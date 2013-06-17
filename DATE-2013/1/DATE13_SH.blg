@@ -1,0 +1,58 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: DATE13_SH.aux
+The style file: IEEEtran.bst
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: IEEEabrv.bib
+Database file #2: global_bibliography.bib
+You're missing a field name---line 2069 of file global_bibliography.bib
+ :     
+ :     %address  = "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+-- IEEEtran.bst version 1.12 (2007/01/11) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 22 entries,
+            4024 wiz_defined-function locations,
+            1312 strings with 18576 characters,
+and the built_in function-call counts, 18019 in all, are:
+= -- 1427
+> -- 394
+< -- 149
++ -- 213
+- -- 62
+* -- 863
+:= -- 2615
+add.period$ -- 48
+call.type$ -- 22
+change.case$ -- 23
+chr.to.int$ -- 387
+cite$ -- 22
+duplicate$ -- 1269
+empty$ -- 1570
+format.name$ -- 81
+if$ -- 4211
+int.to.chr$ -- 0
+int.to.str$ -- 22
+missing$ -- 225
+newline$ -- 97
+num.names$ -- 22
+pop$ -- 544
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 1400
+stack$ -- 0
+substring$ -- 931
+swap$ -- 1021
+text.length$ -- 20
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 22
+warning$ -- 0
+while$ -- 87
+width$ -- 24
+write$ -- 240
+(There was 1 error message)

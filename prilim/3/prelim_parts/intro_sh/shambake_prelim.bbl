@@ -1,0 +1,411 @@
+\begin{thebibliography}{10}
+
+\bibitem{baker1991stack}
+T.~P. Baker.
+\newblock Stack-based scheduling of realtime processes.
+\newblock {\em Real-Time Systems}, 3:67--99, 1991.
+
+\bibitem{barrosmanaging}
+A.~Barros and L.M. Pinho.
+\newblock Managing contention of software transactional memory in real-time
+  systems.
+\newblock In {\em IEEE RTSS, Work-In-Progress}, 2011.
+
+\bibitem{6068352}
+A.~Barros and L.M. Pinho.
+\newblock Software transactional memory as a building block for parallel
+  embedded real-time systems.
+\newblock In {\em 37th EUROMICRO Conference on Software Engineering and
+  Advanced Applications (SEAA)}, pages 251 --255, 30 2011-sept. 2 2011.
+
+\bibitem{Baruah:2007:TMG:1338441.1338647}
+Sanjoy Baruah.
+\newblock Techniques for multiprocessor global schedulability analysis.
+\newblock In {\em RTSS}, pages 119--128, 2007.
+
+\bibitem{5665752}
+C.~Belwal and A.M.K. Cheng.
+\newblock Lazy versus eager conflict detection in software transactional
+  memory: A real-time schedulability perspective.
+\newblock {\em IEEE Embedded Systems Letters}, 3(1):37 --41, march 2011.
+
+\bibitem{6120942}
+C.~Belwal and A.M.K. Cheng.
+\newblock Schedulability analysis of transactions in software transactional
+  memory using timed automata.
+\newblock In {\em IEEE 10th International Conference on Trust, Security and
+  Privacy in Computing and Communications (TrustCom)}, pages 1091 --1098, nov.
+  2011.
+
+\bibitem{Blake:2009:PTS:1669112.1669133}
+Geoffrey Blake, Ronald~G. Dreslinski, and Trevor Mudge.
+\newblock Proactive transaction scheduling for contention management.
+\newblock In {\em Proceedings of the 42nd Annual IEEE/ACM International
+  Symposium on Microarchitecture}, MICRO 42, pages 156--167, New York, NY, USA,
+  2009. ACM.
+
+\bibitem{key-4}
+A.~Block, H.~Leontyev, B.B. Brandenburg, and J.H. Anderson.
+\newblock A flexible real-time locking protocol for multiprocessors.
+\newblock In {\em 13th IEEE International Conference on Embedded and Real-Time
+  Computing Systems and Applications (RTCSA)}, pages 47 --56, aug. 2007.
+
+\bibitem{brandenburg2008implementation}
+B.B. Brandenburg and J.H. Anderson.
+\newblock An implementation of the {PCP, SRP, D-PCP, M-PCP}, and {FMLP}
+  real-time synchronization protocols in {LITMUS-{RT}}.
+\newblock In {\em RTCSA}, pages 185--194, 2008.
+
+\bibitem{brandenburg2008comparison}
+Björn Brandenburg and James Anderson.
+\newblock A comparison of the m-pcp, d-pcp, and fmlp on litmus rt.
+\newblock In Theodore Baker, Alain Bui, and Sébastien Tixeuil, editors, {\em
+  Principles of Distributed Systems}, volume 5401 of {\em Lecture Notes in
+  Computer Science}, pages 105--124, 2008.
+
+\bibitem{Buttazzo:2004:HRC:1027504}
+Giorgio~C. Buttazzo.
+\newblock {\em Hard Real-time Computing Systems: Predictable Scheduling
+  Algorithms And Applications (Real-Time Systems Series)}.
+\newblock Springer-Verlag TELOS, Santa Clara, CA, USA, 2004.
+
+\bibitem{chen1990dynamic}
+Min-Ih Chen and Kwei-Jay Lin.
+\newblock Dynamic priority ceilings: A concurrency control protocol for
+  real-time systems.
+\newblock {\em Real-Time Systems}, 2:325--346, 1990.
+
+\bibitem{4079519}
+Hyeonjoong Cho, B.~Ravindran, and E.D. Jensen.
+\newblock Space-optimal, wait-free real-time synchronization.
+\newblock {\em IEEE Transactions on Computers}, 56(3):373 --384, March 2007.
+
+\bibitem{Cho:2006:UAP:1141277.1141490}
+Hyeonjoong Cho, Binoy Ravindran, and E.~Douglas Jensen.
+\newblock On utility accrual processor scheduling with wait-free
+  synchronization for embedded real-time software.
+\newblock In {\em Proceedings of the ACM symposium on Applied computing}, SAC
+  '06, pages 918--922, New York, NY, USA, 2006. ACM.
+
+\bibitem{1656921}
+Hyeonjoong Cho, Binoy Ravindran, and E.~Douglas Jensen.
+\newblock Lock-free synchronization for dynamic embedded real-time systems.
+\newblock {\em ACM Trans. Embed. Comput. Syst.}, 9(3):23:1--23:28, March 2010.
+
+\bibitem{1508449}
+Hyeonjoong Cho, Binoy Ravindran, and E.D. Jensen.
+\newblock A space-optimal wait-free real-time synchronization protocol.
+\newblock In {\em Proceedings of 17th Euromicro Conference on Real-Time
+  Systems}, ECRTS' 05, pages 79 -- 88, July 2005.
+
+\bibitem{dam06}
+Peter Damron, Alexandra Fedorova, Yossi Lev, Victor Luchangco, Mark Moir, and
+  Daniel Nussbaum.
+\newblock Hybrid transactional memory.
+\newblock In {\em Proceedings of the 12th international conference on
+  Architectural support for programming languages and operating systems},
+  ASPLOS-XII, pages 336--346, New York, NY, USA, 2006. ACM.
+
+\bibitem{key-5}
+U.M.C. Devi, H.~Leontyev, and J.H. Anderson.
+\newblock Efficient synchronization under global edf scheduling on
+  multiprocessors.
+\newblock In {\em 18th Euromicro Conference on Real-Time Systems}, pages 10 pp.
+  --84, 0-0 2006.
+
+\bibitem{4145102}
+Dave Dice and Nir Shavit.
+\newblock Understanding tradeoffs in software transactional memory.
+\newblock In {\em International Symposium on Code Generation and Optimization},
+  CGO '07, pages 21 --33, March 2007.
+
+\bibitem{Dolev:2008:CSC:1400751.1400769}
+Shlomi Dolev, Danny Hendler, and Adi Suissa.
+\newblock Car-stm: scheduling-based collision avoidance and resolution for
+  software transactional memory.
+\newblock In {\em Proceedings of the twenty-seventh ACM symposium on Principles
+  of distributed computing}, PODC '08, pages 125--134, New York, NY, USA, 2008.
+  ACM.
+
+\bibitem{easwaran2009resource}
+A.~Easwaran and B.~Andersson.
+\newblock Resource sharing in global fixed-priority preemptive multiprocessor
+  scheduling.
+\newblock In {\em 30th IEEE Real-Time Systems Symposium (RTSS)}, pages 377
+  --386, dec. 2009.
+
+\bibitem{6045438}
+S.~Fahmy and B.~Ravindran.
+\newblock On stm concurrency control for multicore embedded real-time software.
+\newblock In {\em International Conference on Embedded Computer Systems},
+  SAMOS, pages 1 --8, July 2011.
+
+\bibitem{fahmy2009bounding}
+S.F. Fahmy, B.~Ravindran, and E.~D. Jensen.
+\newblock On bounding response times under software transactional memory in
+  distributed multiprocessor real-time systems.
+\newblock In {\em DATE}, pages 688--693, 2009.
+
+\bibitem{fahmy2009response}
+S.F. Fahmy, B.~Ravindran, and ED~Jensen.
+\newblock Response time analysis of software transactional memory-based
+  distributed real-time systems.
+\newblock In {\em ACM SAC}, pages 334--338, 2009.
+
+\bibitem{gai2003comparison}
+P.~Gai, M.~Di~Natale, G.~Lipari, A.~Ferrari, C.~Gabellini, and P.~Marceca.
+\newblock A comparison of mpcp and msrp when sharing resources in the janus
+  multiple-processor on a chip platform.
+\newblock In {\em Proceedings of the 9th IEEE Real-Time and Embedded Technology
+  and Applications Symposium}, pages 189 -- 198, may 2003.
+
+\bibitem{Gray:1981:TCV:1286831.1286846}
+Jim Gray.
+\newblock The transaction concept: virtues and limitations (invited paper).
+\newblock In {\em Proceedings of the seventh international conference on Very
+  Large Data Bases - Volume 7}, VLDB '1981, pages 144--154. VLDB Endowment,
+  1981.
+
+\bibitem{Guerraoui:2005:TTT:1073814.1073863}
+Rachid Guerraoui, Maurice Herlihy, and Bastian Pochon.
+\newblock Toward a theory of transactional contention managers.
+\newblock In {\em PODC}, pages 258--264, 2005.
+
+\bibitem{ham04}
+Lance Hammond, Vicky Wong, Mike Chen, Brian~D. Carlstrom, John~D. Davis, Ben
+  Hertzberg, Manohar~K. Prabhu, Honggo Wijaya, Christos Kozyrakis, and Kunle
+  Olukotun.
+\newblock Transactional memory coherence and consistency.
+\newblock In {\em Proceedings of the 31st annual international symposium on
+  Computer architecture}, ISCA '04, pages 102--, Washington, DC, USA, 2004.
+  IEEE Computer Society.
+
+\bibitem{Harris:2003:LSL:949305.949340}
+Tim Harris and Keir Fraser.
+\newblock Language support for lightweight transactions.
+\newblock In {\em Proceedings of the 18th annual ACM SIGPLAN conference on
+  Object-oriented programing, systems, languages, and applications}, OOPSLA
+  '03, pages 388--402, New York, NY, USA, 2003. ACM.
+
+\bibitem{tm-book10}
+Tim Harris, James Larus, and Ravi Rajwar.
+\newblock {\em Transactional Memory}.
+\newblock Morgan \& Claypool Publishers, 2nd. edition, December 2010.
+
+\bibitem{Harris:2005:CMT:1065944.1065952}
+Tim Harris, Simon Marlow, Simon~Peyton Jones, and Maurice Herlihy.
+\newblock Composable memory transactions.
+\newblock {\em Commun. ACM}, 51:91--100, Aug 2008.
+
+\bibitem{Herlihy:2006:AMP:1146381.1146382}
+Maurice Herlihy.
+\newblock The art of multiprocessor programming.
+\newblock In {\em PODC}, pages 1--2, 2006.
+
+\bibitem{Herlihy:1993:TMA:165123.165164}
+Maurice Herlihy and J.~Eliot~B. Moss.
+\newblock Transactional memory: architectural support for lock-free data
+  structures.
+\newblock In {\em Proceedings of the 20th annual international symposium on
+  computer architecture}, ISCA '93, pages 289--300, New York, NY, USA, 1993.
+  ACM.
+
+\bibitem{holman2006locking}
+P.~Holman and J.H. Anderson.
+\newblock Locking under pfair scheduling.
+\newblock {\em TOCS}, 24(2):140--174, 2006.
+
+\bibitem{6031129}
+D.K. Kiss.
+\newblock Intelligent priority ceiling protocol for scheduling.
+\newblock In {\em 2011 3rd IEEE International Symposium on Logistics and
+  Industrial Informatics}, LINDI, pages 105 --110, aug. 2011.
+
+\bibitem{Kumar:2006:HTM:1122971.1123003}
+Sanjeev Kumar, Michael Chu, Christopher~J. Hughes, Partha Kundu, and Anthony
+  Nguyen.
+\newblock Hybrid transactional memory.
+\newblock In {\em Proceedings of the 11th ACM SIGPLAN symposium on Principles
+  and practice of parallel programming}, PPoPP '06, pages 209--220, New York,
+  NY, USA, 2006. ACM.
+
+\bibitem{lakshmanan2009coordinated}
+K.~Lakshmanan, D.~de~Niz, and R.~Rajkumar.
+\newblock Coordinated task scheduling, allocation and synchronization on
+  multiprocessors.
+\newblock In {\em 30th IEEE Real-Time Systems Symposium (RTSS)}, pages 469
+  --478, dec. 2009.
+
+\bibitem{5958224}
+W.~Maldonado, P.~Marlier, P.~Felber, J.~Lawall, G.~Muller, and E.~Riviere.
+\newblock Deadline-aware scheduling for software transactional memory.
+\newblock In {\em 41st International Conference on Dependable Systems Networks
+  (DSN)}, pages 257 --268, june 2011.
+
+\bibitem{Maldonado:2010:SST:1693453.1693465}
+Walther Maldonado, Patrick Marlier, Pascal Felber, Adi Suissa, Danny Hendler,
+  Alexandra Fedorova, Julia~L. Lawall, and Gilles Muller.
+\newblock Scheduling support for transactional memory contention management.
+\newblock In {\em Proceedings of the 15th ACM SIGPLAN Symposium on Principles
+  and Practice of Parallel Programming}, PPoPP '10, pages 79--90, New York, NY,
+  USA, 2010. ACM.
+
+\bibitem{manson2006preemptible}
+J.~Manson, J.~Baker, et~al.
+\newblock Preemptible atomic regions for real-time {Java}.
+\newblock In {\em RTSS}, pages 10--71, 2006.
+
+\bibitem{Marathe:2004:DTM:1066650.1066660}
+Virendra~J. Marathe, William~N. Scherer, and Michael~L. Scott.
+\newblock Design tradeoffs in modern software transactional memory systems.
+\newblock In {\em Proceedings of the 7th workshop on Workshop on languages,
+  compilers, and run-time support for scalable systems}, LCR '04, pages 1--7,
+  New York, NY, USA, 2004. ACM.
+
+\bibitem{Martinez:2002:SSA:605397.605400}
+Jos\'{e}~F. Mart\'{\i}nez and Josep Torrellas.
+\newblock Speculative synchronization: applying thread-level speculation to
+  explicitly parallel applications.
+\newblock In {\em Proceedings of the 10th international conference on
+  Architectural support for programming languages and operating systems},
+  ASPLOS-X, pages 18--29, New York, NY, USA, 2002. ACM.
+
+\bibitem{austenmc:tcc:dissertation:2009}
+Austen McDonald.
+\newblock {\em {Architectures for Transactional Memory}}.
+\newblock PhD thesis, Stanford University, June 2009.
+
+\bibitem{Meawad:2011:RWQ:2043910.2043912}
+Fadi Meawad, Martin Schoeberl, Karthik Iyer, and Jan Vitek.
+\newblock Real-time wait-free queues using micro-transactions.
+\newblock In {\em Proceedings of the 9th International Workshop on Java
+  Technologies for Real-Time and Embedded Systems}, JTRES '11, pages 1--10, New
+  York, NY, USA, 2011. ACM.
+
+\bibitem{Minh:2007:EHT:1250662.1250673}
+Chi~Cao Minh, Martin Trautmann, JaeWoong Chung, Austen McDonald, Nathan
+  Bronson, Jared Casper, Christos Kozyrakis, and Kunle Olukotun.
+\newblock An effective hybrid transactional memory system with strong isolation
+  guarantees.
+\newblock In {\em Proceedings of the 34th annual international symposium on
+  Computer architecture}, ISCA '07, pages 69--80, New York, NY, USA, 2007. ACM.
+
+\bibitem{Moss2006186}
+J.~Eliot~B. Moss and Antony~L. Hosking.
+\newblock Nested transactional memory: Model and architecture sketches.
+\newblock {\em Science of Computer Programming}, 63(2):186 -- 201, 2006.
+
+\bibitem{Oplinger:2002:ESR:605397.605417}
+Jeffrey Oplinger and Monica~S. Lam.
+\newblock Enhancing software reliability with speculative threads.
+\newblock In {\em Proceedings of the 10th international conference on
+  Architectural support for programming languages and operating systems},
+  ASPLOS-X, pages 184--196, New York, NY, USA, 2002. ACM.
+
+\bibitem{rajkumar2002real}
+R.~Rajkumar.
+\newblock Real-time synchronization protocols for shared memory
+  multiprocessors.
+\newblock In {\em ICDCS}, pages 116--123, 2002.
+
+\bibitem{Rajkumar:1991:SRS:532621}
+Ragunathan Rajkumar.
+\newblock {\em Synchronization in Real-Time Systems: A Priority Inheritance
+  Approach}.
+\newblock Kluwer Academic Publishers, Norwell, MA, USA, 1991.
+
+\bibitem{Rajwar:2002:TLE:605397.605399}
+Ravi Rajwar and James~R. Goodman.
+\newblock Transactional lock-free execution of lock-based programs.
+\newblock In {\em Proceedings of the 10th international conference on
+  Architectural support for programming languages and operating systems},
+  ASPLOS-X, pages 5--17, New York, NY, USA, 2002. ACM.
+
+\bibitem{Saha:2006:MHP:1122971.1123001}
+Bratin Saha, Ali-Reza Adl-Tabatabai, et~al.
+\newblock {McRT-STM}: a high performance software transactional memory system
+  for a multi-core runtime.
+\newblock In {\em PPoPP}, pages 187--197, 2006.
+
+\bibitem{Saha:2006:ASS:1194816.1194838}
+Bratin Saha, Ali-Reza Adl-Tabatabai, and Quinn Jacobson.
+\newblock Architectural support for software transactional memory.
+\newblock In {\em Proceedings of the 39th Annual IEEE/ACM International
+  Symposium on Microarchitecture}, MICRO 39, pages 185--196, Washington, DC,
+  USA, 2006. IEEE Computer Society.
+
+\bibitem{sarni2009real}
+T.~Sarni, A.~Queudet, and P.~Valduriez.
+\newblock Real-time support for software transactional memory.
+\newblock In {\em RTCSA}, pages 477--485, 2009.
+
+\bibitem{Scherer:2005:ACM:1073814.1073861}
+William~N. Scherer, III and Michael~L. Scott.
+\newblock Advanced contention management for dynamic software transactional
+  memory.
+\newblock In {\em Proceedings of the twenty-fourth annual ACM symposium on
+  Principles of distributed computing}, PODC '05, pages 240--248, New York, NY,
+  USA, 2005. ACM.
+
+\bibitem{schoeberl2010rttm}
+M.~Schoeberl, F.~Brandner, and J.~Vitek.
+\newblock {RTTM}: Real-time transactional memory.
+\newblock In {\em ACM SAC}, pages 326--333, 2010.
+
+\bibitem{5694263}
+M.~Schoeberl and P.~Hilber.
+\newblock Design and implementation of real-time transactional memory.
+\newblock In {\em International Conference on Field Programmable Logic and
+  Applications (FPL)}, pages 279 --284, 31 2010-sept. 2 2010.
+
+\bibitem{sha1990priority}
+L.~Sha, R.~Rajkumar, and J.P. Lehoczky.
+\newblock Priority inheritance protocols: an approach to real-time
+  synchronization.
+\newblock {\em IEEE Transactions on Computers}, 39(9):1175 --1185, sep 1990.
+
+\bibitem{sha95}
+Nir Shavit and Dan Touitou.
+\newblock Software transactional memory.
+\newblock In {\em PODC}, pages 204--213, 1995.
+
+\bibitem{Shpeisman:2007:EIO:1250734.1250744}
+Tatiana Shpeisman, Vijay Menon, Ali-Reza Adl-Tabatabai, Steven Balensiefer, Dan
+  Grossman, Richard~L. Hudson, Katherine~F. Moore, and Bratin Saha.
+\newblock Enforcing isolation and ordering in stm.
+\newblock In {\em Proceedings of ACM SIGPLAN conference on Programming language
+  design and implementation}, PLDI '07, pages 78--88, New York, NY, USA, 2007.
+  ACM.
+
+\bibitem{Shriraman:2007:IHA:1250662.1250676}
+Arrvindh Shriraman, Michael~F. Spear, Hemayet Hossain, Virendra~J. Marathe,
+  Sandhya Dwarkadas, and Michael~L. Scott.
+\newblock An integrated hardware-software approach to flexible transactional
+  memory.
+\newblock In {\em Proceedings of the 34th annual international symposium on
+  Computer architecture}, ISCA '07, pages 104--115, New York, NY, USA, 2007.
+  ACM.
+
+\bibitem{Spear:2009:CSC:1504176.1504199}
+Michael~F. Spear, Luke Dalessandro, Virendra~J. Marathe, and Michael~L. Scott.
+\newblock A comprehensive strategy for contention management in software
+  transactional memory.
+\newblock In {\em Proceedings of the 14th ACM SIGPLAN symposium on Principles
+  and practice of parallel programming}, PPoPP '09, pages 141--150, New York,
+  NY, USA, 2009. ACM.
+
+\bibitem{volos2009nepaltm}
+H.~Volos, A.~Welc, A.R. Adl-Tabatabai, T.~Shpeisman, X.~Tian, and
+  R.~Narayanaswamy.
+\newblock Nepaltm: design and implementation of nested parallelism for
+  transactional memory systems.
+\newblock {\em ECOOP 2009--Object-Oriented Programming}, pages 123--147, 2009.
+
+\bibitem{Yoo:2008:ATS:1378533.1378564}
+Richard~M. Yoo and Hsien-Hsin~S. Lee.
+\newblock Adaptive transaction scheduling for transactional memory systems.
+\newblock In {\em Proceedings of the twentieth annual symposium on Parallelism
+  in algorithms and architectures}, SPAA '08, pages 169--178, New York, NY,
+  USA, 2008. ACM.
+
+\end{thebibliography}

@@ -1,0 +1,172 @@
+\begin{thebibliography}{10}
+
+\bibitem{Abbott:1988:SRT:44203.44209}
+R.~Abbott and H.~Garcia-Molina.
+\newblock Scheduling real-time transactions.
+\newblock {\em SIGMOD Rec.}, 17(1):71--81, Mar. 1988.
+
+\bibitem{1530682}
+M.~Abdouli, L.~Amanton, B.~Sadeg, and A.~Alimi.
+\newblock Using imprecise concurrency control and speculative lending of
+  prepared data-item in distributed real-time nested transactions.
+\newblock In {\em Proceedings. Ninth IEEE International Symposium on
+  Distributed Simulation and Real-Time Applications (DS-RT)}, pages 298 -- 305,
+  oct. 2005.
+
+\bibitem{1420972}
+M.~Abdouli, B.~Sadeg, and L.~Amanton.
+\newblock Scheduling distributed real-time nested transactions.
+\newblock In {\em Eighth IEEE International Symposium on Object-Oriented
+  Real-Time Distributed Computing (ISORC)}, pages 208 -- 215, may 2005.
+
+\bibitem{barrosmanaging}
+A.~Barros and L.~Pinho.
+\newblock Managing contention of software transactional memory in real-time
+  systems.
+\newblock In {\em IEEE RTSS, Work-In-Progress}, 2011.
+
+\bibitem{chen2002efficient}
+H.~Chen and Y.~Chin.
+\newblock An efficient real-time scheduler for nested transaction models.
+\newblock In {\em Proceedings of Ninth International Conference on Parallel and
+  Distributed Systems}, pages 335--340. IEEE, 2002.
+
+\bibitem{316159}
+Y.-W. Chen and L.~Gruenwald.
+\newblock Research issues for a real-time nested transaction model.
+\newblock In {\em Proceedings of the IEEE Workshop on Real-Time Applications},
+  pages 130 --135, jul 1994.
+
+\bibitem{Davis:2011:SHR:1978802.1978814}
+R.~I. Davis and A.~Burns.
+\newblock A survey of hard real-time scheduling for multiprocessor systems.
+\newblock {\em ACM Comput. Surv.}, 43(4):35:1--35:44, Oct. 2011.
+
+\bibitem{shambake_phd_proposal}
+M.~El-Shambakey.
+\newblock {\em Real-Time Software Transactional Memory: Contention Managers,
+  Time Bounds, and Implementations}.
+\newblock Phd proposal, Virginia Tech, 2012.
+\newblock Available as
+  \url{http://www.real-time.ece.vt.edu/shambakey_prelim.pdf}.
+
+\bibitem{lcmdac2012}
+M.~El-Shambakey and B.~Ravindran.
+\newblock {STM} concurrency control for embedded real-time software with
+  tighter time bounds.
+\newblock In {\em Proceedings of the 49th DAC}, pages 437--446. ACM, 2012.
+
+\bibitem{stmconcurrencycontrol:emsoft11}
+M.~El-Shambakey and B.~Ravindran.
+\newblock {STM} concurrency control for multicore embedded real-time software:
+  time bounds and tradeoffs.
+\newblock In {\em Proceedings of the 27th SAC}, pages 1602--1609. ACM, 2012.
+
+\bibitem{fblt}
+M.~Elshambakey and B.~Ravindran.
+\newblock {FBLT}: A real-time contention manager with improved schedulability.
+\newblock {\em DATE'13}, 2013.
+\newblock (to appear).
+
+\bibitem{pnf_dac_asp}
+M.~Elshambakey and B.~Ravindran.
+\newblock On real-time {STM} concurrency control for embedded software with
+  improved schedulability.
+\newblock {\em 18th ASP-DAC}, 2013.
+\newblock (to appear).
+
+\bibitem{6045438}
+S.~Fahmy and B.~Ravindran.
+\newblock On {STM} concurrency control for multicore embedded real-time
+  software.
+\newblock In {\em International Conference on Embedded Computer Systems}, pages
+  1 --8, July 2011.
+
+\bibitem{fahmy2009bounding}
+S.~Fahmy, B.~Ravindran, and E.~D. Jensen.
+\newblock On bounding response times under software transactional memory in
+  distributed multiprocessor real-time systems.
+\newblock In {\em DATE}, pages 688--693, 2009.
+
+\bibitem{key-1}
+S.~F. Fahmy.
+\newblock {\em Collaborative Scheduling and Synchronization of Distributable
+  Real-Time Threads}.
+\newblock PhD thesis, Virginia Tech, 2010.
+
+\bibitem{Guerraoui:2005:TTT:1073814.1073863}
+R.~Guerraoui, M.~Herlihy, and B.~Pochon.
+\newblock Toward a theory of transactional contention managers.
+\newblock In {\em PODC}, pages 258--264, 2005.
+
+\bibitem{Harris:2005:CMT:1065944.1065952}
+T.~Harris, S.~Marlow, S.~P. Jones, and M.~Herlihy.
+\newblock Composable memory transactions.
+\newblock {\em Commun. ACM}, 51:91--100, Aug 2008.
+
+\bibitem{Herlihy:2006:AMP:1146381.1146382}
+M.~Herlihy.
+\newblock The art of multiprocessor programming.
+\newblock In {\em PODC}, pages 1--2, 2006.
+
+\bibitem{Herlihy:2003:STM:872035.872048}
+M.~Herlihy et~al.
+\newblock Software transactional memory for dynamic-sized data structures.
+\newblock In {\em Proceedings of the 22nd PODC}, pages 92--101. ACM, 2003.
+
+\bibitem{6267834}
+J.~Kim and B.~Ravindran.
+\newblock Scheduling closed-nested transactions in distributed transactional
+  memory.
+\newblock In {\em IEEE 26th International Parallel Distributed Processing
+  Symposium (IPDPS)}, pages 179 --188, may 2012.
+
+\bibitem{4709120}
+X.~Lei, W.~Li, and X.~Yuan.
+\newblock Scheduling real-time nested transactions in mobile broadcast
+  environments.
+\newblock In {\em The 9th International Conference for Young Computer
+  Scientists (ICYCS)}, pages 1053 --1058, nov. 2008.
+
+\bibitem{manson2006preemptible}
+J.~Manson, J.~Baker, et~al.
+\newblock Preemptible atomic regions for real-time {Java}.
+\newblock In {\em RTSS}, pages 10--71, 2006.
+
+\bibitem{Saha:2006:MHP:1122971.1123001}
+B.~Saha, A.-R. Adl-Tabatabai, et~al.
+\newblock {McRT-STM}: a high performance software transactional memory system
+  for a multi-core runtime.
+\newblock In {\em PPoPP}, pages 187--197, 2006.
+
+\bibitem{sarni2009real}
+T.~Sarni, A.~Queudet, and P.~Valduriez.
+\newblock Real-time support for software transactional memory.
+\newblock In {\em RTCSA}, pages 477--485, 2009.
+
+\bibitem{schoeberl2010rttm}
+M.~Schoeberl, F.~Brandner, and J.~Vitek.
+\newblock {RTTM}: Real-time transactional memory.
+\newblock In {\em ACM SAC}, pages 326--333, 2010.
+
+\bibitem{620423}
+H.~Tada, K.~Uchida, M.~Higuchi, and M.~Fujii.
+\newblock A model of nested transaction with fine granularity of concurrency
+  control.
+\newblock In {\em IEEE Pacific Rim Conference on Communications, Computers and
+  Signal Processing}, volume~2, pages 977 --980 vol.2, aug 1997.
+
+\bibitem{Turcu:2012:OND:2367589.2367601}
+A.~Turcu and B.~Ravindran.
+\newblock On open nesting in distributed transactional memory.
+\newblock In {\em Proceedings of the 5th Annual International Systems and
+  Storage Conference}, SYSTOR '12, pages 12:1--12:12, New York, NY, USA, 2012.
+  ACM.
+
+\bibitem{turcu2012closed}
+A.~Turcu, B.~Ravindran, and M.~Saad.
+\newblock On closed nesting in distributed transactional memory.
+\newblock In {\em Seventh ACM SIGPLAN workshop on Transactional Computing},
+  2012.
+
+\end{thebibliography}

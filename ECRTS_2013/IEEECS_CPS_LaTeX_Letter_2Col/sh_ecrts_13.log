@@ -1,0 +1,659 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2013.1.2)  2 FEB 2013 01:47
+entering extended mode
+ %&-line parsing enabled.
+**sh_ecrts_13.tex
+(./sh_ecrts_13.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(./IEEEtran.cls
+Document Class: IEEEtran 2007/03/05 V1.7a by Michael Shell
+-- See the "IEEEtran_HOWTO" manual for usage information.
+-- http://www.michaelshell.org/tex/ieeetran/
+\@IEEEtrantmpdimenA=\dimen102
+\@IEEEtrantmpdimenB=\dimen103
+\@IEEEtrantmpcountA=\count79
+\@IEEEtrantmpcountB=\count80
+\@IEEEtrantmptoksA=\toks14
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 373.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+-- Using 8.5in x 11in (letter) paper.
+-- Using DVI output.
+\@IEEEnormalsizeunitybaselineskip=\dimen104
+-- This is a 10 point document.
+\CLASSINFOnormalsizebaselineskip=\dimen105
+\CLASSINFOnormalsizeunitybaselineskip=\dimen106
+\IEEEnormaljot=\dimen107
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 731.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 731.
+\IEEEilabelindentA=\dimen108
+\IEEEilabelindentB=\dimen109
+\IEEEilabelindent=\dimen110
+\IEEEelabelindent=\dimen111
+\IEEEdlabelindent=\dimen112
+\IEEElabelindent=\dimen113
+\IEEEiednormlabelsep=\dimen114
+\IEEEiedmathlabelsep=\dimen115
+\IEEEiedtopsep=\skip41
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@IEEEsubequation=\count85
+\abovecaptionskip=\skip42
+\belowcaptionskip=\skip43
+\c@figure=\count86
+\c@table=\count87
+\@IEEEeqnnumcols=\count88
+\@IEEEeqncolcnt=\count89
+\@IEEEtmpitemindent=\dimen116
+\c@IEEEbiography=\count90
+\@IEEEtranrubishbin=\box26
+) (/usr/share/texmf-texlive/tex/latex/paralist/paralist.sty
+Package: paralist 2002/03/18 v2.3b Extended list environments (BS)
+\pltopsep=\skip44
+\plpartopsep=\skip45
+\plitemsep=\skip46
+\plparsep=\skip47
+\pl@lab=\toks15
+)
+(/usr/share/texmf-texlive/tex/latex/comment/comment.sty
+\CommentStream=\write3
+
+Excluding comment 'comment') (/usr/share/texmf-texlive/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 285.
+LaTeX Info: Redefining \nocite on input line 356.
+Package: cite 2009/08/29  v 5.2
+) (/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip48
+\subfigcapskip=\skip49
+\subfigcaptopadj=\dimen117
+\subfigbottomskip=\skip50
+\subfigcapmargin=\dimen118
+\subfiglabelskip=\skip51
+\c@subfigure=\count91
+\c@lofdepth=\count92
+\c@subtable=\count93
+\c@lotdepth=\count94
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip52
+\subfig@bottom=\skip53
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen119
+\Gin@req@width=\dimen120
+) (./algorithm2e.sty
+Package: algorithm2e 2008/00/00 v3.10 algorithms environments
+\c@AlgoLine=\count95
+
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf-texlive/tex/latex/tools/xspace.sty
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/relsize.sty
+Package: relsize 2003/07/04 ver 3.1
+)
+********************************************************
+Package `algorithm2e' Release 4.01 -- december 14 2009 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip54
+\skiplinenumber=\skip55
+\skiprule=\skip56
+\skiphlne=\skip57
+\skiptext=\skip58
+\skiplength=\skip59
+\algomargin=\skip60
+\skipalgocfslide=\skip61
+\algowidth=\dimen121
+\inoutsize=\dimen122
+\inoutline=\dimen123
+\interspacetitleruled=\dimen124
+\interspacealgoruled=\dimen125
+\interspacetitleboxruled=\dimen126
+\algocf@inoutbox=\box27
+\algocf@inputbox=\box28
+\AlCapSkip=\skip62
+\AlCapHSkip=\skip63
+\algocf@nlbox=\box29
+\algocf@hangingbox=\box30
+\algocf@capbox=\box31
+\algoheightruledefault=\skip64
+\algoheightrule=\skip65
+\algotitleheightruledefault=\skip66
+\algotitleheightrule=\skip67
+\c@algocfline=\count96
+\c@algocfproc=\count97
+\c@algocf=\count98
+\algocf@algoframe=\box32
+\algocf@algobox=\box33
+) (/usr/share/texmf-texlive/tex/latex/amscls/amsthm.sty
+Package: amsthm 2004/08/06 v2.20
+\thm@style=\toks17
+\thm@bodyfont=\toks18
+\thm@headfont=\toks19
+\thm@notefont=\toks20
+\thm@headpunct=\toks21
+\thm@preskip=\skip68
+\thm@postskip=\skip69
+\thm@headsep=\skip70
+\dth@everypar=\toks22
+)
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2009/06/22 v3.00
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\@emptytoks=\toks23
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip71
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks24
+\ex@=\dimen127
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen128
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count99
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count100
+\leftroot@=\count101
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count102
+\DOTSCASE@=\count103
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box34
+\strutbox@=\box35
+\big@size=\dimen129
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count104
+\c@MaxMatrixCols=\count105
+\dotsspace@=\muskip11
+\c@parentequation=\count106
+\dspbrk@lvl=\count107
+\tag@help=\toks25
+\row@=\count108
+\column@=\count109
+\maxfields@=\count110
+\andhelp@=\toks26
+\eqnshift@=\dimen130
+\alignsep@=\dimen131
+\tagshift@=\dimen132
+\tagwidth@=\dimen133
+\totwidth@=\dimen134
+\lineht@=\dimen135
+\@envbody=\toks27
+\multlinegap=\skip72
+\multlinetaggap=\skip73
+\mathdisplay@stack=\toks28
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+\c@clm=\count111
+ (./sh_ecrts_13.aux)
+\openout1 = `sh_ecrts_13.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 365.
+LaTeX Font Info:    ... okay on input line 365.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 365.
+LaTeX Font Info:    ... okay on input line 365.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 365.
+LaTeX Font Info:    ... okay on input line 365.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 365.
+LaTeX Font Info:    ... okay on input line 365.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 365.
+LaTeX Font Info:    ... okay on input line 365.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 365.
+LaTeX Font Info:    ... okay on input line 365.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 419.
+
+
+LaTeX Warning: Citation `Herlihy:2006:AMP:1146381.1146382' on page 1 undefined 
+on input line 452.
+
+
+LaTeX Warning: Citation `Guerraoui:2005:TTT:1073814.1073863' on page 1 undefine
+d on input line 452.
+
+
+LaTeX Warning: Citation `Saha:2006:MHP:1122971.1123001' on page 1 undefined on 
+input line 452.
+
+
+LaTeX Warning: Citation `Harris:2005:CMT:1065944.1065952' on page 1 undefined o
+n input line 452.
+
+
+LaTeX Warning: Citation `6045438' on page 1 undefined on input line 458.
+
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page 1 undefined on
+ input line 458.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 1 undefined on input line 458.
+
+
+LaTeX Warning: Citation `Davis:2011:SHR:1978802.1978814' on page 1 undefined on
+ input line 458.
+
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page 1 undefined on
+ input line 459.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 1 undefined on input line 459.
+
+
+LaTeX Warning: Citation `pnf_dac_asp' on page 1 undefined on input line 459.
+
+
+LaTeX Warning: Citation `shambake_phd_proposal' on page 1 undefined on input li
+ne 459.
+
+
+LaTeX Warning: Citation `Herlihy:2003:STM:872035.872048' on page 1 undefined on
+ input line 459.
+
+
+LaTeX Warning: Citation `fblt' on page 1 undefined on input line 459.
+
+
+LaTeX Warning: Citation `Turcu:2012:OND:2367589.2367601' on page 1 undefined on
+ input line 461.
+
+
+LaTeX Warning: Citation `turcu2012closed' on page 1 undefined on input line 461
+.
+
+[1
+
+
+]
+
+LaTeX Warning: Citation `manson2006preemptible' on page 2 undefined on input li
+ne 481.
+
+
+LaTeX Warning: Citation `fahmy2009bounding' on page 2 undefined on input line 4
+81.
+
+
+LaTeX Warning: Citation `sarni2009real' on page 2 undefined on input line 481.
+
+
+LaTeX Warning: Citation `schoeberl2010rttm' on page 2 undefined on input line 4
+81.
+
+
+LaTeX Warning: Citation `key-1' on page 2 undefined on input line 481.
+
+
+LaTeX Warning: Citation `barrosmanaging' on page 2 undefined on input line 481.
+
+
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page 2 undefined on
+ input line 481.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 2 undefined on input line 481.
+
+
+LaTeX Warning: Citation `pnf_dac_asp' on page 2 undefined on input line 481.
+
+
+LaTeX Warning: Citation `fblt' on page 2 undefined on input line 481.
+
+
+LaTeX Warning: Citation `manson2006preemptible' on page 2 undefined on input li
+ne 484.
+
+
+LaTeX Warning: Citation `fahmy2009bounding' on page 2 undefined on input line 4
+85.
+
+
+LaTeX Warning: Citation `sarni2009real' on page 2 undefined on input line 487.
+
+
+LaTeX Warning: Citation `schoeberl2010rttm' on page 2 undefined on input line 4
+89.
+
+
+LaTeX Warning: Citation `schoeberl2010rttm' on page 2 undefined on input line 4
+89.
+
+
+LaTeX Warning: Citation `key-1' on page 2 undefined on input line 491.
+
+
+LaTeX Warning: Citation `schoeberl2010rttm' on page 2 undefined on input line 4
+91.
+
+
+LaTeX Warning: Citation `key-1' on page 2 undefined on input line 491.
+
+
+LaTeX Warning: Citation `key-1' on page 2 undefined on input line 491.
+
+
+LaTeX Warning: Citation `barrosmanaging' on page 2 undefined on input line 491.
+
+
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page 2 undefined on
+ input line 493.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 2 undefined on input line 496.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 2 undefined on input line 498.
+
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page 2 undefined on
+ input line 498.
+
+
+LaTeX Warning: Citation `pnf_dac_asp' on page 2 undefined on input line 500.
+
+
+LaTeX Warning: Citation `fblt' on page 2 undefined on input line 505.
+
+
+LaTeX Warning: Citation `chen2002efficient' on page 2 undefined on input line 5
+08.
+
+
+LaTeX Warning: Citation `4709120' on page 2 undefined on input line 508.
+
+
+LaTeX Warning: Citation `1420972' on page 2 undefined on input line 508.
+
+
+LaTeX Warning: Citation `316159' on page 2 undefined on input line 508.
+
+
+LaTeX Warning: Citation `chen2002efficient' on page 2 undefined on input line 5
+14.
+
+
+LaTeX Warning: Citation `Abbott:1988:SRT:44203.44209' on page 2 undefined on in
+put line 520.
+
+
+LaTeX Warning: Citation `4709120' on page 2 undefined on input line 522.
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 524.
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 524.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+)
+
+LaTeX Warning: Citation `1420972' on page 2 undefined on input line 527.
+
+
+LaTeX Warning: Citation `1530682' on page 2 undefined on input line 530.
+
+
+LaTeX Warning: Citation `1420972' on page 2 undefined on input line 530.
+
+
+LaTeX Warning: Citation `620423' on page 2 undefined on input line 533.
+
+
+LaTeX Warning: Citation `316159' on page 2 undefined on input line 543.
+
+[2]
+
+LaTeX Warning: Citation `6267834' on page 3 undefined on input line 551.
+
+
+LaTeX Warning: Citation `6267834' on page 3 undefined on input line 551.
+
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 570.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 570.
+
+
+LaTeX Warning: Citation `pnf_dac_asp' on page 3 undefined on input line 578.
+
+
+LaTeX Warning: Citation `fblt' on page 3 undefined on input line 578.
+
+[3]
+
+LaTeX Warning: Citation `pnf_dac_asp' on page 4 undefined on input line 655.
+
+
+LaTeX Warning: Citation `fblt' on page 4 undefined on input line 659.
+
+
+LaTeX Warning: Citation `fblt' on page 4 undefined on input line 661.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 4 undefined on input line 665.
+
+** ATTENTION: \proof is deprecated (line 686). Use \IEEEproof instead.
+[4]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5.55556> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 769.
+
+Underfull \vbox (badness 1360) has occurred while \output is active []
+
+
+** ATTENTION: \proof is deprecated (line 798). Use \IEEEproof instead.
+[5]
+
+LaTeX Warning: Citation `lcmdac2012' on page 6 undefined on input line 877.
+
+
+Overfull \hbox (20.62828pt too wide) detected at line 938
+\OML/cmm/m/it/10 RC\OT1/cmr/m/n/10 0[] = []
+ []
+
+** ATTENTION: \proof is deprecated (line 944). Use \IEEEproof instead.
+[6]
+Overfull \hbox (45.46262pt too wide) detected at line 1001
+\OML/cmm/m/it/10 RC\OT1/cmr/m/n/10 1[] = []
+ []
+
+** ATTENTION: \proof is deprecated (line 1008). Use \IEEEproof instead.
+
+Overfull \hbox (13.2703pt too wide) detected at line 1042
+\OML/cmm/m/it/10 RC\OT1/cmr/m/n/10 2[] = []
+ []
+
+** ATTENTION: \proof is deprecated (line 1048). Use \IEEEproof instead.
+
+Overfull \hbox (77.52692pt too wide) in alignment at lines 1075--1087
+ [][][] []
+ []
+
+** ATTENTION: \proof is deprecated (line 1103). Use \IEEEproof instead.
+[7]
+
+LaTeX Warning: Citation `lcmdac2012' on page 8 undefined on input line 1126.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 8 undefined on input line 1127.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 8 undefined on input line 1132.
+
+
+Overfull \hbox (58.66063pt too wide) in alignment at lines 1162--1168
+ [][][] []
+ []
+
+
+LaTeX Warning: Citation `fblt' on page 8 undefined on input line 1172.
+
+** ATTENTION: \proof is deprecated (line 1176). Use \IEEEproof instead.
+
+LaTeX Warning: Citation `fblt' on page 8 undefined on input line 1191.
+
+
+LaTeX Warning: Citation `fblt' on page 8 undefined on input line 1201.
+
+
+LaTeX Warning: Citation `fblt' on page 8 undefined on input line 1201.
+
+
+Underfull \hbox (badness 1902) in paragraph at lines 1210--1213
+\OT1/ptm/m/it/10 ter or equal to non-nested FBLT's if the con-flict-ing
+ []
+
+** ATTENTION: \proof is deprecated (line 1216). Use \IEEEproof instead.
+
+LaTeX Warning: Citation `fblt' on page 8 undefined on input line 1220.
+
+
+LaTeX Warning: Citation `fblt' on page 8 undefined on input line 1229.
+
+
+Overfull \hbox (39.03616pt too wide) detected at line 1245
+\U/msa/m/n/10 )  \OML/cmm/m/it/10 ^^N[]len [] \OT1/cmr/m/n/10 + [] \OML/cmm/m/i
+t/10 RC\OT1/cmr/m/n/10 5[](\OML/cmm/m/it/10 a\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10
+ ^^T \OML/cmm/m/it/10 ^^N[]len [] \OT1/cmr/m/n/10 + [] \OML/cmm/m/it/10 len []
+ []
+
+
+LaTeX Warning: Citation `fblt' on page 8 undefined on input line 1251.
+
+[8] (./sh_ecrts_13.bbl)
+
+** Conference Paper **
+Before submitting the final camera ready copy, remember to:
+
+ 1. Manually equalize the lengths of two columns on the last page
+ of your paper;
+
+ 2. Ensure that any PostScript and/or PDF output post-processing
+ uses only Type 1 fonts and that every step in the generation
+ process uses the appropriate paper size.
+
+[9
+
+] (./sh_ecrts_13.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 3911 strings out of 495062
+ 54308 string characters out of 1182645
+ 142683 words of memory out of 3000000
+ 7064 multiletter control sequences out of 15000+50000
+ 32248 words of font info for 79 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 33i,20n,31p,2192b,477s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on sh_ecrts_13.dvi (9 pages, 86976 bytes).

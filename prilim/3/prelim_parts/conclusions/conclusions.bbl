@@ -1,0 +1,112 @@
+\begin{thebibliography}{10}
+
+\bibitem{baker1991stack}
+T.~P. Baker.
+\newblock Stack-based scheduling of realtime processes.
+\newblock {\em Real-Time Systems}, 3:67--99, 1991.
+
+\bibitem{Baruah:2007:TMG:1338441.1338647}
+Sanjoy Baruah.
+\newblock Techniques for multiprocessor global schedulability analysis.
+\newblock In {\em RTSS}, pages 119--128, 2007.
+
+\bibitem{key-4}
+A.~Block, H.~Leontyev, B.B. Brandenburg, and J.H. Anderson.
+\newblock A flexible real-time locking protocol for multiprocessors.
+\newblock In {\em 13th IEEE International Conference on Embedded and Real-Time
+  Computing Systems and Applications (RTCSA)}, pages 47 --56, aug. 2007.
+
+\bibitem{brandenburg2008implementation}
+B.B. Brandenburg and J.H. Anderson.
+\newblock An implementation of the {PCP, SRP, D-PCP, M-PCP}, and {FMLP}
+  real-time synchronization protocols in {LITMUS-{RT}}.
+\newblock In {\em RTCSA}, pages 185--194, 2008.
+
+\bibitem{key-3}
+B.B. Brandenburg and J.H. Anderson.
+\newblock Optimality results for multiprocessor real-time locking.
+\newblock In {\em IEEE 31st Real-Time Systems Symposium (RTSS)}, pages 49 --60,
+  30 2010-dec. 3 2010.
+
+\bibitem{brandenburg2008comparison}
+Björn Brandenburg and James Anderson.
+\newblock A comparison of the m-pcp, d-pcp, and fmlp on litmus rt.
+\newblock In Theodore Baker, Alain Bui, and Sébastien Tixeuil, editors, {\em
+  Principles of Distributed Systems}, volume 5401 of {\em Lecture Notes in
+  Computer Science}, pages 105--124, 2008.
+
+\bibitem{Buttazzo:2004:HRC:1027504}
+Giorgio~C. Buttazzo.
+\newblock {\em Hard Real-time Computing Systems: Predictable Scheduling
+  Algorithms And Applications (Real-Time Systems Series)}.
+\newblock Springer-Verlag TELOS, Santa Clara, CA, USA, 2004.
+
+\bibitem{chen1990dynamic}
+Min-Ih Chen and Kwei-Jay Lin.
+\newblock Dynamic priority ceilings: A concurrency control protocol for
+  real-time systems.
+\newblock {\em Real-Time Systems}, 2:325--346, 1990.
+
+\bibitem{easwaran2009resource}
+A.~Easwaran and B.~Andersson.
+\newblock Resource sharing in global fixed-priority preemptive multiprocessor
+  scheduling.
+\newblock In {\em 30th IEEE Real-Time Systems Symposium (RTSS)}, pages 377
+  --386, dec. 2009.
+
+\bibitem{gai2003comparison}
+P.~Gai, M.~Di~Natale, G.~Lipari, A.~Ferrari, C.~Gabellini, and P.~Marceca.
+\newblock A comparison of mpcp and msrp when sharing resources in the janus
+  multiple-processor on a chip platform.
+\newblock In {\em Proceedings of the 9th IEEE Real-Time and Embedded Technology
+  and Applications Symposium}, pages 189 -- 198, may 2003.
+
+\bibitem{holman2006locking}
+P.~Holman and J.H. Anderson.
+\newblock Locking under pfair scheduling.
+\newblock {\em TOCS}, 24(2):140--174, 2006.
+
+\bibitem{6031129}
+D.K. Kiss.
+\newblock Intelligent priority ceiling protocol for scheduling.
+\newblock In {\em 2011 3rd IEEE International Symposium on Logistics and
+  Industrial Informatics}, LINDI, pages 105 --110, aug. 2011.
+
+\bibitem{lakshmanan2009coordinated}
+K.~Lakshmanan, D.~de~Niz, and R.~Rajkumar.
+\newblock Coordinated task scheduling, allocation and synchronization on
+  multiprocessors.
+\newblock In {\em 30th IEEE Real-Time Systems Symposium (RTSS)}, pages 469
+  --478, dec. 2009.
+
+\bibitem{Moss2006186}
+J.~Eliot~B. Moss and Antony~L. Hosking.
+\newblock Nested transactional memory: Model and architecture sketches.
+\newblock {\em Science of Computer Programming}, 63(2):186 -- 201, 2006.
+
+\bibitem{rajkumar2002real}
+R.~Rajkumar.
+\newblock Real-time synchronization protocols for shared memory
+  multiprocessors.
+\newblock In {\em ICDCS}, pages 116--123, 2002.
+
+\bibitem{Rajkumar:1991:SRS:532621}
+Ragunathan Rajkumar.
+\newblock {\em Synchronization in Real-Time Systems: A Priority Inheritance
+  Approach}.
+\newblock Kluwer Academic Publishers, Norwell, MA, USA, 1991.
+
+\bibitem{sha1990priority}
+L.~Sha, R.~Rajkumar, and J.P. Lehoczky.
+\newblock Priority inheritance protocols: an approach to real-time
+  synchronization.
+\newblock {\em IEEE Transactions on Computers}, 39(9):1175 --1185, sep 1990.
+
+\bibitem{volos2009nepaltm}
+H.~Volos, A.~Welc, A.R. Adl-Tabatabai, T.~Shpeisman, X.~Tian, and
+  R.~Narayanaswamy.
+\newblock Nepaltm: design and implementation of nested parallelism for
+  transactional memory systems.
+\newblock {\em ECOOP 2009--Object-Oriented Programming}, pages 123--147, 2009.
+
+\end{thebibliography}

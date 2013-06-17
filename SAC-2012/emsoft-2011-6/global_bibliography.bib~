@@ -1,0 +1,447 @@
+% This file was created with JabRef 2.3.1.
+% Encoding: UTF-8
+
+@ARTICLE{baker1991stack,
+  author = {Baker, T.P.},
+  title = {Stack-based scheduling of realtime processes},
+  journal = {Real-Time Systems},
+  year = {1991},
+  volume = {3},
+  pages = {67--99},
+  number = {1},
+  issn = {0922-6443},
+  publisher = {Springer}
+}
+
+@INPROCEEDINGS{key-6,
+  author = {Baker, Theodore P.},
+  title = {Multiprocessor {EDF} and Deadline Monotonic Schedulability Analysis},
+  booktitle = {RTSS},
+  year = {2003},
+    pages = {120--},
+  }
+
+
+@INPROCEEDINGS{barrosmanaging,
+  author = {Barros, A. and Pinho, L.M.},
+  title = {Managing contention of software transactional memory in real-time
+	systems},
+  year = {2011},
+  booktitle = {IEEE RTSS, Work-In-Progress},
+  }
+
+@INPROCEEDINGS{Baruah:2007:TMG:1338441.1338647,
+  author = {Baruah, Sanjoy},
+  title = {Techniques for Multiprocessor Global Schedulability Analysis},
+  booktitle = {RTSS},
+  year = {2007},
+    pages = {119--128},
+  }
+
+
+@ARTICLE{Baruah:2010:IMG:1842593.1842607,
+  author = {Baruah, Sanjoy and Bonifaci, Vincenzo and Marchetti-Spaccamela, Alberto
+	and Stiller, Sebastian},
+  title = {Improved multiprocessor global schedulability analysis},
+  journal = {Real-Time Syst.},
+  year = {2010},
+  volume = {46},
+  pages = {3--24},
+  month = {September},
+  }
+
+@INPROCEEDINGS{key-2,
+  author = {Bertogna, Marko and Cirinei, Michele},
+  title = {Response-Time Analysis for Globally Scheduled Symmetric Multiprocessor
+	Platforms},
+  booktitle = {RTSS},
+  year = {2007},
+    pages = {149--160},
+  }
+
+
+@ARTICLE{Bertogna:2009:SAG:1515608.1515674,
+  author = {Bertogna, Marko and Cirinei, Michele and Lipari, Giuseppe},
+  title = {Schedulability Analysis of Global Scheduling Algorithms on Multiprocessor
+	Platforms},
+  journal = {IEEE TPDS.},
+  year = {2009},
+  volume = {20},
+  pages = {553--566},
+   issue = {4},
+ }
+
+
+@INPROCEEDINGS{Bertogna:2005:ISA:1084012.1084162,
+  author = {Bertogna, Marko and Cirinei, Michele and Lipari, Giuseppe},
+  title = {Improved Schedulability Analysis of {EDF} on Multiprocessor Platforms},
+  booktitle = {ECRTS},
+  year = {2005},
+  pages = {209--218},
+  }
+
+@INPROCEEDINGS{key-4,
+  author = {Block, Aaron and Leontyev, Hennadiy and Brandenburg, Bjorn B. and
+	Anderson, James H.},
+  title = {A Flexible Real-Time Locking Protocol for Multiprocessors},
+  booktitle = {RTCSA},
+  year = {2007},
+  pages = {47--56},
+}
+
+	
+@CONFERENCE{brandenburg2008implementation,
+  author = {Brandenburg, B.B. and Anderson, J.H.},
+  title = {An Implementation of the {PCP, SRP, D-PCP, M-PCP}, and {FMLP} Real-Time
+	Synchronization Protocols in {LITMUS-{RT}} },
+  booktitle = {RTCSA},
+  year = {2008},
+  pages = {185--194},
+  }
+
+@INPROCEEDINGS{key-3,
+  author = {Brandenburg, Bjorn B. and Anderson, James H.},
+  title = {Optimality Results for Multiprocessor Real-Time Locking},
+  booktitle = {RTSS},
+  year = {2010},
+    pages = {49--60},
+  }
+
+@TECHREPORT{chen1998multiprocessor,
+  author = {Chen, C.M. and Tripathi, S.K.},
+  title = {Multiprocessor priority ceiling based protocols},
+  year = {1998},
+  institution = {UM Computer Science Department},
+  number = {CS-TR-3252}
+}
+
+@ARTICLE{chen1990dynamic,
+  author = {Chen, M.I. and Lin, K.J.},
+  title = {Dynamic priority ceilings: A concurrency control protocol for real-time
+	systems},
+  journal = {Real-Time Systems},
+  year = {1990},
+  volume = {2},
+  pages = {325--346},
+  number = {4},
+  issn = {0922-6443}
+}
+
+@INPROCEEDINGS{key-5,
+  author = {Devi, UmaMaheswari C. and Leontyev, Hennadiy and Anderson, James
+	H.},
+  title = {Efficient Synchronization under Global {EDF} Scheduling on Multiprocessors},
+  booktitle = {ECRTS},
+  year = {2006},
+  pages = {75--84},
+  }
+
+@CONFERENCE{easwaran2009resource,
+  author = {Easwaran, A. and Andersson, B.},
+  title = {Resource sharing in global fixed-priority preemptive multiprocessor
+	scheduling},
+  booktitle = {RTSS},
+  year = {2009},
+  pages = {377--386},
+  issn = {1052-8725}
+}
+
+@PHDTHESIS{key-1,
+  author = {Sherif F. Fahmy},
+  title = {Collaborative Scheduling and Synchronization of Distributable Real-Time
+	Threads},
+  school = {Virginia Tech},
+  year = {2010},
+}
+@CONFERENCE{gai2003comparison,
+  author = {Gai, P. and Di Natale, M. and others},
+  title = {A comparison of {MPCP} and {MSRP} when sharing resources in the {Janus}
+	multiple-processor on a chip platform},
+  booktitle = {RTAS},
+  year = {2003},
+  pages = {189--198},
+  }
+
+@ARTICLE{Goossens:2003:PSP:876600.876615,
+  author = {Goossens, Jo\"{e}l and Funk, Shelby and Baruah, Sanjoy},
+  title = {Priority-Driven Scheduling of Periodic Task Systems on Multiprocessors},
+  journal = {Real-Time Syst.},
+  year = {2003},
+  volume = {25},
+  pages = {187--205},
+  month = {September},
+  issue = {2-3},
+  }
+
+@ARTICLE{holman2006locking,
+  author = {Holman, P. and Anderson, J.H.},
+  title = {Locking under Pfair scheduling},
+  journal = {TOCS},
+  year = {2006},
+  volume = {24},
+  pages = {140--174},
+  number = {2},
+  issn = {0734-2071}
+}
+
+@CONFERENCE{lakshmanan2009coordinated,
+  author = {Lakshmanan, K. and de Niz, D. and Rajkumar, R.},
+  title = {Coordinated task scheduling, allocation and synchronization on multiprocessors},
+  booktitle = {RTSS},
+  year = {2009},
+  pages = {469--478},
+  issn = {1052-8725}
+}
+
+@ARTICLE{lopez2004utilization,
+  author = {Lopez, JM and Diaz, JL and Garcia, DF},
+  title = {Utilization bounds for {EDF} scheduling on real-time multiprocessor systems},
+  journal = {Real-Time Systems},
+  year = {2004},
+  volume = {28},
+  pages = {39--68},
+  number = {1},
+  issn = {0922-6443}
+}
+
+
+@CONFERENCE{rajkumar2002real,
+  author = {Rajkumar, R.},
+  title = {Real-time synchronization protocols for shared memory multiprocessors},
+  booktitle = {ICDCS},
+  year = {2002},
+  pages = {116--123},
+  isbn = {081862048X}
+}
+
+@BOOK{Rajkumar:1991:SRS:532621,
+  title = {Synchronization in Real-Time Systems: A Priority Inheritance Approach},
+  publisher = {Kluwer Academic Publishers},
+  year = {1991},
+  author = {Rajkumar, Ragunathan},
+  address = {Norwell, MA, USA},
+  isbn = {0792392116}
+}
+
+@ARTICLE{sha1990priority,
+  author = {Sha, L. and Rajkumar, R. and Lehoczky, J.P.},
+  title = {Priority inheritance protocols: An approach to real-time synchronization},
+  journal = {IEEE Transactions on computers},
+  year = {1990},
+  pages = {1175--1185},
+  issn = {0018-9340}
+}
+@inproceedings{brandenburg2008comparison,
+  author = {Brandenburg, B. and Anderson, J.},
+  title = {A Comparison of the {M-PCP, D-PCP}, and {FMLP} on {LITMUS--{RT}} },
+  booktitle = {OPODIS},
+  year = {2008},
+  pages = {105--124}
+}
+@CONFERENCE{manson2006preemptible,
+  author = {Manson, J. and Baker, J. and others},
+  title = {Preemptible atomic regions for real-time {Java}},
+  booktitle = {RTSS},
+  year = {2006},
+  pages = {10--71},
+  isbn = {0769524907},
+  issn = {1052-8725}
+}
+
+@Incollection{anderson1997lock,
+  author = {Anderson, J.H. and Ramamurthy, S. and Moir, M. and Jeffay, K.},
+  title = {Lock-free transactions for real-time systems},
+  booktitle = {Real-Time Databases: Issues and Applications},
+  year = {1997},
+  publisher = {Kluwer},
+  pages = {215--234},
+  }
+@Incollection{anderson1997implementing,
+  author = {Anderson, J. H. and Jain, R. and Ramamurthy, S.},
+  title = {Implementing Hard Real-Time Transactions on Multiprocessors},
+  booktitle = {Real-Time Database and Information Systems: Research Advances},
+  year = {1997},
+  publisher = {Kluwer},
+  pages = {247--260},
+  issn = {0893-3405}
+}
+@CONFERENCE{fahmy2009bounding,
+  author = {Fahmy, S.F. and Ravindran, B. and Jensen, E. D.},
+  title = {On bounding response times under software transactional memory in
+	distributed multiprocessor real-time systems},
+  booktitle = {DATE},
+  year = {2009},
+  pages = {688--693},
+  issn = {1530-1591}
+}
+@CONFERENCE{fahmy2009response,
+  author = {Fahmy, S.F. and Ravindran, B. and Jensen, ED},
+  title = {Response time analysis of software transactional memory-based distributed
+	real-time systems},
+  booktitle = {ACM SAC},
+  year = {2009},
+  pages = {334--338}
+}
+@CONFERENCE{sarni2009real,
+  author = {Sarni, T. and Queudet, A. and Valduriez, P.},
+  title = {Real-Time Support for Software Transactional Memory},
+  booktitle = {RTCSA},
+  year = {2009},
+  pages = {477--485},
+  issn = {1533-2306}
+}
+
+@CONFERENCE{schoeberl2010rttm,
+  author = {Schoeberl, M. and Brandner, F. and Vitek, J.},
+  title = {{RTTM}: Real-time transactional memory},
+  booktitle = {ACM SAC},
+  year = {2010},
+  pages = {326--333}
+}
+
+@article{shavit2011data,
+  title={{Data structures in the multicore age}},
+  author={Shavit, N.},
+  journal={Communications of the ACM},
+  volume={54},
+  number={3},
+  pages={76--84},
+  issn={0001-0782},
+  year={2011},
+  publisher={ACM}
+}
+@article{holman2006supporting,
+  title={{Supporting lock-free synchronization in Pfair-scheduled real-time systems}},
+  author={Holman, P. and Anderson, J.H.},
+  journal={Journal of Parallel and Distributed Computing},
+  volume={66},
+  number={1},
+  pages={47--67},
+  issn={0743-7315},
+  year={2006},
+  publisher={Elsevier}
+}
+@InProceedings{anderson96framework,
+	author = "J. Anderson and S. Ramamurthy",
+	title = "A framework for implementing objects and scheduling tasks in lock-free real-time systems",
+	booktitle = "RTSS",
+	pages = "92--105",
+	year = "1996"
+}
+@InProceedings{anderson95realtime,
+	author = "J. Anderson and S. Ramamurthy and K. Jeffay",
+	title = "Real-Time Computing with Lock-Free Shared Objects",
+	booktitle = "RTSS",
+	pages = "28--37",
+	year = "1995"
+}
+
+@phdthesis{austenmc:tcc:dissertation:2009,
+  author        = {McDonald, Austen},
+  title         = {{Architectures for Transactional Memory}},
+  school        = {Stanford University},
+  month         = {June},
+  year          = {2009}
+}
+@article{srinivasan2002deadline,
+  title={{Deadline-based scheduling of periodic task systems on multiprocessors}},
+  author={Srinivasan, A. and Baruah, S.},
+  journal={Information Processing Letters},
+  volume={84},
+  number={2},
+  pages={93--98},
+  issn={0020-0190},
+  year={2002},
+  publisher={Elsevier}
+}
+@PhDThesis{holman-thesis04,
+	author = "Philip L. Holman",
+	title = "On the implementation of pfair-scheduled multiprocessor systems",
+	year = "2004",
+	school = "University of North Carolina, Chapel Hill"
+}
+
+@inproceedings{Harris:2005:CMT:1065944.1065952,
+ author = {Harris, Tim and Marlow, Simon and others},
+ title = {Composable memory transactions},
+ booktitle = {PPoPP},
+  year = {2005},
+  pages = {48--60},
+ } 
+@inproceedings{Saha:2006:MHP:1122971.1123001,
+ author = {Saha, Bratin and Adl-Tabatabai, Ali-Reza and others},
+ title = {{McRT-STM}: a high performance software transactional memory system for a multi-core runtime},
+ booktitle = {PPoPP},
+  year = {2006},
+  pages = {187--197},
+ numpages = {11},
+ } 
+ @inproceedings{Herlihy:2006:AMP:1146381.1146382,
+ author = {Herlihy, Maurice},
+ title = {The art of multiprocessor programming},
+ booktitle = {PODC},
+ year = {2006},
+ isbn = {1-59593-384-0},
+ pages = {1--2},
+ } 
+@InProceedings{bc+08,
+	author = "Bjorn B. Brandenburg and  others",
+	title = "Real-Time Synchronization on Multiprocessors: To Block or Not to Block, to Suspend or Spin?",
+	booktitle = "RTAS",
+	year = "2008",
+	pages = "342--353"
+}
+@BOOK{buttazzo2005hard,
+  title = {Hard real-time computing systems: predictable scheduling algorithms
+	and applications},
+  publisher = {Springer-Verlag New York Inc},
+  year = {2005},
+  author = {Buttazzo, G.C.},
+  isbn = {0387231374}
+}
+@article{ham04,
+author = {Hammond, Lance and Wong, Vicky and others},
+title = {Transactional Memory Coherence and Consistency},
+journal = {SIGARCH Comput. Archit. News},
+volume = {32},
+number = {2},
+year = {2004},
+issn = {0163-5964},
+pages = {102},
+ }
+
+  @inproceedings{sha95,
+ author = {Shavit, Nir and Touitou, Dan},
+ title = {Software transactional memory},
+ booktitle = {PODC},
+ year = {1995},
+ isbn = {0-89791-710-3},
+ pages = {204--213},
+}
+
+@inproceedings{dam06,
+ author = {Damron, Peter and Fedorova, Alexandra and others},
+ title = {Hybrid transactional memory},
+ booktitle = {ASPLOS},
+ year = {2006},
+ isbn = {1-59593-451-0},
+ pages = {336--346},
+ }
+
+@Article{ MultiProcLockFree,
+	author = "Philip Holman and James H. Anderson",
+	title = "Supporting lock-free synchronization in {Pfair}-scheduled real-time systems",
+	journal = "J. Parallel Distrib. Comput.",
+	volume = "66",
+	number = "1",
+	year = "2006",
+	issn = "0743-7315",
+	pages = "47--67"
+}
+@inproceedings{Guerraoui:2005:TTT:1073814.1073863,
+ author = {Guerraoui, Rachid and Herlihy, Maurice and Pochon, Bastian},
+ title = {Toward a theory of transactional contention managers},
+ booktitle = {PODC},
+  year = {2005},
+ pages = {258--264},
+} 

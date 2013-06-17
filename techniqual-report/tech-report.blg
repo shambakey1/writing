@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: tech-report.aux
+The style file: plain.bst
+Database file #1: /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib.bib
+You're missing a field name---line 2068 of file /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib.bib
+ :     
+ :     %address  = "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You've used 39 entries,
+            2118 wiz_defined-function locations,
+            722 strings with 10755 characters,
+and the built_in function-call counts, 16032 in all, are:
+= -- 1619
+> -- 631
+< -- 26
++ -- 251
+- -- 207
+* -- 1012
+:= -- 2401
+add.period$ -- 121
+call.type$ -- 39
+change.case$ -- 214
+chr.to.int$ -- 0
+cite$ -- 39
+duplicate$ -- 725
+empty$ -- 1325
+format.name$ -- 207
+if$ -- 3592
+int.to.chr$ -- 0
+int.to.str$ -- 39
+missing$ -- 36
+newline$ -- 198
+num.names$ -- 80
+pop$ -- 266
+preamble$ -- 1
+purify$ -- 178
+quote$ -- 0
+skip$ -- 601
+stack$ -- 0
+substring$ -- 1117
+swap$ -- 287
+text.length$ -- 26
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 154
+warning$ -- 0
+while$ -- 156
+width$ -- 41
+write$ -- 443
+(There was 1 error message)

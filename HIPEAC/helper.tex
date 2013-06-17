@@ -1,0 +1,89 @@
+\begin{clm}\label{clm:fblt_lcm_rma}
+
+Schedulability of FBLT is equal or better to G-RMA/LCM's when maximum
+abort number of each preemptive transaction $s_{i}^{k}$ is less or equal to sum of maximum $m-1$ transactional lengths in all tasks subtracted from sum of total number
+each higher priority transaction $s_{j}^{h}$ can directly conflict with $s_{i}^{k}$ times maximum $\alpha$ with which $s_{j}^{h}$ can conflict with maximum length transaction sharing objects with $s_{i}^{k}$ and $s_{j}^{h}$.
+
+\end{clm}
+
+\begin{proof}
+
+By substituing $RC_{A}(T_{i})$ and $RC_{B}(T_{i})$ in (\ref{eq:utilization comparison})
+with (\ref{eq:fblt_rc}) and (6.9) in \cite{shambake_phd_proposal}
+respectively. 
+
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_i^klen(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)+RC_{re}(T_{i})}{T_{i}}\label{eq:fblt_lcm_rma_comparison_1}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}^{*}\in\gamma_{i}^{ex}}\sum_{\forall\theta\in\theta_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}(\theta)}}len\left(\bar{s_{j}^{h}(\theta)}+\bar{\alpha_{max}^{jh}}s_{max}^{j}(\theta)\right)}{T_{i}}\nonumber \\
++ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}}\left(1-\alpha_{max}^{ik}\right)len(s_{max}^{i})+RC_{re}(T_{i})}{T_{i}}\nonumber 
+\end{eqnarray}
+where $\tau_{j}^{*}=\left\{ \tau_{j}:\left(\tau_{j}\ne\tau_{i}\right)\wedge\left(p_{j}>p_{i}\right)\right\} $.
+Let $\theta_{i}^{ex}=\theta_{i}+\theta_{i}^{*}$ where $\theta_{i}^{*}$
+is the set of objects not accessed directly by $\tau_{i}$ but can
+enforce transactions in $\tau_{i}$ to retry due to transitive retry.
+Let $\gamma_{i}^{ex}=\gamma_{i}+\gamma_{i}^{*}$ where $\gamma_{i}^{*}$
+is the set of tasks that access objects in $\theta_{i}^{*}$. $\bar{s_{j}^{h}}(\theta)$
+can access multiple objects, so $s_{max}^{j}(\theta)$ is the maximum
+length transaction conflicting with $\bar{s_{j}^{h}}(\theta)$. $\bar{s_{j}^{h}}(\theta)$ is included only once for all $\theta \in \Theta_j^h$. Each $\theta \in \theta_i^{ex}$ has its own $s_{max}^j(\theta)$. But $s_i^h$ can access multiple objects denoted as $\Theta_j^h$. So, $s_{max}^j(\theta)$ is replaced by $s_{max}^j(\Theta_j^h)$ where $s_{max}^j(\Theta_j^h)=max\{s_{max}^j(\theta),\forall \theta \in \Theta_j^h\}$. $s_{max}^j(\Theta_j^h)$ is included once for each $\theta \in \theta_i$. Each $\tau_i^x$ has the same interference pattern from higher priority jobs, $\tau_j^h$, under FBLT and G-RMA/LCM. Hence, $RC_{re}(T_i)$ for $\tau_i^x$ is the same under FBLT and G-RMA/LCM. Consequently,
+(\ref{eq:fblt_lcm_rma_comparison_1}) will be 
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_i^klen(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)}{T_{i}}\label{eq:fblt_lcm_rma_comparison_2}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}^{*}\in\gamma_{i}^{ex}}\sum_
+{\forall s_j^h(\Theta_j^h),\,\Theta_j^h\in\theta_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)len\left(\bar{s_{j}^{h}}(\Theta_j^h)+\bar{\alpha_{max}^{jh}}s_{max}^{j}(\Theta_j^h)\right)}{T_{i}}\nonumber \\
++ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}}\left(1-\alpha_{max}^{ik}\right)len(s_{max}^{i})}{T_{i}}\nonumber 
+\end{eqnarray}
+
+Although different $s_{i}^{k}$ can have common conflicting transactions
+$\bar{s_{j}^{h}}$, but no more than one $s_{i}^{k}$ can be preceded
+by the same $\bar{s_{j}^{h}}$ in the $m\_$set. This happens because
+transactions in the $m\_$set are non-preemptive. Original priority
+of transactions preceding $s_{i}^{k}$ in the $m\_$set can be of
+lower or higher priority than original priority of $s_{i}^{k}$. Under
+G-RMA, $p_{j}>p_{i}$ means that $T_{j}\le T_{i}$, then $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \ge1$.
+For each $s_{i}^{k}\in s_{i}$, there are a set of zero or more $\bar{s_{j}^{h}}(\Theta_j^h)\in\tau_{j}^{*}$
+that are conflicting with $s_{i}^{k}$. Assuming this set of conflicting
+transactions with $s_{i}^{k}$ is denoted as $\eta_{i}^{k}=\left\{ \bar{s_{j}^{h}}(\Theta_j^h)\in\tau_{j}^{*}:\left(\Theta_j^h\in\theta_{i}^{ex}\right)\wedge\left(\bar{s_{j}^{h}}(\Theta_j^h)\not\in\eta_{i}^{l},\, l\ne k\right)\right\} $.
+The last condition $\bar{s_{j}^{h}}(\Theta_j^h)\not\in\eta_{i}^{l},\, l\ne k$
+in definition of $\eta_{i}^{k}$ ensures that common transactions
+$\bar{s_{j}^{h}}$ that can conflict with more than one transaction
+$s_{i}^{k}\in\tau_{i}$ are split among different $\eta_{i}^{k},\, k=1,..,|s_{i}|$.
+This condition is necessary because in G-RMA/LCM, no two or more transactions
+of $\tau_{i}^{x}$ can be aborted by the same transaction of $\tau_{j}^{h}$
+where $p_{j}^{h}>p_{i}^{x}$. By substitution of $\eta_{i}^{k}$ in
+(\ref{eq:fblt_lcm_rma_comparison_2}), we get 
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_i^klen(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)}{T_{i}}\label{eq:fblt_lcm_rma_comparison_4}\\
+\le & \sum_{\forall\tau_{i}}\frac{\left(\sum_{\forall k=1}^{|s_{i}|}\sum_{\bar{s_{j}^{h}}(\Theta_j^h)\in\eta_{i}^{k}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)len\left(\bar{s_{j}^{h}}(\Theta_j^h)+\bar{\alpha_{max}^{jh}}s_{max}^{j}(\Theta_j^h)\right)\right)}{T_{i}}\nonumber \\
++ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}}\left(1-\alpha_{max}^{ik}\right)len(s_{max}^{i})}{T_{i}}\nonumber 
+\end{eqnarray}
+
+$\bar{s_{j}^{h}}$ belongs to higher priority jobs than $\tau_{i}$. $s_{max}^{j}$ belongs to higher priority jobs than $\tau_{i}$ or $\tau_{i}$ itself. $s_{max}^{j}$ has a lower priority than $\tau_j$. Transactions in $m\_$set can belong to jobs
+with original priority higher or lower than $\tau_{i}$. So, (\ref{eq:fblt_lcm_rma_comparison_4})
+holds if for each $s_{i}^{k}\in\tau_{i}$ 
+\begin{eqnarray}
+\delta_i^klen(s_{i}^{k}) & \le & \left(\sum_{\bar{s_{j}^{h}}(\Theta_j^h)\in\eta_{i}^{k}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)len\left(\bar{s_{j}^{h}}(\Theta_j^h)+\bar{\alpha_{max}^{jh}}s_{max}^{j}(\Theta_j^h)\right)\right)\right)\nonumber\\
+ & + & \left(1-\alpha_{max}^{ik}\right)len(s_{max}^{i})-\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})
+ \nonumber
+\end{eqnarray}
+Then
+\begin{eqnarray}
+\delta_i^k & \le & \left(\sum_{\bar{s_{j}^{h}}(\Theta_j^h)\in\eta_{i}^{k}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)len\left(\frac{\bar{s_{j}^{h}}(\Theta_j^h)+\bar{\alpha_{max}^{jh}}s_{max}^{j}(\Theta_j^h)}{s_{i}^{k}}\right)\right)\right)\nonumber \\
+ & + & \left(1-\alpha_{max}^{ik}\right)len\left(\frac{s_{max}^{i}}{s_{i}^{k}}\right)-\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len\left(\frac{s_{iz}^{k}}{s_{i}^{k}}\right)\label{eq:fblt_lcm_rma_comparison_5}
+\end{eqnarray}
+
+Let $\epsilon=\left\{s_{u_{max}}:(1\le u \le n)\wedge \left(s_{u1_{max}} \ge s_{u2_{max}},\,u1 < u2 \right)\right\}$, where $n$ is number of tasks, and $s_{u_{max}}$ is maximum transactional length in any job of $\tau_u$. Thus, $\epsilon$ is the set of maximum transactional lengths of all task in non-increasing order. Each $s_{u_{max}} \in \epsilon$ belongs to a distinct task. Thus, $\sum_{s_{iz}^k \in \chi_i^k}len\left(\frac{s_{iz}^{k}}{s_{i}^{k}}\right)\le \sum_{u=1,\,s_{u_{max}}\in \epsilon}^{min(n,m)-1} s_{u_{max}}$. $\sum_{u=1,\,s_{u_{max}}\in \epsilon}^{min(n,m)-1} s_{u_{max}}$ is the sum of at most maximum $m-1$ transactional lengths of all tasks. $|\chi_i^k|\le m-1$ and $len(s_{max}^{j}(\Theta_j^h)) \ge len(s_{i}^{k})$. So, (\ref{eq:fblt_lcm_rma_comparison_5})
+holds if 
+\begin{equation}
+\delta_i^k\le\left(\sum_{\bar{s_{j}^{h}}(\Theta_j^h)\in\eta_{i}^{k}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\bar{\alpha_{max}^{jh}}\right)-\sum_{u=1,\,s_{u_{max}}\in \epsilon}^{min(n,m)-1} s_{u_{max}}\label{eq:fblt_lcm_rma_comparison_6}
+\end{equation}
+
+To bound effect of transitive retry, only objects that belong to $\theta_i$ (not whole $\theta_i^{ex}$) will be considered. So, G-RMA/LCM acts as if there were no transitive retry. Thus, $\eta_i^k$ is modified to $\bar{\eta_i^k}=\left\{ \bar{s_{j}^{h}}(\Theta)\in\tau_{j}^{*}:\left(\Theta \in \Theta_j^h \cap \theta_{i}\right)\wedge\left(\bar{s_{j}^{h}}(\Theta)\not\in\eta_{i}^{l},\, l\ne k\right)\right\}$. As $\bar{\eta_i^k} \subseteq \eta_i^k$, then (\ref{eq:fblt_lcm_rma_comparison_6}) still holds if $\eta_i^k$ is replaced with $\bar{\eta_i^k}$.  Consequently, (\ref{eq:fblt_lcm_rma_comparison_6}) holds if 
+
+\begin{equation}
+\delta_i^k\le\left(\sum_{\bar{s_{j}^{h}}(\Theta)\in \bar{\eta_{i}^{k}}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\bar{\alpha_{max}^{jh}}\right)-\sum_{u=1,\,s_{u_{max}}\in \epsilon}^{min(n,m)-1} s_{u_{max}}\label{eq:fblt_lcm_rma_comparison_7}
+\end{equation}
+
+$\left(\sum_{\bar{s_{j}^{h}}(\Theta) \in \bar{\eta_{i}^{k}}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\bar{\alpha_{max}^{jh}}\right)$ is the sum of total number each transaction $s_j^h$ can directly conflict with $s_i^k$ multiplied by maximum $\alpha$ with which $s_j^h$ can conflict with maximum length transaction sharing objects with $s_i^k$ and $s_j^h$. Claim follows.
+\end{comment}
+
+\end{proof}

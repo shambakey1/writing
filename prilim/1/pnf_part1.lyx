@@ -1,0 +1,6165 @@
+#LyX file created by tex2lyx 2.0.0
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref 0
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+We consider software transactional memory (STM) concurrency control for multicore real-time software, and present a novel contention manager (CM) for resolving transactional conflicts, called Priority contention manager with Negative values and First access (PNF). We upper bound transactional retries and response times under PNF, when used with G-EDF and G-RMA schedulers. We identify the conditions under which PNF outperforms previous real-time STM CMs and lock-free synchronization. Our work reveals that G-EDF/PNF and G-RMA/PNF have shorter or comparable retry costs and response times than other synchronization techniques.
+\end_layout
+
+\begin_layout Section
+
+ECM and RCM: Overview and Limitations
+\begin_inset CommandInset label
+LatexCommand label
+name "probelm description"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+ECM and RCM
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ use dynamic and fixed priorities, respectively, to resolve transactional conflicts. ECM is used with the G-EDF scheduler, and allows the transaction whose job has the earliest absolute deadline to commit first
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "6045438"
+
+\end_inset
+
+. RCM is used with the G-RMA scheduler, and allows the transaction whose job has the shortest relative deadline to commit first.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: I wonder whether it would be useful for Systor reviewers to know about the retry upper bounds of ECM and RCM. You can simply state those theorems here: "Retry costs under ECM is bounded in~
+\backslash
+cite{stmconcurrencycontrol:emsoft11} as follows:"
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: Now state the theorem with a citation: "Theorem 1 (from [])..."
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: (no need to provide the proof). Also, your notations also carry over and have been defined in this paper.
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: Now repeat for RCM's bound. 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+As mentioned before, 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ assumes that each transaction accesses only one object. This assumption simplifies the retry cost (Claims 2 and 3 in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+) and response time analysis (Sections 4 and 5 in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+). Besides, it enables a one-to-one comparison with retry-loop lock-free synchronization in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+. With multiple objects per transaction, 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ will introduce transitive retry, which we illustrate with an example.
+\end_layout
+
+\begin_layout Standard
+
+
+\series bold
+Example 1.
+\series default
+ Consider three atomic sections 
+\begin_inset Formula $s_{1}^{x}$
+\end_inset
+
+, 
+\begin_inset Formula $s_{2}^{y}$
+\end_inset
+
+, and 
+\begin_inset Formula $s_{3}^{z}$
+\end_inset
+
+ belonging to jobs 
+\begin_inset Formula $\tau_{1}^{x}$
+\end_inset
+
+,
+\begin_inset Formula $\tau_{2}^{y}$
+\end_inset
+
+, and 
+\begin_inset Formula $\tau_{3}^{z}$
+\end_inset
+
+, with priorities 
+\begin_inset Formula $p_{3}^{z}>p_{2}^{y}>p_{1}^{x}$
+\end_inset
+
+, respectively. Assume that 
+\begin_inset Formula $s_{1}^{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{2}^{y}$
+\end_inset
+
+ share objects, 
+\begin_inset Formula $s_{2}^{y}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{3}^{z}$
+\end_inset
+
+ share objects. 
+\begin_inset Formula $s_{1}^{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{3}^{z}$
+\end_inset
+
+ do not share objects. 
+\begin_inset Formula $s_{3}^{z}$
+\end_inset
+
+ can cause 
+\begin_inset Formula $s_{2}^{y}$
+\end_inset
+
+ to retry, which in turn will cause 
+\begin_inset Formula $s_{1}^{x}$
+\end_inset
+
+ to retry. This means that 
+\begin_inset Formula $s_{1}^{x}$
+\end_inset
+
+ may retry transitively because of 
+\begin_inset Formula $s_{3}^{z}$
+\end_inset
+
+, which will increase the retry cost of 
+\begin_inset Formula $s_{1}^{x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+Assume another atomic section 
+\begin_inset Formula $s_4^f$
+\end_inset
+
+ is introduced. Priority of 
+\begin_inset Formula $s_4^f$
+\end_inset
+
+ is higher than priority of 
+\begin_inset Formula $s_3^z$
+\end_inset
+
+. 
+\begin_inset Formula $s_4^f$
+\end_inset
+
+ shares objects only with 
+\begin_inset Formula $s_3^z$
+\end_inset
+
+. Thus, 
+\begin_inset Formula $s_4^f$
+\end_inset
+
+ can make 
+\begin_inset Formula $s_3^z$
+\end_inset
+
+ to retry, which in turn will make 
+\begin_inset Formula $s_2^y$
+\end_inset
+
+ to retry, and finally, 
+\begin_inset Formula $s_1^x$
+\end_inset
+
+ to retry. Thus, transitive retry will move from 
+\begin_inset Formula $s_{4}^{f}$
+\end_inset
+
+ to 
+\begin_inset Formula $s_{1}^{x}$
+\end_inset
+
+, increasing the retry cost of 
+\begin_inset Formula $s_{1}^{x}$
+\end_inset
+
+. The situation gets worse as more tasks of higher priorities are added, where each task shares objects with its immediate lower priority task. 
+\begin_inset Formula $\tau_{3}^{z}$
+\end_inset
+
+ may have atomic sections that share objects with 
+\begin_inset Formula $\tau_{1}^{x}$
+\end_inset
+
+, but this will not prevent the effect of transitive retry due to 
+\begin_inset Formula $s_{1}^{x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{mydef}
+\end_layout
+
+\end_inset
+
+ 
+\series bold
+Transitive Retry:
+\series default
+ A transaction 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ suffers from transitive retry when it conflicts with a higher priority transaction 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+, which in turn conflicts with a higher priority transaction 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+, but 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ does not conflict with 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+. Still, when 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ retries due to 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+, 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ also retries due to 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+. Thus, the effect of the higher priority transaction 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ is transitively moved to the lower priority transaction 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+, even when they do not conflict on common objects. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{mydef}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "ecm-rcm-transitive-retry"
+
+\end_inset
+
+ ECM and RCM suffer from transitive retry for multi-object transactions. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ ECM and RCM depend on priorities to resolve conflicts between transactions. Thus, lower priority transaction must always be aborted for a conflicting higher priority transaction. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Therefore, the analysis in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ must extend the set of objects that can cause an atomic section of a lower priority job to retry. This can be done by initializing the set of conflicting objects, 
+\begin_inset Formula $\gamma_i$
+\end_inset
+
+, to all objects accessed by all transactions of 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+. We then cycle through all transactions belonging to all other higher priority tasks. Each transaction 
+\begin_inset Formula $s_j^l$
+\end_inset
+
+ that accesses at least one of the objects in 
+\begin_inset Formula $\gamma_i$
+\end_inset
+
+ adds all other objects accessed by 
+\begin_inset Formula $s_j^l$
+\end_inset
+
+ to 
+\begin_inset Formula $\gamma_i$
+\end_inset
+
+. The loop over all higher priority tasks is repeated, each time with the new 
+\begin_inset Formula $\gamma_i$
+\end_inset
+
+, until there are no more transactions accessing any object in 
+\begin_inset Formula $\gamma_i$
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+However, note that, this solution may over-extend the set of conflicting objects, and may even contain all objects accessed by all tasks.
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+In addition to the 
+\emph on
+transitive retry
+\emph default
+ problem, retrying higher priority transactions can prevent lower priority tasks from running. This happens when all processors are busy with higher priority jobs. When a transaction retries, the processor time is wasted. Thus, it would be better to give the processor to some other task.
+\end_layout
+
+\begin_layout Standard
+
+Essentially, what we present is a new contention manager that avoids the effect of transitive retry. We call it, Priority contention manager with Negative values and First access (or P-N-F). P-N-F also tries to enhance processor utilization. This is done by allocating processors to jobs with non-retrying transactions. P-N-F is described in detail in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+
+The P-N-F Contention Manager
+\begin_inset CommandInset label
+LatexCommand label
+name "P-N-F"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+
+\size footnotesize
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+LinesNumbered
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+KwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\shape italic
+Executing Transaction:
+\shape default
+ is one that cannot be aborted by any other transaction, nor preempted by a higher priority task
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\shape italic
+
+\begin_inset Formula $m$
+\end_inset
+
+-set:
+\shape default
+ 
+\begin_inset Formula $m$
+\end_inset
+
+-length set that contains only non-conflicting executing transactions
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\shape italic
+
+\begin_inset Formula $n$
+\end_inset
+
+-set:
+\shape default
+ 
+\begin_inset Formula $n$
+\end_inset
+
+-length set that contains retrying transactions for 
+\begin_inset Formula $n$
+\end_inset
+
+ tasks in non-increasing order of priority
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\shape italic
+n(z):
+\shape default
+ transaction at index 
+\begin_inset Formula $z$
+\end_inset
+
+ of the 
+\begin_inset Formula $n$
+\end_inset
+
+-set
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+: a newly released transaction
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $s_j^l$
+\end_inset
+
+: one of the executing transactions
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+KwResult
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+atomic sections that will commit
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+eIf
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ does not conflict with any executing transaction
+\begin_inset CommandInset label
+LatexCommand label
+name "s_i^k true"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ Assign 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ as an executing transaction
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ Add 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ to the 
+\begin_inset Formula $m$
+\end_inset
+
+-set
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ Select 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ to commit 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ Add 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ to the 
+\begin_inset Formula $n$
+\end_inset
+
+-set according to its priority
+\begin_inset CommandInset label
+LatexCommand label
+name "move to n"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ Assign temporary priority -1 to the job that owns 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "priority to -1"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ Select transaction(s) conflicting with 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ for commit
+\begin_inset CommandInset label
+LatexCommand label
+name "s_i^k commit"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+If
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $s_j^l$
+\end_inset
+
+ commits
+\begin_inset CommandInset label
+LatexCommand label
+name "s_j^l commits"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+For
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+z=1 to size of n-set
+\begin_inset CommandInset label
+LatexCommand label
+name "traverse n-set"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+If
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+n(z) does not conflict with any executing transaction
+\begin_inset CommandInset label
+LatexCommand label
+name "n(z) no conflict"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+If
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+processor available
+\begin_inset CommandInset label
+LatexCommand label
+name "processor available"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ Restore priority of task owning n(z)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ Assign n(z) as executing transaction
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ Add n(z) to m-set
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ Select n(z) for commit
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ move to the next n(z)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+\size footnotesize
+
+P-N-F Algorithm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size footnotesize
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "P-N-F-algorithm"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F-algorithm"
+
+\end_inset
+
+ describes P-N-F. It manages two sets. The first is the 
+\begin_inset Formula $m$
+\end_inset
+
+-set, which contains at most 
+\begin_inset Formula $m$
+\end_inset
+
+ non-conflicting transactions, where 
+\begin_inset Formula $m$
+\end_inset
+
+ is the number of processors, as there cannot be more than 
+\begin_inset Formula $m$
+\end_inset
+
+ executing transactions (or generally, 
+\begin_inset Formula $m$
+\end_inset
+
+ executing jobs) at the same time. When a transaction is entered in the 
+\begin_inset Formula $m$
+\end_inset
+
+-set, it executes non-preemptively and no other transaction can abort it. A transaction in the 
+\begin_inset Formula $m$
+\end_inset
+
+-set is called an 
+\emph on
+executing transaction
+\emph default
+. This means that, when a transaction is executing before the arrival of higher priority conflicting transactions, then the one that started executing first will be committed (Step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "s_i^k commit"
+
+\end_inset
+
+) (hence the word 
+\begin_inset Quotes eld
+\end_inset
+
+First
+\begin_inset Quotes erd
+\end_inset
+
+ in the algorithm's name).
+\end_layout
+
+\begin_layout Standard
+
+The second set is the 
+\begin_inset Formula $n$
+\end_inset
+
+-set, which holds the transactions that are retrying because of a conflict with one or more of the executing transactions (Step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "move to n"
+
+\end_inset
+
+), where 
+\begin_inset Formula $n$
+\end_inset
+
+ stands for the number of tasks in the system. It also holds transactions that cannot currently execute, because processors are busy, either due to processing 
+\emph on
+executing transactions
+\emph default
+ and/or higher priority jobs. Any transaction in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set is assigned a temporal priority of -1 (Step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "priority to -1"
+
+\end_inset
+
+) (hence the word 
+\begin_inset Quotes eld
+\end_inset
+
+Negative
+\begin_inset Quotes erd
+\end_inset
+
+ in the algorithm's name). A negative priority is considered smaller than any normal priority, and a transaction continues to hold this negative priority until it is moved to the 
+\begin_inset Formula $m$
+\end_inset
+
+-set, where it is restored its normal priority.
+\end_layout
+
+\begin_layout Standard
+
+A job holding a transaction in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set can be preempted by any other job with normal priority, even if that normal priority job does not have transactions conflicting with the preempted job. Hence, this set is of length 
+\begin_inset Formula $n$
+\end_inset
+
+, as there can be at most 
+\begin_inset Formula $n$
+\end_inset
+
+ jobs in the system at the same time. Transactions in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set whose jobs have been preempted are called 
+\emph on
+preempted transactions
+\emph default
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%BR: From here on, there is no need to italicize  
+\backslash
+emph{preempted transactions} and 
+\backslash
+emph{executing transactions}. (First time is okay.) Remove all such emphasis from here. 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+The 
+\begin_inset Formula $n$
+\end_inset
+
+-set list keeps track of 
+\emph on
+preempted transactions
+\emph default
+, because as it will be shown, 
+\emph on
+preempted transactions
+\emph default
+ are examined when any of the 
+\emph on
+executing transaction
+\emph default
+ commits. Then, one or more transactions are selected from the 
+\begin_inset Formula $m$
+\end_inset
+
+-set to be 
+\emph on
+executing transactions
+\emph default
+. If a 
+\emph on
+preempted transaction
+\emph default
+ is selected as an 
+\emph on
+executing transaction
+\emph default
+, then the task that owns the 
+\emph on
+preempted transaction
+\emph default
+ regains its priority. Thus, an aborted transaction can preempt the job which previously preempted it when the transaction was in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set.
+\end_layout
+
+\begin_layout Standard
+
+When a new transaction is released, and it does not conflict with any of the 
+\emph on
+executing transactions
+\emph default
+ (Step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "s_i^k true"
+
+\end_inset
+
+), then it will allocate a slot in the 
+\begin_inset Formula $m$
+\end_inset
+
+-set and becomes an 
+\emph on
+executing transaction
+\emph default
+ itself. When this transaction is released (which means that its containing task is already allocated to a processor), it will be able to access a processor immediately. This new transaction may have a conflict with any of the transactions in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set. However, since transactions in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set have priorities of -1, they cannot prevent this new transaction from executing if it does not conflict with any of the 
+\emph on
+executing transactions
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+
+When one of the 
+\emph on
+executing transactions
+\emph default
+ commits (Step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "s_j^l commits"
+
+\end_inset
+
+), it is time to select one of the 
+\begin_inset Formula $n$
+\end_inset
+
+-set transactions to commit. The 
+\begin_inset Formula $n$
+\end_inset
+
+-set is traversed from the highest priority transaction to the lowest priority (where priority here refers to the original priority of the transactions, and not -1) (Step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "traverse n-set"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+If an examined transaction in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set, 
+\begin_inset Formula $s_{h}^{b}$
+\end_inset
+
+, does not conflict with any 
+\emph on
+executing transaction
+\emph default
+ (Step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "n(z) no conflict"
+
+\end_inset
+
+), and there is an available processor for it (Step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "processor available"
+
+\end_inset
+
+) (where 
+\begin_inset Quotes eld
+\end_inset
+
+available
+\begin_inset Quotes erd
+\end_inset
+
+ means either an idle processor, or one that is executing a job of lower priority than 
+\begin_inset Formula $s_{h}^{b}$
+\end_inset
+
+), then 
+\begin_inset Formula $s_{h}^{b}$
+\end_inset
+
+ is moved from the 
+\begin_inset Formula $n$
+\end_inset
+
+-set to the 
+\begin_inset Formula $m$
+\end_inset
+
+-set, as an 
+\emph on
+executing transaction
+\emph default
+ and restored its original priority.
+\end_layout
+
+\begin_layout Standard
+
+If 
+\begin_inset Formula $s_{h}^{b}$
+\end_inset
+
+ is added to the 
+\begin_inset Formula $m$
+\end_inset
+
+-set, the new 
+\begin_inset Formula $m$
+\end_inset
+
+-set is used to compare with other transactions in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set with lower priority than 
+\begin_inset Formula $s_{h}^{b}$
+\end_inset
+
+. Hence, if one of the transactions in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set, 
+\begin_inset Formula $s_{d}^{g}$
+\end_inset
+
+, is of lower priority than 
+\begin_inset Formula $s_{h}^{b}$
+\end_inset
+
+ and conflicts with 
+\begin_inset Formula $s_{h}^{b}$
+\end_inset
+
+, it will remain in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set.
+\end_layout
+
+\begin_layout Standard
+
+The choice of the new transaction from the 
+\begin_inset Formula $n$
+\end_inset
+
+-set depends on the original priority of transactions (hence the word 
+\begin_inset Quotes eld
+\end_inset
+
+PCM
+\begin_inset Quotes erd
+\end_inset
+
+ in the name of the algorithm). Thus, the algorithm avoids interrupting an already executing transaction to reduce its retry cost. In the meanwhile, it tries to avoid delaying the highest priority transaction in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set when it is time to select a new one to commit, even if the highest priority transaction arrives after other lower priority transactions in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: How about a subsection here called "Illustrative Example", where you show how P-N-F works for an example task set? Use a small task set with 3-4 tasks, etc. That will significantly help the reviewers. 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+Properties
+\begin_inset CommandInset label
+LatexCommand label
+name "pnf properties sec"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "P-N-F-transitive-retry"
+
+\end_inset
+
+ Transactions scheduled under P-N-F do not suffer from transitive retry. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ The proof is by contradiction. Assume that a transaction 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ is retrying because of a higher priority transaction 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+, which in turn is retrying because of another higher priority transaction 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+. Assume that 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ do not conflict, yet, 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ is transitively retrying because of 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+. Note that 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ cannot exit together in the 
+\begin_inset Formula $m$
+\end_inset
+
+-set as they have common objects. But they both can exist in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set, as they both can conflict with other 
+\emph on
+executing transactions
+\emph default
+. We have three cases:
+\end_layout
+
+\begin_layout Standard
+
+
+\shape italic
+Case 1:
+\shape default
+ Assume that 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ is an 
+\emph on
+executing transaction
+\emph default
+. This means that 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ is in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set. When 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ arrives, by the definition of P-N-F, it will be compared with the 
+\begin_inset Formula $m$
+\end_inset
+
+-set, which contains 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+. Now, it will be found that 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ does not conflict with 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+. Also, by the definition of P-N-F, 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ is not compared with transactions in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set. When it newly arrives, priorities of 
+\begin_inset Formula $n$
+\end_inset
+
+-set transactions are lower than any normal priority. Therefore, as 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ does not conflict with any other executing transaction, it joins the 
+\begin_inset Formula $m$
+\end_inset
+
+-set and becomes an 
+\emph on
+executing transaction
+\emph default
+. This contradicts the assumption that 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ is transitively retrying because of 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+
+\shape italic
+Case 2:
+\shape default
+ Assume that 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ is in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set, while 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ is an executing transaction. When 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ arrives, it will conflict with 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ and joins the 
+\begin_inset Formula $n$
+\end_inset
+
+-set. Now, 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ retries due to 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+, and not 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+. When 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ commits, the 
+\begin_inset Formula $n$
+\end_inset
+
+-set is traversed from the highest priority transaction to the lowest one: if 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ does not conflict with any other executing transaction and there are available processors, 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ becomes an executing transaction. When 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ is compared with the 
+\begin_inset Formula $m$
+\end_inset
+
+-set, it is found that it does not conflict with 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+. Additionally, if it also does not conflict with any other executing transaction and there are available processors, then 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ becomes an executing transaction. This means that 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ are executing concurrently, which violates the assumption of transitive retry.
+\end_layout
+
+\begin_layout Standard
+
+
+\shape italic
+Case 3:
+\shape default
+ Assume that 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ both exist in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set. When 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ arrives, it is compared with the 
+\begin_inset Formula $m$
+\end_inset
+
+-set. If 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ does not conflict with any executing transactions and there are available processors, then 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ becomes an executing transaction. Even though 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ has common objects with 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+, 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ is not compared with 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+, which is in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set. If 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ joins the 
+\begin_inset Formula $n$
+\end_inset
+
+-set, it is because, it conflicts with one or more executing transactions, not because of 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+, which violates the transitive retry assumption. If the three transactions 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+, 
+\begin_inset Formula $s_j^l$
+\end_inset
+
+ and 
+\begin_inset Formula $s_z^h$
+\end_inset
+
+ exist in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set, and 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ is chosen as a new executing transaction, then 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ remains in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set. This leads to Case 1. If 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ is chosen, because 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ conflicts with another executing transaction and 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ does not, then this leads to Case 2. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "first-access"
+
+\end_inset
+
+ The 
+\emph on
+first access
+\emph default
+ property of P-N-F is important to avoid increased retry cost of transactions suffering from transitive retry. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: This is badly worded! A claim should be quantitative or at least stating that something won't happen (e.g., "X protocol prevents deadlocks"). Saying that something is important as a claim doesn't make any sense. Reword (e.g., "The 
+\backslash
+emph{first access} property of P-N-F bounds the transitive retry cost of transactions.")
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ The proof is by contradiction. Assume that the retry cost of transactions in the absence of the first access property is the same as when first access exists. Now, assume that P-N-F is devoid of the first access property. This means that executing transactions can be aborted.
+\end_layout
+
+\begin_layout Standard
+
+Assume three transactions 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+, 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+, and 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+, where 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+'s priority is higher than 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+'s priority, and 
+\begin_inset Formula $s_j^l$
+\end_inset
+
+'s priority is higher than 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+'s priority. Assume that 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ conflicts with both 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+. 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ do not conflict together. If 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ arrives while 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ is an 
+\emph on
+executing transaction
+\emph default
+ and 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ exists in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set, then 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ becomes an 
+\emph on
+executing transaction
+\emph default
+ itself while 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ is retrying. If 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ did not commit at least when 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+ commits, then 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ becomes an executing transaction. Due to the lack of the first access property, 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ will cause 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ to retry. So, the retry cost for 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ will be 
+\begin_inset Formula $len(s_{z}^{h}+s_{j}^{l})$
+\end_inset
+
+. This retry cost for 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ is the same if it had been transitively retrying because of 
+\begin_inset Formula $s_{z}^{h}$
+\end_inset
+
+. This contradicts the first assumption. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%
+\backslash
+begin{clm}
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%P-N-F handles multi-object transactions better than ECM and RCM.
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%
+\backslash
+end{clm}
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%
+\backslash
+begin{proof}
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: I suggest not stating this as a claim, as it is quite straightforward from the previous ones. 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+From Claims 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F-transitive-retry"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "first-access"
+
+\end_inset
+
+, P-N-F does not increase the retry cost of multi-object transactions. However, this is not the case for ECM and RCM as shown by Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ecm-rcm-transitive-retry"
+
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%Claim follows.
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%
+\backslash
+end{proof}
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "higher retry does not affect response"
+
+\end_inset
+
+ Under P-N-F, any job 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ is not affected by the retry cost in any other job 
+\begin_inset Formula $\tau_{j}^{l}$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ As explained in Section
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F-algorithm"
+
+\end_inset
+
+, P-N-F assigns a temporary priority of -1 to any job that includes a retrying transaction. So, retrying transactions have lower priority than any other normal priority. When 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ is released and 
+\begin_inset Formula $\tau_j^l$
+\end_inset
+
+ has a retrying transaction, 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ will have a higher priority than 
+\begin_inset Formula $\tau_j^l$
+\end_inset
+
+. Thus, 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ can run on any available processor while 
+\begin_inset Formula $\tau_j^l$
+\end_inset
+
+ is retrying one of its transactions. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+Retry Cost under P-N-F
+\begin_inset CommandInset label
+LatexCommand label
+name "rc pnf sec"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+We now derive an upper bound on the retry cost of any job 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ under P-N-F during an interval 
+\begin_inset Formula $L\le T_i$
+\end_inset
+
+. Since all tasks are sporadic (i.e., each task 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+ has a minimum period 
+\begin_inset Formula $T_i$
+\end_inset
+
+), 
+\begin_inset Formula $T_i$
+\end_inset
+
+ is the maximum study interval for each task 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "two transactions retry cost P-N-F"
+
+\end_inset
+
+ Assume two conflicting transactions 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+. Under P-N-F, the maximum retry cost suffered by 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ due to 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ is 
+\begin_inset Formula $len(s_{j}^{l})$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ By P-N-F's definition, 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ cannot have started before 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+. Otherwise, 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ would have been an 
+\emph on
+executing transaction
+\emph default
+ and 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ cannot abort it. So, the earliest release time for 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ would have been just after 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ starts execution. Then, 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ would have to wait until 
+\begin_inset Formula $s_{j}^{l}$
+\end_inset
+
+ commits. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+ The retry cost for any job 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ due to conflicts between its transactions and transactions of other jobs under P-N-F during an interval 
+\begin_inset Formula $L\le T_{i}$
+\end_inset
+
+ is upper bounded by: 
+\begin_inset Formula \begin{equation}
+RC(L)\le\sum_{\tau_{j}\in\gamma_{i}}\left(\sum_{\theta\in\theta_{i}}\left(\left(\left\lceil \frac{L}{T_{j}}\right\rceil +1\right)\sum_{\bar{\forall s_{j}^{l}(\theta)}}len\left(\bar{s_{j}^{l}(\theta)}\right)\right)\right)\label{rc-P-N-F}
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $\bar{s_{j}^{l}(\theta)}$
+\end_inset
+
+ is the same as 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ except for the following difference: if 
+\begin_inset Formula $\bar{s_{j}^{l}}$
+\end_inset
+
+ accesses multiple objects in 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+, then 
+\begin_inset Formula $\bar{s_{j}^{l}}$
+\end_inset
+
+ is included only once in the last summation (i.e., 
+\begin_inset Formula $\bar{s_j^l}$
+\end_inset
+
+ is not repeated for each shared object with 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+). 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Consider a transaction 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ belonging to job 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+. Under P-N-F, higher priority transactions than 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ can become 
+\emph on
+executing transactions
+\emph default
+ before 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+. A lower priority transaction 
+\begin_inset Formula $s_v^f$
+\end_inset
+
+ can also become an 
+\emph on
+executing transaction
+\emph default
+ before 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+. This happens when 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ conflicts with any 
+\emph on
+executing transaction
+\emph default
+ while 
+\begin_inset Formula $s_v^f$
+\end_inset
+
+ does not. The worst case scenario for 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ occurs when 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ has to wait in the 
+\begin_inset Formula $n$
+\end_inset
+
+-set, while all other conflicting transactions with 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ are chosen to be 
+\emph on
+executing transactions
+\emph default
+. Let 
+\begin_inset Formula $\bar{s_j^l}$
+\end_inset
+
+ accesses multiple objects in 
+\begin_inset Formula $\theta_i$
+\end_inset
+
+. If 
+\begin_inset Formula $\bar{s_j^l}$
+\end_inset
+
+ is an 
+\emph on
+executing transaction
+\emph default
+, then 
+\begin_inset Formula $\bar{s_j^l}$
+\end_inset
+
+ will not repeat itself for each object it accesses. Besides, 
+\begin_inset Formula $\bar{s_j^l}$
+\end_inset
+
+ will finish before 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ starts execution. Consequently, 
+\begin_inset Formula $\bar{s_j^l}$
+\end_inset
+
+ will not conflict with 
+\begin_inset Formula $s_i^{k+1}$
+\end_inset
+
+. This means that an 
+\emph on
+executing transaction
+\emph default
+ can force no more than one transaction in a given job to retry. This is why 
+\begin_inset Formula $\bar{s_j^l}$
+\end_inset
+
+ is included only once in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+) for all shared objects with 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+The maximum number of jobs of any task 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ that can interfere with 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ during interval 
+\begin_inset Formula $L$
+\end_inset
+
+ is 
+\begin_inset Formula $\left\lceil \frac{L}{T_{j}}\right\rceil +1$
+\end_inset
+
+. From the previous observations and Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "two transactions retry cost P-N-F"
+
+\end_inset
+
+, Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "delay"
+
+\end_inset
+
+ The delay time for a 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: "delay time" is somewhat awkward. How about "blocking time"? Use it consistently throughout the paper. 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+job 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ due to lower priority jobs, during an interval 
+\begin_inset Formula $L\le T_{i}$
+\end_inset
+
+, is upper bounded by: 
+\begin_inset Formula \begin{equation}
+D(\tau_{i}^{x})\le\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{L}{T_{j}}\right\rceil +1\right)\sum_{\forall\ddot{s_{j}^{h}}}len\left(\ddot{s_{j}^{h}}\right)\right)\right\rfloor \label{P-N-F-delay}
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $D(\tau_{i}^{x})$
+\end_inset
+
+ is the delay time 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: "blocking time"? 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+suffered by 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ due to lower priority jobs. 
+\begin_inset Formula $\bar{\tau_{j}^{l}}=\{\tau_{j}^{l}:p_{j}^{l}<p_{i}^{x}\}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ddot{s_{j}^{h}}=\{s_{j}^{h}:s_{j}^{h}\, does\, not\, conflict\, with\, any\, s_{i}^{k}\}$
+\end_inset
+
+. During this delay time, 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: "blocking time"? 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+all processors are unavailable for 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Under P-N-F, 
+\emph on
+executing transactions
+\emph default
+ are non-preemptive. So, lower priority 
+\emph on
+executing transactions
+\emph default
+ can delay a higher priority job 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ if no other processors are available. Lower priority executing transactions can be conflicting or non-conflicting with any transaction in 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+. They also can exist when 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is newly released, or after that. So, we have the following cases:
+\end_layout
+
+\begin_layout Standard
+
+
+\emph on
+Lower priority conflicting transactions after 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is released:
+\emph default
+ This case is already covered by the retry cost in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+
+\emph on
+Lower priority conflicting transactions when 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is newly released:
+\emph default
+ Each lower priority conflicting transaction 
+\begin_inset Formula $s_j^h$
+\end_inset
+
+ will delay 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ for 
+\begin_inset Formula $len(s_j^h)$
+\end_inset
+
+. The effect of 
+\begin_inset Formula $s_j^h$
+\end_inset
+
+ is already covered by
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+). Besides,
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+) does not divide the retry cost by 
+\begin_inset Formula $m$
+\end_inset
+
+ as done in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F-delay"
+
+\end_inset
+
+). Thus, the worst case scenario requires inclusion of 
+\begin_inset Formula $s_j^h$
+\end_inset
+
+ in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+), and not in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F-delay"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+
+\emph on
+Lower priority non-conflicting transactions when 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is newly released:
+\emph default
+ 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is delayed if there are no available processors for it. Otherwise, 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ can run in parallel with these non-conflicting lower priority transactions. Each lower priority non-conflicting transaction 
+\begin_inset Formula $\ddot{s_j^h}$
+\end_inset
+
+ will delay 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ for 
+\begin_inset Formula $len(\ddot{s_j^h})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+
+\emph on
+Lower priority non-conflicting transactions after 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is released:
+\emph default
+ This situation can happen if 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is retrying one of its transactions 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+. So, 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is assigned a priority of -1. 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ can be preempted by any other job. When 
+\begin_inset Formula $s_i^k$
+\end_inset
+
+ is checked again to be an 
+\emph on
+executing transaction
+\emph default
+, all processors may be busy with lower priority non-conflicting transaction and/or higher priority jobs. Otherwise, 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ can run in parallel with these lower priority non-conflicting transactions. The effect of higher priority jobs is included by Claims
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "response time ecm P-N-F"
+
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%,
+\backslash
+ref{response rcm P-N-F}. 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: is there a need to cite the section? 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+Each lower priority non-conflicting transaction 
+\begin_inset Formula $\ddot{s_j^h}$
+\end_inset
+
+ will delay 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ for 
+\begin_inset Formula $len(\ddot{s_j^h})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+From the previous cases, lower priority non-conflicting transactions act as if they were higher priority jobs interfering with 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+. So, the delay time can be calculated by the interference workload given by Theorem 1 in 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-2"
+
+\end_inset
+
+. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "response time ecm P-N-F"
+
+\end_inset
+
+ Assume that P-N-F is used with the G-EDF scheduler. The response time of a job 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+, during an interval 
+\begin_inset Formula $L\le T_{i}$
+\end_inset
+
+, is upper bounded by: 
+\begin_inset Formula \begin{equation}
+R_{i}^{up}=c_{i}+RC(L)+D_{edf}(\tau_{i}^{x})+\left\lfloor \frac{1}{m}\sum_{\forall j\ne i}W_{ij}(R_{i}^{up})\right\rfloor 
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $RC(L)$
+\end_inset
+
+ is calculated by (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+). 
+\begin_inset Formula $D_{edf}(\tau_{i}^{x})$
+\end_inset
+
+ is the same as 
+\begin_inset Formula $D(\tau_{i}^{x})$
+\end_inset
+
+ defined in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F-delay"
+
+\end_inset
+
+). However, for G-EDF systems. 
+\begin_inset Formula $D_{edf}(\tau_i^x)$
+\end_inset
+
+ is calculated as: 
+\begin_inset Formula \begin{equation}
+D_{edf}(\tau_{i}^{x})\le\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\begin{cases}
+0 & ,L\le T_{i}-T_{j}\\
+\sum_{\forall\ddot{s_{j}^{h}}}len\left(\ddot{s_{j}^{h}}\right) & ,L>T_{i}-T_{j}
+\end{cases}\right\rfloor \label{d-edf}
+\end{equation}
+\end_inset
+
+ and 
+\begin_inset Formula $W_{ij}(R_{i}^{up})$
+\end_inset
+
+ is calculated by (3) in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%%%%%%%%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%%%%%%%%%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Response time for 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ is calculated by (3) in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ with the addition of delay time 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: blocking time?
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+defined by Claim 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "delay"
+
+\end_inset
+
+. G-EDF uses absolute deadlines for scheduling. This defines which jobs of the same task can be of lower priority than 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+, and which will not. Any instance 
+\begin_inset Formula $\tau_j^h$
+\end_inset
+
+, released between 
+\begin_inset Formula $r_i^x - T_j$
+\end_inset
+
+ and 
+\begin_inset Formula $d_i^x - T_j$
+\end_inset
+
+, will be of higher priority than 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+. Before 
+\begin_inset Formula $r_i^x-T_j$
+\end_inset
+
+, 
+\begin_inset Formula $\tau_j^h$
+\end_inset
+
+ would have finished before 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is released. After 
+\begin_inset Formula $d_i^x-T_j$
+\end_inset
+
+, 
+\begin_inset Formula $d_j^h$
+\end_inset
+
+ would be greater than 
+\begin_inset Formula $d_i^x$
+\end_inset
+
+. Thus, 
+\begin_inset Formula $\tau_j^h$
+\end_inset
+
+ will be of lower priority than 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+. So, during 
+\begin_inset Formula $T_i$
+\end_inset
+
+, there can be only one instance 
+\begin_inset Formula $\tau_j^h$
+\end_inset
+
+ of 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ with lower priority than 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+. 
+\begin_inset Formula $\tau_j^h$
+\end_inset
+
+ is released between 
+\begin_inset Formula $d_i^x-T_j$
+\end_inset
+
+ and 
+\begin_inset Formula $d_i^x$
+\end_inset
+
+. Consequently, during 
+\begin_inset Formula $L<T_i-T_j$
+\end_inset
+
+, no existing instance of 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ is of lower priority than 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+. Hence, 0 is used in the first case of
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "d-edf"
+
+\end_inset
+
+). But if 
+\begin_inset Formula $L>T_i-T_j$
+\end_inset
+
+, there can be only one instance 
+\begin_inset Formula $\tau_j^h$
+\end_inset
+
+ of 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ with lower priority than 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+. Hence, 
+\begin_inset Formula $\left\lceil\frac{L}{T_i}\right\rceil+1$
+\end_inset
+
+ in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F-delay"
+
+\end_inset
+
+) is replaced with 1 in the second case in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "d-edf"
+
+\end_inset
+
+). Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "response rcm P-N-F"
+
+\end_inset
+
+ Assume that P-N-F is used with the G-RMA scheduler. Response time of job 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ during an interval 
+\begin_inset Formula $L\le T_{i}$
+\end_inset
+
+ is upper bounded by: 
+\begin_inset Formula \begin{equation}
+R_{i}^{up}=c_{i}+RC(L)+D(\tau_{i}^{x})+\left\lfloor \frac{1}{m}\sum_{\forall j\ne i,p_j>p_i}W_{ij}(R_{i}^{up})\right\rfloor 
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $RC(L)$
+\end_inset
+
+ is calculated by (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+), 
+\begin_inset Formula $D(\tau_{i}^{x})$
+\end_inset
+
+ is calculated by (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F-delay"
+
+\end_inset
+
+), and 
+\begin_inset Formula $W_{ij}(R_{i}^{up})$
+\end_inset
+
+ is calculated by (2) in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ The proof is the same as for Claim 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "response time ecm P-N-F"
+
+\end_inset
+
+, except that G-RMA assigns static priorities for tasks. Hence, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F-delay"
+
+\end_inset
+
+) can be used directly for calculating 
+\begin_inset Formula $D(\tau_{i}^{x})$
+\end_inset
+
+ without modifications. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+Comparison between P-N-F and Other Synchronization Techniques
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:pnf-sched-comparison"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+We now (formally) compare the schedulability of G-EDF (G-RMA) with P-N-F against other synchronization techniques including the ECM and RCM STM contention managers
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ and retry-loop lock-free synchronization
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11,key-5"
+
+\end_inset
+
+. Such a comparison will reveal when P-N-F outperforms others. Toward this, we compare the total utilization under G-EDF (G-RMA)/P-N-F, with that under the other synchronization methods. Inflated execution time of each method, which is the sum of the worst-case execution time of the task and its retry cost, is used in the utilization calculation of each task.
+\end_layout
+
+\begin_layout Standard
+
+By Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "delay"
+
+\end_inset
+
+, no processor is available for 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ during the delay time. As each processor is busy with some other job than 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+, 
+\begin_inset Formula $D(\tau_i^x)$
+\end_inset
+
+ is not added to the inflated execution time of 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+. Hence, 
+\begin_inset Formula $D(\tau_i^x)$
+\end_inset
+
+ is not added to the utilization calculation of 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+Let 
+\begin_inset Formula $RC_{A}(T_{i})$
+\end_inset
+
+ denote the retry cost of any 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ using the synchronization method 
+\begin_inset Formula $A$
+\end_inset
+
+ during 
+\begin_inset Formula $T_i$
+\end_inset
+
+. Let 
+\begin_inset Formula $RC_{B}(T_{i})$
+\end_inset
+
+ denote the retry cost of any 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ using synchronization method 
+\begin_inset Formula $B$
+\end_inset
+
+ during 
+\begin_inset Formula $T_i$
+\end_inset
+
+. Then, schedulability of 
+\begin_inset Formula $A$
+\end_inset
+
+ is comparable to 
+\begin_inset Formula $B$
+\end_inset
+
+ if: 
+\begin_inset Formula \begin{eqnarray}
+\sum_{\forall\tau_{i}}\frac{c_{i}+RC_{A}(T_{i})}{T_{i}} & \le & \sum_{\forall\tau_{i}}\frac{c_{i}+RC_{B}(T_{i})}{T_{i}}\nonumber \\
+\therefore\sum_{\forall\tau_{i}}\frac{RC_{A}(T_{i})}{T_{i}} & \le & \sum_{\forall\tau_{i}}\frac{RC_{B}(T_{i})}{T_{i}}\label{utilization comparison}
+\end{eqnarray}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+As described in Section
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "probelm description"
+
+\end_inset
+
+, the set of common objects needs to be extended under ECM and RCM. Toward this, we introduce a few additional notions. Let 
+\begin_inset Formula $\theta_i^{ex}$
+\end_inset
+
+ be an extended set of distinct objects that contains all objects in 
+\begin_inset Formula $\theta_i$
+\end_inset
+
+. Thus, 
+\begin_inset Formula $\theta_i^{ex}$
+\end_inset
+
+ contains all objects accessed by 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+. 
+\begin_inset Formula $\theta_i^{ex}$
+\end_inset
+
+ can also contain other objects that can cause any transaction in 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+ to retry as explained in Section
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "probelm description"
+
+\end_inset
+
+. Thus, 
+\begin_inset Formula $\theta_i^{ex}$
+\end_inset
+
+ may contain objects not accessed by 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+. 
+\begin_inset Formula $\gamma_i^{ex}$
+\end_inset
+
+ is an extended set of tasks that access any object in 
+\begin_inset Formula $\theta_i^{ex}$
+\end_inset
+
+. Therefore, 
+\begin_inset Formula $\gamma_i^{ex}$
+\end_inset
+
+ contains at least all tasks in 
+\begin_inset Formula $\gamma_i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+There are two sources of retry cost for any 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ under ECM, RCM, and lock-free. First is due to conflict between 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+'s transactions and transactions of other jobs. This is denoted as 
+\begin_inset Formula $RC$
+\end_inset
+
+. Second is due to the preemption of any transaction in 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ due to the release of a higher priority job 
+\begin_inset Formula $\tau_j^h$
+\end_inset
+
+. This is denoted as 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+. Retry due to the release of higher priority jobs do not occur under P-N-F, because 
+\emph on
+executing transactions
+\emph default
+ are non-preemptive. It is up to the implementation of the contention manager to safely avoid 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+. Here, we assume that ECM and RCM do not avoid 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+. Thus, we introduce 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+ for ECM and RCM first before comparing P-N-F with other synchronization techniques.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "ecm rlease conflict"
+
+\end_inset
+
+ Under ECM, the total retry cost suffered by all transactions in any 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ during an interval 
+\begin_inset Formula $L\le T_i$
+\end_inset
+
+ is upper bounded by: 
+\begin_inset Formula \begin{equation}
+RC_{to}(L)=RC(L)+RC_{re}(L)
+\label{total rc ecm eq}
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $RC(L)$
+\end_inset
+
+ is the retry cost resulting from conflict between transactions in 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ and transactions of other jobs. 
+\begin_inset Formula $RC(L)$
+\end_inset
+
+ is calculated by (15) in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ with replacing 
+\begin_inset Formula $\gamma_i$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta_i$
+\end_inset
+
+ with 
+\begin_inset Formula $\gamma_i^{ex}$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta_i^{ex}$
+\end_inset
+
+, respectively. 
+\begin_inset Formula $RC_{re}(L)$
+\end_inset
+
+ is the retry cost resulting from the release of higher priority jobs, which preempt 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+. 
+\begin_inset Formula $RC_{re}(L)$
+\end_inset
+
+ is given by: 
+\begin_inset Formula \begin{equation}
+RC_{re}(L)=\sum_{\forall \tau_{j}\in\zeta_{i}}\begin{cases}
+\left\lceil \frac{L}{T_{j}}\right\rceil s_{i_{max}} & ,L\le T_{i}-T_{j}\\\\
+\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor s_{i_{max}} & ,L>T_{i}-T_{j}
+\end{cases}\label{eq6}
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $\zeta_i=\{\tau_j:\left(\tau_j \ne \tau_i\right)\wedge \left(D_j < D_i \right)\}$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Two conditions must be satisfied for any 
+\begin_inset Formula $\tau_{j}^{l}$
+\end_inset
+
+ to be able to preempt 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ under G-EDF: 
+\begin_inset Formula $r_{i}^{x}<r_{j}^{l}<d_{i}^{x}$
+\end_inset
+
+, and 
+\begin_inset Formula $d_{j}^{l}\le d_{i}^{x}$
+\end_inset
+
+. Without the first condition, 
+\begin_inset Formula $\tau_{j}^{l}$
+\end_inset
+
+ would have been already released before 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+. Thus, 
+\begin_inset Formula $\tau_j^l$
+\end_inset
+
+ will not preempt 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+. Without the second condition, 
+\begin_inset Formula $\tau_{j}^{l}$
+\end_inset
+
+ will be of lower priority than 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ and will not preempt it. If 
+\begin_inset Formula $D_{j} \ge D_{i}$
+\end_inset
+
+, then there will be at most one instance 
+\begin_inset Formula $\tau_j^l$
+\end_inset
+
+ with higher priority than 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+. 
+\begin_inset Formula $\tau_j^l$
+\end_inset
+
+ must have been released at most at 
+\begin_inset Formula $r_i^x$
+\end_inset
+
+, which violates the first condition. The other instance 
+\begin_inset Formula $\tau_j^{l+1}$
+\end_inset
+
+ would have an absolute deadline greater than 
+\begin_inset Formula $d_i^x$
+\end_inset
+
+. This violates the second condition. Hence, only tasks with shorter relative deadline than 
+\begin_inset Formula $D_{i}$
+\end_inset
+
+ are going to be considered. These jobs are grouped in 
+\begin_inset Formula $\zeta_i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+The total number of released instances of 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ during any interval 
+\begin_inset Formula $L\le T_{i}$
+\end_inset
+
+ is 
+\begin_inset Formula $\left\lceil \frac{L}{T_{i}}\right\rceil +1$
+\end_inset
+
+. The 
+\begin_inset Quotes eld
+\end_inset
+
+carried-in" jobs (i.e., each job released before 
+\begin_inset Formula $r_i^x$
+\end_inset
+
+ and has an absolute deadline before 
+\begin_inset Formula $d_i^x$
+\end_inset
+
+
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-2"
+
+\end_inset
+
+) are discarded as they violate the first condition. The 
+\begin_inset Quotes eld
+\end_inset
+
+carried-out" jobs (i.e., each job released after 
+\begin_inset Formula $r_i^x$
+\end_inset
+
+ and has an absolute deadline after 
+\begin_inset Formula $d_i^x$
+\end_inset
+
+
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-2"
+
+\end_inset
+
+) are also discarded because they violate the second condition. Thus, the number of considered higher priority instances of 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ during the interval 
+\begin_inset Formula $L\le T_i-T_j$
+\end_inset
+
+ is 
+\begin_inset Formula $\left\lceil\frac{L}{T_j}\right\rceil$
+\end_inset
+
+. The number of considered higher priority instances of 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ during interval 
+\begin_inset Formula $L> T_i-T_j$
+\end_inset
+
+ is 
+\begin_inset Formula $\left\lfloor\frac{T_i}{T_j}\right\rfloor$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+The worst 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+ for 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ occurs when 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is always interfered at the end of execution of its longest atomic section, 
+\begin_inset Formula $s_{i_{max}}$
+\end_inset
+
+. 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ will have to retry for 
+\begin_inset Formula $len(s_{i_{max}})$
+\end_inset
+
+, as shown in Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig8"
+
+\end_inset
+
+. The total retry cost suffered by 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is the combination of 
+\begin_inset Formula $RC$
+\end_inset
+
+ and 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+. Claim follows.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics 
+	filename figures/figure8.eps
+	scale 70
+
+\end_inset
+
+
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig8"
+
+\end_inset
+
+Transactional retry due to release of higher priority tasks
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "rcm rlease conflict"
+
+\end_inset
+
+ Under RCM, the total retry cost suffered by all transactions in any 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ during an interval 
+\begin_inset Formula $L\le T_i$
+\end_inset
+
+ is upper bounded by: 
+\begin_inset Formula \begin{equation}
+RC_{to}(L)=RC(L)+RC_{re}(L)
+\label{total rc rcm eq}
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $RC(L)$
+\end_inset
+
+ and 
+\begin_inset Formula $RC_{re}(L)$
+\end_inset
+
+ are defined in Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ecm rlease conflict"
+
+\end_inset
+
+. 
+\begin_inset Formula $RC_{re}(L)$
+\end_inset
+
+ is calculated by: 
+\begin_inset Formula \begin{equation}
+RC_{re}(L)=\sum_{\forall \tau_j \in \zeta_i^*}\left(\left\lceil\frac{L}{T_j}\right\rceil s_{i_{max}}\right)\label{eq21}
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $\zeta_i^*=\{\tau_j:p_j > p_i \}$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ The proof is the same as that for Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ecm rlease conflict"
+
+\end_inset
+
+, except that G-RMA uses static priority. Thus, the carried-out jobs will be considered in the interference with 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+. The carried-in jobs are still not considered because they are released before 
+\begin_inset Formula $r_i^x$
+\end_inset
+
+. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lock free release"
+
+\end_inset
+
+ Consider retry-loop lock-free synchronization. Let 
+\begin_inset Formula $r_{i_{max}}$
+\end_inset
+
+ be the maximum execution cost of a single iteration of any retry loop of 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+. 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+ under G-EDF with retry-loop lock-free synchronization is calculated by
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq6"
+
+\end_inset
+
+), where 
+\begin_inset Formula $s_{i_{max}}$
+\end_inset
+
+ is replaced by 
+\begin_inset Formula $r_{i_{max}}$
+\end_inset
+
+. 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+ under G-RMA with retry-loop lock-free synchronization is calculated by
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq21"
+
+\end_inset
+
+), where 
+\begin_inset Formula $s_{i_{max}}$
+\end_inset
+
+ is replaced by 
+\begin_inset Formula $r_{i_{max}}$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ The interference pattern of higher priority jobs to lower priority jobs is the same in ECM and G-EDF with retry-loop lock-free synchronization. The pattern is also the same in RCM and G-RMA with retry-loop lock-free. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+P-N-F versus ECM
+\begin_inset CommandInset label
+LatexCommand label
+name "pnf vs ecm sec"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "P-N-F ecf comaprison clm"
+
+\end_inset
+
+ The schedulability of P-N-F with G-EDF tends to be 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: "tends to be" is weak. Why don't you say "is"?
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+ better or equal to the schedulability of ECM when conflicting atomic sections have equal lengths. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Substitue 
+\begin_inset Formula $RC_{A}(T_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $RC_{B}(T_{i})$
+\end_inset
+
+ in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+) with (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "total rc ecm eq"
+
+\end_inset
+
+), respectively. Let 
+\begin_inset Formula $\theta_{i}^{ex}=\theta_{i}+\theta_{i}^{*}$
+\end_inset
+
+, where 
+\begin_inset Formula $\theta_{i}^{*}$
+\end_inset
+
+ is the set of objects not accessed directly by 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ but can cause transactions in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ to retry due to transitive retry. Let 
+\begin_inset Formula $\gamma_{i}^{ex}=\gamma_{i}+\gamma_{i}^{*}$
+\end_inset
+
+, where 
+\begin_inset Formula $\gamma_{i}^{*}$
+\end_inset
+
+ is the set of tasks that access objects in 
+\begin_inset Formula $\theta_{i}^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+Let: 
+\begin_inset Note Comment
+status open
+
+\begin_layout Standard
+
+
+\begin_inset Formula \begin{eqnarray*}
+g(\tau_{i}) & = & \left(\sum_{\forall\tau_{j}\in\gamma_{i}^{*}}\sum_{\theta\in\theta_{i}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\\
+& + & s_{max}^{*}(\theta)\right)\right)\right) + RC_{re}(T_{i})
+\end{eqnarray*}
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula \begin{eqnarray*}
+g(\tau_{i}) & = & \Bigg(\sum_{\forall\tau_{j}\in\gamma_{i}^{*}}\sum_{\theta\in\theta_{i}^{*}}\Bigg(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall\bar{s_{j}^{k}(\theta)}}len\Big(\bar{s_{j}^{k}(\theta)}\\
+ & + & s_{max}^{*}(\theta)\Big)\Bigg)\Bigg)+RC_{re}(T_{i})
+\end{eqnarray*}
+\end_inset
+
+ where 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+ is given by
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq6"
+
+\end_inset
+
+). Let: 
+\begin_inset Formula \begin{equation*}
+\eta_{1}(\tau_{i})=\sum_{\forall\tau_{j}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)
+\end{equation*}
+\end_inset
+
+ 
+\begin_inset Formula \begin{equation*}
+\eta_{2}(\tau_{i})=\sum_{\forall\tau_{j}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(s_{max}^{j}(\theta)\right)\right)
+\end{equation*}
+\end_inset
+
+ and 
+\begin_inset Formula \begin{equation*}
+\eta_{3}(\tau_{i})=\sum_{\forall\tau_{j}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)
+\end{equation*}
+\end_inset
+
+ By substitution of 
+\begin_inset Formula $g(\tau_{i})$
+\end_inset
+
+, 
+\begin_inset Formula $\eta_1(\tau_i)$
+\end_inset
+
+, and 
+\begin_inset Formula $\eta_2(\tau_i)$
+\end_inset
+
+, and subtraction of 
+\begin_inset Formula $\sum_{\forall \tau_i} \frac{\eta_3(\tau_i)}{T_i}$
+\end_inset
+
+ from both sides of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+), we get: 
+\begin_inset Formula \begin{equation}
+\sum_{\forall \tau_i} \frac{\eta_1(\tau_i)}{T_i} \le \sum_{\forall \tau_i} \frac{\eta_2(\tau_i)+g(\tau_i)}{T_i}
+\label{P-N-F ecm comparison 2}
+\end{equation}
+\end_inset
+
+ From (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F ecm comparison 2"
+
+\end_inset
+
+), we note that by keeping every 
+\begin_inset Formula $len(\bar{s_{j}^{k}(\theta)})\le len(s_{max}^{j}(\theta))$
+\end_inset
+
+ for each 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $\tau_{j}\in\gamma_{i}$
+\end_inset
+
+, and 
+\begin_inset Formula $\theta\in\theta_{i}$
+\end_inset
+
+, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F ecm comparison 2"
+
+\end_inset
+
+) holds. Because of the dynamic priority of G-EDF, 
+\begin_inset Formula $s_{max}^{j}(\theta)$
+\end_inset
+
+ can belong to any task other than 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+. Assume four jobs 
+\begin_inset Formula $\tau_a^b$
+\end_inset
+
+, 
+\begin_inset Formula $\tau_c^d$
+\end_inset
+
+, 
+\begin_inset Formula $\tau_e^f$
+\end_inset
+
+, and 
+\begin_inset Formula $\tau_g^h$
+\end_inset
+
+ with a common object 
+\begin_inset Formula $\theta$
+\end_inset
+
+. Let 
+\begin_inset Formula $s_{max}(\theta)=s_{g_{max}}(\theta)$
+\end_inset
+
+. When 
+\begin_inset Formula $\tau_a^b$
+\end_inset
+
+ is the checked 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+ by
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F ecm comparison 2"
+
+\end_inset
+
+), any 
+\begin_inset Formula $s_c^x(\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $s_e^y(\theta)$
+\end_inset
+
+ will be less or equal to 
+\begin_inset Formula $s_{g_{max}}(\theta)$
+\end_inset
+
+. But 
+\begin_inset Formula $s_{e_{max}}(\theta)$
+\end_inset
+
+ should also be smaller or equal to either 
+\begin_inset Formula $s_{a_{max}}(\theta)$
+\end_inset
+
+ or 
+\begin_inset Formula $s_{c_{max}}(\theta)$
+\end_inset
+
+ or 
+\begin_inset Formula $s_{g_{max}}(\theta)$
+\end_inset
+
+. Thus, there must be at least two equal maximum-length atomic sections in different tasks that access 
+\begin_inset Formula $\theta$
+\end_inset
+
+. By generalizing the previous concept to every 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+, 
+\begin_inset Formula $\tau_j \in \gamma_i$
+\end_inset
+
+, and 
+\begin_inset Formula $\theta \in \theta_i$
+\end_inset
+
+, claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+P-N-F versus RCM
+\begin_inset CommandInset label
+LatexCommand label
+name "pnf vs rcm sec"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+ The schedulability of P-N-F with G-RMA tends to be 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: "tends to be" is weak. Why don't you say "is"?
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+better or equal to the schedulability of RCM when a large number of tasks are heavily conflicting together. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\theta_{i}^{ex}=\theta_{i}+\theta_{i}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{i}^{ex}=\gamma_{i}+\gamma_{i}^{*}$
+\end_inset
+
+, as defined in the proof of Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F ecf comaprison clm"
+
+\end_inset
+
+. Substitute 
+\begin_inset Formula $RC_{A}(T_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $RC_{B}(T_{i})$
+\end_inset
+
+ in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+) with (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "total rc rcm eq"
+
+\end_inset
+
+), respectively. Let 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+% 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula \begin{eqnarray*}
+g(\tau_{i}) & =RC_{re}(T_{i})+\Bigg( & \sum_{\forall\tau_{j}\in(\gamma_{i}^{*}\cap\zeta_{i}^{*})}\sum_{\forall\theta\in\theta_{i}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\times\\
+ &  & \sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}+s_{max}^{j}(\theta)\right)\Bigg)
+\end{eqnarray*}
+\end_inset
+
+ where 
+\begin_inset Formula $RC_{re}$
+\end_inset
+
+ and 
+\begin_inset Formula $\zeta_i^*$
+\end_inset
+
+ are defined by
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq21"
+
+\end_inset
+
+). Let 
+\begin_inset Formula $\gamma_{i}=\zeta_{i}^{*}\cup\bar{\zeta_{i}}$
+\end_inset
+
+, where 
+\begin_inset Formula $\bar{\zeta_{i}}=\left\{ \tau_{j}:\left(\tau_{j}\ne\tau_{i}\right)\wedge\left(p_{j}<p_{i}\right)\right\} $
+\end_inset
+
+, thus 
+\begin_inset Formula $\zeta_{i}^{*}\cap\bar{\zeta_{i}}=\phi$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+Let: 
+\begin_inset Formula \begin{equation*}
+\eta_{1}(\tau_{i})=\sum_{\forall\tau_{j}\in(\gamma_{i}\cap\zeta_{i}^{*})}\sum_{\forall\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)
+\end{equation*}
+\end_inset
+
+ 
+\begin_inset Formula \begin{equation*}
+\eta_{2}(\tau_{i})=\sum_{\forall\tau_{j}\in(\gamma_{i}\cap\bar{\zeta_{i}})}\sum_{\forall\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)
+\end{equation*}
+\end_inset
+
+ and 
+\begin_inset Formula \begin{eqnarray*}
+\eta_{3}(\tau_{i}) & = & \sum_{\forall\tau_{j}\in(\gamma_{i}\cap\zeta_{i}^{*})}\sum_{\forall\theta\in\theta_{i}}\Bigg(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\times\\
+ &  & \sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}+s_{max}^{j}(\theta)\right)\Bigg)
+\end{eqnarray*}
+\end_inset
+
+ By substitution of 
+\begin_inset Formula $g(\tau_i)$
+\end_inset
+
+, 
+\begin_inset Formula $\eta_1(\tau_i)$
+\end_inset
+
+, 
+\begin_inset Formula $\eta_2(\tau_i)$
+\end_inset
+
+, and 
+\begin_inset Formula $\eta_3(\tau_i)$
+\end_inset
+
+ in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+), we get: 
+\begin_inset Formula \begin{equation}
+\sum_{\forall\tau_{i}}\frac{\eta_{1}(\tau_{i})+\eta_{2}(\tau_{i})}{T_{i}}\le\sum_{\forall\tau_{i}}\frac{\eta_{3}(\tau_{i})+g(\tau_{i})}{T_{i}}
+\label{P-N-F rcm comparison 3}
+\end{equation}
+\end_inset
+
+ For implicit deadline tasks scheduled with 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%BR: Better to say "When tasks with deadlines equal to periods are scheduled with.." (Systor may not know what is "implicit deadline tasks") 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+G-RMA, 
+\begin_inset Formula $T_{j}>T_{i}$
+\end_inset
+
+ if 
+\begin_inset Formula $p_{j}<p_{i}$
+\end_inset
+
+. So, for each 
+\begin_inset Formula $\tau_{j}\in\bar{\zeta_{i}}$
+\end_inset
+
+, 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil =1$
+\end_inset
+
+. Then: 
+\begin_inset Formula \begin{equation}
+\eta_{2}(\tau_{i})=2\sum_{\forall\tau_{j}\in(\gamma_{i}\cap\bar{\zeta_{i}})}\sum_{\forall\theta\in\theta_{i}}\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)
+\label{P-N-F rcm comparison 5}
+\end{equation}
+\end_inset
+
+ Let: 
+\begin_inset Formula \begin{equation*}
+\eta_{4}(\tau_{i})=\sum_{\forall\tau_{j}\in(\gamma_{i}\cap\zeta_{i}^{*})}\sum_{\forall\theta\in\theta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(s_{max}^{j}(\theta)\right)
+\end{equation*}
+\end_inset
+
+ By substitution of
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F rcm comparison 5"
+
+\end_inset
+
+) and subtraction of 
+\begin_inset Formula $\sum_{\forall \tau_i} \frac{\eta_1 (\tau_i)}{T_i}$
+\end_inset
+
+ from both sides of
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F rcm comparison 3"
+
+\end_inset
+
+), we get: 
+\begin_inset Formula \begin{equation}
+2\sum_{\forall\tau_{i}}\frac{\eta_{2}(\tau_{i})}{T_{i}}\le\sum_{\forall\tau_{i}}\frac{\eta_{4}(\tau_{i})+g(\tau_{i})}{T_{i}}
+\label{P-N-F rcm comparison 4}
+\end{equation}
+\end_inset
+
+ From (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F rcm comparison 4"
+
+\end_inset
+
+), we note that when higher priority jobs increasingly conflict with lower priority jobs, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F rcm comparison 4"
+
+\end_inset
+
+) tends to hold. This occurs when the number of conflicting tasks, their job instances, and their shared objects increases. When the number of shared objects among tasks increases, 
+\begin_inset Formula $g(\tau_{i})$
+\end_inset
+
+ also increases. This allows (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F rcm comparison 4"
+
+\end_inset
+
+) to hold. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+P-N-F versus lock-free
+\begin_inset CommandInset label
+LatexCommand label
+name "pnf vs lock free sec"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Retry-loop lock-free synchronization
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5,stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ accesses only one object. Thus, the number of accessed objects per transaction in P-N-F is limited to one. This allows us to compare the schedulability of P-N-F with the retry-loop lock-free algorithm.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Formula $RC_{B}(T_{i})$
+\end_inset
+
+ in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+) is replaced with: 
+\begin_inset Formula \begin{equation}
+\sum_{\forall\tau_{j}\in\gamma_{i}}\Bigg(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}r_{max}\Bigg)+RC_{re}(T_{i})
+\label{lock-free rc}
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ is the number of retry loops of 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ that access the same object as accessed by some retry loop of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+. 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+ is the maximum execution cost of a single iteration of any retry loop of any task
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+. 
+\begin_inset Formula $RC_{re}(T_i)$
+\end_inset
+
+ is defined in Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lock free release"
+
+\end_inset
+
+. Retry-loop lock-free synchronization does not depend on priorities of tasks. Thus,
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lock-free rc"
+
+\end_inset
+
+) applies for both G-EDF and G-RMA systems.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "P-N-F lock-free comparison"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+ be the maximum execution cost of a single iteration of any retry loop of any task
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+. Let 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ be the maximum transaction length in all tasks. Assume that each transaction under P-N-F accesses only one object for once. The schedulability of P-N-F with either G-EDF or G-RMA scheduler is better or equal to the schedulability of retry-loop lock-free synchronization if 
+\begin_inset Formula $s_{max}/r_{max}\le 1$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ The assumption in Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F lock-free comparison"
+
+\end_inset
+
+ is made to enable a comparison between P-N-F and the retry-loop lock-free technique. Let 
+\begin_inset Formula $RC_{A}(T_{i})$
+\end_inset
+
+ in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+) be replaced with (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+) and 
+\begin_inset Formula $RC_{B}(T_{i})$
+\end_inset
+
+ be replaced with (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lock-free rc"
+
+\end_inset
+
+). To simplify comparison, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-P-N-F"
+
+\end_inset
+
+) is upper bounded by: 
+\begin_inset Formula \begin{equation*}
+RC(T_{i})=\sum_{\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}^* s_{max}\right)
+\end{equation*}
+\end_inset
+
+ where 
+\begin_inset Formula $\beta_{i,j}^*$
+\end_inset
+
+ is the number of times transactions in 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ accesses shared objects with 
+\begin_inset Formula $
+\tau_i$
+\end_inset
+
+. Thus, 
+\begin_inset Formula $\beta_{i,j}^* = \beta_{i,j}$
+\end_inset
+
+. Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+) will be: 
+\begin_inset Formula \begin{eqnarray}
+\sum_{\forall\tau_{i}}\frac{\sum_{\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}s_{max}\right)}{T_{i}} & \le\nonumber \\
+\sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}r_{max}+RC_{re}(\tau_i)}{T_{i}}\label{P-N-F lock-free comparison}
+\end{eqnarray}
+\end_inset
+
+ From (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F lock-free comparison"
+
+\end_inset
+
+), we note that if 
+\begin_inset Formula $s_{max}\le r_{max}$
+\end_inset
+
+, then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "P-N-F lock-free comparison"
+
+\end_inset
+
+) holds. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

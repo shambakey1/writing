@@ -1,0 +1,55 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {subsection}{\numberline {1.0.1}Preliminaries}{1}
+\contentsline {subsection}{\numberline {1.0.2}Summary of Current Research and Contributions}{2}
+\contentsline {subsection}{\numberline {1.0.3}Summary of Proposed Post Preliminary-Exam Work}{3}
+\contentsline {subsection}{\numberline {1.0.4}Proposal outline}{4}
+\contentsline {chapter}{\numberline {2}Past and Related Work}{5}
+\contentsline {subsection}{\numberline {2.0.5}Real-Time Lock-free Synchronization}{5}
+\contentsline {subsection}{\numberline {2.0.6}Transactional Memory: Overview }{5}
+\contentsline {subsection}{\numberline {2.0.7}Real-Time Database Transactions}{6}
+\contentsline {subsection}{\numberline {2.0.8}Real-Time STM}{6}
+\contentsline {chapter}{\numberline {3}ECM and RCM}{8}
+\contentsline {section}{\numberline {3.1}G-EDF/EDF CM (ECM)}{8}
+\contentsline {subsection}{\numberline {3.1.1}G-EDF Interference and workload}{8}
+\contentsline {subsection}{\numberline {3.1.2}Retry Cost of Atomic Sections}{10}
+\contentsline {subsection}{\numberline {3.1.3}Upper Bound on Response Time}{13}
+\contentsline {subsubsection}{Tighter Upper Bound}{14}
+\contentsline {section}{\numberline {3.2}G-RMA/RMA CM Response Time}{16}
+\contentsline {subsection}{\numberline {3.2.1}Maximum Task Interference}{16}
+\contentsline {subsection}{\numberline {3.2.2}Retry Cost of Atomic Sections}{17}
+\contentsline {subsection}{\numberline {3.2.3}Upper Bound on Response Time}{17}
+\contentsline {section}{\numberline {3.3}STM versus Lock-Free}{18}
+\contentsline {subsection}{\numberline {3.3.1} ECM versus Lock-Free}{18}
+\contentsline {subsection}{\numberline {3.3.2}RCM versus Lock-Free}{19}
+\contentsline {section}{\numberline {3.4}Conclusions}{22}
+\contentsline {chapter}{\numberline {4}LCM}{23}
+\contentsline {section}{\numberline {4.1}Length-based CM}{23}
+\contentsline {subsection}{\numberline {4.1.1} Design and Rationale}{23}
+\contentsline {subsection}{\numberline {4.1.2} Response Time of G-EDF/LCM}{27}
+\contentsline {subsection}{\numberline {4.1.3}Schedulability of G-EDF/LCM and ECM}{28}
+\contentsline {subsection}{\numberline {4.1.4}G-EDF/LCM versus Lock-free}{30}
+\contentsline {subsection}{\numberline {4.1.5}Response Time of G-RMA/LCM}{32}
+\contentsline {subsection}{\numberline {4.1.6}Schedulability of G-RMA/LCM and RCM}{32}
+\contentsline {subsection}{\numberline {4.1.7}G-RMA/LCM versus Lock-free}{33}
+\contentsline {section}{\numberline {4.2}Conclusions}{35}
+\contentsline {chapter}{\numberline {5}PNF}{36}
+\contentsline {section}{\numberline {5.1}ECM, RCM and LCM: Limitations}{36}
+\contentsline {section}{\numberline {5.2}The PNF Contention Manager}{38}
+\contentsline {subsection}{\numberline {5.2.1}Properties}{40}
+\contentsline {section}{\numberline {5.3}Retry Cost under PNF}{41}
+\contentsline {section}{\numberline {5.4}Comparison between PNF and Other Synchronization Techniques}{44}
+\contentsline {subsection}{\numberline {5.4.1}PNF versus ECM}{47}
+\contentsline {subsection}{\numberline {5.4.2}PNF versus RCM}{48}
+\contentsline {subsection}{\numberline {5.4.3}PNF versus G-EDF/LCM}{49}
+\contentsline {subsection}{\numberline {5.4.4}PNF versus G-RMA/LCM}{50}
+\contentsline {subsection}{\numberline {5.4.5}PNF versus lock-free}{51}
+\contentsline {section}{\numberline {5.5}Conclusions}{52}
+\contentsline {chapter}{\numberline {6}Experiments}{54}
+\contentsline {section}{\numberline {6.1}LCM, ECM and RCM}{54}
+\contentsline {subsection}{\numberline {6.1.1}Experimental Setup}{54}
+\contentsline {subsection}{\numberline {6.1.2}Results}{55}
+\contentsline {section}{\numberline {6.2}PNF}{62}
+\contentsline {chapter}{\numberline {7}Conclusions, Contributions, and Proposed Post Preliminary-Exam Work }{66}
+\contentsline {section}{\numberline {7.1}Contribution}{67}
+\contentsline {section}{\numberline {7.2}Post Preliminary-Exam Work}{68}

@@ -1,0 +1,117 @@
+\begin{thebibliography}{10}
+
+\bibitem{anderson95realtime}
+J.~Anderson, S.~Ramamurthy, and K.~Jeffay.
+\newblock Real-time computing with lock-free shared objects.
+\newblock In {\em RTSS}, pages 28--37, 1995.
+
+\bibitem{barrosmanaging}
+A.~Barros and L.~Pinho.
+\newblock Managing contention of software transactional memory in real-time
+  systems.
+\newblock In {\em IEEE RTSS, Work-In-Progress}, 2011.
+
+\bibitem{key-2}
+M.~Bertogna and M.~Cirinei.
+\newblock Response-time analysis for globally scheduled symmetric
+  multiprocessor platforms.
+\newblock In {\em RTSS}, pages 149--160, 2007.
+
+\bibitem{key-4}
+A.~Block, H.~Leontyev, B.~B. Brandenburg, and J.~H. Anderson.
+\newblock A flexible real-time locking protocol for multiprocessors.
+\newblock In {\em RTCSA}, pages 47--56, 2007.
+
+\bibitem{brandenburg2008comparison}
+B.~Brandenburg and J.~Anderson.
+\newblock A comparison of the {M-PCP, D-PCP}, and {FMLP} on {LITMUS--{RT}}.
+\newblock In {\em OPODIS}, pages 105--124, 2008.
+
+\bibitem{key-3}
+B.~B. Brandenburg and J.~H. Anderson.
+\newblock Optimality results for multiprocessor real-time locking.
+\newblock In {\em RTSS}, pages 49--60, 2010.
+
+\bibitem{bc+08}
+B.~B. Brandenburg et~al.
+\newblock Real-time synchronization on multiprocessors: To block or not to
+  block, to suspend or spin?
+\newblock In {\em RTAS}, pages 342--353, 2008.
+
+\bibitem{key-5}
+U.~C. Devi, H.~Leontyev, and J.~H. Anderson.
+\newblock Efficient synchronization under global {EDF} scheduling on
+  multiprocessors.
+\newblock In {\em ECRTS}, pages 75--84, 2006.
+
+\bibitem{fahmy2009bounding}
+S.~Fahmy, B.~Ravindran, and E.~D. Jensen.
+\newblock On bounding response times under software transactional memory in
+  distributed multiprocessor real-time systems.
+\newblock In {\em DATE}, pages 688--693, 2009.
+
+\bibitem{key-1}
+S.~F. Fahmy.
+\newblock {\em Collaborative Scheduling and Synchronization of Distributable
+  Real-Time Threads}.
+\newblock PhD thesis, Virginia Tech, 2010.
+
+\bibitem{Goossens:2003:PSP:876600.876615}
+J.~Goossens, S.~Funk, and S.~Baruah.
+\newblock Priority-driven scheduling of periodic task systems on
+  multiprocessors.
+\newblock {\em Real-Time Syst.}, 25:187--205, September 2003.
+
+\bibitem{Guerraoui:2005:TTT:1073814.1073863}
+R.~Guerraoui, M.~Herlihy, and B.~Pochon.
+\newblock Toward a theory of transactional contention managers.
+\newblock In {\em PODC}, pages 258--264, 2005.
+
+\bibitem{Harris:2005:CMT:1065944.1065952}
+T.~Harris, S.~Marlow, et~al.
+\newblock Composable memory transactions.
+\newblock In {\em PPoPP}, pages 48--60, 2005.
+
+\bibitem{Herlihy:2006:AMP:1146381.1146382}
+M.~Herlihy.
+\newblock The art of multiprocessor programming.
+\newblock In {\em PODC}, pages 1--2, 2006.
+
+\bibitem{manson2006preemptible}
+J.~Manson, J.~Baker, et~al.
+\newblock Preemptible atomic regions for real-time {Java}.
+\newblock In {\em RTSS}, pages 10--71, 2006.
+
+\bibitem{austenmc:tcc:dissertation:2009}
+A.~McDonald.
+\newblock {\em {Architectures for Transactional Memory}}.
+\newblock PhD thesis, Stanford University, June 2009.
+
+\bibitem{Saha:2006:MHP:1122971.1123001}
+B.~Saha, A.-R. Adl-Tabatabai, et~al.
+\newblock {McRT-STM}: a high performance software transactional memory system
+  for a multi-core runtime.
+\newblock In {\em PPoPP}, pages 187--197, 2006.
+
+\bibitem{sarni2009real}
+T.~Sarni, A.~Queudet, and P.~Valduriez.
+\newblock Real-time support for software transactional memory.
+\newblock In {\em RTCSA}, pages 477--485, 2009.
+
+\bibitem{schoeberl2010rttm}
+M.~Schoeberl, F.~Brandner, and J.~Vitek.
+\newblock {RTTM}: Real-time transactional memory.
+\newblock In {\em ACM SAC}, pages 326--333, 2010.
+
+\bibitem{sha95}
+N.~Shavit and D.~Touitou.
+\newblock Software transactional memory.
+\newblock In {\em PODC}, pages 204--213, 1995.
+
+\bibitem{srinivasan2002deadline}
+A.~Srinivasan and S.~Baruah.
+\newblock {Deadline-based scheduling of periodic task systems on
+  multiprocessors}.
+\newblock {\em Information Processing Letters}, 84(2):93--98, 2002.
+
+\end{thebibliography}

@@ -1,0 +1,309 @@
+% acmsmall-sample.tex, dated 24th May 2012
+% This is a sample file for ACM small trim journals
+%
+% Compilation using 'acmsmall.cls' - version 1.3, Aptara Inc.
+% (c) 2010 Association for Computing Machinery (ACM)
+%
+% Questions/Suggestions/Feedback should be addressed to => "acmtexsupport@aptaracorp.com".
+% Users can also go through the FAQs available on the journal's submission webpage.
+%
+% Steps to compile: latex, bibtex, latex latex
+%
+% For tracking purposes => this is v1.3 - May 2012
+
+\documentclass[prodmode,acmtecs]{acmsmall}
+
+% Package to generate and customize Algorithm as per ACM style
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{cite}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[ruled]{algorithm2e}
+\renewcommand{\algorithmcfname}{ALGORITHM}
+\newtheorem{clm}{Claim}
+\newtheorem{mydef}{Definition}
+\SetAlFnt{\small}
+\SetAlCapFnt{\small}
+\SetAlCapNameFnt{\small}
+\SetAlCapHSkip{0pt}
+\IncMargin{-\parindent}
+
+% Metadata Information
+\acmVolume{}
+\acmNumber{}
+\acmArticle{}
+\acmYear{}
+\acmMonth{}
+
+% Document starts
+\begin{document}
+
+% Page heads
+\markboth{M. Elshambakey et al.}{FBLT}
+
+% Title portion
+\title{FBLT: A Real-Time Transactional Memory Contention Manager with Improved Retry Costs and Schedulability}
+%%BR: Updated the title. 
+\author{Mohammed Elshambakey
+\affil{Virginia Tech University}
+Binoy Ravindran
+\affil{Virginia Tech University}}
+
+\begin{abstract}
+\bf{NEEDS TO BE WRITTEN}
+\end{abstract}
+
+\category{C.3}{Special-Purpose and Application-based Systems}{Real-time and embedded systems}
+
+\terms{Design, Experimentation, Measurement}
+
+\keywords{Software transactional memory (STM), real-time contention manager}
+
+\acmformat{Elshambakey, M., Binoy, R. 2012. FBLT.}
+
+\begin{bottomstuff}
+New Paper, Not an Extension of a Conference Paper.\\
+Author's addresses: M. Elshambakey {and} B. Ravindran, ECE Department,
+Virginia Tech University, Blacksburg, VA 24060, USA.
+\end{bottomstuff}
+
+\maketitle
+
+\section{Introduction}
+
+\label{sec:intro}
+
+Embedded systems sense physical processes and control their behavior, typically through feedback loops. Since physical processes are concurrent, computations that control them must also be concurrent, enabling them to process multiple streams of sensor input and control multiple actuators, all concurrently. Often, such computations need to concurrently read/write shared data objects. They must also process sensor input and react, while satisfying time constraints. 
+
+The de facto standard for concurrent programming is the threads abstraction, and the 
+de facto synchronization abstraction is locks. Lock-based concurrency control has significant programmability, scalability, and composability challenges~\cite{Herlihy:2006:AMP:1146381.1146382}. Transactional memory (TM) is an alternative synchronization model for shared memory objects that promises to alleviate these difficulties. With TM, code that read/write shared objects is organized as \textit{memory transactions}, which execute speculatively, while logging changes made to objects. Two transactions conflict if they access the same object and one access is a write. When that happens, a contention manager (CM)~\cite{Guerraoui:2005:TTT:1073814.1073863} resolves the conflict by aborting one and allowing the other to commit, yielding (the illusion of) atomicity. Aborted transactions are re-started, after rolling back the changes. In addition to a simple programming model, TM provides performance comparable to locking and lock-free approaches, especially for high contention and read-dominated workloads (see an example TM system's performance in~\cite{Saha:2006:MHP:1122971.1123001}), and is composable~\cite{Harris:2005:CMT:1065944.1065952}. TM has been proposed in hardware, called HTM, and in software, called STM, with the usual tradeoffs: HTM has lesser overhead, but needs transactional support in hardware; STM is available on any hardware.
+
+Given STM's programmability, scalability, and composability advantages, it is a compelling concurrency control technique also for multicore embedded real-time software. However, this requires  bounding transactional  retries, as real-time threads, which subsume transactions, must satisfy time constraints.  Retry bounds under STM are dependent on the CM policy at hand (analogous to the way thread response time bounds are OS scheduler-dependent). 
+
+Past real-time CM research (Section~\ref{sec:fblt design}) has proposed resolving transactional contention using dynamic and fixed priorities of parent threads, resulting in EDF-based CM (ECM) and RMS-based CM (RCM)~\cite{6045438,stmconcurrencycontrol:emsoft11,lcmdac2012}, which are intended to be used with global EDF (G-EDF) and global RMS (G-RMS) multicore real-time schedulers~\cite{Davis:2011:SHR:1978802.1978814}, respectively.
+In particular,~\cite{stmconcurrencycontrol:emsoft11} shows that ECM and RCM achieve higher schedulability -- i.e., greater number of task sets meeting their time constraints -- than lock-free synchronization only under some ranges for the maximum atomic section length. That range is significantly expanded with the LCM contention manager in~\cite{lcmdac2012}, increasing the coverage of STM's timeliness superiority. ECM, RCM, and LCM suffer from transitive retry and restrict to one object access per transaction. 
+%%BR: Correct?
+These limitations are overcome with the PNF contention manager~\cite{shambake_phd_proposal}. 
+%PNF can be used with global EDF (G-EDF) and global RMA (G-RMA) multicore real-time schedulers. 
+However, PNF requires a-priori knowledge of all objects accessed by each transaction. This significantly limits programmability, and is incompatible with dynamic STM implementations~\cite{Herlihy:2003:STM:872035.872048}. Additionally, PNF is a centralized CM, which increases overheads and retry costs, and has a complex implementation. 
+
+We propose the First Blocked, Last Timestamp (or FBLT) contention manager.
+%%BR: Update this sentence with the Section # of the FBLT section: "...contention manager (Section~\ref{fblt})." 
+In contrast to PNF, FBLT does not require a-priori knowledge of objects accessed by transactions. 
+Moreover, FBLT handles multiple objects per transaction better than past contention managers.
+%%BR: What do you mean by "handles"? Clarify. Also, clarify how FBLT deals with transitive retry together in the same sentence. Maybe, something like "Moreover, FBLT handles multiple objects per transaction better than past contention managers, resulting in shorter transitive retry costs."
+Additionally, FBLT is a decentralized CM and does not use locks in its implementation. Implementation of FBLT is also simpler than PNF. 
+%
+
+
+We establish FBLT's retry and response time upper bounds under G-EDF and G-RMA schedulers (Section~\ref{fblt rc}). We also identify the conditions under which FBLT outperforms 
+%%BR: "...under which FBLT's schedulability is better than.." 
+ECM (Section~\ref{sec:fblt vs ecm}), RCM (Section~\ref{sec:fblt vs rcm}), G-EDF/LCM (Section~\ref{sec:fblt vs gedf lcm}), G-RMA/LCM (Section~\ref{fblt vs grma lcm}), PNF (Section~\ref{sec:fblt vs pnf}), and lock-free synchronization (Section~\ref{sec:fblt vs lock free}).
+%%BR: Since all these are in the same section, for brevity, it may be best to say "We also identify the conditions under which FBLT's schedulability is better than ECM, RCM, G-EDF/LCM, G-RMA/LCM, PNF, and lock-free synchronization (Section~\ref{schedulabiltiy comparison})."
+%
+We implement FBLT and competitor CM techniques in the Rochester STM framework~\cite{marathe2006lowering} and conduct experimental studies (Section~\ref{exp_eval}). Our results reveal that...
+%%BR: Complete it after you have the #s. I suggest that you be competitive here, like "...reveal that FBLT reduces retry costs over PNF by as much as x\%."
+
+Thus, the paper's contribution is the FBLT contention manager with superior timeliness properties. FBLT, thus allows programmers to reap STM's significant programmability and composability benefits for a broader range of multicore embedded real-time
+software than what was previously possible.
+
+\section{Schedulability Comparison}\label{schedulabiltiy comparison}
+
+%%BR: Need to have an introduction for this section: "We now compare the schedulability of FBLT with PNF, lock-free synchronization, ...and..." (list them in the same order as you describe them in this section).
+
+\subsection{FBLT vs. PNF}
+\label{sec:fblt vs pnf}
+
+\begin{clm}\label{clm:fblt_pnf_edf}
+Let $\rho_{i}^{j}(k)$ be the difference between the sum of transactional
+lengths of all transactions in $\tau_{j}$ conflicting with $s_{i}^{k}$,
+and the maximum length transaction in $\tau_{i}$. The schedulability
+of FBLT is better or equal to PNF's if the maximum abort number of any
+preemptive transaction $s_{i}^{k}$ is not greater than the sum of the maximum
+$m-1$ transactional lengths in all tasks subtracted from the sum of all
+$\rho_{i}^{j}(k)$ of all jobs of $\tau_{j}$ interfering with $\tau_{i}$.
+%%BR: This sentence maybe difficult to interpret. I suggest formatting this sentence as an equation. "The schedulability of FBLT is better or equal to PNF's if \begin{equation}....\leq .....\end{equation} where ...."
+\end{clm}
+\begin{proof}
+By substituting $RC_{A}(T_{i})$ and $RC_{B}(T_{i})$ in (\ref{eq:utilization comparison})
+with (\ref{eq:fblt_rc}) and (6.1) in \cite{shambake_phd_proposal}, 
+respectively, we get:
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}len(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)+RC_{re}(T_{i})}{T_{i}}\label{eq:fblt_pnf_comparison_1}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\sum_{\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}}(\theta)}len\left(\bar{s_{j}^{h}}(\theta)\right)\right)}{T_{i}}\nonumber 
+\end{eqnarray}
+
+
+$\bar{s_{j}^{h}}(\theta)$ can access multiple objects. $\bar{s_{j}^{h}}(\theta)$
+is included only once for all objects accessed by it. $RC_{re}(T_{i})$
+is given by (6.8) in \cite{shambake_phd_proposal} in case of G-EDF,
+and (6.10) in \cite{shambake_phd_proposal} in case of G-RMA. Substituting
+$RC_{re}(T_{i})=\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)s_{i_{max}}$,
+covers $RC_{re}(T_{i})$ given by (6.8) and (6.10) in \cite{shambake_phd_proposal}
+and maintains the correctness of (\ref{eq:fblt_pnf_comparison_1}). 
+%%BR: This sentence doesn't sound quite right. Usually, we say "Substituting X with Y, we ensure that ...". Reword.
+If $\tau_{j}$ has no shared objects with $\tau_{i}$, then the release of
+any higher priority job $\tau_{j}^{y}$ will not abort any transaction
+in any job of $\tau_{i}$. Thus, (\ref{eq:fblt_pnf_comparison_1}) holds
+if:
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}len(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)}{T_{i}}\label{eq:fblt_pnf_comparison_1-1}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\left(\left(\sum_{\forall\bar{s_{j}^{h}}(\Theta),\,\Theta\in\theta_{i}}len\left(\bar{s_{j}^{h}}(\theta)\right)\right)-s_{i_{max}}\right)}{T_{i}}\nonumber 
+\end{eqnarray}
+
+For each $s_{i}^{k}\in s_{i}$, there are a set of zero or more $\bar{s_{j}^{h}}(\Theta)\in\tau_{j},\,\forall\tau_{j}\ne\tau_{i}$
+that are conflicting with $s_{i}^{k}$. Assuming this set of 
+transactions conflicting with $s_{i}^{k}$ is denoted as $\eta_{i}^{k}(j)=\left\{ \bar{s_{j}^{h}}(\Theta)\in\tau_{j}:\left(\Theta\in\theta_{i}\right)\wedge\left(\tau_{j}\ne\tau_{i}\right)\wedge\left(\bar{s_{j}^{h}}(\Theta)\not\in\eta_{i}^{l},\, l\ne k\right)\right\} $.
+The last condition $\bar{s_{j}^{h}}(\Theta)\not\in\eta_{i}^{l},\, l\ne k$
+in the definition of $\eta_{i}^{k}$ ensures that common transactions
+$\bar{s_{j}^{h}}$ that can conflict with more than one transaction
+$s_{i}^{k}\in\tau_{i}$ are split among different $\eta_{i}^{k}(j),\, k=1,..,|s_{i}|$.
+This condition is necessary, because in PNF, 
+%%BR: ERROR? "...in FBLT.."????
+no two or more transactions of $\tau_{i}^{x}$ can be aborted by the same transaction of $\tau_{j}^{h}$.
+
+
+Let $\gamma_{i}^{k}$ be the subset of $\gamma_{i}$ that contains tasks
+with transactions conflicting directly with $s_{i}^{k}$. By substitution
+of $\eta_{i}^{k}(j)$ and $\gamma_{i}^{k}$ in (\ref{eq:fblt_pnf_comparison_1-1}),
+(\ref{eq:fblt_pnf_comparison_1-1}) holds if for each $s_{i}^{k}$:
+%%BR: In general, we should say "By substitution of x with y, ...holds..." See if you can reword for increased clarity. 
+\begin{eqnarray}
+ & \delta_{i}^{k}+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(\frac{s_{iz}^{k}}{s_{i}^{k}})\label{eq:fblt_pnf_comparison_1-1-1}\\
+\le & \sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\left(\left(\sum_{\forall\bar{s_{j}^{h}}(\Theta)\in\eta_{i}^{k}(j)}len\left(\frac{\bar{s_{j}^{h}}(\Theta)}{s_{i}^{k}}\right)\right)-len\left(\frac{s_{i_{max}}}{s_{i}^{k}}\right)\right)\nonumber 
+\end{eqnarray}
+
+Non-preemptive transactions preceding $s_{i}^{k}$ in the $m\_$set can directly or indirectly  conflict with $s_{i}^{k}$. Under PNF, 
+%%BR: ERROR? "Under FBLT,.."????
+transactions can only directly conflict with $s_{i}^{k}$. Thus, $s_{iz}^{k}$
+on the left hand side of (\ref{eq:fblt_pnf_comparison_1-1-1}) is
+not necessarily included in $\bar{s_{j}^{h}}(\Theta)$ on the right
+hand side of (\ref{eq:fblt_pnf_comparison_1-1-1}). Let $\epsilon=\left\{ s_{u_{max}}:(1\le u\le n)\wedge\left(s_{u1_{max}}\ge s_{u2_{max}},\, u1<u2\right)\right\} $,
+where $n$ is the number of tasks, and $s_{u_{max}}$ is the maximum transactional
+length in any job of $\tau_{u}$. Thus, $\epsilon$ is the set of
+maximum transactional lengths of all tasks in non-increasing order.
+Each $s_{u_{max}}\in\epsilon$ belongs to a distinct task. Thus, $\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len\left(\frac{s_{iz}^{k}}{s_{i}^{k}}\right)\le\sum_{u=1,\, s_{u_{max}}\in\epsilon}^{min(n,m)-1}s_{u_{max}}$.
+$\sum_{u=1,\, s_{u_{max}}\in\epsilon}^{min(n,m)-1}s_{u_{max}}$ is
+the sum of at most maximum $m-1$ transactional lengths of all tasks.
+$|\chi_{i}^{k}|\le m-1$. Then (\ref{eq:fblt_pnf_comparison_1-1-1})
+holds if:
+\begin{eqnarray*}
+\delta_{i}^{k} & \le & \left(\sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)len\left(\frac{\left(\sum_{\forall\bar{s_{j}^{h}}(\Theta)\in\eta_{i}^{k}(j)}len\left(\bar{s_{j}^{h}}(\Theta)\right)\right)-s_{i_{max}}}{s_{i}^{k}}\right)\right)\\
+& - & \sum_{u=1,\, s_{u_{max}}\in\epsilon}^{min(n,m)-1}s_{u_{max}}\label{eq:fblt_pnf_comparison_1-1-1-1}
+\end{eqnarray*}
+
+Since $\rho_{i}^{j}(k)=\left(\sum_{\forall\bar{s_{j}^{h}}(\Theta)\in\eta_{i}^{k}(j)}len\left(\bar{s_{j}^{h}}(\Theta)\right)\right)-s_{i_{max}},\,\tau_{j}\in\gamma_{i}^{k}$,
+and $\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)$
+is the total number of jobs of $\tau_{j}$ interfering with $\tau_{i}$, claim follows.
+\end{proof}
+
+
+\subsection{FBLT vs. Lock-free}
+\label{sec:fblt vs lock free}
+
+\begin{clm}\label{clm:fblt_edf_lock-free}
+Under G-EDF and G-RMA, the schedulability of FBLT is equal or better than
+that under lock-free synchronization if $s_{max}\le r_{max}$. If transactions execute in FIFO
+order (i.e., $\delta_{i}^{k}=0,\,\forall s_{i}^{k}$) and contention
+is high, $s_{max}$ can be much larger than $r_{max}$.
+\end{clm}
+\begin{proof}
+Lock-free synchronization \cite{key-5,stmconcurrencycontrol:emsoft11}
+%%BR: I think the Herlihy/Shavit book is a better citation here. 
+allows only one object to be synchronized at a given time (e.g., a lock-free stack). 
+Thus, for comparing FBLT's schedulability with lock-free, we limit the number of accessed objects per transaction under FBLT to one. 
+
+By substituting $RC_{A}(T_{i})$ and $RC_{B}(T_{i})$ in (\ref{eq:utilization comparison})
+with (\ref{eq:fblt_rc}) and (6.17) in \cite{shambake_phd_proposal}, 
+respectively, we get:
+%%BR: Note that I reworded. (In general, we must ay "By substituting x with Y, we get..")
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}len(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)+RC_{re}(T_{i})}{T_{i}}\label{eq:fblt_lf_comparison_1}\\
+\le & \sum_{\forall\tau_{i}}\frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}r_{max}\right)\right)+RC_{re}(T_{i})}{T_{i}}\nonumber 
+\end{eqnarray}
+where $\beta_{i,j}$ is the number of retry loops of $\tau_{j}$ that
+access the same objects as accessed by any retry loop of $\tau_{i}$
+\cite{key-5} and $r_{max}$ is the maximum execution cost of a single
+iteration of any retry loop of any task \cite{key-5}. 
+
+
+For G-EDF (G-RMA),
+any job $\tau_{i}^{x}$ under FBLT has the same pattern of interference
+from higher priority jobs as ECM (RCM), respectively. $RC_{re}(T_{i})$
+for ECM, RCM, and lock-free are given by Claims 25, 26, and 27 in \cite{shambake_phd_proposal}, 
+respectively. $\therefore$ $RC_{re}(T_{i})=\left\lceil \frac{T_{i}}{T_{j}}\right\rceil s_{i_{max}},\,\forall\tau_{j}\neq\tau_{i}$
+covers $RC_{re}(T_{i})$ for G-EDF/FBLT and G-RMA/FBLT. $RC_{re}(T_{i})=\left\lceil \frac{T_{i}}{T_{j}}\right\rceil r_{i_{max}},\,\forall\tau_{j}\neq\tau_{i}$
+covers the retry cost for G-EDF/lock-free and G-RMA/lock-free. 
+%%BR: I am not exactly sure what you mean by "covers" (I suspect reviewers will also be confused). Can you reword here as well as in previous instances where you used "covers"?
+$\therefore$ (\ref{eq:fblt_lf_comparison_1}) becomes:
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}len(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)+\sum_{\forall\tau_{j}\neq\tau_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil s_{i_{max}}}{T_{i}}\label{eq:fblt_lf_comparison_8}\\
+\le & \sum_{\forall\tau_{i}}\frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}r_{max}\right)\right)+\sum_{\forall\tau_{j}\neq\gamma_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil r_{i_{max}}}{T_{i}}\nonumber 
+\end{eqnarray}
+Since $s_{max}\ge s_{i_{max}},\, len(s_{i}^{k}),\, len(s_{iz}^{k}),\,\forall i,z,k$
+and $r_{max}\ge r_{i_{max}}$ $\therefore$ (\ref{eq:fblt_lf_comparison_8})
+holds if: 
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\left(\left(\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}+|\chi_{i}^{k}|\right)\right)+\sum_{\forall\tau_{j}\neq\tau_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)s_{max}}{T_{i}}\label{eq:fblt_lf_comparison_6}\\
+\le & \sum_{\forall\tau_{i}}\frac{\left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}\right)\right)+\sum_{\forall\tau_{j}\neq\tau_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)r_{max}}{T_{i}}\nonumber 
+\end{eqnarray}
+$\therefore$ (\ref{eq:fblt_lf_comparison_6}) holds if for each $\tau_{i}$:
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}+|\chi_{i}^{k}|\right)\right)+\sum_{\forall\tau_{j}\neq\tau_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)s_{max}\label{eq:fblt_lf_comparison_7}\\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}\right)\right)+\sum_{\forall\tau_{j}\neq\tau_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)r_{max}\nonumber 
+\end{eqnarray}
+$\therefore$
+\begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & \frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}\right)\right)+\sum_{\forall\tau_{j}\neq\tau_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }{\left(\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}+|\chi_{i}^{k}|\right)\right)+\sum_{\forall\tau_{j}\neq\tau_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }\label{eq:fblt_lf_comparison_9}
+\end{eqnarray}
+
+
+
+It appears from (\ref{eq:fblt_lf_comparison_9}) that as $\delta_{i}^{k}$ and $|\chi_{i}^{k}|$ increases, $s_{max}/r_{max}$ decreases.
+So, to get the lower bound on $s_{max}/r_{max}$, let $\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}+|\chi_{i}^{k}|\right)$
+reach its maximum value. 
+%%BR: In instances such as these, use singular, as in "...let ...reach..." (I fixed it).
+This maximum value is the total number
+of interfering transactions belonging to any job $\tau_{j}^{l},\, j\ne i$.
+The priority of $\tau_{j}^{l}$ can be higher or lower than the current instance
+of $\tau_{i}$. Beyond this maximum value, there will be no more transactions that conflict with $s_{i}^{k}$. Thus, higher values for any $\delta_{i}^{k}$
+beyond the maximum value will be ineffective. $\therefore\,\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}+|\chi_{i}^{k}|\right)\le\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)$.
+Consequently, (\ref{eq:fblt_lf_comparison_9}) will be:
+%%BR: Maybe best to say "Consequently, (\ref{eq:fblt_lf_comparison_9}) becomes:"
+\begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & \frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{i,j}\right)\right)+\sum_{\forall\tau_{j}\neq\tau_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)+\sum_{\forall\tau_{j}\neq\tau_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }\label{eq:fblt_lf_comparison_10}
+\end{eqnarray}
+Since we are seeking the lower bound on $\frac{s_{max}}{r_{max}}$, let
+$\beta_{i,j}$ assume its minimum value. 
+%%BR: In instances such as these, use singular, as in "...let ...assume..." (I fixed it). 
+Thus, $\beta_{i,j}=1$. $\therefore$
+(\ref{eq:fblt_lf_comparison_10}) holds if $\frac{s_{max}}{r_{max}}\le1$.
+
+Let $\delta_{i}^{k}(T_{i})\rightarrow0$ in (\ref{eq:fblt_lf_comparison_9}).
+This means that transactions approximately execute according to their arrival order.
+Let $\beta_{i,j}\rightarrow\infty,\,\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \rightarrow\infty$
+in (\ref{eq:fblt_lf_comparison_9}). This implies high contention.
+Consequently, $\frac{s_{max}}{r_{max}}\rightarrow\infty$. Hence, if
+transactions execute in FIFO order and contention is high, $s_{max}$
+can be much larger than $r_{max}$. Claim follows.
+\end{proof}
+
+%%BR: DONE. 3:09PM, 6/15/2012. 
+
+% Bibliography
+\bibliographystyle{acmsmall}
+\bibliography{global_bibliography}
+
+% History dates
+\received{}{}{}
+
+% Electronic Appendix
+%\elecappendix
+
+\medskip
+
+
+\end{document}
+

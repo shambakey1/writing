@@ -1,0 +1,478 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Real-Time Lock-free Synchronization
+\end_layout
+
+\begin_layout Standard
+Transactional-like concurrency control and lock-free synchronization, for
+ real-time systems, has been previously studied in (e.g.,
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "anderson95realtime,anderson1997lock,684918,1203552,896371,anderson96framework,811240"
+
+\end_inset
+
+).
+ Despite their numerous advantages over locks (e.g., deadlock-freedom), their
+ programmability has remained a challenge.
+ Past studies show that they are best suited for simple data structures
+ where their retry cost is competitive to the cost of lock-based synchronization
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bc+08,key-5"
+
+\end_inset
+
+.
+ In contrast, STM is semantically simpler
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Herlihy:2006:AMP:1146381.1146382"
+
+\end_inset
+
+, and is often the only viable lock-free solution for complex data structures
+ (e.g., red/black tree) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "6045438"
+
+\end_inset
+
+ and nested critical sections 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saha:2006:MHP:1122971.1123001,Agrawal:2008:SOT:1378533.1378553,Peri:2011:CCE:1946143.1946152"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Transactional Memory: Overview 
+\end_layout
+
+\begin_layout Standard
+Database transactions motivated TM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gray:1981:TCV:1286831.1286846"
+
+\end_inset
+
+.
+ In TM, concurrent threads synchronize via transactions when they access
+ shared memory.
+ A TM transaction is an explicitly delimited sequence of steps executed
+ atomically by a thread 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tm-book10"
+
+\end_inset
+
+.
+ Atomicity implies all-or-nothing: the sequence of steps (i.e., reads and
+ writes) logically occur at a single instant in time; intermediate states
+ are invisible to other transactions.
+ The semantic difficulty of locks and the resulting high development and
+ maintenance costs have been the driving motivation for seeking alternate
+ concurrency control abstractions.
+ The design of lock-free and wait-free data structures are one such alternative.
+ These approaches are highly performant, but significantly complex to write
+ and reason about, and therefore, have largely been limited to a small set
+ of basic data structures - e.g., linked lists, queues, stacks 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "1508449,4079519,1656921,Cho:2006:UAP:1141277.1141490"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The term “transactional memory” was proposed by Herlihy and Moss [5], where
+ they presented hardware support for lock-free data structures.
+ TM has been provided in hardware (HTM) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "698569,Martinez:2002:SSA:605397.605400,Oplinger:2002:ESR:605397.605417,Rajwar:2002:TLE:605397.605399,ham04"
+
+\end_inset
+
+, software (STM) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "4145102,Dolev:2008:CSC:1400751.1400769,Harris:2003:LSL:949305.949340,Harris:2005:CMT:1065944.1065952,Cho:2006:UAP:1141277.1141490,Marathe:2004:DTM:1066650.1066660,Yoo:2008:ATS:1378533.1378564,Saha:2006:ASS:1194816.1194838,Shpeisman:2007:EIO:1250734.1250744"
+
+\end_inset
+
+ and hybrid TM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dam06,Kumar:2006:HTM:1122971.1123003,Minh:2007:EHT:1250662.1250673,Shriraman:2007:IHA:1250662.1250676"
+
+\end_inset
+
+.
+ Hybrid TM allows STM to exploit any available HTM support to improve performanc
+e.
+ One basic problem in STM is how to correctly and efficiently resolve conflicts
+ when multiple threads access one shared objects simultaneously and at least
+ one writes inot it.
+ Generally, a contention manager (CM) is responsible to ensure that all
+ transactions eventually commit.
+ CM decides which transaction to delay or abort and when to restart the
+ aborted transaction in case of conflicts 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Spear:2009:CSC:1504176.1504199,Scherer:2005:ACM:1073814.1073861,Blake:2009:PTS:1669112.1669133,Maldonado:2010:SST:1693453.1693465"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Real-Time Database Transactions
+\end_layout
+
+\begin_layout Standard
+As database transactions motivated TM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gray:1981:TCV:1286831.1286846"
+
+\end_inset
+
+.
+ Real-time database has a lot of inspiration on real-time transactional
+ memory 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "real-time-data-base-systems-book"
+
+\end_inset
+
+.
+ Real-time database is not concerned only with consistency, but also with
+ timing constraints.
+ When there is a conflict, lower priority transaction is aborted if it is
+ abortable, or may cause excessive blocking to any higher priority transaction
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "liang2003quantification,liang1996bap,lam1997concurrency"
+
+\end_inset
+
+.
+ Blocking time can be estimated by on-line or off-line schedulers.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "liang2003quantification"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "liang1996bap"
+
+\end_inset
+
+ proposed a framework for trading abort cost with the blocking cost of transacti
+ons.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "xian2009data"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "chen2002efficient"
+
+\end_inset
+
+ present a number of transaction scheduling strategies.
+ These strategies include ED (Earliest Deadline), HV (Highest Value), HRU
+ (Highest Reward and Urgency), and FHR (Flexible High Reward).
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tseng1997adaptive"
+
+\end_inset
+
+ schedules transactions on multiprocessor system based on both slack time
+ and value assigned to each transaction.
+ So, it tries to acheive the highest possible value of completed transactions
+ and meat as much deadlines as possible.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "yuehua2010new"
+
+\end_inset
+
+ combines EDF with LSF (Least Slack First) to compute transaction priorities.
+ Different scheduling strategies compute transactions' priorities.
+ Thus, which transaction to commit first.
+\end_layout
+
+\begin_layout Subsection
+Real-Time STM
+\end_layout
+
+\begin_layout Standard
+As TM is inspired from database transactions 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gray:1981:TCV:1286831.1286846"
+
+\end_inset
+
+, TM in real-time systems also has a lot of inspiration from real-time database
+ sy.
+ STM concurrency control for real-time systems has been previously studied
+ in
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "manson2006preemptible,fahmy2009bounding,sarni2009real,schoeberl2010rttm,barrosmanaging,6045438,fahmy2009response"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "manson2006preemptible"
+
+\end_inset
+
+ proposes a restricted version of STM for uniprocessors.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fahmy2009response"
+
+\end_inset
+
+ considers STM for distributed uni-processor systems.
+ A higher priority task causes only one retry in a lower prirority tasks
+ due to the uni-prcessor.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fahmy2009bounding"
+
+\end_inset
+
+ bounds response times in distributed multiprocessor systems with STM synchroniz
+ation.
+ They consider Pfair scheduling, limit to small atomic regions with fixed
+ size, and limit transaction execution to span at most two quanta.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sarni2009real"
+
+\end_inset
+
+ presents real-time scheduling of transactions and serializes transactions
+ based on transactions' - not jobs'- deadlines.
+ However, the work does not bound retries and response times, nor establishes
+ tradeoffs against lock-free synchronization.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "schoeberl2010rttm"
+
+\end_inset
+
+ proposes real-time HTM.
+ The retry bound developed in
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "schoeberl2010rttm"
+
+\end_inset
+
+ assumes that the worst case conflict between atomic sections of different
+ tasks occurs when the sections are released at the same time.
+ This assmuption deos not cover the worst case scenario for transactions'
+ interference.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "6045438"
+
+\end_inset
+
+ presents earliest-deadline CM or ECM.
+ ECM resolves conflicts by aborting the transaction with longer absoluted
+ deadline.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "6045438"
+
+\end_inset
+
+ derives a number of properties for ECM, upper bounds transactional retrys,
+ and compares schedulability of ECM to retry-loop lock-free synchronization
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "6045438"
+
+\end_inset
+
+, like 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "schoeberl2010rttm"
+
+\end_inset
+
+, assumes that the worst case conflict between atomic sections occurs when
+ the sections are released simultaneously.
+ Besides, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "6045438"
+
+\end_inset
+
+ assumes all transactions have equal lengths.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "barrosmanaging"
+
+\end_inset
+
+ presents extend idea in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "6045438"
+
+\end_inset
+
+ to bound number of retries and prevent starvation.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "barrosmanaging"
+
+\end_inset
+
+ presents three ideas for CMs.
+ However, work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "barrosmanaging"
+
+\end_inset
+
+ is still in progress.
+ Provided algorithms might not give the planned results because they are
+ not analyzed.
+\end_layout
+
+\end_body
+\end_document

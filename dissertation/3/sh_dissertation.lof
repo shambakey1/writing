@@ -1,0 +1,49 @@
+\select@language {english}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Maximum interference of jobs of $\tau _j$ to $\tau _i^x$ running on different processors, under G-EDF. $T_i=aT_j+b$}}{27}{figure.4.1}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {during $L=T_i-f$, $f \le b$}}}{27}{figure.4.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {during $L=T_i-f$, $f>b$}}}{27}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Effect of carried\_in job of $\tau _j$ to retry cost of transactions in $\tau _i$}}{30}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Max interference of $\tau _{j}$ to $\tau _{i}$ in G-RMA}}{34}{figure.4.3}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Interference of $s_{i}^{k}$ by various lengths of $s_{j}^{l}$}}{47}{figure.5.1}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {9.1}{\ignorespaces Average retry cost for 1 object per transaction for different values of total, maximum and minimum atomic section length under all synchronization techniques}}{102}{figure.9.1}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{102}{figure.9.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{102}{figure.9.1}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{102}{figure.9.1}
+\contentsline {figure}{\numberline {9.2}{\ignorespaces Average retry cost for 1 object per transaction for different values of total, maximum and minimum atomic section length under contention managers only}}{103}{figure.9.2}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{103}{figure.9.2}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{103}{figure.9.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{103}{figure.9.2}
+\contentsline {figure}{\numberline {9.3}{\ignorespaces Average retry cost for 20 objects per transaction, 40\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{104}{figure.9.3}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{104}{figure.9.3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{104}{figure.9.3}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{104}{figure.9.3}
+\contentsline {figure}{\numberline {9.4}{\ignorespaces Average retry cost for 20 objects per transaction, 80\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{105}{figure.9.4}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{105}{figure.9.4}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{105}{figure.9.4}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{105}{figure.9.4}
+\contentsline {figure}{\numberline {9.5}{\ignorespaces Average retry cost for 20 objects per transaction, 100\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{106}{figure.9.5}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{106}{figure.9.5}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{106}{figure.9.5}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{106}{figure.9.5}
+\contentsline {figure}{\numberline {9.6}{\ignorespaces Average retry cost for 40 objects per transaction, 40\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{107}{figure.9.6}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{107}{figure.9.6}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{107}{figure.9.6}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{107}{figure.9.6}
+\contentsline {figure}{\numberline {9.7}{\ignorespaces Average retry cost for 40 objects per transaction, 80\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{108}{figure.9.7}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{108}{figure.9.7}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{108}{figure.9.7}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{108}{figure.9.7}
+\contentsline {figure}{\numberline {9.8}{\ignorespaces Average retry cost for 40 objects per transaction, 100\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{109}{figure.9.8}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{109}{figure.9.8}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{109}{figure.9.8}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{109}{figure.9.8}
+\addvspace {10\p@ }

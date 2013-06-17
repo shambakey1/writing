@@ -1,0 +1,639 @@
+\documentclass[preprint]{sigplanconf}
+\special{papersize=8.5in,11in}
+
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{amsthm}
+\usepackage{amssymb,amsmath}
+\usepackage{natbib}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[ruled]{algorithm2e}
+
+\newtheorem{clm}{Claim}
+
+\usepackage{pslatex}
+
+\begin{document}
+
+\conferenceinfo{LCTES 2013,}{date, City.} 
+\copyrightyear{2013} 
+\copyrightdata{[to be supplied]} 
+
+%\titlebanner{banner above paper title}        % These are ignored unless
+%\preprintfooter{short description of paper}   % 'preprint' option specified.
+
+\title{STM Concurrency Control with Checkpointing for Embedded Real-Time Software with Tighter Time Bounds}
+%\subtitle{Subtitle Text, if any}
+
+\authorinfo{Mohammed Elshambakey}
+           {ECE Dept., Virginia Tech, Blacksburg, VA 24060, USA}
+           {shambake@vt.edu}
+\authorinfo{Binoy Ravindran}
+           {ECE Dept., Virginia Tech, Blacksburg, VA 24060, USA}
+           {binoy@vt.edu}
+
+\maketitle
+
+\begin{abstract}
+We consider checkpointing with software transactional memory (STM) concurrency control for embedded multicore real-time software, and present a modified version of FBLT contention manager called \textit{Checkpointing FBLT} (CPFBLT). We upper bound transactional retries and task response times under CPFBLT, and identify when CPFBLT is a more appropriate alternative to FBLT without checkpointing.
+\end{abstract}
+
+\category{C.3}{Special-Purpose and Application-based Systems}{Real-time and embedded systems}
+
+\terms
+Design, Experimentation, Measurement
+
+\keywords
+Software transactional memory (STM), real-time contention manager
+
+\section{Introduction}
+
+\label{sec:intro}
+
+Embedded systems sense physical processes and control their behavior, typically through feedback loops. Since physical processes are concurrent, computations that control them must also be concurrent, enabling them to process multiple streams of sensor input and control multiple actuators, all concurrently while satisfying time constraints. 
+%Often, such computations need to concurrently read/write shared data objects. They must also process sensor input and react, while satisfying time constraints. 
+
+The de facto standard for concurrent programming is the threads abstraction, and the 
+de facto synchronization abstraction is locks. Lock-based concurrency control has significant programmability, scalability, and composability challenges~\cite{Herlihy:2006:AMP:1146381.1146382}.
+ Transactional memory (TM) is an alternative synchronization model for shared memory objects that promises to alleviate these difficulties. With TM, code that read/write shared objects is organized as \textit{memory transactions}, which execute speculatively, while logging changes made to objects. Two transactions conflict if they access the same object and at least one access is a write. When that happens, a contention manager (CM)~\cite{Guerraoui:2005:TTT:1073814.1073863} resolves the conflict by aborting one and allowing the other to commit, yielding (the illusion of) atomicity. Aborted transactions are re-started, after rolling back the changes. In addition to a simple programming model, TM provides performance comparable to lock-free approach, especially for high contention and read-dominated workloads (see an example TM system's performance in~\cite{Saha:2006:MHP:1122971.1123001}), and is composable~\cite{Harris:2005:CMT:1065944.1065952}. TM has been proposed in hardware, called HTM, and in software, called STM, with the usual tradeoffs: HTM has lesser overhead, but needs transactional support in hardware; STM is available on any hardware.
+
+Given STM's programmability, scalability, and composability advantages, it is a compelling concurrency control technique also for multicore embedded real-time software. However, this requires  bounding transactional  retries, as real-time threads which subsume transactions, must satisfy time constraints.  Retry bounds under STM are dependent on the CM policy at hand. 
+
+Past real-time CM research proposed resolving transactional contention using dynamic and fixed priorities of parent threads. \cite{6045438,stmconcurrencycontrol:emsoft11,lcmdac2012} present  Earliest Deadline CM (ECM) and Rate Monotonic CM (RCM)~, which are used with global EDF (G-EDF) and global RMS (G-RMS) multicore real-time schedulers \cite{Davis:2011:SHR:1978802.1978814}.
+In particular,~\cite{stmconcurrencycontrol:emsoft11} shows that ECM and RCM achieve higher schedulability -- i.e., greater number of task sets meeting their time constraints -- than lock-free synchronization only under some ranges for the maximum atomic section length. That range is significantly expanded with the Length-based CM (LCM) in~\cite{lcmdac2012}, increasing the coverage of STM's timeliness superiority. ECM, RCM, and LCM suffer from transitive retry and cannot handle multiple objects per transaction efficiently. These limitations are overcome with the Priority with Negative value and First access CM (PNF)~\cite{pnf_dac_asp,shambake_phd_proposal}. However, PNF requires prior knowledge of all objects accessed by each transaction. This significantly limits programmability, and is incompatible with dynamic STM implementations~\cite{Herlihy:2003:STM:872035.872048}. Additionally, PNF is a centralized CM, which increases overheads and retry costs, and has a complex implementation. First Bounded, Last Timestamp CM (or FBLT)~\cite{fblt}, in contrast to PNF, does not require prior knowledge of objects accessed by transactions. Moreover, FBLT allows each transaction to access multiple objects with shorter transitive retry cost than ECM, RCM and LCM. Additionally, FBLT is a decentralized CM and does not use locks in its implementation. Implementation of FBLT is also simpler than PNF.
+
+%SH_ST
+Checkpointing~\cite{Koskinen:2008:CCI:1378533.1378563} can be used to further reduce response time of threads with conflicting transactions. Under checkpointing, a transaction retreats to a previous control flow location upon conflict. So, an aborted transaction does not have to retreat to its beginning.
+%FIXME_ST
+We introduce checkpointing FBLT (CPFBLT) that extends original FBLT with checkpointing. (Section~\ref{sec:closed_nested_fblt_design}). We present the motivation for introducing checkpointing into FBLT (Section~\ref{sec:motivation}). We establish CPFBLT's retry and response time upper bounds under G-EDF and G-RMA schedulers (Section~\ref{sec:closed_nested_fblt rc}). We also identify the conditions under which CPFBLT is a better alternative to non-checkpointing FBLT (Section~\ref{sec:schedulabiltiy comparison}).
+
+We implement FBLT and CPFBLT in the Rochester STM framework~\cite{marathe2006lowering} and conduct experimental studies (Section~\ref{exp_eval}). Our results reveal that CPFBLT has shorter retry cost than FBLT. FBLT's retry cost is comparable to that of PNF, especially in case of non-transitive retry, but it doesn't require a-priori knowledge of objects accessed by transactions, unlike PNF. 
+
+Thus, the paper's contribution is the FBLT contention manager with superior timeliness properties. FBLT, thus allows programmers to reap STM's significant programmability and composability benefits for a broader range of multicore embedded real-time software than what was previously possible.
+%FIXME_END
+%SH_END
+
+\section{Related Work}
+\label{sec:past}
+
+Transactional-like concurrency control without using locks, for real-time systems, has been previously studied in the context of non-blocking data structures (e.g.,~\cite{anderson95realtime}). Despite their numerous advantages over locks 
+(e.g., deadlock-freedom), their programmability has remained a challenge. Past studies show that they are best suited for simple data structures where their retry cost is competitive to the cost of lock-based synchronization~\cite{bc+08}.  In contrast, STM is semantically simpler~\cite{Herlihy:2006:AMP:1146381.1146382}, and is often the only viable lock-free solution for complex data structures (e.g., red/black tree)~\cite{key-1} and nested critical sections~\cite{Saha:2006:MHP:1122971.1123001}. STM concurrency control for real-time systems has been previously studied in~\cite{manson2006preemptible,fahmy2009bounding,sarni2009real,schoeberl2010rttm,key-1,barrosmanaging,stmconcurrencycontrol:emsoft11,lcmdac2012,pnf_dac_asp,fblt}.
+
+\cite{manson2006preemptible} proposes a restricted version of STM for uniprocessors. \cite{fahmy2009bounding} bounds response times in distributed  systems with STM synchronization. \cite{fahmy2009bounding} considers Pfair scheduling, limit to small atomic regions with fixed size, and limit transaction execution to span at most two quanta. \cite{sarni2009real} presents real-time scheduling of transactions and serializes transactions based on deadlines. However, the work does not bound retries and response times. \cite{schoeberl2010rttm} proposes real-time HTM. \cite{schoeberl2010rttm} assumes that the worst case conflict between atomic sections of different tasks occurs when the sections are released at the same time. 
+
+\cite{key-1} upper bounds retries and response times for ECM with G-EDF, and identify the tradeoffs with locking and lock-free protocols. Similar to~\cite{schoeberl2010rttm},~\cite{key-1} also assumes that the worst case conflict between atomic sections occurs when the sections are released simultaneously. The ideas in~\cite{key-1} are extended in~\cite{barrosmanaging}, which presents three real-time CM designs.
+ 
+\cite{stmconcurrencycontrol:emsoft11} presents the ECM and RCM contention managers, and upper bounds transactional retries and task response times under them.~\cite{stmconcurrencycontrol:emsoft11} also identifies the conditions under which ECM and RCM are superior to lock-free techniques. In particular, \cite{stmconcurrencycontrol:emsoft11} shows that, STM's superiority holds only under some ranges for the maximum atomic section length.  Moreover,~\cite{stmconcurrencycontrol:emsoft11} restricts transactions to access only one object.
+
+\cite{lcmdac2012} presents the LCM contention manager, and upper bounds transactional retry cost and task response times for G-EDF and G-RMA schedulers. This work also compares (analytically and experimentally) LCM with ECM, RCM, and lock-free synchronization. However, similar to~
+\cite{lcmdac2012},~\cite{stmconcurrencycontrol:emsoft11} restricts transactions to access only one object. 
+
+\cite{pnf_dac_asp} presents the PNF contention manager, which allows transactions to access  multiple objects and avoids the consequent transitive retry effect. The work also upper bounds transactional retries and task response times under G-EDF and G-RMA. However, PNF requires a-priori knowledge of the objects accessed by each transaction, which is not always possible, limits programmability, and is incompatible with dynamic STM implementations~\cite{Herlihy:2003:STM:872035.872048}. Additionally, PNF is a centralized CM and uses locks in its implementation, which increases overheads.
+
+\cite{fblt} presents the FBLT contention manager. In contrast to PNF, FBLT does not require prior knowledge of required objects by each transaction. FBLT premits multiple objects per transaction.
+Under FBLT, each transaction can be aborted for a specific number of times. Afterwards, the transaction becomes non-preemptive. Non-preemptive transaction cannot be aborted except by another non-preemptive transaction. Non-preemptive transactions resolve conflicts based on the time they became non-preemptive. 
+
+%SH_ST
+Previous CMs try to enhance response time of real-time tasks using different policies for conflict resolution. Checkpointing does not require aborted transaction to restart from beginning. Thus, Checkpointing can be plugged into different CMs to further improve response time. \cite{Koskinen:2008:CCI:1378533.1378563} introduces checkpointing as an alternative to closed nesting transactions\cite{turcu2012closed}. \cite{Koskinen:2008:CCI:1378533.1378563} uses boosted transactions \cite{Herlihy:2008:TBM:1345206.1345237} instead of closed nesting \cite{Peri:2011:CCE:1946143.1946152,turcu2012closed,6267834} to implement checkpointing. Booseted transactions are based on linearizable objects with abstract states and concrete implementation. Methods under boosted transaction have well defined semantics to transit objects from one state to another. Inverse methods are used to restore objects to previous states. Upon a conflict, a transaction does not need to revert to its beginning, but rather to a point where the conflict can be avoided. Thus, checkpointing enables partial abort. \cite{turcu_phd_proposal} applies check pointing in distributed transactional memory using Hyflow \cite{Saad:2011:HHP:1996130.1996167}. Checkpointing showed performance improvement compared to flat transactions.
+%SH_END
+%
+\section{Preliminary}
+
+We consider a multiprocessor system with $m$ identical processors and $n$ sporadic tasks $\tau_1, \tau_2,\ldots, \tau_n$. The $k^{th}$ instance (or job) of a task $\tau_i$ is denoted $\tau_i^k$. Each task $\tau_i$ is specified by its worst case execution time (WCET) $c_i$, its minimum period $T_i$ between any two consecutive instances, and its relative deadline $D_i$, where $D_i=T_i$. Job $\tau_i^j$ is released at time $r_i^j$ and must finish no later than its absolute deadline $d_i^j=r_i^j+D_i$. Under a fixed priority scheduler such as G-RMA, $p_i$ determines $\tau_i$'s (fixed) priority and it is constant for all instances of $\tau_i$. Under a dynamic priority scheduler such as G-EDF, a job $\tau_i^j$'s priority, $p_i^j$, differs from one instance to another. 
+A task $\tau_j$ may interfere with task $\tau_i$ for a number of times during an interval $L$, and this number is denoted as $G_{ij}(L)$. 
+
+\textit{Shared objects.}
+ A task may need to read/write shared, in-memory data objects while it is executing any of its atomic sections (transactions), which are synchronized using STM. 
+The set of atomic sections of task $\tau_i$ is denoted $s_i$. $s_i^k$ is the $k^{th}$ atomic section of $\tau_i$. Each object, $\theta$, can be accessed by multiple tasks. The set of distinct objects accessed by $\tau_i$ is $\Theta_i$. The set of atomic sections used by $\tau_i$ to access $\theta$ is $s_i(\theta)$, and the sum of the lengths of those atomic sections is $len(s_i(\theta))$. $s_i^k(\theta)$ is the $k^{th}$ atomic section of $\tau_i$ that accesses $\theta$.
+%
+ $s_i^k$ can access one or more objects in $\Theta_i$. So, $s_i^k$ refers to the transaction itself, regardless of the objects accessed by the transaction. We denote the set of all accessed objects by $s_i^k$ as $\Theta_i^k$. While $s_i^k(\theta)$ implies that $s_i^k$ accesses an object $\theta \in \Theta_i^k$, $s_i^k(\Theta)$ implies that $s_i^k$ accesses a set of objects $\Theta=\{\theta \in \Theta_i^k$ \}. $\bar{s_i^k}=\bar{s_i^k}(\Theta)$ refers only once to $s_i^k$, regardless of the number of objects in $\Theta$. So, $|\bar{s_i^k}(\Theta)|_{\forall \theta \in \Theta}=1$.
+%
+ $s_i^k(\theta)$  executes for a duration $len(s_i^k(\theta))$. $len(s_i^k)=len(s_i^k(\theta))=len(s_i^k(\Theta))=len(s_i^k(\Theta_i^k))$ The set of tasks sharing $\theta$ with $\tau_i$ is denoted $\gamma_i(\theta)$. 
+
+The maximum-length atomic section in $\tau_i$ that accesses $\theta$ is denoted $s_{i_{max}} (\theta)$, while the maximum one among all tasks is $s_{max} (\theta)$, and the maximum one among tasks with priorities lower than that of $\tau_i$ is $s_{max}^i (\theta)$. $s_{max}^i(\Theta_h^i)=max\{s_{max}^i(\theta):\forall \theta \in \Theta_h^i\}$.
+
+\textit{STM retry cost.} If two or more atomic sections conflict, the CM will commit one section and abort and retry the others, increasing the time to execute the aborted transactions. The increased time that an atomic section $s_i^p (\theta)$ will take to execute due to a conflict with another section $s_j^k (\theta)$, is denoted $W_{i}^{p}(s_{j}^{k}(\theta))$. If an atomic section, $s_i^p$, is already executing, and another atomic section $s_j^k$ tries to access a shared object with $s_i^p$, then $s_j^k$ is said to ``interfere" or ``conflict" with $s_i^p$. The job $s_j^k$ is the ``interfering job", and the job $s_i^p$ is the ``interfered job".
+
+Due to \textit{transitive retry}~\cite{pnf_dac_asp,fblt}, an atomic section $s_i^k(\Theta_i^k)$ may retry due to another atomic section $s_j^l(\Theta_j^l)$, where $\Theta_i^k \cap \Theta_j^l = \emptyset$. $\Theta_i^*$ denotes the set of objects not accessed directly by atomic sections in $\tau_i$, but can cause transactions in $\tau_i$ to retry due to transitive retry. $\Theta_i^{ex}(=\Theta_i + \Theta_i^*)$ is the set of all objects that can cause transactions in $\tau_i$ to retry directly or through transitive retry. $\Theta_i^{k^{ex}}$ is the subset of objects in $\Theta_i^{ex}$ that can cause direct or transitive conflict to $s_i^k$. $\gamma_i^*$ is the set of tasks that accesses  objects in $\Theta_i^*$. $\gamma_i^{ex}(=\gamma_i + \gamma_i^*)$ is the set of all tasks that can directly or indirectly (through transitive retry) cause transactions in $\tau_i$ to abort and retry. $\gamma_i^k$ is the set of tasks that can directly cause $s_i^k$ to abort and retry. $\gamma_i^{k^{ex}}$ is the set of tasks that can directly or indirectly (through transitive retry) cause $s_i^k$ to abort and retry.
+
+The total time that a task $\tau_i$'s atomic sections have to retry over $T_i$ is denoted $RC(T_i)$. The additional amount of time by which all interfering jobs of $\tau_j$ increases the response time of any job of $\tau_i$ during $L$, without considering retries due to atomic sections, is denoted $W_{ij}(L)$.
+
+%FIMXE_ST
+\textit{Nested transactions:} A nested transaction $s_{i}^{k}$ is represented as a \textit{tree} or a \textit{transactional family}, where $s_{i}^{k}$ is the \textit{root} or \textit{Top Tree Level (TTL)}. Any (sub)transaction that contains other (sub)transactions is called
+a \textit{parent}, while a sub-transaction is called a \textit{child}.
+Thus, a sub-transaction can be a parent and a child at the same time.
+Root does not have a parent. A sub-transaction without children is
+called a \textit{leaf}. $s_{i*}^{k}$ can be any (sub)transaction
+lying in the tree whose root is $s_{i}^{k}$, including $s_{i}^{k}$
+itself, down to the leaves. Root of the tree to which $s_{i*}^{k}$
+belongs is denoted as $R(s_{i*}^{k})$. $s_{i*}^{k}$ begins after
+start of $s_{i}^{k}$ by at least $\nabla_{i*}^{k}$. Set of leaves
+of the tree whose root is $s_{i*}^{k}$ is denoted as $L(s_{i*}^{k})$.
+Parent of $s_{i*}^{k}$ is denoted as $Par(s_{i*}^{k})$. Set of direct
+children of $s_{i*}^{k}$ is denoted as $Ch(s_{i*}^{k})$. Set of
+children of any (sub)transaction $s_{i*}^{k}$, including grand children
+down to leaves, are called \textit{descendants} of $s_{i*}^{k}$,
+$Des(s_{i*}^{k})$. Set of parents and grand parents of $s_{i*}^{k}$
+up to the root are called \textit{ancestors}, $Anc(s_{i*}^{k})$.
+A (sub)transaction $s_{i*}^{k}$ and its descendants are represented
+as a set of (sub)transactions $\left\{ s_{i*}^{k}\right\} $. Thus,
+$\{s_{i*}^{k}\}$ is a \textit{tree} or a \textit{transactional family}
+whose root is $s_{i*}^{k}$. (Sub)transactions in $\{s_{i*}^{k}\}$
+are ordered by their start time relative to $s_{i*}^{k}$ with ties
+broken arbitrarily. Thus, if $s_{i1*}^{k}$($s_{i2*}^{k}$) begins
+after start of $s_{i*}^{k}$ by $\nabla_{i1*}^{k}$($\nabla_{i2*}^{k}$)
+respectively, and $\nabla_{i1*}^{k}<\nabla_{i2*}^{k}$, then $s_{i1*}^{k}$
+comes before $s_{i2*}^{k}$ in $\{s_{i*}^{k}\}$. The $a^{th}$ direct
+child of $s_{i*}^{k}$ is $s_{i*-a}^{k}$. Thus, $s_{i*-a}^{k}\in\left\{ s_{i*}^{k}\right\} $.
+The set of $s_{i*-a}^{k}$ and its descendants is a subset of $\left\{ s_{i*}^{k}\right\} $
+(i.e., $\left\{ s_{i*-a}^{k}\right\} \subseteq\left\{ s_{i*}^{k}\right\} $).
+A parent precedes its children in order, thus $s_{i*}^{k}<s_{i*-a}^{k}$.
+$len(s_{i*}^{k})$ includes lengths of all its children, as any $s_{i*-a}^{k}$
+executes inside $s_{i*}^{k}$. $\Theta_{i*}^{k}$ represents set of
+objects accessed by $s_{i*}^{k}$. $\Theta_{i*-a}^{k}$ represents
+set of objects accessed by $s_{i*-a}^{k}$. $\Theta_{i*-a}^{k}$ may
+contain objects not in $\Theta_{i*}^{k}$. Thus, if $\theta$ is accessed
+by both $s_{i*}^{k}$ and $s_{i*-a}^{k}$, then $\theta\in\Theta_{i*}^{k},\,\Theta_{i*-a}^{k}$.
+If $\theta$ is accessed by $s_{i*}^{k}$ but not $s_{i*-a}^{k}$,
+then $\theta\in\Theta_{i*}^{k}$ but $\theta\not\in\Theta_{i*-a}^{k}$.
+If $\theta$ is accessed by $s_{i*-a}^{k}$ but not by $s_{i*}^{k}$,
+then $\theta\in\Theta_{i*-a}^{k}$, but $\theta\not\in\Theta_{i*}^{k}$.
+The set of objects accessed by all (sub)transactions in $\{s_{i*}^{k}\}$
+is $\{\Theta_{i*}^{k}\}=\cup_{\forall s_{i*}^{k}\in\{s_{i*}^{k}\}}\Theta_{i*}^{k}$. $\Theta_{i}^{k^{ex}}$
+is the same for any $s_{i*}^{k}\in\{s_{i}^{k}\}$ (i.e., $\Theta_{i}^{k^{ex}}=\Theta_{i*}^{k^{ex}},\,\forall s_{i*}^{k}\in\{s_{i}^{k}\}$).
+This is because children abort with their parents under closed nesting.
+Thus, objects accessed by $Par\{s_{i*}^{k}\}$ are included in $\Theta_{i*}^{k^{ex}}$. $p(s_{i*}^{k})$ is priority of (sub)transaction $s_{i*}^{k}$. Generally,
+we assume $p(s_{i*}^{k}),\,\forall s_{i*}^{k}\in\{s_{i*}^{k}\}$ is
+the same unless otherwise stated.
+
+\textit{Conflicting (sub)Transaction:} $CT(s_{i*}^{k},s_{j*}^{l},a)$
+is the $a^{th}$ subtransaction in $\{s_{j*}^{l}\}$ that can conflict
+directly with any (sub)transaction in $\{s_{i*}^{k}\}$. Let the set
+of objects accessed by $CT(s_{i*}^{k},s_{j*}^{l},a)$ be $\Theta1$.
+By definition of $CT(s_{i*}^{k},s_{j*}^{l},a)$, $\Theta1\cap\{\Theta_{i*}^{k}\}\neq\emptyset$.
+Let $CT(s_{i*}^{k},s_{j*}^{l},a)$ begins after start of $s_{j*}^{l}$
+by $\nabla1$. Let $CT(s_{i*}^{k},s_{j*}^{l},b)$ begins after start
+of $s_{j*}^{l}$ by $\nabla2$. If $a<b$, then $\nabla1<\nabla2$.
+The first (sub)transaction in $\{s_{i*}^{k}\}$ that can be interfered
+by $CT(s_{i*}^{k},s_{j*}^{l},a)$ is defined as \textit{Inverse Conflicting
+(sub)Transaction} $CT^{-1}(s_{i*}^{k},s_{j*}^{l},a)$. $CT^{ex}(s_{i*}^{k},s_{j*}^{l},a)$
+is the same as $CT(s_{i*}^{k},s_{j*}^{l},a)$ except that $\Theta1\cap\Theta_{i*}^{k^{ex}}\neq\emptyset$.
+By definition of $\Theta_{i*}^{k^{ex}}$, $CT^{ex}(s_{i*}^{k},s_{j*}^{l},a)$
+may not directly conflict with any (sub)transaction in $\{s_{i*}^{k}\}$.
+Thus, there will be no definition for \textit{Inverse Conflicting
+(sub)Transaction} in transitive retry.
+%FIXME_END
+
+%SH_ST
+\section{Motivation}\label{sec:motivation}
+
+Under checkpointing, a transaction $s_i^k \in \tau_i$ does not need to restart from the beginning upon a conflict on object $\theta$. $s_i^k$ just needs to return to the first point it accessed $\theta$. Thus, response time of $\tau_i$ can be improved by checkpointing unless $s_i^k$ acquires all its objects at its beginning. While the CM tries to resolve conflicts using proper strategies, checkpointing enhances performance by reducing aborted part of each transaction. Thus, checkpointing acts as a complementary component to different CMs to further enhance response time.
+
+Behaviour of some CMs, like PNF~\cite{pnf_dac_asp}, can make checkpointing useless. PNF requires a priori knowledge of accessed objects within transactions. Only the first $m$ non-conflicting transactions are allowed to execute concurrently and non-preemptively. Thus, PNF makes no use of checkpointing because there is no conflict between non-preemptive transactions.
+
+Other CMs (e. g., FBLT\cite{fblt}) allow conflicting transaction to run concurrently. So, FBLT can benefit from checkpointing. FBLT, by definition, depends on LCM. LCM, in turn, depends
+on ECM (RCM) for G-EDF (G-RMA), respectively. Experimental results
+show superiority of FBLT over LCM, ECM and RCM\cite{fblt}. Thus, we extend FBLT to checpointing FBLT (CPFBLT) to improve response time than the non-checkpointing FBLT (NCPFBLT).
+
+\section{Checkpointing FBLT (CPFBLT)}\label{sec:cpfblt_design}
+
+CPFBLT depends on FBLT which in turn depends on LCM~\cite{lcmdac2012}. So, we initially illustrate LCM with required modification to implement checkpointing (Section~\ref{sec:cplcm}). Afterwards, we illustrate FBLT with checkpointing extension in (Section~\ref{sec:design_cpfblt}).
+
+\subsection{Checkpointing LCM (CPLCM)}\label{sec:cplcm}
+
+CPLCM is shown in Algorithm~\ref{alg:cplcm}. 
+%
+\begin{algorithm}[!htpd]
+\footnotesize{
+\LinesNumbered
+\KwData{\\
+$s_{i}^k\rightarrow$ interfered transaction.\\
+$s_{j}^l\rightarrow$ interfering transaction with $s_i^k$ on object $\theta_{ij}^{kl}$.\\
+$\psi\rightarrow$ predefined threshold $\in [0,1]$.\\
+$\epsilon_i^k\rightarrow$ remaining execution length of $\{s_i^k\}$.\\
+$cp_h^u(\theta) \rightarrow$ recorded checkpoint in transaction $s_h^u$ for newly accessed object $\theta$}
+\KwResult{which transaction of $s_{i}^k$ or $s_{j}^l$ aborts}
+\ForEach{newly accessed $\theta$ requested by any transaction $s_h^u$}{Add a checkpoint $cp_h^u(\theta)$\label{cplcm_step_add_new_cp}}
+\eIf{$p_i^k > p_j^l$}
+	{$s_{j}^l$ aborts and retreats to $cp_j^l(\theta_{ij}^{kl})$\label{cp-step_sicommits}\;
+	Remove all checkpoints in $s_j^l$ recorded after $cp_j^l(\theta_{ij}^{kl})$\label{cp_step_rem_cp_jl_1}}
+	{$c_{ij}^{kl}=len(s_j^l)/len(s_i^k)$\label{cp-step_cijkl}\;
+	$\alpha_{ij}^{kl}=ln(\psi)/(ln(\psi)-c_{ij}^{kl})$\label{cp-step_alphaijkl}\;
+	$\alpha=\left(len(s_i^k)-\epsilon_i^k\right)/len(s_i^k)$\label{cp_step_alpha}\;
+	\eIf{$\alpha \le \alpha_{ij}^{kl}$}
+	{$s_{i}^k$ aborts and retreats to $cp_i^k(\theta_{ij}^{kl})$\label{cp-step_siaborts}\;
+	Remove all checkpoints in $s_i^k$ recorded after $cp_i^k(\theta_{ij}^{kl})$\label{cp_step_rem_cp_ik}}
+	{$s_{j}^l$ aborts and retreats to $cp_j^l(\theta_{ij}^{kl})$\label{cp-step_sjaborts}\;
+	Remove all checkpoints in $s_j^l$ recorded after $cp_j^l(\theta_{ij}^{kl})$\label{cp_step_rem_cp_jl_2}}
+	}
+	}
+\caption{CPLCM}
+\label{alg:cplcm}
+\end{algorithm}
+%
+A new checkpoint is recorded for each newly accessed object $\theta$ by any transaction $s_h^u$ (step~\ref{cplcm_step_add_new_cp}). Checkpoint is recorded when $\theta$ is accessed for the first time because any further changes to $\theta$ will be discarded upon conflict. CPLCM uses the remaining length of $s_{i}^{k}$ when it is interfered, as well as $len(s_{j}^{l})$, to decide which transaction must be aborted. If $p_i^k > p_j^l$, then $s_{j}^l$ would be the transaction to abort because of lower priority of $s_j
+^l$, and $s_{i}^k$ started before $s_j^l$ (step~\ref{cp-step_sicommits}). Otherwise, $c_{ij}^{kl}$ is calculated (step~\ref{cp-step_cijkl}) to determine whether it is worth aborting $s_{i}^k$ in favour of $s_{j}^l$. If $len(s_j^l)$ is relatively small compared to $len(s_i^k)$, then $c_{ij}^{kl}$, and $\alpha_{ij}^{kl}$ tend to be small (steps~\ref{cp-step_cijkl},~\ref{cp-step_alphaijkl}). Consequently, $s_i^k$ aborts in favour of $s_j^l$. Also, if the remaining execution length of $s_i^k$ is long, then $\alpha$ tends to be small (step~\ref{cp_step_alpha}). Consequently, $s_i^k$ will abort in favour of $s_j^l$. When $s_i^k$ aborts upon a conflict with $s_j^l$ on object $\theta_{ij}^{kl}$, then checkpoints in $s_i^k$ recorded after $cp_i^k(\theta_{ij}^{kl})$ are removed (step~\ref{cp_step_rem_cp_ik}). Prior checkpoints to $cp_i^k(\theta_{ij}^{kl})$ remain the same. Also, if $s_j^l$ aborts in favour of $s_i^k$, then all checkpoints in $s_j^l$ recorded after $cp_j^l(\theta_{ij}^{kl})$ are removed (steps~\ref{cp_step_rem_cp_jl_1},~\ref{cp_step_rem_cp_jl_2}).
+
+\subsection{Design of CPFBLT}\label{sec:design_cpfblt}
+
+Algorithm~\ref{cpfblt-algorithm} illustrates CPFBLT. 
+%
+\begin{algorithm}[!htpd]
+\footnotesize{
+\LinesNumbered
+\KwData{\\
+$s_{i}^k$: interfered transaction.\\
+$s_{j}^l$: interfering transaction.\\
+$\delta_i^k$: the maximum number of times $s_i^k$ can be aborted during $T_i$.\\
+$\eta_i^k$: number of times $s_i^k$ has already been aborted up to now.\\
+$m\_$set: contains at most $m$ non-preemptive transactions. $m$ is number of processors.\\
+$m\_prio$: priority of any transaction in $m\_$set. $m\_prio$ is higher than any priority of any real-time task.\\
+$r(s_i^k)$: time point at which $s_i^k$ joined $m\_$set.\\
+$cp_h^u(\theta) \rightarrow$ recorded checkpoint in transaction $s_h^u$ for newly accessed object $\theta$
+}
+\KwResult{which transaction, $s_i^k$ or $s_j^l$, aborts}
+\ForEach{newly accessed $\theta$ requested by any transaction $s_h^u$}{Add a checkpoint $cp_h^u(\theta)$\label{cpfblt_step_add_new_cp}}
+\uIf{\label{cpfblt-both preemptive}$s_i^k,\, s_j^l \not\in m\_set$}
+{
+%
+Apply CPLCM (Algorithm~\ref{alg:cplcm})\label{apply cplcm}\;
+%
+\eIf{\label{cpfblt-preemptive s_i^k aborted}$s_{i}^k$ is aborted}
+{
+\eIf{$\eta_i^k<\delta_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{cpfblt-increment eta 1}\;
+}
+{
+Add $s_i^k$ to $m\_$set\label{cpfblt-add to m_set 1}\;
+Record $r(s_i^k)$\label{cpfblt-record 1}\;
+Increase priority of $s_i^k$ to $m\_prio$\label{cpfblt-increase priority 1}\;
+}
+}
+{
+Swap $s_{i}^k$ and $s_{j}^l$\;
+Go to Step~\ref{cpfblt-preemptive s_i^k aborted}\;
+}
+}
+\uElseIf{\label{cpfblt-s_j^l is non preemptive}$s_j^l \in m\_set, s_i^k \not\in m\_set$}
+{
+$s_{i}^k$ aborts and retreats to $cp_i^k(\theta_{ij}^{kl})$\;
+Remove all checkpoints in $s_i^k$ recorded after $cp_i^k(\theta_{ij}^{kl})$\label{cpfblt_step_rem_cp_ik_1}\;
+\eIf{$\eta_i^k < \delta_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{cpfblt-increment eta 2}\;
+}
+{
+Add $s_i^k$ to $m\_$set\label{cpfblt-add to m_set 2}\;
+Record $r(s_i^k)$\label{cpfblt-record 2}\;
+Increase priority of $s_i^k$ to $m\_prio$\label{cpfblt-increase priority 2}\;
+}
+}
+\uElseIf{\label{cpfblt-s_i^k is non-preemptive}$s_i^k \in m\_set, s_j^l \not\in m\_set$}
+{
+Swap $s_{i}^k$ and $s_{j}^l$\;
+Go to Step~\ref{cpfblt-s_j^l is non preemptive}\label{cpfblt-end preemptive and non preemptive}\;
+}
+\Else
+{
+\label{cpfblt-both non preemptive}
+\eIf{$r(s_i^k)<r(s_j^l)$}
+{	
+$s_{j}^l$ aborts and retreats to $cp_j^l(\theta_{ij}^{kl})$\label{cpfblt-s_i^k first in m_set}\;
+Remove all checkpoints in $s_j^l$ recorded after $cp_j^l(\theta_{ij}^{kl})$\label{cpfblt_step_rem_cp_jl}\;
+}
+{
+$s_{i}^k$ aborts and retreats to $cp_i^k(\theta_{ij}^{kl})$\label{cpfblt-s_j^l first in m_set}\;
+Remove all checkpoints in $s_i^k$ recorded after $cp_i^k(\theta_{ij}^{kl})$\label{cpfblt_step_rem_cp_ik_2}\;
+}
+}
+}
+\caption{The CPFBLT Algorithm}\label{cpfblt-algorithm}
+\end{algorithm}
+%
+A new checkpoint is recorded for each newly accessed object $\theta$ by any transaction $s_h^u$ (step~\ref{cpfblt_step_add_new_cp}). Checkpoint is recorded when $\theta$ is accessed for the first time because any further changes to $\theta$ will be discarded upon conflict. Each transaction $s_{i}^{k}$ can be aborted during $T_i$ for at most $\delta_{i}^{k}$ times. $\eta_{i}^{k}$ records  the number of times $s_{i}^{k}$ has already been aborted up to now. If $s_i^k$ and $s_j^l$ have not joined the $m\_$set yet, then they are preemptive transactions. Preemptive transactions resolve conflicts using CPLCM (step~\ref{apply cplcm}). Thus, CPFBLT defaults to CPLCM when the conflicting transactions ($s_i^k$ and $s_j^l$) have not reached their $\delta$s ($\delta_i^k$ and $\delta_j^l$). $\eta_i^k$ is incremented each time $s_{i}^k$ is aborted as long as $\eta_i^k < \delta_i^k$ (steps~\ref{cpfblt-increment eta 1} and~\ref{cpfblt-increment eta 2}). Otherwise, $s_i^k$ is added to the $m\_$ set and priority of $s_{i}^k$ is increased to $m\_prio$ (steps~\ref{cpfblt-add to m_set 1} to~\ref{cpfblt-increase priority 1} and~\ref{cpfblt-add to m_set 2} to~\ref{cpfblt-increase priority 2}). When the priority of $s_i^k$ is increased to $m\_prio$, $s_i^k$ becomes a non-preemptive transaction. Non-preemptive transactions cannot be aborted by other preemptive transactions, nor by any other real-time job (steps~\ref{cpfblt-s_j^l is non preemptive} to~\ref{cpfblt-end preemptive and non preemptive}). The $m\_$set can hold at most $m$ concurrent transactions because there are $m$ processors in the system. $r(s_i^k)$ records the time $s_i^k$ joined the $m\_$set (steps~\ref{cpfblt-record 1} and~\ref{cpfblt-record 2}). When non-preemptive transactions conflict together (step~\ref{cpfblt-both non preemptive}), the transaction that joined $m\_$set first becomes the transaction that commits first (steps~\ref{cpfblt-s_i^k first in m_set} and~\ref{cpfblt-s_j^l first in m_set}). Thus, non-preemptive transactions are executed in FIFO order. When $s_i^k$($s_j^l$) aborts due to a conflict on $\theta_{ij}^{kl}$ with $s_j^l$($s_i^k$), then $s_i^k$($s_j^l$) retreats to $cp_i^k(\theta_{ij}^{kl})$($cp_j^l(\theta_{ij}^{kl})$), respectively. All checkpoints recorded after $cp_i^k(\theta_{ij}^{kl})$($cp_j^l(\theta_{ij}^{kl})$) are removed (steps~\ref{cpfblt_step_rem_cp_ik_1},~\ref{cpfblt_step_rem_cp_jl} and~\ref{cpfblt_step_rem_cp_ik_2}). 
+
+\section{Retry cost with checkpointing}\label{sec:cpfblt rc}
+
+\begin{clm}\label{clm:basic_rc}
+Assume only two transaction $s_i^k$ and $s_j^l$ conflicting together. Let $s_i^k$ begins at time $S\left(s_i^k\right)$ and $s_j^l$ begins at time $S\left(s_j^l\right)$. Let $\triangle=S\left(s_j^l\right)-S\left(s_i^k\right)$. In the absence of checkpointing, retry cost of $s_i^k$ due to $s_j^l$ is given by
+%
+\begin{equation}
+BASE\_RC_{ij}^{kl}=\begin{cases}
+len\left(s_{j}^{l}\right)+\triangle & ,-len\left(s_{j}^{l}\right)\le\triangle\le len\left(s_{i}^{k}\right)\\
+0 & ,\, Otherwise
+\end{cases}
+\label{eq:base_rc}
+\end{equation}
+%
+$BASE\_RC_{ij}^{kl}$ is upper bounded by 
+\begin{equation}
+len\left(s_j^l\right)+\left(s_i^k\right)\label{eq:upper_base_rc}
+\end{equation}
+%
+which is the same upper bound given by Proofs of Claims 1 and 3 in~\cite{stmconcurrencycontrol:emsoft11}
+\end{clm}
+%
+\begin{proof}
+Due to absence of checkpointing, $s_i^k$ aborts and retries from its beginning due to $s_j^l$. So, $s_i^k$ retries for the period starting from $S\left(s_i^k\right)$ to the end of execution of $s_j^l$. $s_j^l$ ends execution at $S\left(s_j^l\right)+len\left(s_j^l\right)$. If $S\left(s_j^l\right)<S\left(s_i^k\right)-len\left(s_j^l\right)$, then $s_j^l$ finishes execution before start of $s_i^k$ and there will be no conflict. Also, if $S\left(s_j^l\right)>S\left(s_i^k\right)+len\left(s_i^k\right)$, then $s_j^l$ starts execution after $s_i^k$ finishes execution and there will be no conflict. Thus,~(\ref{eq:base_rc}) follows. Equation~(\ref{eq:upper_base_rc}) is derived by substitution of $\triangle$ by its maximum value (i.e., $\left(s_{i}^{k}\right)$). Claim follows.
+\end{proof}
+%
+\begin{clm}\label{clm:2_tx_cp_retry_cost}
+Assume only two transactions $s_i^k$ and $s_j^l$ conflicting on one object $\theta$. Let $\nabla_{j}^{l}$ be the time interval between the start of $s_{j}^{l}$ and the first access to $\theta$. Similarly, let $\nabla_{i}^{k}$ be the time interval between the start of $s_i^k$ and the first access to $\theta$. Let $\triangle$ be the time difference between start of $s_j^l$ relative to start of $s_i^k$. So, $\triangle < 0$ if $s_j^l$ starts before $s_i^k$. Under checkpointing, $s_{i}^{k}$ aborts and retries due to $s_{j}^{l}$
+for 
+\begin{equation}
+RC0_{ij}^{kl}=\begin{cases}
+len\left(s_{j}^{l}\right)-\nabla_{i}^{k}+\triangle & \mbox{, if }\begin{gathered}\triangle\ge\nabla_{i}^{k}-len\left(s_{j}^{l}\right)\\
+\triangle\le len\left(s_{i}^{k}\right)-\nabla_{j}^{l}
+\end{gathered}
+\\
+0 & \mbox{, Otherwise}
+\end{cases}\label{eq:2_tx_cp_retry_cost}
+\end{equation}
+%
+$RC0_{ij}^{kl}$ is upper bounded by 
+\begin{equation}
+len\left(s_{j}^{l}+s_{i}^{k}\right)-\nabla_{j}^{l}-\nabla_{i}^{k}\label{eq:rc0_upper_bound}
+\end{equation}
+
+\end{clm}
+%
+\begin{proof}
+%
+As $s_i^k$ and $s_j^l$ conflict only on one object $\theta$, there will be no conflict before both $s_i^k$ and $s_j^l$ access $\theta$. Retry cost of $s_i^k$ due to $s_j^l$ is derived by Claim~\ref{clm:basic_rc} excluding parts of $s_i^k$ and $s_j^l$ before both transactions access $\theta$. Thus, $len\left(s_i^k\right)$ in Claim~\ref{clm:basic_rc} is substituted by $len\left(s_i^k\right)-\triangle_i^k$. $len\left(s_j^l\right)$ is substituted by $len\left(s_j^l\right)-\triangle_j^l$. $\triangle$ in Claim~\ref{clm:basic_rc} is substituted by $\triangle+\nabla_j^l-\nabla_i^k$. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:cplcm_before_alpha_two_tx}
+
+Assume only two transactions $s_i^k$ and $s_j^l$ conflicting only on one object $\theta$. Under CPFBLT, $s_{i}^{k}$ and $s_j^l$ use CPLCM to resolve conflicts before $s_{i}^{k}$ and $s_j^l$ become non-preemptive transactions. Under CPLCM, $s_{i}^{k}$ aborts and retries due to only one interference of $s_{j}^{l}$ by at most 
+%
+\begin{equation}
+RC1_{ij}^{kl}=\begin{cases}
+len\left(s_{j}^{l}\right)-\nabla_{i}^{k}+\triangle & \mbox{,}\begin{gathered}\triangle\ge\nabla_{i}^{k}-len\left(s_{j}^{l}\right)\\
+\triangle\le min\left(\begin{gathered}len\left(s_{i}^{k}\right)-\nabla_{j}^{l}\\
+\alpha_{ij}^{kl}len\left(s_{i}^{k}\right)
+\end{gathered}
+\right)
+\end{gathered}
+\\
+0 & \mbox{, Otherwise}
+\end{cases}\label{eq:cplcm_before_alpha_two_tx}
+\end{equation}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Under CPLCM, any transaction $s_{i}^{k}$ aborts and retries due to $s_{j}^{l}$ if $s_{j}^{l}$
+begins before $s_{i}^{k}$ reaches $\alpha_{ij}^{kl}$ of its execution length (i.e., $\alpha_{ij}^{kl}len(s_{i}^{k})$). Following Claim~\ref{clm:2_tx_cp_retry_cost}, retry cost of $s_{i}^{k}$ due to interference of $s_{j}^{l}$ can be calculated by (\ref{eq:2_tx_cp_retry_cost}) conditioning that $\triangle\le\alpha_{ij}^{kl}len\left(s_{i}^{k}\right)$. Otherwise, $s_j^l$ will abort and retry due to $s_i^k$. So, $\triangle$ should not exceed the minimum value between $len\left(s_{i}^{k}\right)-\nabla_{j}^{l}$ and $\alpha_{ij}^{kl}len\left(s_{i}^{k}\right)$. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:closed_nested_lcm_after_alpha}
+
+Under closed nested FBLT, any (sub)transaction $s_{i*}^{k}\in\{s_{i}^{k}\}$
+uses closed nested LCM to resolve conflicts before $s_{i}^{k}$ becomes
+non-preemptive. Under closed nested LCM, $\{s_{j}^{l}\}$ aborts and
+retries due to lower priority $\{s_{i}^{k}\}$ if $s_{i}^{k}$ has
+passed $\alpha_{ij}^{kl}$ of its execution length. Under closed nested
+LCM, $\{s_{j}^{l}\}$ aborts and retries due to lower priority $\{s_{i}^{k}\}$
+by at most 
+\begin{equation}
+RC2_{ji}^{lk}=\begin{cases}
+\Pi\left(len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}-\triangle\right) & ,\,\begin{gathered}\triangle\ge\alpha_{ij}^{kl}len\left(s_{i}^{k}\right)\\
+\triangle\le len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}
+\end{gathered}
+\\
+0 & ,\mbox{ Otherwise}
+\end{cases}\label{eq:closed_nested_lcm_after_alpha_two_tx}
+\end{equation}
+ where $\nabla_{j*}^{l}$ is the time interval between starts of $s_{j}^{l}$
+and $CT(s_{i}^{k},s_{j}^{l},1)$.
+
+\end{clm}
+%
+\begin{proof}
+
+Proof is the same as proof of Claim \ref{clm:2_tx_cp_retry_cost}
+except for:
+
+$s_{i*}^{k}$ can overlap with $s_{j*}^{l}$ for $\triangle+len\left(s_{j}^{l}\right)-\nabla_{i*}^{k}$.
+Thus, $\{s_{j}^{l}\}$ can abort and retry due to $\{s_{i}^{k}\}$
+for $len\left(s_{j}^{l}+s_{i}^{k}\right)-\nabla_{j*}^{l}-\nabla_{i*}^{k}-\triangle-len\left(s_{j}^{l}\right)+\nabla_{i*}^{k}=len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}-\triangle$.
+$s_{j}^{l}$ must start not less than $\alpha_{ij}^{kl}len\left(s_{i}^{k}\right)$,
+and $\alpha_{ij}^{kl}\left(s_{i}^{k}\right)\le len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}$.
+Otherwise, $\{s_{j}^{l}\}$ will not abort and retry due to $\{s_{i}^{k}\}$
+by definition of LCM. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:closed_nested_lcm_before_delta}
+
+Let $\omega1_{i}^{j}=\begin{cases}
+\left\lceil \frac{T_{i}}{T_{j}}\right\rceil  & \mbox{, G-EDF}\\
+\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1 & \mbox{, G-RMA}
+\end{cases}$
+
+$\omega2_{i}=\begin{cases}
+1 & \mbox{, G-EDF}\\
+2 & \mbox{, G-RMA}
+\end{cases}$. Let
+\begin{eqnarray}
+RC3_{i}^{k} & = & \sum_{\forall\tau_{j}\in\gamma_{i}^{k^{ex}}}\omega1_{i}^{j}\sum_{\begin{array}{cc}
+\forall\{s_{j}^{l}\}\\
+\{\Theta_{j}^{l}\}\cap\Theta_{i}^{k^{ex}}\neq\emptyset
+\end{array}}max_{\begin{array}{cc}
+\forall\{s_{x}^{y}\},\forall\tau_{x}\\
+p_{i}^{k}\le p_{x}^{y}<p_{j}^{l}
+\end{array}}\left(RC1_{ix}^{ky}\right)\nonumber \\
+ & + & \omega2_{i}\sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\sum_{\begin{array}{cc}
+\forall\{s_{j}^{l}\}\\
+\{\Theta_{j}^{l}\}\cap\Theta_{i}^{k^{ex}}\neq\emptyset
+\end{array}}max\left(RC2_{ij}^{kl}\right)\label{eq:closed_nested_lcm_before_delta}
+\end{eqnarray}
+where $RC1_{ix}^{ky}$ is calculated by (\ref{eq:cplcm_before_alpha_two_tx})
+and $RC2_{ij}^{kl}$ is calculated by (\ref{eq:closed_nested_lcm_after_alpha_two_tx}).
+Under closed nested FBLT, the maximum retry cost of any transactional
+family $\{s_{i}^{k}\}\in\tau_{i}^{x}$ before $s_{i}^{k}$ becomes
+non-preemptive due to other conflicting (sub)transactions is upper
+bounded by 
+\begin{equation}
+RC4_{i}^{k}=\begin{cases}
+RC3_{i}^{k} & \mbox{, if }\left\lceil \frac{RC3_{i}^{k}}{len\left(s_{i}^{k}\right)}\right\rceil <\delta_{i}^{k}\\
+\delta_{i}^{k}len\left(s_{i}^{k}\right) & \mbox{, Otherwise}
+\end{cases}\label{eq:closed_nested_fblt_before_delta}
+\end{equation}
+
+\end{clm}
+%
+\begin{proof}
+
+$\omega1_{i}^{j}$ is maximum number of higher priority jobs $\tau_{j}^{h}$
+that can be released during $T_{i}$. $\omega2_{i}$ is number of
+lower priority jobs $\tau_{j}^{l}$ that can be released during $T_{i}$.
+Under G-EDF, only one instance of each $\tau_{j}$ can be of lower
+priority than current job $\tau_{i}^{f}$. So, remaining jobs of $\tau_{j}$
+is the maximum number of higher priority jobs released during $T_{i}$
+(i.e., $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $). Under G-RMA,
+all jobs of $\tau_{j}$ are of higher priority than any job of $\tau_{i}$
+if $p_{j}>p_{i}$ (i.e., $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1$).
+Also, all jobs of $\tau_{j}$ are of lower priority than any job of
+$\tau_{i}$ if $p_{j}<p_{i}$ (i.e., $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1$).
+Under G-RMA with implicit deadlines, $T_{j}>T_{i}$ if $p_{j}<p_{i}$.
+Thus, maximum number of lower priority jobs $\tau_{j}^{l}$ that can
+be released during $T_{i}$ is $2$.
+
+Under closed nested FBLT, any (sub)transaction $\{s_{i}^{k}\}$ uses
+closed nested LCM to resolve conflicts before $\{s_{i}^{k}\}$ is
+aborted $\delta_{i}^{k}$ times. If maximum abort number of $\{s_{i}^{k}\}$
+is less than $\delta_{i}^{k}$, then retry cost of $\{s_{i}^{k}\}$
+is calculated by (\ref{eq:closed_nested_lcm_before_delta}). Equation
+(\ref{eq:closed_nested_lcm_before_delta}) is derived from proof of
+Claim 5 (Claim 8) in \cite{lcmdac2012} for G-EDF (G-RMA) respectively,
+except for two points: 1) Claims 5 and 8 in \cite{lcmdac2012} calculates
+retry cost for all transactions in any job $\tau_{i}^{x}$, while
+(\ref{eq:closed_nested_lcm_before_delta}) calculates retry cost for
+only one $\{s_{i}^{k}\}$. Thus, Claims \ref{clm:cplcm_before_alpha_two_tx}
+and \ref{clm:closed_nested_lcm_after_alpha} are used to calculate
+(\ref{eq:closed_nested_lcm_before_delta}). 2) In Claim 5 in \cite{lcmdac2012},
+each higher priority transaction $s_{i}^{k}$ can be aborted only
+once by any lower priority transaction. In closed nested LCM, due
+to multiple objects per transaction and nested transactions, each
+$\{s_{i}^{k}\}$ can be aborted by all directly and transitively conflicting
+lower priority transactions. By definition of closed nested FBLT,
+$\{s_{i}^{k}\}$ retries for at most $RC3_{i}^{k}$ before $\{s_{i}^{k}\}$
+becomes non-preemptive if maximum abort number of $\{s_{i}^{k}\}$
+is less than $\delta_{i}^{k}$ (i.e., $\left\lceil \frac{RC3_{i}^{k}}{len\left(s_{i}^{k}\right)}\right\rceil <\delta_{i}^{k}$).
+Otherwise, $\{s_{i}^{k}\}$ aborts and retries for at most $\delta_{i}^{k}len\left(s_{i}^{k}\right)$
+before $\{s_{i}^{k}\}$ becomes non-preemptive. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:closed_nested_fblt_final}
+
+Let $\{s_{i}^{k}\}$ be a nested transaction under closed nested FBLT.
+Let $RC5_{ij}^{kl}=RC0_{ij}^{kl}$ as defined in Claim \ref{clm:2_tx_cp_retry_cost}
+except that $\nabla_{i*}^{k}-len\left(s_{j}^{l}\right)\le\triangle\le min\left(0,len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}\right)$.
+Let $\chi_{i}^{k}$ be set of nested transactions $\{s_{j}^{l}\}$
+that can conflict directly or transitively with $\{s_{i}^{k}\}$ arranged
+in non-increasing order of $RC0_{ij}^{kl}$. Each $\{s_{j}^{l}\}\in\chi_{i}^{k}$
+belongs to a distinct task $\tau_{j}$. $\chi_{i}^{k}(a)$ is the
+$a^{th}$ nested transaction in $\chi_{i}^{k}$. $\chi_{i}^{k}=\left\{ \{s_{j}^{l}\}|\left(\Theta_{i}^{k^{ex}}\cap\{\Theta_{j}^{l}\}\neq\emptyset\right)\wedge\left(RC5_{i}^{k}(a)\ge RC5_{i}^{k}(a+1)\right)\right\} $
+where $RC5_{i}^{k}(a)=RC5_{ij}^{kl}|\,\chi_{i}^{k}(a)=\{s_{j}^{l}\}$.
+The total retry cost of any job $\tau_{i}^{x}$ during $T_{i}$ under
+closed nested FBLT due to 1) directly and transitively conflicting
+transactions with any $\{s_{i}^{k}\}$. 2) release of higher priority
+jobs is upper bounded by 
+\begin{eqnarray}
+RC_{i} & = & \sum_{\forall s_{i}^{k}}\begin{cases}
+RC3_{i}^{k} & \,\left\lceil \frac{RC3_{i}^{k}}{len\left(s_{i}^{k}\right)}\right\rceil <\delta_{i}^{k}\\
+\delta_{i}^{k}len\left(s_{i}^{k}\right)+\sum_{\forall\chi_{i}^{k}(a),\, a=1}^{a\le m-1}RC5_{ij}^{kl}(a) & \mbox{, otherwise}
+\end{cases}\nonumber \\
+ & + & RC_{re}(T_{i})\label{eq:closed_nested_fblt_after_delta}
+\end{eqnarray}
+$RC3_{i}^{k}$ is calculated by Claim \ref{clm:closed_nested_lcm_before_delta}.
+$RC_{re}(T_{i})$ is the retry cost resulting from release of higher
+priority jobs which preempt $\tau_{i}^{x}$. $RC_{re}(T_{i})$ is
+calculated by as defined by Claim 1 in \cite{fblt}.
+
+\end{clm}
+%
+\begin{proof}
+
+Non-preemptive (sub)transaction $\{s_{i}^{k}\}$ resolves conflicts
+based on the time $\{s_{i}^{k}\}$ becomes non-preemptive. Thus, non-preemptive
+$\{s_{i}^{k}\}$ can be interfered at most by $m-1$ nested transactions
+that precede $\{s_{i}^{k}\}$ in the $m\_set$ as defined in closed
+nested FBLT. As defined by closed-nested FBLT, nested transactions
+in the $m\_$set are arranged in FIFO order. Thus, if $\{s_{j}^{l}\}$
+precedes $\{s_{i}^{k}\}$ in $m\_$set, then $\{s_{i}^{k}\}$ must
+have started as a non-preemptive transaction not before non-preemptive
+$\{s_{j}^{l}\}$. So, $RC0_{ij}^{kl}$ is modified to $RC5_{ij}^{kl}$
+to indicate the proper time interval for start of $s_{j}^{l}$ relative
+to $s_{i}^{k}$. The $m-1$ nested transactions preceding $\{s_{i}^{k}\}$
+result in maximum retry cost to $\{s_{i}^{k}\}$ (i.e., $\sum_{\forall\chi_{i}^{k}(a),\, a=1}^{a\le m-1}RC5_{ij}^{kl}(a)$).
+Based on the previous notion and Claims \ref{clm:closed_nested_lcm_before_delta},
+\ref{clm:2_tx_cp_retry_cost} and Claim 1 in \cite{fblt}, Claim
+follows.
+%
+\end{proof}
+%
+Any newly released task $\tau_{i}^{x}$ can be blocked by $m$ lower
+priority non-preemptive nested transactions. $\tau_{i}^{x}$ has to
+wait at most for the whole length of a non-preemptive nested transaction.
+Thus, $D_{i}$ is independent of nesting. Blocking time of $\tau_{i}^{x}$
+($D_{i}$) due to the longest $m$ lower priority non-preemptive nested
+transaction is calculated by Claim 3 in \cite{fblt}. Claim 2 in \cite{fblt}
+is used to calculate response time under closed nested FBLT where
+$RC_{to}(T_{i})$ is calculated by (\ref{eq:closed_nested_fblt_after_delta}).
+
+
+\section{Closed nested vs. non-nested FBLT}\label{sec:schedulabiltiy comparison}
+
+\begin{clm}\label{clm:closed_nested_non_nested_fblt_schedulabiltiy_comp}
+
+Schedulability of closed-nested FBLT is better or equal to non-nested
+FBLT's if the conflicting (sub)transactions in each $\{s_{i}^{k}\}$
+begin lately relative to start of $s_{i}^{k}$.
+
+\end{clm}
+%
+\begin{proof}
+
+Let upper bound on retry cost of any task $\tau_{i}^{x}$ during $T_{i}$
+under non-nested FBLT be denoted as $RC_{i}^{nn}$. $RC_{i}^{nn}$
+is calculated by Claim 1 in \cite{fblt}. Let upper bound on retry
+cost of any task $\tau_{i}^{x}$ during $T_{i}$ under closed-nested
+FBTL be denoted as $RC_{i}^{cn}$. $RC_{i}^{cn}$ is calculated by
+(\ref{eq:closed_nested_fblt_after_delta}). Let $D_{i}$ be the upper
+bound on blocking time of any newly released task $\tau_{i}^{x}$
+during $T_{i}$ due to lower priority jobs. Any newly released task
+$\tau_{i}^{x}$ can suffer $D_{i}$ blocking time if there are $m$
+non-preemptive executing transactions. Thus, $D_{i}$ is the same
+for both closed-nested and non-nested FBLT. $D_{i}$ is calculated
+by Claim 2 in \cite{fblt} for both closed-nested and non-nested FBLT.
+For closed-nested FBLT schedulability to be better than schedulability
+of non-nested FBLT: 
+\begin{equation}
+\sum_{\forall\tau_{i}}\frac{c_{i}+RC_{i}^{cn}+D_{i}}{T_{i}}\le\sum_{\forall\tau_{i}}\frac{c_{i}+RC_{i}^{nn}+D_{i}}{T_{i}}\label{eq:schedulability_comparison}
+\end{equation}
+$\because$ $D_{i}$ and $c_{i}$ are the same for each $\tau_{i}$
+under closed-nested and non-nested FBLT, then (\ref{eq:schedulability_comparison})
+holds if:
+\[
+\forall\tau_{i},\, RC_{i}^{cn}\le RC_{i}^{nn}
+\]
+
+
+\[
+\therefore\,\delta_{i}^{k}len\left(s_{i}^{k}\right)+\sum_{\forall\chi_{i}^{k}(a),\, a=1}^{a\le m-1}RC5_{ij}^{kl}(a)\le\delta_{i}^{k}len\left(s_{i}^{k}\right)+\sum_{\forall s_{iz}^{k}\in\Upsilon_{i}^{k}}len\left(s_{iz}^{k}\right)
+\]
+\begin{equation}
+\therefore\,\sum_{\forall\chi_{i}^{k}(a),\, a=1}^{a\le m-1}RC5{}_{ij}^{kl}(a)\le\sum_{\forall s_{iz}^{k}\in\Upsilon_{i}^{k}}len\left(s_{iz}^{k}\right)\label{eq:closed_nest_vs_non_nested_fblt_1}
+\end{equation}
+where $\Upsilon_{i}^{k}$ is the set of at most $m-1$ longest transactions
+conflicting directly or transitively with $s_{i}^{k}$ as defined
+in Claim 1 in \cite{fblt}. If $\{s_{j}^{l}\}=RC5_{ij}^{kl}(a)$,
+then by definition of $RC5_{ij}^{kl}$, $\triangle=len(s_{i}^{k})-\nabla_{j*}^{l}$
+if $len(s_{i}^{k})-\nabla_{j*}^{l}<0$. So, $max\left(RC5_{ij}^{kl}(a)\right)=\Pi\left(len(s_{j}^{l})-\nabla_{i*}^{k}\right)$.
+$\therefore$ by substitution in (\ref{eq:closed_nest_vs_non_nested_fblt_1})
+\begin{equation}
+\therefore\,\sum_{\forall\{s_{j}^{l}\}=\chi_{i}^{k}(a),\, a=1}^{a\le m-1}\Pi\left(len(s_{j}^{l})-\nabla_{i*}^{k}\right)\le\sum_{\forall s_{iz}^{k}\in\Upsilon_{i}^{k}}len\left(s_{iz}^{k}\right)\label{eq:closed_nest_vs_non_nested_fblt_2}
+\end{equation}
+(\ref{eq:closed_nest_vs_non_nested_fblt_2}) holds as $\nabla_{i*}^{k}$
+increases. Claim follows.
+%
+\end{proof}
+%
+\section{Conclusion}\label{sec:conclusion}
+
+Past research on real-time CMs focused on non-nested transactions. Nested transactions can be flat, closed and open. In this paper, we analysed effect of closed nesting over FBLT CM. Analysis shows that retry cost, hence schedulability, can be reduced if conflicting (sub)transactions start lately relative to their roots. Some CMs make no use of nesting due to behaviour of that CM (e.g, under PNF, all non-preemptive transactions are non-conflicting). Experimental evaluation of closed-nested FBLT, compared to non-nested FBLT, will be done in future work. Also, open nesting will be analysed to reveal whether retry cost and schedulability can be more improved than closed and non-nested FBLT. 
+
+\bibliographystyle{abbrv}
+\bibliography{/e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography}
+
+\end{document}
+%SH_END

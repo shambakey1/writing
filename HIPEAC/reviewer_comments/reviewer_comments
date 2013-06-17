@@ -1,0 +1,204 @@
+
+
+Referee: 1
+
+Recommendation: Needs Major Revision
+
+Comments:
+The paper presents First Bounded, Last Timestamp (FBLT), a contention manager for resolving transactional conflicts in the context of Software Transactional Memory (STM) concurrency control for embedded multicore real-time software. FBLT builds upon a previous proposal by the same authors (Priority contention manager with Negative value First or PNF), solving the two major hurdles that it presents: i) PNF requires a-priori knowledge of all objects accessed by each transaction; ii) PNF is a centralized contention manager that use locks in its implementation. The authors formally show under what circumstances FBLT’s schedulability is equal to or better than other previous proposals (ECM, RCM, LCM and PNF). Finally, through experimentation using the Rochester STM framework /real-time Linux it is shown that FBLT has equal to or shorter retry cost than ECM, RCM and LCM, and a little bit longer than PNF (which requires a-priori knowledge of all objects accessed by each transaction).
+The paper focuses on an interesting topic (using STM as a concurrency control technique for multicore embedded real-time software) and is well-written and organized. However, my main concern with this paper is its lack of novelty considering the previous works by the same authors. FBLT is somehow a small extension of the proposals already published by the same authors. In fact, part of the material included in this paper (several proofs for example) already appeared in that previous works. Although the authors clearly state the contribution of this work, I am not sure that it is relevant enough to deserve publication in HiPEAC 13 conference. The paper would be much more interesting if for example the authors also concentrate on the problem of supporting nested transactions.
+Minor things:
+When printed using a BN printer, figures 1, 2 and 3 are almost illegible. The authors should consider improving the legibility of these figures.
+There are problems with some references (i.e. Marathe??, Devi06).
+
+
+Additional Questions:
+Review's recommendation for paper type: Full length technical paper
+
+Should this paper be considered for a best paper award?: No
+
+Does this paper present innovative ideas or material?: Yes
+
+In what ways does this paper advance the field?: The paper extends the proposals already published by the same authors in the context of contention management for resolving transactional conflicts in Software Transactional Memory (STM) concurrency control for embedded multicore real-time software. In this way the paper advance the field, but not in a significant manner.
+
+Is the information in the paper sound, factual, and accurate?: Yes
+
+If not, please explain why.:
+
+Rate the paper on its contribution to the body of knowledge in architecture and code optimization (none=1, very important=5): 3
+
+What are the major contributions of the paper?: The proposal of the FBLT contention manager, which in contrast to PNF does not require a-priori knowledge of objects accesed by transactions, and is a descentralized contention manager that does not use locks in its implementation.
+
+Rate how well the ideas are presented (very difficult to understand=1 very easy to understand =5): 4
+
+Rate the overall quality of the writing (very poor=1, excellent=5): 4
+
+Does this paper cite and use appropriate references?: Yes
+
+If not, what important references are missing?:
+
+Should anything be deleted from or condensed in the paper?: No
+
+If so, please explain.:
+
+Is the treatment of the subject complete?: Yes
+
+If not, What important details / ideas/ analyses are missing?:
+
+What type of paper is this?: This paper is an original, previously unpublished, paper (to the best of my knowledge)
+
+<b>Recommendations to the authors</b>
+<br>Please list some concrete actionable items to improve the paper. When the paper is resubmitted, the authors will at least have to explain how they dealt with these recommendations.: The paper would be much more interesting if for example the authors also discuss how nested transactions can be supported.
+
+
+Referee: 2
+
+Recommendation: Reject
+
+Comments:
+This paper is generally well-written, and comprises a great deal of detail and in-depth analysis of the real-time scheduling problem for STM.  However I feel that more could be done in the writing to make this niche topic more digestible for a broader audience.
+
+
+Additional Questions:
+Review's recommendation for paper type: Full length technical paper
+
+Should this paper be considered for a best paper award?: No
+
+Does this paper present innovative ideas or material?: Yes
+
+In what ways does this paper advance the field?: The authors present a contention manager for real-time STM that has better theoretical schedulability than their prior approach, and shows a lower retry cost on a synthetic benchmark.
+
+Is the information in the paper sound, factual, and accurate?: Yes
+
+If not, please explain why.: I did not find inaccuracy, although I did not verify all of the equations/proofs.
+
+Rate the paper on its contribution to the body of knowledge in architecture and code optimization (none=1, very important=5): 2
+
+What are the major contributions of the paper?: As described above, and also the description of a new worst-case conditions for real-time TM contention management.
+
+Rate how well the ideas are presented (very difficult to understand=1 very easy to understand =5): 2
+
+Rate the overall quality of the writing (very poor=1, excellent=5): 4
+
+Does this paper cite and use appropriate references?: Yes
+
+If not, what important references are missing?: I found no related work to be missing.
+
+Should anything be deleted from or condensed in the paper?: Yes
+
+If so, please explain.: To be most relevant to HiPEAC/taco, I think the paper should focus more on experimental results and less on theoretical, but this is only my opinion.
+
+Is the treatment of the subject complete?: No
+
+If not, What important details / ideas/ analyses are missing?: Again I wish the experimental evaluation was more thorough and convincing.
+
+What type of paper is this?: This paper is an original, previously unpublished, paper (to the best of my knowledge)
+
+<b>Recommendations to the authors</b>
+<br>Please list some concrete actionable items to improve the paper. When the paper is resubmitted, the authors will at least have to explain how they dealt with these recommendations.: Section1: "two transactions conflict if they access the same object and ***at least*** one access is a write.  This statement: "this requires bounding transactional retries, as real-time-threads, which subsume transactions, must satisfy time constraints" doesn't make sense.  What do you mean by real-time threads subsuming transactions?
+
+There are lots of acronyms used in section1 but few of them defined.  EDF, ECM, RMS, RCM, PNF, LCM, G-RMA.  This makes section1 fairly unreadable. It would be nice if you could spend more time explaining the basic idea of these schemes.
+
+Section2: When you say "section", do you mean the same thing as "transaction"? You should clearly state this somewhere.  What does it mean to release a section?  Is this the same as committing a transaction?
+
+You describe a worst-case scenario, but claim there is an even worse case---you  may as well describe what that worse case is here.  Also, I think description of this new worst case is one of your new contributions, you should hoist/highlight this aspect, right now it is buried in the middle of section2.
+
+Figure1: it is hard to differentiate the lines in these graphs, it would help if they each had a different point style (in addition to line style).  Also, maybe there are too many lines per graph?
+
+I didn't understand the different between fig1a and fig1b; Fig1b doesn't have the LF lines, but the remaining lines look different than in fig1a.  Why is fig1b necessary?
+
+You measure impact on retry cost, but not on final response time?  In otherwords to me it seems missing to show the overall benefit of this new approach.  Retry cost alone is only one aspect of the system.
+
+Of course it would be nicer to move beyond synthetic benchmark to something more compelling.
+
+
+Referee: 3
+
+Recommendation: Reject
+
+Comments:
+(There are no comments.)
+
+Additional Questions:
+Review's recommendation for paper type: Short technical note
+
+Should this paper be considered for a best paper award?: No
+
+Does this paper present innovative ideas or material?: Yes
+
+In what ways does this paper advance the field?: The paper proposes an improved conflict resolution and contention management algorithm for software transactional memory.
+
+Is the information in the paper sound, factual, and accurate?: Yes
+
+If not, please explain why.:
+
+Rate the paper on its contribution to the body of knowledge in architecture and code optimization (none=1, very important=5): 2
+
+What are the major contributions of the paper?: The main contirbution is what is expected to be a better conflict resolution and conflict management approach. The paper shows that in theory it should work better, and experimentally shows that it does work marginally better on syntethic workloads.
+
+Rate how well the ideas are presented (very difficult to understand=1 very easy to understand =5): 1
+
+Rate the overall quality of the writing (very poor=1, excellent=5): 2
+
+Does this paper cite and use appropriate references?: No
+
+If not, what important references are missing?: There has been a LOT of work in HTMs on conflict avoidance and some on conflict resolution. Considering that this is a TACO submission, it really should cite some of these papers.
+
+Should anything be deleted from or condensed in the paper?: No
+
+If so, please explain.:
+
+Is the treatment of the subject complete?: Yes
+
+If not, What important details / ideas/ analyses are missing?:
+
+What type of paper is this?: This paper is an original, previously unpublished, paper (to the best of my knowledge)
+
+<b>Recommendations to the authors</b>
+<br>Please list some concrete actionable items to improve the paper. When the paper is resubmitted, the authors will at least have to explain how they dealt with these recommendations.: This paper represents a marginal improvement over prior work, so the improtance of the contribution depends solely on how much imprevement there is. the results in the paper are based on modeling of synthetic workloads, and the improvement is not impressive. With this in mind, I would really like to see results based on real applications - this type of evaluation is a de facto standard for TACO papers anyway.
+
+
+Referee: 4
+
+Recommendation: Needs Major Revision
+
+Comments:
+(There are no comments.)
+
+Additional Questions:
+Review's recommendation for paper type: Full length technical paper
+
+Should this paper be considered for a best paper award?: No
+
+Does this paper present innovative ideas or material?: Yes
+
+In what ways does this paper advance the field?: Introduces a new real-time transactional contention manager (for STMs). it basically bounds the retry count for each individual transaction and forces it to become non-premptive subsequently.
+
+Is the information in the paper sound, factual, and accurate?: No
+
+If not, please explain why.: The paper was fairly dense and wasn;t easy to read. So I am not sure about all the analysis in it -- i;d have preferred a "don't know" optionj above.
+
+Rate the paper on its contribution to the body of knowledge in architecture and code optimization (none=1, very important=5): 3
+
+What are the major contributions of the paper?: a new contention manager for real time STMs.
+
+Rate how well the ideas are presented (very difficult to understand=1 very easy to understand =5): 2
+
+Rate the overall quality of the writing (very poor=1, excellent=5): 3
+
+Does this paper cite and use appropriate references?: Yes
+
+If not, what important references are missing?:
+
+Should anything be deleted from or condensed in the paper?: No
+
+If so, please explain.:
+
+Is the treatment of the subject complete?: Yes
+
+If not, What important details / ideas/ analyses are missing?:
+
+What type of paper is this?: This paper is an original, previously unpublished, paper (to the best of my knowledge)
+
+<b>Recommendations to the authors</b>
+<br>Please list some concrete actionable items to improve the paper. When the paper is resubmitted, the authors will at least have to explain how they dealt with these recommendations.: The paper is very dense to read. it really needs to be made more accessibe -- the dense mathematical treatment doesn't convey much intuition.

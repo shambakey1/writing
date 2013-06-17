@@ -1,0 +1,2261 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.5.17)  27 AUG 2012 20:07
+entering extended mode
+ %&-line parsing enabled.
+**tech-report.tex
+(./tech-report.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(/usr/share/texmf-texlive/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-texlive/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip43
+\subfigcapskip=\skip44
+\subfigcaptopadj=\dimen103
+\subfigbottomskip=\skip45
+\subfigcapmargin=\dimen104
+\subfiglabelskip=\skip46
+\c@subfigure=\count87
+\c@lofdepth=\count88
+\c@subtable=\count89
+\c@lotdepth=\count90
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip47
+\subfig@bottom=\skip48
+)
+(/usr/share/texmf-texlive/tex/latex/paralist/paralist.sty
+Package: paralist 2002/03/18 v2.3b Extended list environments (BS)
+\pltopsep=\skip49
+\plpartopsep=\skip50
+\plitemsep=\skip51
+\plparsep=\skip52
+\pl@lab=\toks14
+)
+(/usr/share/texmf-texlive/tex/latex/comment/comment.sty
+\CommentStream=\write3
+
+Excluding comment 'comment')
+(/usr/share/texmf-texlive/tex/latex/tools/array.sty
+Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen105
+\extrarowheight=\dimen106
+\NC@list=\toks15
+\extratabsurround=\skip53
+\backup@length=\skip54
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip55
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks16
+\ex@=\dimen107
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen108
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count91
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count92
+\leftroot@=\count93
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count94
+\DOTSCASE@=\count95
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen109
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count96
+\c@MaxMatrixCols=\count97
+\dotsspace@=\muskip10
+\c@parentequation=\count98
+\dspbrk@lvl=\count99
+\tag@help=\toks17
+\row@=\count100
+\column@=\count101
+\maxfields@=\count102
+\andhelp@=\toks18
+\eqnshift@=\dimen110
+\alignsep@=\dimen111
+\tagshift@=\dimen112
+\tagwidth@=\dimen113
+\totwidth@=\dimen114
+\lineht@=\dimen115
+\@envbody=\toks19
+\multlinegap=\skip56
+\multlinetaggap=\skip57
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks21
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen116
+\Gin@req@width=\dimen117
+)
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2009/06/22 v3.00
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+(/usr/share/texmf-texlive/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 285.
+LaTeX Info: Redefining \nocite on input line 356.
+Package: cite 2009/08/29  v 5.2
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip11
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+) (./changepage.sty
+Package: changepage 2009/10/20 v1.0c check page and change page layout
+\c@cp@cntr=\count103
+\cp@tempcnt=\count104
+)
+(./algorithm2e.sty
+Package: algorithm2e 2008/00/00 v3.10 algorithms environments
+\c@AlgoLine=\count105
+ (/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf-texlive/tex/latex/tools/xspace.sty
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/relsize.sty
+Package: relsize 2003/07/04 ver 3.1
+)
+********************************************************
+Package `algorithm2e' Release 4.01 -- december 14 2009 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip58
+\skiplinenumber=\skip59
+\skiprule=\skip60
+\skiphlne=\skip61
+\skiptext=\skip62
+\skiplength=\skip63
+\algomargin=\skip64
+\skipalgocfslide=\skip65
+\algowidth=\dimen118
+\inoutsize=\dimen119
+\inoutline=\dimen120
+\interspacetitleruled=\dimen121
+\interspacealgoruled=\dimen122
+\interspacetitleboxruled=\dimen123
+\algocf@inoutbox=\box28
+\algocf@inputbox=\box29
+\AlCapSkip=\skip66
+\AlCapHSkip=\skip67
+\algocf@nlbox=\box30
+\algocf@hangingbox=\box31
+\algocf@capbox=\box32
+\algoheightruledefault=\skip68
+\algoheightrule=\skip69
+\algotitleheightruledefault=\skip70
+\algotitleheightrule=\skip71
+\c@algocfline=\count106
+\c@algocfproc=\count107
+\c@algocf=\count108
+\algocf@algoframe=\box33
+\algocf@algobox=\box34
+)
+\c@clm=\count109
+\c@proof=\count110
+\c@mydef=\count111
+ (./tech-report.aux
+
+LaTeX Warning: Label `eq26' multiply defined.
+
+
+LaTeX Warning: Label `eq32' multiply defined.
+
+
+LaTeX Warning: Label `sec:fblt vs lock free' multiply defined.
+
+
+LaTeX Warning: Label `clm:fblt_edf_lock-free' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_1' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_8' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_6' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_7' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_9' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_10' multiply defined.
+
+
+LaTeX Warning: Label `fig:fblt_results_1_obj_all' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:fblt_results_1_obj_all' multiply defined.
+
+
+LaTeX Warning: Label `fig:fblt_results_1_obj_without_lock_free' multiply define
+d.
+
+
+LaTeX Warning: Label `sub@fig:fblt_results_1_obj_without_lock_free' multiply de
+fined.
+
+
+LaTeX Warning: Label `fig:fblt_results_uniobject' multiply defined.
+
+
+LaTeX Warning: Label `fig-RC-fblt-20t-20obj' multiply defined.
+
+
+LaTeX Warning: Label `fig-RC-fblt-8t-20obj' multiply defined.
+
+
+LaTeX Warning: Label `fig-RC-fblt-20t-20obj' multiply defined.
+
+)
+\openout1 = `tech-report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Try loading font information for U+msa on input line 43.
+ (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 43.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+) [1
+
+]
+Overfull \hbox (1.47061pt too wide) in paragraph at lines 61--62
+\OT1/cmr/m/n/10 Earliest-Deadline-First (EDF) CM or Rate Mono-tonic As-sign-men
+t (RMA)-based
+ []
+
+[2] [3]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 133.
+
+ (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 133.
+ [4] [5]
+File: figures/figure9-a.eps Graphic file (type eps)
+
+<figures/figure9-a.eps>
+File: figures/figure9-b.eps Graphic file (type eps)
+ <figures/figure9-b.eps>
+File: figures/figure5-a.eps Graphic file (type eps)
+ <figures/figure5-a.eps>
+File: figures/figure5-b-1.eps Graphic file (type eps)
+
+<figures/figure5-b-1.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 198--198
+[]\OT1/cmr/m/n/8 (b) Lazy val-i-da-tion with
+ []
+
+File: figures/figure5-c-1.eps Graphic file (type eps)
+<figures/figure5-c-1.eps> [6] [7]
+Overfull \hbox (4.44978pt too wide) in paragraph at lines 267--268
+[]\OT1/cmr/m/n/10 Here, $[] [][] \OML/cmm/m/it/10 len []$ \OT1/cmr/m/n/10 is th
+e con-tri-bu-tion of all in-stances
+ []
+
+File: figures/figure6-a-1.eps Graphic file (type eps)
+<figures/figure6-a-1.eps>
+File: figures/figure6-b.eps Graphic file (type eps)
+ <figures/figure6-b.eps>
+File: figures/circle.eps Graphic file (type eps)
+ <figures/circle.eps>
+File: figures/dotted_circle.eps Graphic file (type eps)
+
+<figures/dotted_circle.eps> [8]
+File: figures/figure7.eps Graphic file (type eps)
+ <figures/figure7.eps>
+Overfull \hbox (48.50731pt too wide) in paragraph at lines 333--341
+\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]\OT1/cmr/m/n/10 )$, 
+whereas $^^H[]$ (the re-sult of (9[]) for $\OML/cmm/m/it/10 ^^R[]$\OT1/cmr/m/n/
+10 ) will be $[][] [] \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (76.26729pt too wide) in paragraph at lines 343--349
+\OT1/cmr/m/n/10 sec-tions that share $\OML/cmm/m/it/10 ^^R[]$ \OT1/cmr/m/n/10 w
+ith $\OML/cmm/m/it/10 T[]$\OT1/cmr/m/n/10 . Then, $^^H[]$ for $\OML/cmm/m/it/10
+ ^^R[]$ \OT1/cmr/m/n/10 will re-sult in $[][] [] \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (7.3761pt too wide) in paragraph at lines 343--349
+\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]\OT1/cmr/m/n/10 ) + 
+\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]\OT1/cmr/m/n/10 )$, 
+and $^^H[]$ will be $[][] [] +
+ []
+
+
+Overfull \hbox (9.60066pt too wide) in paragraph at lines 343--349
+\OML/cmm/m/it/10 Const[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 p[]g[]s[]\OT1/cmr/m
+/n/10 (\OML/cmm/m/it/10 ^^R[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/
+it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]\OT1/cmr/m/n/10 ) + \OML/cmm/m/
+it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]\OT1/cmr/m/n/10 )$. So, $^^H[] 
+\OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 ^^H[] = (\OML/cmm/m/it/10 p[]g[] \OMS/cmsy
+/m/n/10 ^^@ \OT1/cmr/m/n/10 1)(\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/
+it/10 ^^R[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@
+ []
+
+[9] [10]
+File: figures/figure10.eps Graphic file (type eps)
+ <figures/figure10.eps> [11]
+File: figures/figure11.eps Graphic file (type eps)
+ <figures/figure11.eps> [12]
+LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 502.
+
+Overfull \hbox (17.0781pt too wide) in paragraph at lines 531--531
+ []|\OT1/cmr/m/n/9 Multiprocessor| 
+ []
+
+
+Overfull \hbox (2.9518pt too wide) in paragraph at lines 533--533
+ []|\OT1/cmr/m/n/9 Partitioned| 
+ []
+
+
+Overfull \hbox (1.01375pt too wide) in paragraph at lines 565--566
+ []|$[]$\OT1/cmr/m/n/9 JLSP| 
+ []
+
+
+Overfull \hbox (104.76776pt too wide) in paragraph at lines 529--568
+[][] 
+ []
+
+[13] [14]
+Overfull \hbox (0.50194pt too wide) in paragraph at lines 622--624
+\OT1/cmr/m/n/10 In [7], global FMLP has a max-i-mum s-oblivious pi-blocking cos
+t of $^^B(\OML/cmm/m/it/10 n\OT1/cmr/m/n/10 )$, whereas
+ []
+
+[15] [16]
+File: figures/figure14.eps Graphic file (type eps)
+ <figures/figure14.eps> [17] [18] [19]
+File: figures/figure15-a.eps Graphic file (type eps)
+ <figures/figure15-a.eps>
+File: figures/figure15-b.eps Graphic file (type eps)
+
+<figures/figure15-b.eps> [20] [21]
+File: figures/figure12-a.eps Graphic file (type eps)
+ <figures/figure12-a.eps>
+File: figures/figure12-b.eps Graphic file (type eps)
+
+<figures/figure12-b.eps> [22]
+File: figures/figure13.eps Graphic file (type eps)
+ <figures/figure13.eps> [23] [24] [25]
+File: figures/figure16.eps Graphic file (type eps)
+
+<figures/figure16.eps> [26] [27] [28]
+File: figures/figure18.eps Graphic file (type eps)
+ <figures/figure18.eps> [29] [30] [31]
+[32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46]
+Overfull \hbox (2.45627pt too wide) in paragraph at lines 2142--2149
+\OT1/cmr/m/n/10 Assume that $\OML/cmm/m/it/10 g\OT1/cmr/m/n/10 (\OML/cmm/m/it/1
+0 ^^\[]\OT1/cmr/m/n/10 )[] \OMS/cmsy/m/n/10 ! \OT1/cmr/m/n/10 0$. From (74[]), 
+we note that by keep-ing ev-ery $\OML/cmm/m/it/10 len\OT1/cmr/m/n/10 ([]) \OMS/
+cmsy/m/n/10 ^^T
+ []
+
+[47] [48] [49] [50]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[51] [52]
+Overfull \hbox (15.2621pt too wide) in paragraph at lines 2429--2436
+\OT1/cmr/m/n/10 preemptive trans-ac-tion. As $\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/
+10 (\OML/cmm/m/it/10 ^^R[]; ^^R[]\OT1/cmr/m/n/10 )$ is a pre-emp-tive trans-ac-
+tion, $\U/msa/m/n/10 )  \OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^
+^R[]; ^^R[]\OT1/cmr/m/n/10 )$
+ []
+
+[53] [54] [55] [56]
+Overfull \hbox (27.552pt too wide) in paragraph at lines 2767--2769
+[]\OT1/cmr/m/n/10 Since $\OML/cmm/m/it/10 len [] \OMS/cmsy/m/n/10 ^^U \OML/cmm/
+m/it/10 len\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 )$, (91[]) hold
+s if $\OML/cmm/m/it/10 ^^N[] \OMS/cmsy/m/n/10 ^^T [][] []$\OT1/cmr/m/n/10 . $[]
+[] []$
+ []
+
+[57]
+Overfull \hbox (21.2859pt too wide) detected at line 2847
+\OML/cmm/m/it/10 ^^N[]len\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 )
+ \OMS/cmsy/m/n/10 ^^T [] ^^@ [] \OML/cmm/m/it/10 len\OT1/cmr/m/n/10 (\OML/cmm/m
+/it/10 s[]\OT1/cmr/m/n/10 )
+ []
+
+
+Overfull \hbox (8.47235pt too wide) detected at line 2851
+\OML/cmm/m/it/10 ^^N[] \OMS/cmsy/m/n/10 ^^T [] ^^@ [] \OML/cmm/m/it/10 len []
+ []
+
+[58]
+Overfull \hbox (36.95862pt too wide) in paragraph at lines 2859--2860
+\OT1/cmr/m/n/10 retry. Thus, $\OML/cmm/m/it/10 ^^W[]$ \OT1/cmr/m/n/10 is mod-i-
+fied to $[] = []$.
+ []
+
+[59]
+Overfull \hbox (120.40472pt too wide) in paragraph at lines 2928--2932
+\OT1/cmr/m/n/10 tions con-flict-ing with $\OML/cmm/m/it/10 s[]$ \OT1/cmr/m/n/10
+ is de-noted as $\OML/cmm/m/it/10 ^^W[] \OT1/cmr/m/n/10 = []$. 
+ []
+
+[60]
+Overfull \hbox (0.10028pt too wide) detected at line 2955
+\OML/cmm/m/it/10 ^^N[]len\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 )
+ \OMS/cmsy/m/n/10 ^^T [] \OT1/cmr/m/n/10 + [] \OML/cmm/m/it/10 len []
+ []
+
+[61] [62]
+Overfull \hbox (55.29198pt too wide) in paragraph at lines 3057--3058
+\OT1/cmr/m/n/10 tive retry. Thus, $\OML/cmm/m/it/10 ^^W[]$ \OT1/cmr/m/n/10 is m
+od-i-fied to $[] = []$.
+ []
+
+
+Overfull \hbox (27.44217pt too wide) in paragraph at lines 3070--3073
+\OT1/cmr/m/it/10 con-flict-ing with $\OML/cmm/m/it/10 s[]$\OT1/cmr/m/it/10 , an
+d the max-i-mum length trans-ac-tion in $\OML/cmm/m/it/10 ^^\[]$\OT1/cmr/m/it/1
+0 . Let $[][] \OML/cmm/m/it/10 s[]$
+ []
+
+[63]
+Overfull \hbox (37.66182pt too wide) in paragraph at lines 3122--3133
+\OT1/cmr/m/n/10 the right hand side of (115[]). Let $\OML/cmm/m/it/10 ^^O \OT1/
+cmr/m/n/10 = []$,
+ []
+
+[64] [65] [66] [67] [68] [69]
+File: figures/Abr_dur_5t_nl_g_30_0.2_0.2_0.2_1.eps Graphic file (type eps)
+ <figures/Abr_dur_5t_nl_g_30_0.2_0.2_0.2_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.2_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.2_0.2_0.2_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.2_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.2_0.2_0.2_1.eps>
+File: figures/Res_Time_5t_nl_g_30_0.2_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_5t_nl_g_30_0.2_0.2_0.2_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.2_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.2_0.2_0.2_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.2_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.2_0.2_0.2_1.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 3541--3550
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3541--3550
+[]
+ []
+
+[70] [71] [72]
+File: figures/Abr_dur_4t_5obj_all_100wr.eps Graphic file (type eps)
+ <figures/Abr_dur_4t_5obj_all_100wr.eps>
+File: figures/Abr_dur_8t_9obj_all_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_8t_9obj_all_100wr.eps>
+File: figures/Abr_dur_20t_21obj_all_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_21obj_all_100wr.eps>
+
+LaTeX Warning: Float too large for page by 36.07103pt on input line 3591.
+
+File: figures/Abr_dur_4t_5obj_100wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_5obj_100wr.eps>
+File: figures/Abr_dur_8t_9obj_100wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_9obj_100wr.eps>
+File: figures/Abr_dur_20t_21obj_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_21obj_100wr.eps>
+
+LaTeX Warning: Float too large for page by 36.07103pt on input line 3615.
+
+File: figures/Abr_dur_4t_50obj_40wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_50obj_40wr.eps>
+File: figures/Abr_dur_8t_90obj_40wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_90obj_40wr.eps>
+File: figures/Abr_dur_20t_210obj_40wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_210obj_40wr.eps>
+
+LaTeX Warning: Float too large for page by 34.68214pt on input line 3639.
+
+File: figures/Abr_dur_4t_50obj_80wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_50obj_80wr.eps>
+File: figures/Abr_dur_8t_90obj_80wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_90obj_80wr.eps>
+File: figures/Abr_dur_20t_210obj_80wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_210obj_80wr.eps>
+
+LaTeX Warning: Float too large for page by 34.68214pt on input line 3664.
+
+File: figures/Abr_dur_4t_50obj_100wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_50obj_100wr.eps>
+File: figures/Abr_dur_8t_90obj_100wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_90obj_100wr.eps>
+File: figures/Abr_dur_20t_210obj_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_210obj_100wr.eps>
+
+LaTeX Warning: Float too large for page by 34.68214pt on input line 3688.
+
+File: figures/Abr_dur_4t_100obj_40wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_100obj_40wr.eps>
+File: figures/Abr_dur_8t_180obj_40wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_180obj_40wr.eps>
+File: figures/Abr_dur_20t_420obj_40wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_420obj_40wr.eps>
+
+LaTeX Warning: Float too large for page by 34.68214pt on input line 3712.
+
+File: figures/Abr_dur_4t_100obj_80wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_100obj_80wr.eps>
+File: figures/Abr_dur_8t_180obj_80wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_180obj_80wr.eps>
+File: figures/Abr_dur_20t_420obj_80wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_420obj_80wr.eps>
+
+LaTeX Warning: Float too large for page by 34.68214pt on input line 3736.
+
+File: figures/Abr_dur_4t_100obj_100wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_100obj_100wr.eps>
+File: figures/Abr_dur_8t_180obj_100wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_180obj_100wr.eps>
+File: figures/Abr_dur_20t_420obj_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_420obj_100wr.eps>
+
+LaTeX Warning: Float too large for page by 34.68214pt on input line 3760.
+
+
+Overfull \hbox (0.97285pt too wide) in paragraph at lines 3765--3766
+\OT1/cmr/m/n/10 We re-peated the ex-per-i-ments in Sec-tion 18.3[] in-clud-ing 
+FBLT. While Fig-ure 26(a)[]
+ []
+
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/5_tasks/
+Abr_Dur/fblt/Abr_dur_5t_1obj_all_100wr.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/5_tasks/Abr_D
+ur/fblt/Abr_dur_5t_1obj_all_100wr.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/5_tasks/
+Abr_Dur/fblt/Abr_dur_5t_1obj_100wr.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/5_tasks/Abr_D
+ur/fblt/Abr_dur_5t_1obj_100wr.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/5_tasks/
+Abr_Dur/fblt/Abr_dur_5t_1obj_all_100wr.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/5_tasks/Abr_D
+ur/fblt/Abr_dur_5t_1obj_all_100wr.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/5_tasks/
+Abr_Dur/fblt/Abr_dur_5t_1obj_100wr.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/5_tasks/Abr_D
+ur/fblt/Abr_dur_5t_1obj_100wr.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/4_tasks/
+Abr_Dur/fblt/Abr_dur_4t_50obj_100wr_-1eta.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/4_tasks/Abr_D
+ur/fblt/Abr_dur_4t_50obj_100wr_-1eta.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/4_tasks/
+Abr_Dur/fblt/Abr_dur_4t_100obj_100wr_-1eta.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/4_tasks/Abr_D
+ur/fblt/Abr_dur_4t_100obj_100wr_-1eta.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/8_tasks/
+Abr_Dur/fblt/Abr_dur_8t_90obj_100wr_-1eta.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/8_tasks/Abr_D
+ur/fblt/Abr_dur_8t_90obj_100wr_-1eta.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/8_tasks/
+Abr_Dur/fblt/Abr_dur_8t_180obj_100wr_-1eta.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/8_tasks/Abr_D
+ur/fblt/Abr_dur_8t_180obj_100wr_-1eta.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/20_tasks
+/Abr_Dur/fblt/Abr_dur_20t_210obj_100wr_-1eta.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/20_tasks/Abr_
+Dur/fblt/Abr_dur_20t_210obj_100wr_-1eta.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/20_tasks
+/Abr_Dur/fblt/Abr_dur_20t_420obj_100wr_-1eta.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/20_tasks/Abr_
+Dur/fblt/Abr_dur_20t_420obj_100wr_-1eta.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/4_tasks/
+Abr_Dur/fblt/Abr_dur_4t_20obj_100wr_-1eta.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/4_tasks/Abr_D
+ur/fblt/Abr_dur_4t_20obj_100wr_-1eta.eps>
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/8_tasks/
+Abr_Dur/fblt/Abr_dur_8t_20obj_100wr_-1eta.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/8_tasks/Abr_D
+ur/fblt/Abr_dur_8t_20obj_100wr_-1eta.eps>
+
+! LaTeX Error: Too many unprocessed floats.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3861 \begin{figure}[!htpd]
+                            
+You've lost some text.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+\@xfloat ...@fltovf \fi \global \setbox \@currbox 
+                                                  \color@vbox \normalcolor \...
+l.3861 \begin{figure}[!htpd]
+                            
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \color@vbox 
+l.3861 \begin{figure}[!htpd]
+                            
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+File: /e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/20_tasks
+/Abr_Dur/fblt/Abr_dur_20t_20obj_100wr_-1eta.eps Graphic file (type eps)
+
+</e/lectures/real-time/PhD-work/STM/Practical/results_uno/figures/20_tasks/Abr_
+Dur/fblt/Abr_dur_20t_20obj_100wr_-1eta.eps>
+! Undefined control sequence.
+\@largefloatcheck ->\ifdim \ht \@currbox 
+                                         >\textheight \@tempdima -\textheigh...
+l.3866 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   >
+l.3866 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> \@currbox 
+                     
+l.3866 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Argument of \@xnext has an extra }.
+<inserted text> 
+                \par 
+l.3866 \end{figure}
+                   
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+\@currbox \@currlist \ifnum \count \@currbox >\z@ \advance \@pageht \@pagedp \E
+TC.
+! Paragraph ended before \@xnext was complete.
+<to be read again> 
+                   \par 
+l.3866 \end{figure}
+                   
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+! Extra \else.
+\subfig@end@float ...penalty \@floatpenalty \else 
+                                                  \vadjust {\penalty -\@Miv ...
+l.3866 \end{figure}
+                   
+I'm ignoring this; it doesn't match any \if.
+
+! You can't use `\vadjust' in vertical mode.
+\subfig@end@float ...@floatpenalty \else \vadjust 
+                                                  {\penalty -\@Miv \vbox {}\...
+l.3866 \end{figure}
+                   
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Argument of \@xnext has an extra }.
+<inserted text> 
+                \par 
+l.3866 \end{figure}
+                   
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+\@currbox \@currlist \ifnum \count \@currbox >\z@ \advance \@pageht \@pagedp \E
+TC.
+! Paragraph ended before \@xnext was complete.
+<to be read again> 
+                   \par 
+l.3866 \end{figure}
+                   
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+(./tech-report.bbl
+Missing character: There is no Ã in font cmr10!
+Missing character: There is no ¶ in font cmr10!
+Missing character: There is no Ã in font cmr10!
+Missing character: There is no © in font cmr10!
+)
+Overfull \vbox (2644.75682pt too high) has occurred while \output is active []
+
+
+[73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85]
+Overfull \hbox (50.0858pt too wide) in paragraph at lines 3918--4008
+[]  
+ []
+
+[86]
+File: figures/Abr_dur_5t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+ <figures/Abr_dur_5t_nl_g_30_0.5_0.2_0.2_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.5_0.2_0.2_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.5_0.2_0.2_1.eps>
+! Missing number, treated as zero.
+<to be read again> 
+                   \@elt 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Missing = inserted for \ifnum.
+<to be read again> 
+                   \@elt 
+l.4033 \end{figure}
+                   
+I was expecting to see `<', `=', or `>'. Didn't.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \@elt 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   
+l.4033 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \@marbox 
+                    
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ù in font cmr10!
+! Undefined control sequence.
+<argument> \@marbox 
+                    
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+\@addmarginpar ...advance \@tempdima \ht \@marbox 
+                                                  \ifdim \@tempdima >\z@ \@l...
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Bad register code (-37725804).
+\@addmarginpar ...e \space moved}\else \@tempdima 
+                                                  \z@ \fi \global \@mparbott...
+l.4033 \end{figure}
+                   
+A register number must be between 0 and 32767.
+I changed this one to zero.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \global 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   \global 
+l.4033 \end{figure}
+                   
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+! Undefined control sequence.
+\@addmarginpar ...vance \@mparbottom \dp \@marbox 
+                                                  \global \advance \@mparbot...
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \global 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+\@addmarginpar ...dvance \@tempdima -\ht \@marbox 
+                                                  \global \setbox \@marbox \...
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \global 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+\@addmarginpar ...marbox \global \setbox \@marbox 
+                                                  \vbox {\vskip \@tempdima \...
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \vbox 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+\@addmarginpar ...\vskip \@tempdima \box \@marbox 
+                                                  }\global \ht \@marbox \z@ ...
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+\@addmarginpar ... \@marbox }\global \ht \@marbox 
+                                                  \z@ \global \dp \@marbox \...
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \global 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   \global 
+l.4033 \end{figure}
+                   
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+! Undefined control sequence.
+\@addmarginpar ...marbox \z@ \global \dp \@marbox 
+                                                  \z@ \kern -\@pagedp \noint...
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \kern 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   \kern 
+l.4033 \end{figure}
+                   
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+! You can't use `\prevdepth' in horizontal mode.
+\nointerlineskip ->\prevdepth 
+                              -\@m \p@ 
+l.4033 \end{figure}
+                   
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.4033 \end{figure}
+                   
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \hbox 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   \hbox 
+l.4033 \end{figure}
+                   
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+! Undefined control sequence.
+\@addmarginpar ...arginparwidth \fi \box \@marbox 
+                                                  \hss }\nointerlineskip \hb...
+l.4033 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \hss 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! You can't use `\prevdepth' in math mode.
+\nointerlineskip ->\prevdepth 
+                              -\@m \p@ 
+l.4033 \end{figure}
+                   
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \hbox 
+l.4033 \end{figure}
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   \hbox 
+l.4033 \end{figure}
+                   
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4033 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<output> ...i \else \global \vsize \maxdimen \fi }
+                                                  
+l.4033 \end{figure}
+                   
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.4033 \end{figure}
+                   
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no è in font cmex10!
+Missing character: There is no è in font cmex10!
+! Missing } inserted.
+<inserted text> 
+                }
+l.4033 \end{figure}
+                   
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Unbalanced output routine.
+<inserted text> }
+                 
+l.4033 \end{figure}
+                   
+Your sneaky output routine has problematic {'s and/or }'s.
+I can't handle that very well; good luck.
+
+
+Overfull \hbox (11.11113pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/10 -$[] \OMS/cmsy/m/n/10 ^^@
+ []
+
+File: figures/Res_Time_5t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+<figures/Res_Time_5t_nl_g_30_0.5_0.2_0.2_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.5_0.2_0.2_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.5_0.2_0.2_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E 
+l.4055 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4055 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4055 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Abr_dur_5t_nl_g_30_0.5_0.5_0.2_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.5_0.5_0.2_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.5_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.5_0.5_0.2_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.5_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.5_0.5_0.2_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F 
+l.4077 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4077 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4077 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Res_Time_5t_nl_g_30_0.5_0.5_0.2_1.eps Graphic file (type eps)
+<figures/Res_Time_5t_nl_g_30_0.5_0.5_0.2_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.5_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.5_0.5_0.2_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.5_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.5_0.5_0.2_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G 
+l.4099 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4099 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ö in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4099 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Abr_dur_5t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.5_0.5_0.5_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.5_0.5_0.5_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.5_0.5_0.5_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H 
+l.4121 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4121 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4121 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Res_Time_5t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+<figures/Res_Time_5t_nl_g_30_0.5_0.5_0.5_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.5_0.5_0.5_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.5_0.5_0.5_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx@I 
+l.4143 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4143 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4143 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Abr_dur_5t_nl_g_30_0.8_0.2_0.2_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.8_0.2_0.2_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.8_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.8_0.2_0.2_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.8_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.8_0.2_0.2_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4165 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4165 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4165 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Res_Time_5t_nl_g_30_0.8_0.2_0.2_1.eps Graphic file (type eps)
+<figures/Res_Time_5t_nl_g_30_0.8_0.2_0.2_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.8_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.8_0.2_0.2_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.8_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.8_0.2_0.2_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4187 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4187 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4187 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Abr_dur_5t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.8_0.5_0.2_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.8_0.5_0.2_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.8_0.5_0.2_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4209 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4209 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4209 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Res_Time_5t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+<figures/Res_Time_5t_nl_g_30_0.8_0.5_0.2_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.8_0.5_0.2_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.8_0.5_0.2_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4231 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4231 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ð in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4231 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Abr_dur_5t_nl_g_30_0.8_0.5_0.5_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.8_0.5_0.5_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.8_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.8_0.5_0.5_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.8_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.8_0.5_0.5_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4253 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4253 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no î in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4253 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Res_Time_5t_nl_g_30_0.8_0.5_0.5_1.eps Graphic file (type eps)
+<figures/Res_Time_5t_nl_g_30_0.8_0.5_0.5_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.8_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.8_0.5_0.5_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.8_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.8_0.5_0.5_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4275 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4275 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ï in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4275 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Abr_dur_5t_nl_g_30_0.8_0.8_0.2_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.8_0.8_0.2_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.8_0.8_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.8_0.8_0.2_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.8_0.8_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.8_0.8_0.2_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4297 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4297 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no í in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4297 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Res_Time_5t_nl_g_30_0.8_0.8_0.2_1.eps Graphic file (type eps)
+<figures/Res_Time_5t_nl_g_30_0.8_0.8_0.2_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.8_0.8_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.8_0.8_0.2_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.8_0.8_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.8_0.8_0.2_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4319 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no ì in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4319 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ì in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no ì in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4319 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Abr_dur_5t_nl_g_30_0.8_0.8_0.5_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.8_0.8_0.5_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.8_0.8_0.5_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.8_0.8_0.5_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.8_0.8_0.5_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.8_0.8_0.5_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4341 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no ì in font cmr10!
+Missing character: There is no ë in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4341 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ë in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no ì in font cmr10!
+Missing character: There is no ë in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4341 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Res_Time_5t_nl_g_30_0.8_0.8_0.5_1.eps Graphic file (type eps)
+<figures/Res_Time_5t_nl_g_30_0.8_0.8_0.5_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.8_0.8_0.5_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.8_0.8_0.5_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.8_0.8_0.5_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.8_0.8_0.5_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4363 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no ì in font cmr10!
+Missing character: There is no ë in font cmr10!
+Missing character: There is no ü in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4363 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ü in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no ì in font cmr10!
+Missing character: There is no ë in font cmr10!
+Missing character: There is no ü in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4363 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: figures/Abr_dur_5t_nl_g_30_0.8_0.8_0.8_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.8_0.8_0.8_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.8_0.8_0.8_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.8_0.8_0.8_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.8_0.8_0.8_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.8_0.8_0.8_1.eps>
+! Use of \@xnext doesn't match its definition.
+\@currlist ->\bx@D 
+                   \@elt \bx@E \@elt \bx@F \@elt \bx@G \@elt \bx@H \@elt \bx...
+l.4385 \end{figure}
+                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no ì in font cmr10!
+Missing character: There is no ë in font cmr10!
+Missing character: There is no ü in font cmr10!
+Missing character: There is no û in font cmr10!
+! Undefined control sequence.
+\@next ...mpty #4\else \expandafter \@xnext #2\@@ 
+                                                  #1#2#3\fi 
+l.4385 \end{figure}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no û in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ø in font cmr10!
+Missing character: There is no ÷ in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no õ in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ó in font cmr10!
+Missing character: There is no ò in font cmr10!
+Missing character: There is no ñ in font cmr10!
+Missing character: There is no ð in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no ì in font cmr10!
+Missing character: There is no ë in font cmr10!
+Missing character: There is no ü in font cmr10!
+Missing character: There is no û in font cmr10!
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4385 \end{figure}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \begin{figure} on input line 4014 ended by \end{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4411 \end{document}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[87] [88] [89] [90] [91] [92] [93] [94] [95] [96] [97] [98] [99] [100] [101]
+[102] [103]
+
+! LaTeX Error: Float(s) lost.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4411 \end{document}
+                     
+You've lost some text.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+(./tech-report.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ )
+(\end occurred inside a group at level 1)
+
+### semi simple group (level 1) entered at line 4014 (\begingroup)
+### bottom level
+(\end occurred when \ifnum on line 3866 was incomplete)
+(\end occurred when \ifnum on line 3866 was incomplete)
+(\end occurred when \ifx on line 3866 was incomplete)
+(\end occurred when \ifnum on line 3866 was incomplete)
+(\end occurred when \ifnum on line 3866 was incomplete)
+(\end occurred when \ifnum on line 3866 was incomplete)
+(\end occurred when \ifnum on line 3866 was incomplete)
+(\end occurred when \ifnum on line 3866 was incomplete) 
+Here is how much of TeX's memory you used:
+ 3968 strings out of 495062
+ 60790 string characters out of 1182644
+ 164110 words of memory out of 3000000
+ 6992 multiletter control sequences out of 15000+50000
+ 16078 words of font info for 60 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 34i,20n,33p,1811b,544s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on tech-report.dvi (103 pages, 431600 bytes).

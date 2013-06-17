@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: LCTES_sh.aux
+The style file: abbrv.bst
+Database file #1: /e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography.bib
+You're missing a field name---line 820 of file /e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography.bib
+ :  
+ :  %url = {http://doi.acm.org/10.1145/1378704.1378725},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You've used 28 entries,
+            2118 wiz_defined-function locations,
+            655 strings with 8925 characters,
+and the built_in function-call counts, 11029 in all, are:
+= -- 1138
+> -- 405
+< -- 18
++ -- 160
+- -- 130
+* -- 640
+:= -- 1657
+add.period$ -- 95
+call.type$ -- 28
+change.case$ -- 144
+chr.to.int$ -- 0
+cite$ -- 28
+duplicate$ -- 517
+empty$ -- 935
+format.name$ -- 130
+if$ -- 2494
+int.to.chr$ -- 0
+int.to.str$ -- 28
+missing$ -- 25
+newline$ -- 147
+num.names$ -- 56
+pop$ -- 189
+preamble$ -- 1
+purify$ -- 117
+quote$ -- 0
+skip$ -- 423
+stack$ -- 0
+substring$ -- 727
+swap$ -- 200
+text.length$ -- 18
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 112
+warning$ -- 0
+while$ -- 111
+width$ -- 30
+write$ -- 326
+(There was 1 error message)

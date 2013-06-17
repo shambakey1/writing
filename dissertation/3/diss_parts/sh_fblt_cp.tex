@@ -1,0 +1,319 @@
+\chapter{\label{ch_fblt_cp}FBLT Contention Manager with Checkpointing}
+\markright{Mohammed El-Shambakey \hfill Chapter~\ref{ch_fblt_cp}. FBLT with Checkpointing \hfill}
+
+In this chapter, we consider checkpointing~\cite{Koskinen:2008:CCI:1378533.1378563} with software transactional memory (STM) concurrency control for embedded multicore real-time software, and present a modified version of FBLT contention manager called \textit{Checkpointing FBLT} (CPFBLT). We upper bound transactional retries and task response times under CPFBLT, and identify when CPFBLT is a more appropriate alternative to FBLT without checkpointing.
+
+The rest of this Chapter is organized as follows: We present the motivation for introducing checkpointing into FBLT in Section~\ref{sec:motivation}. We introduce checkpointing FBLT (CPFBLT) that combines original FBLT with checkpointing in Section~\ref{sec:cpfblt_design}. We establish CPFBLT's retry and response time upper bounds under G-EDF and G-RMA schedulers in Section~\ref{sec:cpfblt rc}. We also identify the conditions under which CPFBLT is a better alternative to non-checkpointing FBLT in Section~\ref{sec:schedulabiltiy comparison}. We conclude Chapter in Section~\ref{sec:conclusion}.
+%
+\section{Motivation}\label{sec:motivation}
+%
+Under checkpointing~\cite{Koskinen:2008:CCI:1378533.1378563}, a transaction $s_i^k \in \tau_i$ does not need to restart from the beginning upon a conflict on object $\theta$. $s_i^k$ just needs to return to the first point it accessed $\theta$. If $s_i^k$ needs to restart from its beginning, then the time between the beginning of $s_i^k$ and the first access to $\theta$ is wasted. Besides, restarting $s_i^k$ from its beginning increases the chances of aborting $s_i^k$ by other transactions. Thus, response time of $\tau_i$ can be improved by checkpointing unless $s_i^k$ acquires all its objects at its beginning. While previous CMs (i.e., ECM, RCM (Chapter~\ref{ecm-rcm}), LCM (Chapter~\ref{ch_lcm}), PNF (Chapter~\ref{ch_pnf}) and FBLT (Chapter~\ref{ch_fblt})) without checkpointing try to resolve conflicts using proper strategies, checkpointing enhances performance by reducing aborted part of each transaction. Thus, checkpointing acts as a complementary component to different CMs to further enhance response time. Checkpointing integrated into CMs allows programmers to reap STM's significant programmability and composability benefits for multicore embedded real-time software.
+
+Behaviour of some CMs, like PNF (Chapter~\ref{ch_pnf}), can make checkpointing useless. PNF requires a priori knowledge of accessed objects within transactions. Only the first $m$ non-conflicting transactions are allowed to execute concurrently and non-preemptively. Thus, PNF makes no use of checkpointing because there is no conflict between non-preemptive transactions.
+
+Other CMs (e. g., FBLT (Chapter~\ref{ch_fblt})) allow conflicting transaction to run concurrently. So, FBLT can benefit from checkpointing. FBLT, by definition, depends on LCM. LCM, in turn, depends
+on ECM for G-EDF and RCM for G-RMA. Like PNF, FBLT allows any transaction $s_i^k$ to be a non-preemptive transaction if $s_i^k$ has been aborted for a specified number of times $\Omega_i^k$. Non-preemptive transactions cannot be aborted by preemptive transactions, nor by non-critical sections in real-time jobs. FBLT, unlike PNF, allow non-preemptive transactions to abort each other. Non-preemptive transactions resolve conflicts using time of being a non-preemptive transaction. As FBLT  tries to combine advantages of other CMs, we extend FBLT to checpointing FBLT (CPFBLT) to improve response time over original FBLT.
+%
+\section{Checkpointing FBLT (CPFBLT)}\label{sec:cpfblt_design}
+%
+CPFBLT depends on LCM (Chapter~\ref{ch_lcm}) with checkpointing. So, we initially illustrate LCM integrated with checkpointing (Section~\ref{sec:cplcm}). Afterwards, we illustrate FBLT with checkpointing in (Section~\ref{sec:design_cpfblt}).
+%
+\subsection{Checkpointing LCM (CPLCM)}\label{sec:cplcm}
+%
+Algorithm~\ref{alg:cplcm} presents LCM integrated with checkpointing to give CPLCM. 
+%
+\begin{algorithm}
+\footnotesize{
+\LinesNumbered
+\KwData{$s_i^k$ and $s_j^l$ are two conflicting atomic sections.\\$\psi\rightarrow$ predefined threshold $\in [0,1]$.\\
+$\delta_i^k \rightarrow$ remaining execution length of $s_i^k$ when interfered by $s_j^l$.\\
+$s\left(s_i^k\right) \rightarrow$ start time of $s_i^k$. $s\left(s_i^k\right)$ is updated each time $s_i^k$ aborts and retries to the start time of the new retry.\\
+$s\left(s_j^l\right) \rightarrow$ the same as $s\left(s_i^k\right)$ but for $s_j^l$.\\
+$cp_h^u(\theta) \rightarrow$ recorded checkpoint in transaction $s_h^u$ for newly accessed object $\theta$.
+}
+\KwResult{which atomic section of $s_i^k$ or $s_j^l$ aborts}
+\ForEach{newly accessed $\theta$ requested by any transaction $s_h^u$}{Add a checkpoint $cp_h^u(\theta)$\label{cplcm_step_add_new_cp}}
+\eIf{$s\left(s_i^k\right) < s\left(s_j^l\right)$\label{lcm:s_i_k start before s_j_l}}
+{
+\eIf{$p\left(s_i^k\right) > p\left(s_j^l\right)$}
+	{$s_{j}^l$ aborts and retreats to $cp_j^l(\theta_{ij}^{kl})$\label{cp-step_sicommits}\;
+	Remove all checkpoints in $s_j^l$ recorded after $cp_j^l(\theta_{ij}^{kl})$\label{cp_step_rem_cp_jl_1}}
+	{$c_{ij}^{kl}=len(s_j^l)/len(s_i^k)$\label{cp-step_cijkl}\;
+	$\alpha_{ij}^{kl}=ln(\psi)/(ln(\psi)-c_{ij}^{kl})$\label{cp-step_alphaijkl}\;
+	$\alpha=\left(len(s_i^k)-\delta_i^k\right)/len(s_i^k)$\label{cp_step_alpha}\;
+	\eIf{$\alpha \le \alpha_{ij}^{kl}$}
+	{$s_{i}^k$ aborts and retreats to $cp_i^k(\theta_{ij}^{kl})$\label{cp-step_siaborts}\;
+	Remove all checkpoints in $s_i^k$ recorded after $cp_i^k(\theta_{ij}^{kl})$\label{cp_step_rem_cp_ik}}
+	{$s_{j}^l$ aborts and retreats to $cp_j^l(\theta_{ij}^{kl})$\label{cp-step_sjaborts}\;
+	Remove all checkpoints in $s_j^l$ recorded after $cp_j^l(\theta_{ij}^{kl})$\label{cp_step_rem_cp_jl_2}}
+	}
+	}
+	{
+	Swap $s_i^k$ and $s_j^l$\label{cplcm:s_j_l start before s_i_k}\;
+	}
+	}
+\caption{CPLCM}
+\label{alg:cplcm}
+\end{algorithm}
+%
+A new checkpoint is recorded for each newly accessed object $\theta$ by any transaction $s_h^u$ (step~\ref{cplcm_step_add_new_cp}). Checkpoint is recorded when $\theta$ is accessed for the first time because any further changes to $\theta$ will be discarded upon conflict. CPLCM uses priorities of $s_i^k$ and $s_j^l$, the remaining length of $s_{i}^{k}$ when it is interfered, as well as $len(s_{j}^{l})$, to decide which transaction must be aborted. If $s_j^l$ starts after $s_i^k$ and $p_i^k > p_j^l$, then $s_{j}^l$ would be the transaction to abort (step~\ref{cp-step_sicommits}). Otherwise, $c_{ij}^{kl}$, $\alpha_{ij}^{kl}$ and $\alpha$ are calculated (steps~\ref{cp-step_cijkl},~\ref{cp-step_alphaijkl} and~\ref{cp_step_alpha}) to determine whether it is worth aborting $s_{i}^k$ in favour of $s_{j}^l$. If $len(s_j^l)$ is relatively small compared to $len(s_i^k)$, then $c_{ij}^{kl}$ approaches its minimum value (i.e., 0), and $\alpha_{ij}^{kl}$ approaches its maximum value (i.e., 1) (steps~\ref{cp-step_cijkl},~\ref{cp-step_alphaijkl}). Otherwise, $c_{ij}^{kl}$ approaches its maximum value (i.e., $\infty$), and $\alpha_{ij}^{kl}$ approaches its minimum value (i.e., 0). $\Psi$ is a predefined threshold that lies in $[0,1]$. The remaining execution length of $s_i^k$ (i.e., $\delta_i^k$) is used to calculate $\alpha$ (step~\ref{cp_step_alpha}). If $s_i^k$ still has much work to do, then $\delta_i^k$ approaches $len(s_i^k)$ and $\alpha$ approaches 0. Otherwise, $\alpha$ approaches 1. If $len(s_i^k)$ is much longer than $len(s_j^l)$, or $s_i^k$ still has much work to do when interfered by $s_j^l$, then $\alpha$ tends to be smaller than $\alpha_{ij}^{kl}$. Consequently, $s_i^k$ aborts in favour of $s_j^l$. When $s_i^k$ aborts upon a conflict with $s_j^l$ on object $\theta_{ij}^{kl}$, then checkpoints in $s_i^k$ recorded after $cp_i^k(\theta_{ij}^{kl})$ are removed (step~\ref{cp_step_rem_cp_ik}). Prior checkpoints to $cp_i^k(\theta_{ij}^{kl})$ remain the same. Also, if $s_j^l$ aborts in favour of $s_i^k$, then all checkpoints in $s_j^l$ recorded after $cp_j^l(\theta_{ij}^{kl})$ are removed (steps~\ref{cp_step_rem_cp_jl_1},~\ref{cp_step_rem_cp_jl_2}).
+%
+\subsection{CPFBLT}\label{sec:design_cpfblt}
+%
+Algorithm~\ref{cpfblt-algorithm} illustrates FBLT integrated with checkpointing to give CPFBLT. 
+%
+\begin{algorithm}
+\footnotesize{
+\LinesNumbered
+\KwData{\\
+$s_{i}^k$: interfered transaction.\\
+$s_{j}^l$: interfering transaction.\\
+$\Omega_i^k$: maximum number of times $s_i^k$ can be aborted during $T_i$.\\
+$\eta_i^k$: number of times $s_i^k$ has already been aborted up to now.\\
+$m\_$set: contains at most $m$ non-preemptive transactions. $m$ is number of processors.\\
+$m\_prio$: priority of any transaction in $m\_$set. $m\_prio$ is higher than any priority of any real-time task.\\
+$r(s_i^k)$: time point at which $s_i^k$ joined $m\_$set.\\
+$cp_h^u(\theta)$: recorded checkpoint in transaction $s_h^u$ for newly accessed object $\theta$
+}
+\KwResult{which transaction, $s_i^k$ or $s_j^l$, aborts}
+\ForEach{newly accessed $\theta$ requested by any transaction $s_h^u$}{Add a checkpoint $cp_h^u(\theta)$\label{cpfblt_step_add_new_cp}}
+\uIf{\label{cpfblt-both preemptive}$s_i^k,\, s_j^l \not\in m\_set$}
+{
+%
+Apply CPLCM (Algorithm~\ref{alg:cplcm})\label{apply cplcm}\;
+%
+\eIf{\label{cpfblt-preemptive s_i^k aborted}$s_{i}^k$ is aborted}
+{
+\eIf{$\eta_i^k<\Omega_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{cpfblt-increment eta 1}\;
+}
+{
+Add $s_i^k$ to $m\_$set\label{cpfblt-add to m_set 1}\;
+Record $r(s_i^k)$\label{cpfblt-record 1}\;
+Increase priority of $s_i^k$ to $m\_prio$\label{cpfblt-increase priority 1}\;
+}
+}
+{
+Swap $s_{i}^k$ and $s_{j}^l$\;
+Go to Step~\ref{cpfblt-preemptive s_i^k aborted}\;
+}
+}
+\uElseIf{\label{cpfblt-s_j^l is non preemptive}$s_j^l \in m\_set, s_i^k \not\in m\_set$}
+{
+$s_{i}^k$ aborts and retreats to $cp_i^k(\theta_{ij}^{kl})$\;
+Remove all checkpoints in $s_i^k$ recorded after $cp_i^k(\theta_{ij}^{kl})$\label{cpfblt_step_rem_cp_ik_1}\;
+\eIf{$\eta_i^k < \Omega_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{cpfblt-increment eta 2}\;
+}
+{
+Add $s_i^k$ to $m\_$set\label{cpfblt-add to m_set 2}\;
+Record $r(s_i^k)$\label{cpfblt-record 2}\;
+Increase priority of $s_i^k$ to $m\_prio$\label{cpfblt-increase priority 2}\;
+}
+}
+\uElseIf{\label{cpfblt-s_i^k is non-preemptive}$s_i^k \in m\_set, s_j^l \not\in m\_set$}
+{
+Swap $s_{i}^k$ and $s_{j}^l$\;
+Go to Step~\ref{cpfblt-s_j^l is non preemptive}\label{cpfblt-end preemptive and non preemptive}\;
+}
+\Else
+{
+\label{cpfblt-both non preemptive}
+\eIf{$r(s_i^k)<r(s_j^l)$}
+{	
+$s_{j}^l$ aborts and retreats to $cp_j^l(\theta_{ij}^{kl})$\label{cpfblt-s_i^k first in m_set}\;
+Remove all checkpoints in $s_j^l$ recorded after $cp_j^l(\theta_{ij}^{kl})$\label{cpfblt_step_rem_cp_jl}\;
+}
+{
+$s_{i}^k$ aborts and retreats to $cp_i^k(\theta_{ij}^{kl})$\label{cpfblt-s_j^l first in m_set}\;
+Remove all checkpoints in $s_i^k$ recorded after $cp_i^k(\theta_{ij}^{kl})$\label{cpfblt_step_rem_cp_ik_2}\;
+}
+}
+}
+\caption{The CPFBLT Algorithm}\label{cpfblt-algorithm}
+\end{algorithm}
+%
+A new checkpoint is recorded for each newly accessed object $\theta$ by any transaction $s_h^u$ (step~\ref{cpfblt_step_add_new_cp}). Checkpoint is recorded when $\theta$ is accessed for the first time because any further changes to $\theta$ will be discarded upon conflict. Each transaction $s_{i}^{k}$ can be aborted during $T_i$ for at most $\Omega_{i}^{k}$ times before $s_i^k$ becomes a non-preemptive transaction. $\eta_{i}^{k}$ records  the number of times $s_{i}^{k}$ has already been aborted up to now. If $s_i^k$ and $s_j^l$ have not joined the $m\_$set yet, then they are preemptive transactions. Preemptive transactions resolve conflicts using CPLCM (step~\ref{apply cplcm}). Thus, CPFBLT defaults to CPLCM when the conflicting transactions ($s_i^k$ and $s_j^l$) have not reached their $\Omega$s ($\Omega_i^k$ and $\Omega_j^l$). $\eta_i^k$ is incremented each time $s_{i}^k$ is aborted as long as $\eta_i^k < \Omega_i^k$ (steps~\ref{cpfblt-increment eta 1} and~\ref{cpfblt-increment eta 2}). Otherwise, $s_i^k$ is added to the $m\_$ set and priority of $s_{i}^k$ is increased to $m\_prio$ (steps~\ref{cpfblt-add to m_set 1} to~\ref{cpfblt-increase priority 1} and~\ref{cpfblt-add to m_set 2} to~\ref{cpfblt-increase priority 2}). When the priority of $s_i^k$ is increased to $m\_prio$, $s_i^k$ becomes a non-preemptive transaction. Non-preemptive transactions cannot be aborted by other preemptive transactions, nor by any other real-time job (steps~\ref{cpfblt-s_j^l is non preemptive} to~\ref{cpfblt-end preemptive and non preemptive}). Non-preemptive transactions can conflict with each other. The $m\_$set can hold at most $m$ concurrent transactions because there are $m$ processors in the system. $r(s_i^k)$ records the time $s_i^k$ joined the $m\_$set (steps~\ref{cpfblt-record 1} and~\ref{cpfblt-record 2}). When non-preemptive transactions conflict together (step~\ref{cpfblt-both non preemptive}), the transaction that joined $m\_$set first becomes the transaction that commits first (steps~\ref{cpfblt-s_i^k first in m_set} and~\ref{cpfblt-s_j^l first in m_set}). When $s_i^k$ aborts due to a conflict on $\theta_{ij}^{kl}$ with $s_j^l$, then $s_i^k$ retreats to $cp_i^k(\theta_{ij}^{kl})$. All checkpoints recorded after $cp_i^k(\theta_{ij}^{kl})$ are removed (steps~\ref{cpfblt_step_rem_cp_ik_1}, and~\ref{cpfblt_step_rem_cp_ik_2}). Similarly, $s_j^l$ removes all checkpoints recorded after $cp_j^l(\theta_{ij}^{kl})$ if aborted by $s_i^k$ (step~\ref{cpfblt_step_rem_cp_jl}).
+
+\section{CPFBLT Retry Cost}\label{sec:cpfblt rc}
+
+\begin{clm}\label{clm:basic_rc}
+Assume only two transaction $s_i^k$ and $s_j^l$ conflicting together. Let $s_i^k$ begins at time $S\left(s_i^k\right)$ and $s_j^l$ begins at time $S\left(s_j^l\right)$. Let $\triangle=S\left(s_j^l\right)-S\left(s_i^k\right)$. In the absence of checkpointing, retry cost of $s_i^k$ due to $s_j^l$ is given by
+%
+\begin{equation}
+BASE\_RC_{ij}^{kl} \le \begin{cases}
+len\left(s_{j}^{l}\right)+\triangle & ,-len\left(s_{j}^{l}\right)\le\triangle\le len\left(s_{i}^{k}\right)\\
+0 & ,\, Otherwise
+\end{cases}
+\label{eq:base_rc}
+\end{equation}
+%
+$BASE\_RC_{ij}^{kl}$ is upper bounded by 
+\begin{equation}
+len\left(s_j^l+s_i^k\right)\label{eq:upper_base_rc}
+\end{equation}
+%
+which is the same upper bound given by Claim~\ref{clm:basic_2_tx_rc}.
+\end{clm}
+%
+\begin{proof}
+Due to absence of checkpointing, $s_i^k$ aborts and retries from its beginning due to $s_j^l$. So, $s_i^k$ retries for the period starting from $S\left(s_i^k\right)$ to the end of execution of $s_j^l$. $s_j^l$ ends execution at $S\left(s_j^l\right)+len\left(s_j^l\right)$. If $S\left(s_j^l\right)<S\left(s_i^k\right)-len\left(s_j^l\right)$, then $s_j^l$ finishes execution before start of $s_i^k$ and there will be no conflict. Also, if $S\left(s_j^l\right)>S\left(s_i^k\right)+len\left(s_i^k\right)$, then $s_j^l$ starts execution after $s_i^k$ finishes execution and there will be no conflict. Thus,~(\ref{eq:base_rc}) follows. Equation~(\ref{eq:upper_base_rc}) is derived by substitution of $\triangle$ by its maximum value (i.e., $len\left(s_{i}^{k}\right)$). Claim follows.
+\end{proof}
+%
+\begin{clm}\label{clm:2_tx_cp_retry_cost}
+Assume only two transactions $s_i^k$ and $s_j^l$ conflicting on one object $\theta$. Let $\nabla_{j}^{l}$ be the time interval between the start of $s_{j}^{l}$ and the first access to $\theta$. Similarly, let $\nabla_{i}^{k}$ be the time interval between the start of $s_i^k$ and the first access to $\theta$. Let $\triangle$ be the time difference between start of $s_j^l$ to the start of $s_i^k$. So, $\triangle < 0$ if $s_j^l$ starts before $s_i^k$. Under checkpointing, $s_{i}^{k}$ aborts and retries due to $s_{j}^{l}$
+for 
+\begin{equation}
+RC0_{ij}^{kl} \le \begin{cases}
+len\left(s_{j}^{l}\right)-\nabla_{i}^{k}+\triangle & \mbox{, if }\begin{gathered}\triangle\ge\nabla_{i}^{k}-len\left(s_{j}^{l}\right)\\
+\triangle\le len\left(s_{i}^{k}\right)-\nabla_{j}^{l}
+\end{gathered}
+\\
+0 & \mbox{, Otherwise}
+\end{cases}\label{eq:2_tx_cp_retry_cost}
+\end{equation}
+%
+$RC0_{ij}^{kl}$ is upper bounded by 
+\begin{equation}
+len\left(s_{j}^{l}+s_{i}^{k}\right)-\nabla_{j}^{l}-\nabla_{i}^{k}\label{eq:rc0_upper_bound}
+\end{equation}
+
+\end{clm}
+%
+\begin{proof}
+%
+As $s_i^k$ and $s_j^l$ conflict only on one object $\theta$, there will be no conflict before both $s_i^k$ and $s_j^l$ access $\theta$. Retry cost of $s_i^k$ due to $s_j^l$ is derived by Claim~\ref{clm:basic_rc} excluding parts of $s_i^k$ and $s_j^l$ before both transactions access $\theta$. Thus, excluding the parts of $s_i^k$ and $s_j^l$ that do not cause conflict. So, $len\left(s_i^k\right)$ in Claim~\ref{clm:basic_rc} is substituted by $len\left(s_i^k\right)-\nabla_i^k$. $len\left(s_j^l\right)$ is substituted by $len\left(s_j^l\right)-\nabla_j^l$. $\triangle$ in Claim~\ref{clm:basic_rc} is substituted by $\triangle+\nabla_j^l-\nabla_i^k$. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:rc1_upper_bound}
+%
+Assume only two transactions $s_i^k$ and $s_j^l$ conflicting on a number of objects $\theta_1,\,\theta_2\,...\,\theta_z$. Let $\nabla_{i*}^k$ be the time interval between start of $s_i^k$ and the first access to the first object accessed by $s_i^k$ and shared with $s_j^l$ (e.g., $\theta_i$). Let $\nabla_{j*}^l$ be the time interval between start of $s_j^l$ and the first access to the first object accessed by $s_j^l$ and shared with $s_i^k$ (e.g., $\theta_j$). $\theta_i$ and $\theta_j$ may not be the same. With checkpointing, retry cost of $s_i^k$ due to $s_j^l$ is upper bounded by 
+%
+\begin{equation}
+RC1_{ij}^{kl} \le len\left(s_i^k+s_j^l\right)-\nabla_{i*}^k-\nabla_{j*}^l
+\label{eq:rc1_upper_bound}
+\end{equation}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Proof follows directly from Claim~\ref{clm:2_tx_cp_retry_cost} by maximizing (\ref{eq:rc0_upper_bound}). $len\left(s_i^k\right)$, as well as, $len\left(s_j^l\right)$ in (\ref{eq:rc0_upper_bound}) cannot be changed. Thus, by choosing minimum values of $\nabla_i^k$ and $\nabla_j^l$ that correspond to shared objects between $s_i^k$ and $s_j^l$, (\ref{eq:rc0_upper_bound}) is maximized. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:cp_with_transitive_retry}
+If $s_j^l$ is conflicting indirectly (through transitive retry) with $s_i^k$, then it is safe to ignore $\nabla_{i*}^k$ in calculating the upper bound of retry cost of $s_i^k$ due to $s_j^l$.
+\end{clm}
+%
+\begin{proof}
+If $s_j^l$ is conflicting indirectly with $s_i^k$, then $s_j^l$ is accessing an object $\theta$ that does not belong to $\Theta_i^k$. In this case, to get an upper bound for the retry cost of $s_i^k$ due to $s_j^l$, $\nabla_{i*}^k$ assumes its minimum value in (\ref{eq:rc1_upper_bound}). Thus, $\nabla_{i*}^k=0$. Claim follows.
+\end{proof}
+%
+\begin{clm}\label{clm:non_preemptive_2tx_cpfblt_rc}
+Assume only two non-preemptive transactions $s_i^k$ and $s_j^l$ under CPFBLT. With checkpointing, retry cost of $s_i^k$ due to direct or indirect conflict with $s_j^l$ is upper bounded by 
+%
+\begin{equation}
+RC2_{ij}^{kl} \le len\left(s_{j}^{l}\right)-\nabla_{i*}^{k}\label{eq:rc2_upper_bound}
+\end{equation}
+%
+where $\nabla_{i*}^k=0$ in case of indirect conflict.
+%
+\end{clm}
+%
+\begin{proof}
+Proof follows directly from Claims~\ref{clm:2_tx_cp_retry_cost},~\ref{clm:rc1_upper_bound} and~\ref{clm:cp_with_transitive_retry} except that $s_j^l$ must have become non-preemptive before $s_i^k$. So, $s_j^l$ starts execution non-preemptively before $s_i^k$. Otherwise, by definition of CPFBLT, $s_j^l$ will not be able to abort $s_i^k$. Thus, $\triangle$ must not exceed 0. Claim follows.
+\end{proof}
+%
+\begin{clm}\label{clm:non_preemptive_all_tx_rc}
+Let $s_i^k$ be a non-preemptive transaction under CPFBLT. Let $\chi_i^k$ be the set of transactions conflicting (directly or indirectly) with $s_i^k$. Each transaction $s_j^l \in \chi_i^k$ belongs to a distinct task. Transactions in $\chi_i^k$ are organized in non-increasing order of $RC2_{ij}^{kl}$ for each $s_j^l \in \chi_i^k$. Total retry cost of non-preemptive transaction $s_i^k$ due to other non-preemptive transactions is upper bounded by 
+%
+\begin{equation}
+RC3_i^k \le \sum_{a=1}^{a=min\left(|\chi_i^k|, m-1\right)} RC2_i^k\left(\chi_i^k(a)\right)
+\label{eq:non_preemptive_all_tx_rc}
+\end{equation}
+%
+where $\chi_i^k(a)$ is the $a^{th}$ transaction in $\chi_i^k$. If $\chi_i^k(a)=s_j^l$, then $RC2_i^k\left(\chi_i^k(a)\right)=RC2_{ij}^{kl}$.
+%
+\end{clm}
+%
+\begin{proof}
+By definition of CPFBLT, a transaction $s_i^k$ can be preceded by at most $m-1$ non-preemptive transactions. As non-preemptive transactions are organized in the order they become non-preemptive, no two non-preemptive transactions can belong to the same task. Maximum retry cost of non-preemptive $s_i^k$ occurs when: 1) $s_i^k$ is preceded by at most $m-1$ transactions conflicting with $s_i^k$. 2) Each conflicting transaction $s_j^l$ to $s_i^k$ must have one of the highest $m-1$ values for $RC2_{ij}^{kl}$. 3) Non-preemptive transactions preceding $s_i^k$ are executing sequentially. Thus, retry cost of non-preemptive $s_i^k$ can be upper bounded by Claim~\ref{clm:non_preemptive_2tx_cpfblt_rc} for at most the first $m-1$ transactions in $\chi_i^k$. If the third condition is not satisfied, then (\ref{eq:non_preemptive_all_tx_rc}) still gives a correct, but not tight, upper bound. Claim follows.
+\end{proof}
+%
+\begin{clm}\label{clm:delta_ik_rc}
+%
+Under CPFBLT, a preemptive transaction $s_i^k$ aborts and retries for at most
+\begin{equation}
+RC4_i^k \le \Omega_i^k \left(len\left(s_i^k\right)-min\left(\nabla_{i*}^k\right)\right)
+\label{eq:delta_ik_rc}
+\end{equation}
+%
+where $min\left(\nabla_{i*}^k\right)$ is the minimum $\nabla_{i*}^k$ for $s_i^k$ and any other conflicting transaction $s_j^l$. If there are indirectly conflicting transactions with $s_i^k$, then $min\left(\nabla_{i*}^k\right)=0$.
+%
+\end{clm}
+%
+\begin{proof}
+%
+No transaction will make preemptive $s_i^k$ aborts and retries before $min\left(\nabla_{i*}^k\right)$. By checkpointing, $s_i^k$ will not retreat earlier than $min\left(\nabla_{i*}^k\right)$. By definition of CPFBLT, preemptive $s_i^k$ aborts for at most $\Omega_i^k$ times before it becomes non-preemptive. Claim follows.
+\end{proof}
+%
+\begin{clm}\label{clm:closed_nested_fblt_final}
+%
+The total retry cost of any job $\tau_i^x$ under CPFBLT due to 1) conflicts with other transactions during an interval $L$. 2) release of higher priority jobs during execution of preemptive transactions is upper bounded by
+%
+\begin{equation}
+RC_{i_{to}}(L)=\sum_{\forall s_i^k} \left(RC3_i^k + RC4_i^k \right) + RC_{i_{re}}(L)
+\label{eq:cpfblt_final}
+\end{equation}
+where $RC_{i_{re}}(L)$ is the retry cost resulting from the release of higher priority jobs during execution of preemptive transactions. $RC_{i_{re}}(L)$ is calculated by (\ref{eq:ecm_release_conflict}) for G-EDF, and (\ref{eq:rcm_release_conflict}) for G-RMA schedulers.
+%
+\end{clm}
+%
+\begin{proof}
+%
+Following Claims~\ref{clm:cp_with_transitive_retry},~\ref{clm:non_preemptive_all_tx_rc},~\ref{clm:delta_ik_rc}  and~\ref{clm:total_rc_fblt}, Claim follows.
+%
+\end{proof}
+%
+Any newly released task $\tau_{i}^{x}$ can be blocked by $m$ lower priority non-preemptive transactions. Blocking time $D(\tau_i^x)$ of any job $\tau_i^x$ is independent of checkpointing. Thus, $D(\tau_i^x)$ is calculated by Claim~\ref{clm:blocking_time_fblt}. Claim~\ref{clm:fblt_res_time} is used to calculate response time under CPFBLT where $RC_{i_{to}}(T_{i})$ is calculated by (\ref{eq:cpfblt_final}).
+%
+\section{CPFBLT versus FBLT}\label{sec:schedulabiltiy comparison}
+%
+\begin{clm}\label{clm:cp_ncp_fblt_schedulabiltiy_comp}
+%
+Schedulability of CPFBLT is better or equal to schedulability of FBLT if shared objects within each transaction $s_i^k$ are accessed close to the end of execution $s_i^k$.
+%
+\end{clm}
+%
+\begin{proof}
+%
+Let upper bound on retry cost of any task $\tau_{i}^{x}$ during $T_{i}$ under FBLT be denoted as $RC_{i}^{ncp}$. $RC_{i}^{ncp}$ is calculated by Claim~\ref{clm:total_rc_fblt}. Let upper bound on retry cost of any task $\tau_{i}^{x}$ during $T_{i}$ under CPFBTL be denoted as $RC_{i}^{cp}$. $RC_{i}^{cp}$ is given by Claim~\ref{clm:closed_nested_fblt_final}. Let $D_{i}$ be the upper bound on blocking time of any newly released task $\tau_{i}^{x}$ during $T_{i}$ due to lower priority jobs. $D_{i}$ is the same for both CPFBLT and FBLT. $D_{i}$ is calculated by Claim~\ref{clm:blocking_time_fblt}. For CPFBLT schedulability to be equal or better than schedulability of FBLT, then: 
+%
+\begin{equation}
+\sum_{\forall\tau_{i}}\frac{c_{i}+RC_{i}^{cp}+D_{i}}{T_{i}}\le\sum_{\forall\tau_{i}}\frac{c_{i}+RC_{i}^{ncp}+D_{i}}{T_{i}}\label{eq:schedulability_comparison}
+\end{equation}
+$\because$ $D_{i}$ and $c_{i}$ are the same for each $\tau_{i}$
+under CPFBLT and FBLT, then (\ref{eq:schedulability_comparison})
+holds if:
+\[
+\forall\tau_{i},\, RC_{i}^{cp}\le RC_{i}^{ncp}
+\]
+%
+\begin{eqnarray}
+ & \Omega_{i}^{k}\left(len\left(s_{i}^{k}\right)-min\left(\nabla_{i*}^{k}\right)\right)+\sum_{a=1}^{min\left(|\chi_{i}^{k}|,m-1\right)}\left(len\left(\chi_{i}^{k}(a)\right)-\nabla_{i*}^{k}\right)\nonumber\\
+\le & \Omega_{i}^{k}len\left(s_{i}^{k}\right)+\sum_{a=1}^{min\left(|\nu_{i}^{k}|,m-1\right)}\left(len\left(\nu_{i}^{k}(a)\right)\right)
+\label{eq:cpfblt_vs_FBLT_1}
+\end{eqnarray}
+%
+where $\nu_i^k$ is the set of at most $m-1$ longest transactions conflicting directly or indirectly with $s_i^k$. Thus, $\nu_i^k(a) \ge \chi_i^k(a), \forall a$. Thus, by increasing $\nabla_{i*}^k$, (\ref{eq:cpfblt_vs_FBLT_1}) holds. Claim follows.
+%
+\end{proof}
+%
+\section{Conclusion}\label{sec:conclusion}
+%
+Past research on real-time CMs focused on devloping different conflict resultion strategis for transactions. Except for LCM (Chapter~\ref{ch_lcm}), no policy was made to reduce the length of conflicting transactions. In this Chapter, we analysed effect of checkpointing over FBLT CM. Analysis shows that response time of CPFBLT can be reduced than FBLT if shared objects are accessed close to the end of execution of each transaction. Some CMs make no use of checkpointing due to behaviour of that CM (e.g, under PNF, all non-preemptive transactions are non-conflicting).
+%

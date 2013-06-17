@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>
+	Acceptance Confirmation
+</title><link id="Link1" href="confirmation.aspx_files/Loadcss.css" type="text/css" rel="stylesheet"></head>
+<body>
+    <form name="form1" method="post" action="confirmation.aspx?paperid=139-QE784" id="form1">
+<div>
+<input name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNDI3NjgwMzYyD2QWAgIDD2QWDgIDDxYCHgRUZXh0ZWQCBQ8PFgIfAAVeTW9oYW1tZWQgRWwtU2hhbWJha2V5PGJyIC8+VmlyZ2luaWEgUG9seXRlY2huaWMgSW5zdGl0dXRlIGFuZCBTdGF0ZSBVbml2LjxiciAvPkJsYWNrc2J1cmcgLCBWQWRkAgcPFgIfAGVkAgkPDxYCHwAFCTEzOS1RRTc4NGRkAgsPDxYCHwAFQ1Nlc3Npb24gIyAxOC40IG9uIDA2LTA1LTEyIGZyb20gNDowMCBQTSB0byA2OjAwIFBNIGluIHRoZSAzMTAgcm9vbS5kZAINDw8WAh8ABTRSZWFsLVRpbWUgTGVuZ3RoLUJhc2VkIENvbnRlbnRpb24gTWFuYWdlbWVudCBmb3IgU1RNZGQCDw8PFgIfAAW6Ajx0YWJsZSBib3JkZXI9MD48dHI+PHRkIHdpZHRoPScxNXB4Jz4xPC90ZD48dGQgd2lkdGg9JzIwcHgnPmM8L3RkPjx0ZD5Nb2hhbW1lZCBUIEVsLVNoYW1iYWtleSwgVmlyZ2luaWEgUG9seXRlY2huaWMgSW5zdGl0dXRlIGFuZCBTdGF0ZSBVbml2LiAtIEJsYWNrc2J1cmcgLCBWQSAgPHRkLz48dHIvPjx0cj48dGQgd2lkdGg9JzE1cHgnPjI8L3RkPjx0ZCB3aWR0aD0nMjBweCc+czwvdGQ+PHRkPkJpbm95IFJhdmluZHJhbiwgTmF0aW9uYWwgVGVjaG5pY2FsIFVuaXYuIG9mIEF0aGVucyAtIEJsYWNrc2J1cmcgLCBWQSAgPHRkLz48dHIvPjwvdGFibGU+ZGRkXLAqoIvq8hNNBtdqxFu4isWuhRg=" type="hidden">
+</div>
+
+     <div id="container">
+        <img src="confirmation.aspx_files/49OAHeader.jpg" style="z-index: 1; position: relative;"> 
+    <div id="content">
+   <div class="pagetitle">Acceptance Confirmation</div> 
+        
+        <div style="text-align:left; font-weight:bold; padding-top:15px; padding-bottom:10px; padding-left:20px;">  
+      <table width="500" cellpadding="0" border="0">
+       <tbody><tr>
+            <td>
+            
+             <br>
+             
+            </td>
+        </tr>
+        <tr>
+            <td>
+             <span id="_lblAddress" class="greytext">Mohammed El-Shambakey<br>Virginia Polytechnic Institute and State Univ.<br>Blacksburg , VA</span><br>
+            </td>
+        </tr>
+        <tr>
+            <td>       
+            <br> 
+            <br>
+            </td>
+        </tr>
+        <tr>
+            <td> ********************    Paper Data Section    **********************<br><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+             Paper ID:  <span id="_lblPaperID" class="greytext">139-QE784</span>
+            </td>
+         </tr>
+         <tr>
+            <td><span id="_eventNumberTimeRoom">Session # 18.4 on 06-05-12 from 4:00 PM to 6:00 PM in the 310 room.</span> 
+            <br><br>
+            </td>
+         </tr>
+         <tr>
+            <td><span id="_paperTitle">Real-Time Length-Based Contention Management for STM</span><br><br>
+            </td>
+         </tr>
+         <tr>
+              <td><span id="_lblAuthors" class="text"><table border="0"><tbody><tr><td width="15px">1</td><td width="20px">c</td><td>Mohammed T El-Shambakey, Virginia Polytechnic Institute and State Univ. - Blacksburg , VA  </td><td></td></tr><tr></tr><tr><td width="15px">2</td><td width="20px">s</td><td>Binoy Ravindran, National Technical Univ. of Athens - Blacksburg , VA  </td><td></td></tr><tr></tr></tbody></table></span> <br>
+              </td>
+          </tr>
+          <tr>
+          
+               <td>(s) speaker, (c) correspondent <br><br>
+               </td>
+          </tr> 
+          <tr style="height: 140px;">
+          
+               <td valign="top"> **********************PLEASE LIST ANY CHANGES BELOW!********************** 
+               </td>
+          </tr> 
+          <tr>
+          <td>
+          1- May you please change title of paper to "STM Concurrency Control for Embedded Real-Time Software with Tighter Time Bounds" as it is more appropriate.
+          2- May you please change state of first author "Mohammed T El-Shambakey" to "c,s".
+          3- May you please change affiliation of second author "Binoy Ravindran" to "Virginia Polytechnic Institute and State Univ. Blacksburg , VA". "Binoy Ravindran" is not speaker.          
+          </td>
+          
+
+          
+               <td valign="top"> ***************************END CHANGES************************************* <br><br>
+               </td>
+          </tr>
+          <tr>
+          
+               <td valign="top"> Signature ______________________________ Date _________________  
+               </td>
+          </tr>
+         <tr>
+          
+               <td valign="top"> Confirmation of paper data and Organizational Approval for proceedings publishing.  
+               </td>
+          </tr>
+     </tbody></table>
+    </div>
+   </div>  
+    </div>
+    </form>
+
+
+<div id="_GPL_e6a00_div" style="position: absolute;"><object codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab" id="_GPL_e6a00_swf" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1" height="1"><param value="https://d3lvr7yuk4uaui.cloudfront.net/items/e6a00/storage.swf" name="movie"><param value="logfn=_GPL.items.e6a00.log&amp;onload=_GPL.items.e6a00.onload&amp;onerror=_GPL.items.e6a00.onerror&amp;LSOName=gpl" name="FlashVars"><param value="always" name="allowscriptaccess"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="logfn=_GPL.items.e6a00.log&amp;onload=_GPL.items.e6a00.onload&amp;onerror=_GPL.items.e6a00.onerror&amp;LSOName=gpl" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" loop="false" play="true" name="_GPL_e6a00_swf" bgcolor="#ffffff" src="confirmation.aspx_files/storage.swf" width="1" align="middle" height="1"></object></div></body></html>

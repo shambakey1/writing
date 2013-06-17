@@ -1,0 +1,2603 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+
+\series bold
+\bar under
+ECM vs.
+ Lock-free
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)s_{max}\\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)r_{max}
+\end{eqnarray*}
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+\frac{s_{max}}{r_{max}}\le\frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)}{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(2\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)}
+\]
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}=\beta_{ij}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil =c1$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula 
+\[
+\frac{s_{max}}{r_{max}}\le\frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+c1}{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(2\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}^{*}\right)+c1\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\because\frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+c1}{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(2\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}^{*}\right)+2c1\right)}\le\frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+c1}{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(2\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}^{*}\right)+c1\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////
+\end_layout
+
+\begin_layout Standard
+\align left
+Let 
+\begin_inset Formula $\zeta_{1}=\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\beta_{i,j})/t(T_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $\zeta_{2}=\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.\beta_{i,j})/t(T_{i})$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\zeta_{1}\le\zeta_{2}$
+\end_inset
+
+ depending on 
+\begin_inset Formula $\lceil\frac{t(T_{i})}{t(T_{j})}\rceil$
+\end_inset
+
+, and the maximum value of 
+\begin_inset Formula $\frac{\zeta_{1}}{2.\zeta_{2}}=\frac{1}{2}$
+\end_inset
+
+ which can happen if 
+\begin_inset Formula $t(T_{j})\ge t(T_{i})\,\therefore\lceil\frac{t(T_{i})}{t(T_{j})}\rceil=1$
+\end_inset
+
+, and 
+\begin_inset Formula $(\ref{eq33})=1$
+\end_inset
+
+ which is its maximum value.
+ Of course, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $t(T_{j})\ge t(T_{i})$
+\end_inset
+
+ means that there is small number of interferences from other tasks to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, consequently, low number of conflict, so 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ is allowed to be as large as 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The theoritical minimum value for 
+\begin_inset Formula $\frac{\zeta_{1}}{2.\zeta_{2}}$
+\end_inset
+
+ is 
+\begin_inset Formula $0$
+\end_inset
+
+ which can be asymptotically reached if 
+\begin_inset Formula $t(T_{j})\ll t(T_{i})$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\lceil\frac{t(T_{i})}{t(T_{j})}\rceil\rightarrow\infty$
+\end_inset
+
+ and 
+\begin_inset Formula $\zeta_{2}\rightarrow\infty$
+\end_inset
+
+, so 
+\begin_inset Formula $(\ref{eq33})\rightarrow1/2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+So, it can be seen that 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ has littel effect on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ as it is contained in both numerator and denominator, but number of interences
+ of other tasks to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $\lceil\frac{t(T_{i})}{t(T_{j})}\rceil$
+\end_inset
+
+, has the main effect as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig14"
+
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure14.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig14"
+
+\end_inset
+
+Effect of 
+\begin_inset Formula $\lceil\frac{t(T_{i})}{t(T_{j})}\rceil$
+\end_inset
+
+ on 
+\begin_inset Formula $\frac{s_{max}}{r_{max}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+\series bold
+G-EDF/LCM vs ECM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+ & \left(\left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)s_{max}\\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)s_{max}
+\end{eqnarray*}
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+1+\alpha_{max}\le2
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+G-EDF/LCM vs Lock-free
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)s_{max}\nonumber \\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)r_{max}\label{eq:gedf_lcm_vs_lf_1}
+\end{eqnarray}
+
+\end_inset
+
+Let 
+\begin_inset Formula $\beta_{\{ij\}}^{*}=\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gedf_lcm_vs_lf_1"
+
+\end_inset
+
+) becomes 
+\begin_inset Formula 
+\[
+\frac{s_{max}}{r_{max}}\le\frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)}{\left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \beta_{\{ij\}}^{*}\right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+G-RMA/LCM vs.
+ RCM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+ & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)s_{max}\right)\\
++ & \left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{z}\in\gamma_{i}^{ex},p_{z}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{z}}\right\rceil +1\right)\sum_{\forall s_{z}^{l},\left(\Theta=\Theta_{z}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)s_{max}\right)\\
++ & \left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)s_{max}\\
+\le & \left(\left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)s_{max}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\therefore & \left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\\
++ & \left(1-\alpha_{min}\right)\sum_{\forall\tau_{z}\in\gamma_{i}^{ex},p_{z}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{z}}\right\rceil +1\right)\sum_{\forall s_{z}^{l},\left(\Theta=\Theta_{z}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\\
+\le & 2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\therefore & \left(1-\alpha_{min}\right)\sum_{\forall\tau_{z}\in\gamma_{i}^{ex},p_{z}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{z}}\right\rceil +1\right)\sum_{\forall s_{z}^{l},\left(\Theta=\Theta_{z}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\\
+\le & \left(1-\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\therefore & \frac{1-\alpha_{min}}{1-\alpha_{max}}\\
+\le & \frac{\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}{\sum_{\forall\tau_{z}\in\gamma_{i}^{ex},p_{z}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{z}}\right\rceil +1\right)\sum_{\forall s_{z}^{l},\left(\Theta=\Theta_{z}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\because p_{z}<p_{i},\,\therefore T_{i}<T_{z}$
+\end_inset
+
+ by definition of G-RMA and implicit deadline tasks.
+ 
+\begin_inset Formula $\therefore\left\lceil \frac{T_{i}}{T_{z}}\right\rceil =1,\,\forall\tau_{i},\tau_{z}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\therefore & \frac{1-\alpha_{min}}{1-\alpha_{max}}\\
+\le & \frac{\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}{2\sum_{\forall\tau_{z}\in\gamma_{i}^{ex},p_{z}<p_{i}}\sum_{\forall s_{z}^{l},\left(\Theta=\Theta_{z}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+G-RMA/LCM vs Lock-free
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)s_{max}\right)\nonumber \\
++ & \left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)s_{max}\right)\nonumber \\
++ & \left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)s_{max}\nonumber \\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)r_{max}\label{eq:grma_lcm_vs_lf_3}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By definition of G-RMA and implicit deadline tasks, 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil =1,\,\forall\tau_{i},\,\tau_{j}$
+\end_inset
+
+ where 
+\begin_inset Formula $p_{j}<p_{i}$
+\end_inset
+
+.
+ So, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grma_lcm_vs_lf_3"
+
+\end_inset
+
+) becomes 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)s_{max}\right)\nonumber \\
++ & 2\left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)s_{max}\right)\nonumber \\
++ & \left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)s_{max}\nonumber \\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)r_{max}\label{eq:grma_lcm_vs_lf_4}
+\end{eqnarray}
+
+\end_inset
+
+ The set of tasks 
+\begin_inset Formula $\left\{ \tau_{j}|\tau_{j}\neq\tau_{i}\right\} $
+\end_inset
+
+ can be devided into four sets dependinong on priority and object sharing
+ between 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+.
+ So, 
+\begin_inset Formula $\left\{ \tau_{j}|\tau_{j}\neq\tau_{i}\right\} =\left\{ \tau_{l}\right\} \cup\left\{ \tilde{\tau}_{l}\right\} \cup\left\{ \tau_{h}\right\} \cup\left\{ \tilde{\tau}_{h}\right\} $
+\end_inset
+
+, where:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{compactitem}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\left\{ \tau_{l}\right\} =\left\{ \tau_{j}|\left(\tau_{j}\neq\tau_{i}\right)\wedge\left(p_{j}<p_{i}\right)\wedge\left(\tau_{j}\in\gamma_{i}\right)\right\} $
+\end_inset
+
+ is the set of tasks 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ other than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ where 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ has direct conflict with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and priority of 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ is lower than priority of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\beta_{il}^{*}$
+\end_inset
+
+ be the number of transactions in 
+\begin_inset Formula $\tau_{l}\in\left\{ \tau_{l}\right\} $
+\end_inset
+
+ that has direct conflict with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ (i.e., 
+\begin_inset Formula $\beta_{il}^{*}=\sum_{\forall s_{l}^{x},\left(\Theta=\Theta_{l}^{x}\cap\Theta_{i}\right)\neq\emptyset}$
+\end_inset
+
+).
+ Let 
+\begin_inset Formula $\beta_{il}$
+\end_inset
+
+ be the number of times a lower priority job of 
+\begin_inset Formula $\tau_{l}$
+\end_inset
+
+ accesses shared objects with a higher priority job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ using retry-loop lock-free
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{key-5}
+\end_layout
+
+\end_inset
+
+.
+ As one object can be accessed multiple times within the same transaction,
+ and lock-free instruction accesses object only once, then 
+\begin_inset Formula $\beta_{il}\ge\beta_{il}^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\left\{ \tilde{\tau}_{l}\right\} =\left\{ \tau_{j}|\left(\tau_{j}\neq\tau_{i}\right)\wedge\left(p_{j}<p_{i}\right)\wedge\left(\tau_{j}\not\in\gamma_{i}\right)\right\} $
+\end_inset
+
+ is the set of tasks 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ other than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ where 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ has no direct conflict with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and priority of 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ is lower than priority of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+itme 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\left\{ \tau_{h}\right\} =\left\{ \tau_{j}|\left(\tau_{j}\neq\tau_{i}\right)\wedge\left(p_{j}>p_{i}\right)\wedge\left(\tau_{j}\in\gamma_{i}\right)\right\} $
+\end_inset
+
+ is the set of tasks 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ other than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ where 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ has direct conflict with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and priority of 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ is higher than priority of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\beta_{ih}^{*}$
+\end_inset
+
+ be the number of transactions in 
+\begin_inset Formula $\tau_{h}\in\left\{ \tau_{h}\right\} $
+\end_inset
+
+ that has direct conflict with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ (i.e., 
+\begin_inset Formula $\beta_{ih}^{*}=\sum_{\forall s_{h}^{x},\left(\Theta=\Theta_{h}^{x}\cap\Theta_{i}\right)\neq\emptyset}$
+\end_inset
+
+).
+ Let 
+\begin_inset Formula $\beta_{ih}$
+\end_inset
+
+ be the number of times a higher priority job of 
+\begin_inset Formula $\tau_{h}$
+\end_inset
+
+ accesses shared objects with a lower priority job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ using retry-loop lock-free
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{key-5}
+\end_layout
+
+\end_inset
+
+.
+ As one object can be accessed multiple times within the same transaction,
+ and lock-free instruction accesses object only once, then 
+\begin_inset Formula $\beta_{ih}\ge\beta_{ih}^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\left\{ \tilde{\tau}_{h}\right\} =\left\{ \tau_{j}|\left(\tau_{j}\neq\tau_{i}\right)\wedge\left(p_{j}>p_{i}\right)\wedge\left(\tau_{j}\not\in\gamma_{i}\right)\right\} $
+\end_inset
+
+ is the set of tasks 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ other than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ where 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ has no direct conflict with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and priority of 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ is higher than priority of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{compactitem}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grma_lcm_vs_lf_4"
+
+\end_inset
+
+) becomes 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left(\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{ih}^{*}\right)s_{max}\right)\nonumber \\
++ & 2\left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{l}\in\left\{ \tau_{l}\right\} }\beta_{il}^{*}s_{max}\right)\nonumber \\
++ & \left(\left(\sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left\lceil \frac{T_{i}}{T_{h}}\right\rceil \right)+\left(\sum_{\forall\tilde{\tau}_{h}\in\left\{ \tilde{\tau}_{h}\right\} }\left\lceil \frac{T_{i}}{\tilde{T}_{h}}\right\rceil \right)\right)s_{max}\nonumber \\
+\le & \left(\left(\sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{ih}\right)+\left(2\sum_{\forall\tau_{l}\in\left\{ \tau_{l}\right\} }\beta_{il}\right)\right)r_{max}\nonumber \\
++ & \left(\left(\sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left\lceil \frac{T_{i}}{T_{h}}\right\rceil \right)+\left(\sum_{\forall\tilde{\tau}_{h}\in\left\{ \tilde{\tau}_{h}\right\} }\left\lceil \frac{T_{i}}{\tilde{T}_{h}}\right\rceil \right)\right)r_{max}\label{eq:grma_lcm_vs_lf_5}
+\end{eqnarray}
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{eqnarray}
+\therefore & \sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left(\left(1+\alpha_{max}\right)\left(\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{ih}^{*}\right)+\left\lceil \frac{T_{i}}{T_{h}}\right\rceil \right)s_{max}\nonumber \\
++ & 2\left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{l}\in\left\{ \tau_{l}\right\} }\beta_{il}^{*}s_{max}\right)\nonumber \\
++ & \left(\left(\sum_{\forall\tilde{\tau}_{h}\in\left\{ \tilde{\tau}_{h}\right\} }\left\lceil \frac{T_{i}}{\tilde{T}_{h}}\right\rceil \right)\right)s_{max}\nonumber \\
+\le & \sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left(\left(\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{ih}\right)+\left\lceil \frac{T_{i}}{T_{h}}\right\rceil \right)r_{max}\nonumber \\
++ & \left(2\sum_{\forall\tau_{l}\in\left\{ \tau_{l}\right\} }\beta_{il}\right)r_{max}\nonumber \\
++ & \left(\sum_{\forall\tilde{\tau}_{h}\in\left\{ \tilde{\tau}_{h}\right\} }\left\lceil \frac{T_{i}}{\tilde{T}_{h}}\right\rceil \right)r_{max}\label{eq:grma_lcm_vs_lf_6}
+\end{eqnarray}
+
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grma_lcm_vs_lf_6"
+
+\end_inset
+
+) is satisfied if for each 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{compactitem}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left(\left(\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{ih}\right)+\left\lceil \frac{T_{i}}{T_{h}}\right\rceil \right)}{\sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left(\left(1+\alpha_{max}\right)\left(\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{ih}^{*}\right)+\left\lceil \frac{T_{i}}{T_{h}}\right\rceil \right)}\label{eq:grma_lcm_vs_lf_7}
+\end{equation}
+
+\end_inset
+
+To find the lower bound over 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ that satisfies (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grma_lcm_vs_lf_7"
+
+\end_inset
+
+), let 
+\begin_inset Formula $\beta_{ih}$
+\end_inset
+
+ assumes its minimum value (i.e., 
+\begin_inset Formula $\beta_{ih}=\beta_{ih}^{*}$
+\end_inset
+
+).
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grma_lcm_vs_lf_7"
+
+\end_inset
+
+) is satisfied if 
+\begin_inset Formula 
+\begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & \frac{\sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left(\left(\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{ih}^{*}\right)+\left\lceil \frac{T_{i}}{T_{h}}\right\rceil \right)}{\sum_{\forall\tau_{h}\in\left\{ \tau_{h}\right\} }\left(1+\alpha_{max}\right)\left(\left(\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{ih}^{*}\right)+\left\lceil \frac{T_{i}}{T_{h}}\right\rceil \right)}\nonumber \\
+ & = & \frac{1}{1+\alpha_{max}}\le\frac{1}{2}\label{eq:grma_lcm_vs_lf_8}
+\end{eqnarray}
+
+\end_inset
+
+To find the upper bound over 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ that satisfies (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grma_lcm_vs_lf_7"
+
+\end_inset
+
+), let 
+\begin_inset Formula $\beta_{ih}>>\left(1+\alpha_{max}\right)\beta_{ih}^{*}$
+\end_inset
+
+.
+ Thus, 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ can be much larger than 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+2\left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{l}\in\left\{ \tau_{l}\right\} }\beta_{il}^{*}s_{max}\right)\le\left(2\sum_{\forall\tau_{l}\in\left\{ \tau_{l}\right\} }\beta_{il}\right)r_{max}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\therefore\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{l}\in\left\{ \tau_{l}\right\} }\beta_{il}}{\left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{l}\in\left\{ \tau_{l}\right\} }\beta_{il}^{*}\right)}\label{eq:grma_lcm_vs_lf_9}
+\end{equation}
+
+\end_inset
+
+To find the lower bound over 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ that satisfies (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grma_lcm_vs_lf_7"
+
+\end_inset
+
+), let 
+\begin_inset Formula $\beta_{il}$
+\end_inset
+
+ assumes its minimum value (i.e., 
+\begin_inset Formula $\beta_{il}=\beta_{il}^{*}$
+\end_inset
+
+).
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grma_lcm_vs_lf_7"
+
+\end_inset
+
+) is satisfied if 
+\begin_inset Formula 
+\begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & \frac{1}{1-\alpha_{min}}\le1\label{eq:grma_lcm_vs_lf_10}
+\end{eqnarray}
+
+\end_inset
+
+To find the upper bound over 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ that satisfies (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grma_lcm_vs_lf_7"
+
+\end_inset
+
+), let 
+\begin_inset Formula $\beta_{il}>>\left(1-\alpha_{min}\right)\beta_{il}^{*}$
+\end_inset
+
+.
+ Thus, 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ can be much larger than 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\left(\left(\sum_{\forall\tilde{\tau}_{h}\in\left\{ \tilde{\tau}_{h}\right\} }\left\lceil \frac{T_{i}}{\tilde{T}_{h}}\right\rceil \right)\right)s_{max}\le\left(\sum_{\forall\tilde{\tau}_{h}\in\left\{ \tilde{\tau}_{h}\right\} }\left\lceil \frac{T_{i}}{\tilde{T}_{h}}\right\rceil \right)r_{max}\label{eq:grma_lcm_vs_lf_11}
+\end{equation}
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+\therefore\frac{s_{max}}{r_{max}}\le1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{compactitem}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By taking the minimum lower bound and the maximum upper bound from the previous
+ cases, Claim follows.
+\end_layout
+
+\begin_layout Section
+G-RMA/LCM vs Global OMLP
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)s_{max}\right)\nonumber \\
++ & 2\left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}\right)\neq\emptyset}\right)s_{max}\right)\nonumber \\
++ & \left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)s_{max}\nonumber \\
+\le & N_{i}\left(2m-1\right)L_{max}\label{eq:grma_lcm_vs_omlp_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{s_{max}}{L_{max}}\le\frac{N_{min}\left(2m-1\right)}{\left(n-1\right)\left(\left(1+\alpha_{max}\right)\left(\left(\Phi_{max}+1\right)N_{max}\right)+2\left(1-\alpha_{min}\right)N_{max}+\Phi_{max}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+G-RMA/LCM vs RNLP
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)s_{max}\right)\nonumber \\
++ & 2\left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)s_{max}\right)\nonumber \\
++ & \left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)s_{max}\nonumber \\
+\le & N_{i}\left(2m-1\right)L_{max}\label{eq:grma_lcm_vs_omlp_1-1}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+G-EDF/PNF vs ECM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)s_{max}\label{eq:pnf_vs_ecm_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \nonumber \\
+\le & \left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\label{eq:pnf_vs_ecm_2}
+\end{eqnarray}
+
+\end_inset
+
+ 
+\begin_inset Formula $\because\,\gamma_{i}\subseteq\gamma_{i}^{ex}$
+\end_inset
+
+, 
+\begin_inset Formula $\Theta_{i}\subseteq\Theta_{i}^{ex}$
+\end_inset
+
+ and 
+\begin_inset Formula $2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \ge\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\le\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)$
+\end_inset
+
+.
+ So, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_ecm_2"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula $\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \le\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}$
+\end_inset
+
+ is the number of transactions in any task 
+\begin_inset Formula $\tau_{j}\neq\tau_{i}$
+\end_inset
+
+ that has no direct conflict with any transaction in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $
+\end_inset
+
+ is the total number of higher priority jobs- that do not belong to 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ - that can be released during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ Thus, Claim follows.
+\end_layout
+
+\begin_layout Section
+G-RMA/PNF vs RCM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & \left(\left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)s_{max}\label{eq:pnf_vs_rcm_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \nonumber \\
+\le & \left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_rcm_2}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray}
+\therefore & \left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(2\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \nonumber \\
+\le & \left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_rcm_3}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_rcm_3"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{eqnarray}
+\therefore & \left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right)+\left(2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)\right)\nonumber \\
+\le & \left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_rcm_4}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray}
+\therefore & \left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l}}\right)\right)\nonumber \\
+\le & \left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_rcm_5}
+\end{eqnarray}
+
+\end_inset
+
+ 
+\begin_inset Formula $\because\,\gamma_{i}\subseteq\gamma_{i}^{ex}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Theta_{i}\subseteq\Theta_{i}^{ex}$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)<2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)$
+\end_inset
+
+.
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_rcm_5"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l}}\right)\le\frac{1}{2}\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l}}\right)$
+\end_inset
+
+ is total number of transactions in tasks with lower priority than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+\end_inset
+
+ is total number of jobs with higher priority than 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ that are released during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ Claim follows.
+ 
+\end_layout
+
+\begin_layout Section
+G-EDF/PNF vs G-EDF/LCM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & \left(\left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)s_{max}\label{eq:pnf_vs_gedf_lcm_1}
+\end{eqnarray}
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \nonumber \\
+\le & \left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\label{eq:pnf_vs_gedf_lcm_2}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,\gamma_{i}\subseteq\gamma_{i}^{ex}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Theta_{i}\subseteq\Theta_{i}^{ex}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_gedf_lcm_2"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \nonumber \\
+\le & \left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\label{eq:pnf_vs_gedf_lcm_3}
+\end{eqnarray}
+
+\end_inset
+
+Eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_gedf_lcm_3"
+
+\end_inset
+
+) holds if:
+\end_layout
+
+\begin_layout Enumerate
+For each 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $\tau_{j}\in\gamma_{i}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\le\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\therefore\,\forall\tau_{j}\in\gamma_{i},\,\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\le\left(1+\alpha_{max}\right)\left\lceil \frac{T_{i}}{T_{j}}\right\rceil 
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\therefore\,\forall\tau_{j}\in\gamma_{i},\,\frac{1}{\alpha_{max}}\le\left\lceil \frac{T_{i}}{T_{j}}\right\rceil 
+\]
+
+\end_inset
+
+ By (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{eq:gedf_max_job_no_interfer_j_i}
+\end_layout
+
+\end_inset
+
+), 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+\end_inset
+
+ is maximum number of jobs of 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ - with higher priority than current job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ - that can exist during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \le\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}$
+\end_inset
+
+ is the number of transactions in any task 
+\begin_inset Formula $\tau_{j}\neq\tau_{i}$
+\end_inset
+
+ that has no direct conflict with any transaction in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $
+\end_inset
+
+ is the total number of jobs- with higher priority than current job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ - that can be released during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+From the previous observations, Claim follows.
+\end_layout
+
+\begin_layout Section
+G-RMA/PNF vs G-RMA/LCM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \nonumber \\
+\le & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)\nonumber \\
++ & \left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)\nonumber \\
+ & \left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_grma_lcm_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(2\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right)\nonumber \\
++ & \left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \nonumber \\
+\le & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)\nonumber \\
++ & \left(1-\alpha_{min}\right)\left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)\nonumber \\
+ & \left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_grma_lcm_2}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,\gamma_{i}\subseteq\gamma_{i}^{ex}$
+\end_inset
+
+, 
+\begin_inset Formula $\Theta_{i}\subseteq\Theta_{i}^{ex}$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha_{max}\ge0$
+\end_inset
+
+, then 
+\begin_inset Formula $\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)$
+\end_inset
+
+ is never bigger than 
+\begin_inset Formula $\left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)$
+\end_inset
+
+.
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_grma_lcm_2"
+
+\end_inset
+
+) holds if:
+\end_layout
+
+\begin_layout Enumerate
+For each 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{equation}
+\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\le\left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)\label{eq:pnf_vs_grma_lcm_3}
+\end{equation}
+
+\end_inset
+
+ Eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_grma_lcm_3"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula $\alpha_{min}\rightarrow0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+For each 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{equation}
+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \le\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \label{eq:pnf_vs_grma_lcm_4}
+\end{equation}
+
+\end_inset
+
+Eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_grma_lcm_3"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\[
+\frac{\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\le\frac{\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)$
+\end_inset
+
+ is total number of transactions- that has no direct conflict with any transacti
+on in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ - in tasks with lower priority than 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+\end_inset
+
+ is total number of jobs with higher priority than 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ that can be released during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+From previous observations, Claim follows.
+\end_layout
+
+\begin_layout Standard
+total number of transactions in tasks with lower priority than 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ does not exceed one half of total number of jobs with higher priority than
+ 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ that can be released during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+G-EDF/PNF vs Lock-free
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)r_{max}\label{eq:pnf_vs_gedf_lf_1}
+\end{eqnarray}
+
+\end_inset
+
+Let 
+\begin_inset Formula $\beta_{ij}^{*}=\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}$
+\end_inset
+
+.
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_gedf_lf_1"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)}{\left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}^{*}\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \right)}\label{eq:pnf_vs_gedf_lf_2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,\beta_{ij}\ge\beta_{ij}^{*}$
+\end_inset
+
+, then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_gedf_lf_2"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \ge\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor $
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $
+\end_inset
+
+ is maximum number of jobs- with higher priority than current job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ - that can be released during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}$
+\end_inset
+
+ is total number of transactions in any task 
+\begin_inset Formula $\tau_{j}\neq\tau_{i}$
+\end_inset
+
+ that has no direct conflict with any transaction in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \ge\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor $
+\end_inset
+
+ allows 
+\begin_inset Formula $s_{max}/r_{max}\ge1$
+\end_inset
+
+ with equal or better schedulability for PNF than retry-loop lock-free with
+ G-EDF.
+\end_layout
+
+\begin_layout Section
+G-RMA/PNF vs lock-free
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)r_{max}\label{eq:pnf_vs_grma_lf_1}
+\end{eqnarray}
+
+\end_inset
+
+Let 
+\begin_inset Formula $\beta_{ij}^{*}=\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}$
+\end_inset
+
+, then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_grma_lf_1"
+
+\end_inset
+
+) becomes 
+\begin_inset Formula 
+\begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)}{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}^{*}\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor }\label{eq:pnf_vs_grma_lf_2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,\beta_{ij}\ge\beta_{ij}^{*}$
+\end_inset
+
+, then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_grma_lf_2"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \ge\frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+\end_inset
+
+ is maximum number of jobs with higher priority than 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ that can be released during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)$
+\end_inset
+
+ is total number of transactions in tasks with lower priority than 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ and have no direct conflict with any transaction in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+G-EDF/PNF vs OMLP
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & N_{i}\left(2m-1\right)L_{max}\label{eq:pnf_vs_gedf_omlp_1}
+\end{eqnarray}
+
+\end_inset
+
+Let 
+\begin_inset Formula $\tilde{N}_{ij}=\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}$
+\end_inset
+
+, then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_gedf_omlp_1"
+
+\end_inset
+
+) becomes 
+\begin_inset Formula 
+\[
+\frac{s_{max}}{L_{max}}\le\frac{N_{i}\left(2m-1\right)}{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)N_{ij}\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\tilde{N}_{ij}}{m}\right\rfloor }
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\le\frac{N_{min}\left(2m-1\right)}{\left(n-1\right)\left(\Phi_{max}+1\right)N_{max}+\frac{\left(n-1\right)N_{max}}{m}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{N_{min}\left(2m-1\right)}{\left(n-1\right)N_{max}\left(\Phi_{max}+1+\frac{1}{m}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+G-RMA/PNF vs OMLP
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & N_{i}\left(2m-1\right)L_{max}\label{eq:pnf_vs_grma_omlp_1}
+\end{eqnarray}
+
+\end_inset
+
+Let 
+\begin_inset Formula $\tilde{N}_{ij}=\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}$
+\end_inset
+
+, then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_vs_grma_omlp_1"
+
+\end_inset
+
+) becomes 
+\begin_inset Formula 
+\[
+\frac{s_{max}}{L_{max}}\le\frac{N_{min}\left(2m-1\right)}{\left(\left(n-1\right)\left(\left(\Phi_{max}+1\right)N_{max}\right)\right)+\frac{2\left(n-1\right)N_{max}}{m}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{s_{max}}{L_{max}}\le\frac{N_{min}\left(2m-1\right)}{\left(n-1\right)N_{max}\left(\Phi_{max}+1+\frac{2}{m}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+G-EDF/PNF vs RNLP
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & N_{i}\left(2m-1\right)L_{max}\label{eq:pnf_vs_gedf_rnlp_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+FBLT vs ECM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)\le\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\label{eq:fblt_ecm_comp_1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\because\,|s_{i}|=\sum_{\forall s_{i}^{k}}$
+\end_inset
+
+, where 
+\begin_inset Formula $|s_{i}|$
+\end_inset
+
+ is total number of transactions in any job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ Then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_ecm_comp_1"
+
+\end_inset
+
+) becomes 
+\begin_inset Formula 
+\begin{equation}
+m+|s_{i}|\left(\Omega_{i}^{k}+m-1\right)\le\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\label{eq:fblt_ecm_comp_2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\Omega_{i}^{k}\le\frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\right)-\left(1+|s_{i}|\right)m+|s_{i}|}{|s_{i}|}\label{eq:fblt_ecm_comp_3}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|\ge1$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\frac{1+|s_{i}|}{|s_{i}|}\le2$
+\end_inset
+
+.
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_ecm_comp_3"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{equation}
+\Omega_{i}^{k}\le2\left(\frac{\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}{|s_{i}|}-m\right)\label{eq:fblt_ecm_comp_4}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)$
+\end_inset
+
+ is the maximum number of transactions in all jobs with higher priority
+ than current job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and have direct or indirect conflict with transactions in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+, Claim follows.
+\end_layout
+
+\begin_layout Section
+FBLT vs RCM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)\le2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\label{eq:fblt_rcm_comp_1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|=\sum_{\forall s_{i}^{k}}$
+\end_inset
+
+, where 
+\begin_inset Formula $|s_{i}|$
+\end_inset
+
+ is total number of transactions in any job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\because\,\Omega_{i}^{max}\ge\Omega_{i}^{k}$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_ecm_comp_1"
+
+\end_inset
+
+) becomes
+\begin_inset Formula 
+\begin{equation}
+m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)\le2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\label{eq:fblt_rcm_comp_2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\therefore\,\Omega_{i}^{max}\le\frac{\left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\right)-\left(1+|s_{i}|\right)m+|s_{i}|}{|s_{i}|}\label{eq:fblt_rcm_comp_3}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|\ge1$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\frac{1+|s_{i}|}{|s_{i}|}\le2$
+\end_inset
+
+.
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_rcm_comp_3"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{equation}
+\Omega_{i}^{max}\le2\left(\frac{\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}{|s_{i}|}-m\right)\label{eq:fblt_rcm_comp_4}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)$
+\end_inset
+
+ is the maximum number of transactions in all jobs with higher priority
+ than current job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and have direct or indirect conflict with transactions in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+, Claim follows.
+\end_layout
+
+\begin_layout Section
+FBLT vs G-EDF/LCM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)\le\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\label{eq:fblt_gedf_lcm_comp_1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|=\sum_{\forall s_{i}^{k}}$
+\end_inset
+
+, where 
+\begin_inset Formula $|s_{i}|$
+\end_inset
+
+ is total number of transactions in any job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\because\,\Omega_{i}^{max}\ge\Omega_{i}^{k}$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_gedf_lcm_comp_1"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{equation}
+m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)\le\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\label{eq:fblt_gedf_lcm_comp_2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\therefore\,\Omega_{i}^{max}\le\frac{\left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\right)-\left(1+|s_{i}|\right)m+|s_{i}|}{|s_{i}|}\label{eq:fblt_gedf_lcm_comp_3}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|\ge1$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\frac{1+|s_{i}|}{|s_{i}|}\le2$
+\end_inset
+
+.
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_gedf_lcm_comp_3"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{equation}
+\Omega_{i}^{max}\le\frac{\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}{|s_{i}|}-2m\label{eq:fblt_gedf_lcm_comp_4}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)$
+\end_inset
+
+ is the maximum number of transactions in all jobs with higher priority
+ than current job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and have direct or indirect conflict with transactions in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+, Claim follows.
+\end_layout
+
+\begin_layout Section
+FBLT vs G-RMA/LCM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)\label{eq:fblt_grma_lcm_comp_1}\\
+\le & \left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\nonumber \\
++ & \left(1-\alpha_{min}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|=\sum_{\forall s_{i}^{k}}$
+\end_inset
+
+, where 
+\begin_inset Formula $|s_{i}|$
+\end_inset
+
+ is total number of transactions in any job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ Then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_grma_lcm_comp_1"
+
+\end_inset
+
+) becomes
+\begin_inset Formula 
+\begin{eqnarray}
+ & m+|s_{i}|\left(\Omega_{i}^{k}+m-1\right)\label{eq:fblt_grma_lcm_comp_2}\\
+\le & \left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\nonumber \\
++ & 2\left(1-\alpha_{min}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray}
+ & \therefore\,\Omega_{i}^{k}\label{eq:fblt_grma_lcm_comp_3}\\
+\le & \frac{\left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)}{|s_{i}|}\nonumber \\
++ & \frac{\left(2\left(1-\alpha_{min}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)}{|s_{i}|}\nonumber \\
++ & 1-\frac{1+|s_{i}|}{|s_{i}|}m\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|\ge1$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\frac{1+|s_{i}|}{|s_{i}|}\le2$
+\end_inset
+
+.
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_grma_lcm_comp_3"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{eqnarray}
+ & \Omega_{i}^{k}\label{eq:fblt_grma_lcm_comp_4}\\
+\le & \frac{\left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)}{|s_{i}|}\nonumber \\
++ & \frac{\left(2\left(1-\alpha_{min}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)}{|s_{i}|}-2m\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)$
+\end_inset
+
+ is the maximum number of transactions in all jobs with higher priority
+ than current job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and have direct or indirect conflict with transactions in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\because\,2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)$
+\end_inset
+
+ is the maximum number of transactions in all jobs with lower priority than
+ current job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ and have direct or indirect conflict with transactions in 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+, Claim follows.
+\end_layout
+
+\begin_layout Section
+FBTL vs.
+ G-EDF/PNF
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \nonumber \\
+\le & \sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \label{eq:fblt_vs_gedf_pnf_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray}
+\therefore & |s_{i}|\Omega_{i}^{k}\nonumber \\
+\le & \sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor -\left(1+|s_{i}|\right)m+|s_{i}|-\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \label{eq:fblt_vs_gedf_pnf_2}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|\ge1$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\frac{1+|s_{i}|}{|s_{i}|}\le2$
+\end_inset
+
+ and
+\begin_inset Formula $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \ge\frac{\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }{|s_{i}|}$
+\end_inset
+
+.
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_vs_gedf_pnf_2"
+
+\end_inset
+
+) holds if
+\begin_inset Formula 
+\begin{eqnarray}
+\therefore & \Omega_{i}^{k}\nonumber \\
+\le & \frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor }{|s_{i}|}-\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor -2m\label{eq:fblt_vs_gedf_pnf_3}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+FBLT vs G-RMA/PNF
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)+\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \nonumber \\
+\le & \sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \label{eq:fblt_vs_grma_pnf_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray}
+ & |s_{i}|\Omega_{i}^{k}\nonumber \\
+\le & \sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor -\left(1+|s_{i}|\right)m+|s_{i}|-\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \label{eq:fblt_vs_grma_pnf_2}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|\ge1$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\frac{1+|s_{i}|}{|s_{i}|}\le2$
+\end_inset
+
+ and
+\begin_inset Formula $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \ge\frac{\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }{|s_{i}|}$
+\end_inset
+
+.
+ Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_vs_grma_pnf_2"
+
+\end_inset
+
+) holds if
+\begin_inset Formula 
+\begin{eqnarray}
+ & \Omega_{i}^{k}\nonumber \\
+\le & \frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor }{|s_{i}|}-2m-\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \label{eq:fblt_vs_grma_pnf_3}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+FBLT vs G-EDF/Lock-free
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)s_{max}\nonumber \\
+\le & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)r_{max}\label{eq:fblt_vs_gedf_lf_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }{m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }\label{eq:fblt_vs_gedf_lf_2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|=\sum_{\forall s_{i}^{k}}$
+\end_inset
+
+, where 
+\begin_inset Formula $|s_{i}|$
+\end_inset
+
+ is total number of transactions in any job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\because\,\Omega_{i}^{max}\ge\Omega_{i}^{k}$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_vs_gedf_lf_2"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\[
+\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+FBLT vs G-RMA/Lock-free
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)+\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)s_{max}\nonumber \\
+\le & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)r_{max}\label{eq:fblt_vs_grma_lf_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\therefore\,\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+FBLT vs G-EDF/OMLP
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \left(m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)s_{max}\nonumber \\
+\le & N_{i}\left(2m-1\right)L_{max}\label{eq:fblt_vs_gedf_omlp_1}
+\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{s_{max}}{L_{max}}\le\frac{N_{i}\left(2m-1\right)}{m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }\label{eq:fblt_vs_gedf_omlp_2}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,|s_{i}|=\sum_{\forall s_{i}^{k}}$
+\end_inset
+
+, where 
+\begin_inset Formula $|s_{i}|$
+\end_inset
+
+ is total number of transactions in any job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\because\,\Omega_{i}^{max}\ge\Omega_{i}^{k}$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_vs_gedf_omlp_2"
+
+\end_inset
+
+) holds if for each 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{equation}
+\frac{s_{max}}{L_{max}}\le\frac{N_{i}\left(2m-1\right)}{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }\label{eq:fblt_vs_gedf_omlp_3}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

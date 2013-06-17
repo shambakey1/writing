@@ -1,0 +1,88 @@
+%% LyX 2.0.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{babel}
+\begin{document}
+
+\subsection{Real-Time Lock-free Synchronization}
+
+Transactional-like concurrency control and lock-free synchronization,
+for real-time systems, has been previously studied in (e.g.,~\cite{anderson95realtime,anderson1997lock,684918,1203552,896371,anderson96framework,811240}).
+Despite their numerous advantages over locks (e.g., deadlock-freedom),
+their programmability has remained a challenge. Past studies show
+that they are best suited for simple data structures where their retry
+cost is competitive to the cost of lock-based synchronization~\cite{bc+08}.
+In contrast, STM is semantically simpler~\cite{Herlihy:2006:AMP:1146381.1146382},
+and is often the only viable lock-free solution for complex data structures
+(e.g., red/black tree)~\cite{key-1} and nested critical sections~\cite{Saha:2006:MHP:1122971.1123001,Agrawal:2008:SOT:1378533.1378553,Peri:2011:CCE:1946143.1946152}.
+
+
+\subsection{Transactional Memory: Overview }
+
+TM is motivated by database transactions \textemdash{} unit of work
+of a database system, with ACID properties \cite{Gray:1981:TCV:1286831.1286846}.
+In TM, concurrent threads synchronize via transactions when they access
+shared memory. A TM transaction is an explicitly delimited sequence
+of steps executed atomically by a thread \cite{harris.larus.rajwar}.
+Atomicity implies all-or-nothing: the sequence of steps (i.e., reads
+and writes) logically occur at a single instant in time; intermediate
+states are invisible to other transactions. The semantic difficulty
+of locks and the resulting high development and maintenance costs
+have been the driving motivation for seeking alternate concurrency
+control abstractions. The design of lock-free and wait-free data structures
+are one such alternative. These approaches are highly performant,
+but significantly complex to write and reason about, and therefore,
+have largely been limited to a small set of basic data structures
+\textemdash{} e.g., linked lists, queues, stacks \cite{1508449,4079519,1656921,Cho:2006:UAP:1141277.1141490}.
+
+The term \textquotedblleft{}transactional memory\textquotedblright{}
+was proposed by Herlihy and Moss {[}5{]}, where they presented hardware
+support for lock-free data structures. TM has been provided in hardware
+(HTM) \cite{698569,Martinez:2002:SSA:605397.605400,Oplinger:2002:ESR:605397.605417,Rajwar:2002:TLE:605397.605399,ham04},
+software (STM) \cite{4145102,Dolev:2008:CSC:1400751.1400769,Harris:2003:LSL:949305.949340,Harris:2005:CMT:1065944.1065952,Cho:2006:UAP:1141277.1141490,Marathe:2004:DTM:1066650.1066660,Yoo:2008:ATS:1378533.1378564,Saha:2006:ASS:1194816.1194838,Shpeisman:2007:EIO:1250734.1250744}
+and hybrid TM \cite{dam06,Kumar:2006:HTM:1122971.1123003,Minh:2007:EHT:1250662.1250673,Shriraman:2007:IHA:1250662.1250676}.
+Hybrid TM allows STM to exploit any available HTM support to improve
+performance. One basic problem in STM is how to correctly and efficiently
+resolve conflicts when multiple threads access one shared objects
+simultaneously and at least one writes inot it. Generally, a contention
+manager (CM) is responsible to ensure that all transactions eventually
+commit by choosing which transaction to delay or abort and when to
+restart the aborted transaction in case of conflicts {[}\textbf{REFERNCE
+FROM NEW PAPERS}{]}.
+
+
+\subsection{Real-Time STM}
+
+STM concurrency control for real-time systems has been previously
+studied in~\cite{manson2006preemptible,fahmy2009bounding,sarni2009real,schoeberl2010rttm,key-1,barrosmanaging,6045438}.
+\cite{manson2006preemptible} proposes a restricted version of STM
+for uniprocessors. \cite{fahmy2009bounding} bounds response times
+in distributed multiprocessor systems with STM synchronization. They
+consider Pfair scheduling, limit to small atomic regions with fixed
+size, and limit transaction execution to span at most two quanta.
+\cite{sarni2009real} presents real-time scheduling of transactions
+and serializes transactions based on deadlines. However, the work
+does not bound retries and response times, nor establishes tradeoffs
+against lock-free synchronization. \cite{schoeberl2010rttm} proposes
+real-time HTM. The retry bound developed in~\cite{schoeberl2010rttm}
+assumes that the worst case conflict between atomic sections of different
+tasks occurs when the sections are released at the same time. \cite{6045438}
+presents earliest-deadline CM or ECM. ECM resolves conflicts by aborting
+the transaction with longer absoluted deadline. \cite{6045438} derives
+a number of properties for ECM, upper bounds transactional retrys,
+and compares schedulability of ECM to retry-loop lock-free synchronization
+\cite{key-1}. \cite{6045438}'s assumptions, although simplifies
+analysis, can lead to pessimistic upper bounds.
+
+The past work that is closest to ours is~\cite{key-1}, which upper
+bounds retries and response times for EDF CM with G-EDF, and identifies
+the tradeoffs against locking and lock-free protocols. Similar to~\cite{schoeberl2010rttm},~\cite{key-1}
+also assumes that the worst case conflict between atomic sections
+occurs when the sections are released simultaneously. In addition,
+we consider RMA CM, besides EDF CM. The ideas in~\cite{key-1} are
+extended in~\cite{barrosmanaging}, which presents three real-time
+CM designs. However, no retry bounds or schedulability analysis is
+presented in~\cite{barrosmanaging}.
+\end{document}

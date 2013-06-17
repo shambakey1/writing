@@ -1,0 +1,226 @@
+% This file was created with JabRef 2.3.1.
+% Encoding: UTF-8
+
+@INPROCEEDINGS{key-6,
+  author = {Baker, Theodore P.},
+  title = {Multiprocessor EDF and Deadline Monotonic Schedulability Analysis},
+  booktitle = {Proceedings of the 24th IEEE International Real-Time Systems Symposium},
+  year = {2003},
+  series = {RTSS '03},
+  pages = {120--},
+  address = {Washington, DC, USA},
+  publisher = {IEEE Computer Society},
+  acmid = {956614},
+  isbn = {0-7695-2044-8},
+  url = {http://portal.acm.org/citation.cfm?id=956418.956614}
+}
+
+@INPROCEEDINGS{Baruah:2007:TMG:1338441.1338647,
+  author = {Baruah, Sanjoy},
+  title = {Techniques for Multiprocessor Global Schedulability Analysis},
+  booktitle = {Proceedings of the 28th IEEE International Real-Time Systems Symposium},
+  year = {2007},
+  series = {RTSS '07},
+  pages = {119--128},
+  address = {Washington, DC, USA},
+  publisher = {IEEE Computer Society},
+  acmid = {1338647},
+  doi = {http://dx.doi.org/10.1109/RTSS.2007.48},
+  isbn = {0-7695-3062-1},
+  numpages = {10},
+  url = {http://dx.doi.org/10.1109/RTSS.2007.48}
+}
+
+@ARTICLE{Baruah:2010:IMG:1842593.1842607,
+  author = {Baruah, Sanjoy and Bonifaci, Vincenzo and Marchetti-Spaccamela, Alberto
+	and Stiller, Sebastian},
+  title = {Improved multiprocessor global schedulability analysis},
+  journal = {Real-Time Syst.},
+  year = {2010},
+  volume = {46},
+  pages = {3--24},
+  month = {September},
+  acmid = {1842607},
+  address = {Norwell, MA, USA},
+  doi = {http://dx.doi.org/10.1007/s11241-010-9096-3},
+  issn = {0922-6443},
+  issue = {1},
+  keywords = {Deadline monotonic, EDF, Global multiprocessor scheduling, Processor
+	speedup factor, Sporadic tasks},
+  numpages = {22},
+  publisher = {Kluwer Academic Publishers},
+  url = {http://dx.doi.org/10.1007/s11241-010-9096-3}
+}
+
+@INPROCEEDINGS{key-2,
+  author = {Bertogna, Marko and Cirinei, Michele},
+  title = {Response-Time Analysis for Globally Scheduled Symmetric Multiprocessor
+	Platforms},
+  booktitle = {Proceedings of the 28th IEEE International Real-Time Systems Symposium},
+  year = {2007},
+  series = {RTSS '07},
+  pages = {149--160},
+  address = {Washington, DC, USA},
+  publisher = {IEEE Computer Society},
+  acmid = {1338650},
+  doi = {http://dx.doi.org/10.1109/RTSS.2007.41},
+  isbn = {0-7695-3062-1},
+  numpages = {12},
+  url = {http://dx.doi.org/10.1109/RTSS.2007.41}
+}
+
+@ARTICLE{Bertogna:2009:SAG:1515608.1515674,
+  author = {Bertogna, Marko and Cirinei, Michele and Lipari, Giuseppe},
+  title = {Schedulability Analysis of Global Scheduling Algorithms on Multiprocessor
+	Platforms},
+  journal = {IEEE Trans. Parallel Distrib. Syst.},
+  year = {2009},
+  volume = {20},
+  pages = {553--566},
+  month = {April},
+  acmid = {1515674},
+  address = {Piscataway, NJ, USA},
+  doi = {10.1109/TPDS.2008.129},
+  issn = {1045-9219},
+  issue = {4},
+  keywords = {Real-time distributed, Scheduling and task partitioning, Parallel
+	Architectures, Processor Architectures, Multi-core/single-chip multiprocessors,
+	Real-time and embedded systems, Special-Purpose and Application-Based
+	Systems, Computer Systems Organization, Multiprocessor Systems, Computer
+	System Implementation, Scheduling, Process Management, Operating
+	Systems, Software/Software Engineering, Organization and Design},
+  numpages = {14},
+  publisher = {IEEE Press},
+  url = {http://portal.acm.org/citation.cfm?id=1515608.1515674}
+}
+
+@INPROCEEDINGS{Bertogna:2005:ISA:1084012.1084162,
+  author = {Bertogna, Marko and Cirinei, Michele and Lipari, Giuseppe},
+  title = {Improved Schedulability Analysis of EDF on Multiprocessor Platforms},
+  booktitle = {Proceedings of the 17th Euromicro Conference on Real-Time Systems},
+  year = {2005},
+  pages = {209--218},
+  address = {Washington, DC, USA},
+  publisher = {IEEE Computer Society},
+  acmid = {1084162},
+  doi = {10.1109/ECRTS.2005.18},
+  isbn = {0-7695-2400-1},
+  numpages = {10},
+  url = {http://portal.acm.org/citation.cfm?id=1084012.1084162}
+}
+
+@INPROCEEDINGS{key-4,
+  author = {Block, Aaron and Leontyev, Hennadiy and Brandenburg, Bjorn B. and
+	Anderson, James H.},
+  title = {A Flexible Real-Time Locking Protocol for Multiprocessors},
+  booktitle = {Proceedings of the 13th IEEE International Conference on Embedded
+	and Real-Time Computing Systems and Applications},
+  year = {2007},
+  series = {RTCSA '07},
+  pages = {47--56},
+  address = {Washington, DC, USA},
+  publisher = {IEEE Computer Society},
+  acmid = {1307316},
+  doi = {http://dx.doi.org/10.1109/RTCSA.2007.8},
+  isbn = {0-7695-2975-5},
+  numpages = {10},
+  url = {http://dx.doi.org/10.1109/RTCSA.2007.8}
+}
+
+@INPROCEEDINGS{key-3,
+  author = {Brandenburg, Bjorn B. and Anderson, James H.},
+  title = {Optimality Results for Multiprocessor Real-Time Locking},
+  booktitle = {Proceedings of the 2010 31st IEEE Real-Time Systems Symposium},
+  year = {2010},
+  series = {RTSS '10},
+  pages = {49--60},
+  address = {Washington, DC, USA},
+  publisher = {IEEE Computer Society},
+  acmid = {1936220},
+  doi = {http://dx.doi.org/10.1109/RTSS.2010.17},
+  isbn = {978-0-7695-4298-0},
+  keywords = {real-time, multiprocessor, locking, synchronization, optimality},
+  numpages = {12},
+  url = {http://dx.doi.org/10.1109/RTSS.2010.17}
+}
+
+@INPROCEEDINGS{key-5,
+  author = {Devi, UmaMaheswari C. and Leontyev, Hennadiy and Anderson, James
+	H.},
+  title = {Efficient Synchronization under Global EDF Scheduling on Multiprocessors},
+  booktitle = {Proceedings of the 18th Euromicro Conference on Real-Time Systems},
+  year = {2006},
+  pages = {75--84},
+  address = {Washington, DC, USA},
+  publisher = {IEEE Computer Society},
+  acmid = {1153938},
+  doi = {10.1109/ECRTS.2006.10},
+  isbn = {0-7695-2619-5},
+  numpages = {10},
+  url = {http://portal.acm.org/citation.cfm?id=1153916.1153938}
+}
+
+@PHDTHESIS{key-1,
+  author = {Sherif F. Fahmy},
+  title = {Collaborative Scheduling and Synchronization of Distributable Real-Time
+	Threads},
+  school = {ECE Department},
+  year = {2010},
+  address = {Virginia Polytechnic Institute and State University}
+}
+
+@ARTICLE{Goossens:2003:PSP:876600.876615,
+  author = {Goossens, Jo\"{e}l and Funk, Shelby and Baruah, Sanjoy},
+  title = {Priority-Driven Scheduling of Periodic Task Systems on Multiprocessors},
+  journal = {Real-Time Syst.},
+  year = {2003},
+  volume = {25},
+  pages = {187--205},
+  month = {September},
+  acmid = {876615},
+  address = {Norwell, MA, USA},
+  doi = {10.1023/A:1025120124771},
+  issn = {0922-6443},
+  issue = {2-3},
+  keywords = {earliest deadline first, multiprocessor scheduling, periodic tasks},
+  numpages = {19},
+  publisher = {Kluwer Academic Publishers},
+  url = {http://portal.acm.org/citation.cfm?id=876600.876615}
+}
+@conference{sarni2009real,
+  title={{Real-Time Support for Software Transactional Memory}},
+  author={Sarni, T. and Queudet, A. and Valduriez, P.},
+  booktitle={2009 15th IEEE International Conference on Embedded and Real-Time Computing Systems and Applications},
+  pages={477--485},
+  issn={1533-2306},
+  year={2009},
+  organization={IEEE}
+}
+@conference{schoeberl2010rttm,
+  title={{RTTM: real-time transactional memory}},
+  author={Schoeberl, M. and Brandner, F. and Vitek, J.},
+  booktitle={Proceedings of the 2010 ACM Symposium on Applied Computing},
+  pages={326--333},
+  year={2010},
+  organization={ACM}
+}
+@conference{fahmy2009response,
+  title={{Response time analysis of software transactional memory-based distributed real-time systems}},
+  author={Fahmy, S.F. and Ravindran, B. and Jensen, ED},
+  booktitle={Proceedings of the 2009 ACM symposium on Applied Computing},
+  pages={334--338},
+  year={2009},
+  organization={ACM}
+}
+@conference{schoeberl2010design,
+  title={{Design and Implementation of Real-Time Transactional Memory}},
+  author={Schoeberl, M. and Hilber, P.},
+  booktitle={2010 International Conference on Field Programmable Logic and Applications},
+  pages={279--284},
+  issn={1946-1488},
+  year={2010},
+  organization={IEEE}
+}
+
+
+

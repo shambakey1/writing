@@ -1,0 +1,944 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.5.17)  19 JUN 2012 00:04
+entering extended mode
+ %&-line parsing enabled.
+**HiPeac_sh.tex
+(./HiPeac_sh.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(./acmsmall.cls
+Document Class: acmsmall 2010/07/15, fonts included on 28 June 2010
+ACM, Production Font style: 2010/06/28 by Aptara
+
+Using ACM, TECS option: 2010/05/04 by Aptara
+
+(/usr/share/texmf-texlive/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/color.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+(/etc/texmf/tex/latex/config/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: dvips.def on input line 130.
+
+(/usr/share/texmf-texlive/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 91.
+)
+\Gin@req@height=\dimen102
+\Gin@req@width=\dimen103
+)
+Document Class `acmsmall' Electronic Submissions v1.3 <May 24, 2012> (ACM).
+\@firstpg=\count79
+\@lastpg=\count80
+\trimheight=\dimen104
+\trimwidth=\dimen105
+\normaltextheight=\dimen106
+\tempdimen=\dimen107
+\tempbox=\box26
+\tbbox=\box27
+\tabledim=\dimen108
+\symnewlargesymbols=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \bigsqcup on input line 1891.
+\normalparindent=\dimen109
+\footheight=\skip41
+\@maxsep=\skip42
+\@dblmaxsep=\skip43
+\@totalpg=\count81
+\@abstract=\box28
+\@permissionbox=\box29
+\c@part=\count82
+\c@section=\count83
+\c@subsection=\count84
+\c@subsubsection=\count85
+\c@paragraph=\count86
+\enumdim=\dimen110
+\c@theorem=\count87
+\belowcaptionskip=\skip44
+\abovecaptionskip=\skip45
+\c@figure=\count88
+\c@table=\count89
+\@narrowfig=\dimen111
+\@nfigbox=\box30
+\@nfcapbox=\box31
+\@nfigbox=\box32
+\@nfcapbox=\box33
+\bibindent=\dimen112
+LaTeX Font Info:    Overwriting math alphabet `\mathbb' in version `normal'
+(Font)                  OT1/ams/bx/n --> OT1/ams/bx/n on input line 3473.
+LaTeX Font Info:    Overwriting math alphabet `\mathbb' in version `bold'
+(Font)                  OT1/ams/bx/n --> OT1/ams/bx/n on input line 3474.
+) (/usr/share/texmf-texlive/tex/latex/paralist/paralist.sty
+Package: paralist 2002/03/18 v2.3b Extended list environments (BS)
+\pltopsep=\skip46
+\plpartopsep=\skip47
+\plitemsep=\skip48
+\plparsep=\skip49
+\pl@lab=\toks15
+)
+(/usr/share/texmf-texlive/tex/latex/comment/comment.sty
+\CommentStream=\write3
+
+Excluding comment 'comment') (/usr/share/texmf-texlive/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 285.
+LaTeX Info: Redefining \nocite on input line 356.
+Package: cite 2009/08/29  v 5.2
+) (/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip50
+\subfigcapskip=\skip51
+\subfigcaptopadj=\dimen113
+\subfigbottomskip=\skip52
+\subfigcapmargin=\dimen114
+\subfiglabelskip=\skip53
+\c@subfigure=\count90
+\c@lofdepth=\count91
+\c@subtable=\count92
+\c@lotdepth=\count93
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip54
+\subfig@bottom=\skip55
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+) (./algorithm2e.sty
+Package: algorithm2e 2008/00/00 v3.10 algorithms environments
+\c@AlgoLine=\count94
+
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf-texlive/tex/latex/tools/xspace.sty
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/relsize.sty
+Package: relsize 2003/07/04 ver 3.1
+)
+********************************************************
+Package `algorithm2e' Release 4.01 -- december 14 2009 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip56
+\skiplinenumber=\skip57
+\skiprule=\skip58
+\skiphlne=\skip59
+\skiptext=\skip60
+\skiplength=\skip61
+\algomargin=\skip62
+\skipalgocfslide=\skip63
+\algowidth=\dimen115
+\inoutsize=\dimen116
+\inoutline=\dimen117
+\interspacetitleruled=\dimen118
+\interspacealgoruled=\dimen119
+\interspacetitleboxruled=\dimen120
+\algocf@inoutbox=\box34
+\algocf@inputbox=\box35
+\AlCapSkip=\skip64
+\AlCapHSkip=\skip65
+\algocf@nlbox=\box36
+\algocf@hangingbox=\box37
+\algocf@capbox=\box38
+\algoheightruledefault=\skip66
+\algoheightrule=\skip67
+\algotitleheightruledefault=\skip68
+\algotitleheightrule=\skip69
+\c@algocfline=\count95
+\c@algocfproc=\count96
+\c@algocf=\count97
+\algocf@algoframe=\box39
+\algocf@algobox=\box40
+)
+\c@clm=\count98
+\c@mydef=\count99
+ (./HiPeac_sh.aux
+
+LaTeX Warning: Label `eq:fblt_rc' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_delay' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_res_time' multiply defined.
+
+
+LaTeX Warning: Label `sec:fblt vs lock free' multiply defined.
+
+
+LaTeX Warning: Label `clm:fblt_edf_lock-free' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_1' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_8' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_6' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_7' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_9' multiply defined.
+
+
+LaTeX Warning: Label `eq:fblt_lf_comparison_10' multiply defined.
+
+)
+\openout1 = `HiPeac_sh.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Try loading font information for OT1+pnc on input line 41.
+ (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pnc.fd
+File: ot1pnc.fd 2001/06/04 font definitions for OT1/pnc.
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 71.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 71.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 71.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 71.
+
+(/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+LaTeX Font Info:    Try loading font information for OMS+pnc on input line 71.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omspnc.fd
+File: omspnc.fd 
+)
+LaTeX Font Info:    Font shape `OMS/pnc/m/n' in size <8> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 71.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.71 \end{bottomstuff}
+                      
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 73.
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 73.
+LaTeX Font Info:    Font shape `OT1/pnc/bx/n' in size <8> not available
+(Font)              Font shape `OT1/pnc/b/n' tried instead on input line 73.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.73 \maketitle
+               
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 76.
+
+Underfull \vbox (badness 1888) has occurred while \output is active []
+
+
+Overfull \vbox (72.27pt too high) has occurred while \output is active []
+
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.84 
+     
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[1
+
+]
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.107 
+      
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[2]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.125 
+      
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[3]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 130.
+LaTeX Font Info:    Font shape `OMS/pnc/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 140.
+
+! Too many }'s.
+l.154 ...ast Timestamp (FBLT)} contention manager}
+                                                  , we first give a brief in...
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+
+Underfull \vbox (badness 4341) has occurred while \output is active []
+
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.155 
+      
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[4]
+LaTeX Font Info:    Font shape `OT1/pnc/bx/n' in size <5> not available
+(Font)              Font shape `OT1/pnc/b/n' tried instead on input line 183.
+LaTeX Font Info:    Font shape `OT1/pnc/bx/n' in size <5.55556> not available
+(Font)              Font shape `OT1/pnc/b/n' tried instead on input line 183.
+LaTeX Font Info:    Font shape `OT1/pnc/bx/n' in size <10> not available
+(Font)              Font shape `OT1/pnc/b/n' tried instead on input line 192.
+LaTeX Font Info:    Font shape `OT1/pnc/bx/n' in size <9> not available
+(Font)              Font shape `OT1/pnc/b/n' tried instead on input line 192.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.204 C
+       onsider three atomic sections $s_{1}^{x}$, $s_{2}^{y}$,
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[5]
+Underfull \hbox (badness 3209) in paragraph at lines 216--217
+[]\OT1/pnc/m/n/10 Therefore, the anal-y-sis in [El-Shambakey and Ravin-dran 201
+2b] and [El-
+ []
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.220 H
+       owever, with PNF, all objects accessed by each transaction must be kn...
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[6]
+! Undefined control sequence.
+<recently read> \dela 
+                      
+l.231 ...nsactions to at most $\delta_i^k$. $\dela
+                                                  _i^k$ includes the number ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \vbox (badness 1960) has occurred while \output is active []
+
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.311 \item T
+             ransaction $s_{i}^{k}(\theta_{1},\theta_{2})$ is released while
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[7]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.326 \item $
+             s_{j}^{l}(\theta_{3})$ is released. $p_{j}^{l}>p_{e}^{f}$. $s_{...
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[8]
+! Undefined control sequence.
+<recently read> \because 
+                         
+l.329 are compared again. $\because
+                                   \,\eta_{i}^{k}=\delta_{i}^{k}$, $\therefo...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.329 ...\eta_{i}^{k}=\delta_{i}^{k}$, $\therefore
+                                                  \, s_{i}^{k}(\theta_{1},\t...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.332 ... is a preemptive transaction, $\therefore
+                                                  \, s_{e}^{f}(\theta_{2},\t...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 1715) in paragraph at lines 340--345
+[]$\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]; ^^R[]\OT1/cmr/m
+/n/10 )$ \OT1/pnc/m/n/10 and $\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/i
+t/10 ^^R[]; ^^R[]\OT1/cmr/m/n/10 )$ \OT1/pnc/m/n/10 are now non-preemptive tran
+s-ac-tions. $\OML/cmm/m/it/10 s[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]; ^^R[]
+\OT1/cmr/m/n/10 )$ \OT1/pnc/m/n/10 and
+ []
+
+
+! LaTeX Error: \begin{compactenum} on input line 310 ended by \end{enumerate}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.350 \end{enumerate}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.403 \end{proof}
+                 
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[9]
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.471 
+      
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[10]
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.538 
+      
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[11]
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.583 \end{eqnarray}
+                    
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[12]
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.637 \begin{eqnarray}
+                      
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[13]
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.645 ...{h}}(\Theta)\in\tau_{j}:\left(\Theta\in\(
+                                                  \theta_{i}\cap\Theta_j^h)\...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+<recently read> \p 
+                   
+l.667 ...in all jobs with higher priority than $\p
+                                                  _{i}^x$. Claim follows.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Extra \right.
+l.676 ...epsilon}^{min(n,m)-1} s_{u_{max}} \right)
+                                                   \right)\label{eq:fblt_rcm...
+I'm ignoring a \right that had no matching \left.
+
+! Extra \right.
+l.676 ...^{min(n,m)-1} s_{u_{max}} \right) \right)
+                                                  \label{eq:fblt_rcm_compari...
+I'm ignoring a \right that had no matching \left.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.688 \end{eqnarray}
+                    
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[14]
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.744 \end{equation}
+                    
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[15]
+! Extra \right.
+l.749 ...epsilon}^{min(n,m)-1} s_{u_{max}} \right)
+                                                  \label{eq:fblt_rcm_compari...
+I'm ignoring a \right that had no matching \left.
+
+! Extra \right.
+l.754 ...epsilon}^{min(n,m)-1} s_{u_{max}} \right)
+                                                   \right)\label{eq:fblt_rcm...
+I'm ignoring a \right that had no matching \left.
+
+! Extra \right.
+l.754 ...^{min(n,m)-1} s_{u_{max}} \right) \right)
+                                                  \label{eq:fblt_rcm_compari...
+I'm ignoring a \right that had no matching \left.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.876 \end{clm}
+               
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[16]
+! Misplaced alignment tab character &.
+l.972 \delta_{i}^{k} &
+                       \le & \left(\sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\l...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.972 \delta_{i}^{k} & \le &
+                             \left(\sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\l...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.973 &
+        - & \sum_{u=1,\, s_{u_{max}}\in\epsilon}^{min(n,m)-1}s_{u_{max}}\lab...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.973 & - &
+            \sum_{u=1,\, s_{u_{max}}\in\epsilon}^{min(n,m)-1}s_{u_{max}}\lab...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+Overfull \hbox (13.29526pt too wide) detected at line 974
+\OML/cmm/m/it/10 ^^N[] \OMS/cmsy/m/n/10 ^^T [] []  ^^@ [] \OML/cmm/m/it/10 s[][
+]
+ []
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.1013 \begin{eqnarray}
+                       
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[17]
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1071 respectively. $\therefore
+                                $ $RC_{re}(T_{i})=\left\lceil \frac{T_{i}}{T...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1072 $\therefore
+                  $ (\ref{eq:fblt_lf_comparison_1}) becomes:
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.1073 \begin{eqnarray}
+                       
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[18]
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1078 and $r_{max}\ge r_{i_{max}}$ $\therefore
+                                               $ (\ref{eq:fblt_lf_comparison...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1084 $\therefore
+                  $ (\ref{eq:fblt_lf_comparison_6}) holds if for each $\tau_...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1089 $\therefore
+                  $
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1102 ...m value will be ineffective. $\therefore
+                                                  \,\sum_{\forall s_{i}^{k}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1109 ...alue. Thus, $\beta_{i,j}=1$. $\therefore
+                                                  $
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.1125 U
+        nder G-EDF and G-RMA, schedulability of FBLT is equal or better than
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[19]
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1154 respectively.$\therefore
+                               $ $RC_{re}(T_{i})=\left\lceil \frac{T_{i}}{T_...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1156 ...ck-free and G-RMA/lock-free. $\therefore
+                                                  $
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1163 and $r_{max}\ge r_{i_{max}}$ $\therefore
+                                               $ (\ref{eq:fblt_lf_comparison...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1169 $\therefore
+                  $ (\ref{eq:fblt_lf_comparison_6}) holds if for each $\tau_...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1174 $\therefore
+                  $
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1186 ...m value will be ineffective. $\therefore
+                                                  \,\sum_{\forall s_{i}^{k}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.1188 \begin{eqnarray}
+                       
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[20]
+! Undefined control sequence.
+<recently read> \therefore 
+                           
+l.1192 ... value. So, $\beta_{i,j}=1$. $\therefore
+                                                  $
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+File: figures/Abr_dur_5t_1obj_all_100wr.eps Graphic file (type eps)
+<figures/Abr_dur_5t_1obj_all_100wr.eps>
+File: figures/Abr_dur_5t_1obj_100wr.eps Graphic file (type eps)
+ <figures/Abr_dur_5t_1obj_100wr.eps>
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.1240 
+       
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[21]
+File: figures/Abr_dur_4t_50obj_100wr_-1eta.eps Graphic file (type eps)
+ <figures/Abr_dur_4t_50obj_100wr_-1eta.eps>
+File: figures/Abr_dur_4t_100obj_100wr_-1eta.eps Graphic file (type eps)
+
+<figures/Abr_dur_4t_100obj_100wr_-1eta.eps>
+Underfull \vbox (badness 4108) has occurred while \output is active []
+
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.1291 
+       
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[22]
+Underfull \vbox (badness 1137) has occurred while \output is active []
+
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.1292 B
+        y proper adjustment of the maximum abort number of each transaction,...
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[23] (./HiPeac_sh.bbl
+Underfull \hbox (badness 1342) in paragraph at lines 53--58
+[]\OT1/pnc/m/sc/8 El-Shambakey, M. and Ravin-dran, B. \OT1/pnc/m/n/8 2011. On t
+he de-sign of real-time stm con-tention man-
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.145   et~al\mbox{.}}{2009}]{sarni2009real}
+                                            
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[24])
+! Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.1313 \end{document}
+                     
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+[25] (./HiPeac_sh.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 3065 strings out of 495062
+ 39904 string characters out of 1182644
+ 119598 words of memory out of 3000000
+ 6228 multiletter control sequences out of 15000+50000
+ 16249 words of font info for 47 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 34i,19n,31p,1809b,504s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on HiPeac_sh.dvi (25 pages, 150740 bytes).

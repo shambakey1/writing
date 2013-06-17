@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: conclusions.aux
+The style file: plain.bst
+Database file #1: global_bibliography.bib
+I was expecting a `,' or a `}'---line 481 of file global_bibliography.bib
+ :   
+ :   year={2006}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You've used 18 entries,
+            2118 wiz_defined-function locations,
+            610 strings with 7198 characters,
+and the built_in function-call counts, 7400 in all, are:
+= -- 732
+> -- 269
+< -- 12
++ -- 109
+- -- 87
+* -- 469
+:= -- 1097
+add.period$ -- 54
+call.type$ -- 18
+change.case$ -- 94
+chr.to.int$ -- 0
+cite$ -- 18
+duplicate$ -- 338
+empty$ -- 632
+format.name$ -- 87
+if$ -- 1671
+int.to.chr$ -- 0
+int.to.str$ -- 18
+missing$ -- 20
+newline$ -- 93
+num.names$ -- 38
+pop$ -- 119
+preamble$ -- 1
+purify$ -- 78
+quote$ -- 0
+skip$ -- 285
+stack$ -- 0
+substring$ -- 553
+swap$ -- 137
+text.length$ -- 12
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 68
+warning$ -- 0
+while$ -- 69
+width$ -- 20
+write$ -- 202
+(There was 1 error message)

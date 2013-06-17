@@ -1,0 +1,177 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+Assume 
+\begin_inset Formula $g(\tau_{i})$
+\end_inset
+
+, 
+\begin_inset Formula $\eta_{1}(\tau_{i})$
+\end_inset
+
+, 
+\begin_inset Formula $\eta_{2}(\tau_{i})$
+\end_inset
+
+ are the same as proof of Claim ().
+ Let 
+\begin_inset Formula 
+\begin{eqnarray*}
+\eta_{3}(\tau_{i}) & = & \sum_{\forall\tau_{j}\in(\gamma_{i}\cap\zeta_{i}^{*})}\sum_{\forall\theta\in\theta_{i}}\Bigg(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\times\\
+ &  & \sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}+\alpha_{max}^{jl}s_{max}^{j}(\theta)\right)\Bigg)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\therefore\sum_{\forall\tau_{i}}\frac{\eta_{1}(\tau_{i})+\eta_{2}(\tau_{i})}{T_{i}}\le\sum_{\forall\tau_{i}}\frac{\eta_{3}(\tau_{i})+g(\tau_{i})}{T_{i}}\label{pnf-lcm-rma-comp-1}
+\end{equation}
+
+\end_inset
+
+Let 
+\begin_inset Formula $\eta_{4}(\tau_{i})=\sum_{\forall\tau_{j}\in(\gamma_{i}\cap\zeta_{i}^{*})}\sum_{\forall\theta\in\theta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\alpha_{max}^{jl}s_{max}^{j}(\theta)\right)$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\therefore$
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "pnf-lcm-rma-comp-1"
+
+\end_inset
+
+ becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+2\sum_{\forall\tau_{i}}\frac{\eta_{2}(\tau_{i})}{T_{i}}\le\sum_{\forall\tau_{i}}\frac{\eta_{4}(\tau_{i})+g(\tau_{i})}{T_{i}}\label{pnf-lcm-rma-comp-2}
+\end{equation}
+
+\end_inset
+
+Assuming negligible effect of transitive retry and retry cost due to release
+ of higher priority jobs (
+\begin_inset Formula $g(\tau_{i})\rightarrow0$
+\end_inset
+
+).
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "pnf-lcm-rma-comp-2"
+
+\end_inset
+
+) holds if: 1) contention from higher priority jobs to lower priority jobs
+ increases because of the 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1$
+\end_inset
+
+ term in the right hand side of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "pnf-lcm-rma-comp-2"
+
+\end_inset
+
+).
+ 2) 
+\begin_inset Formula $\alpha$
+\end_inset
+
+s approaches unity.
+ 3) Lengths of atomic sections increase as priority increases.
+ This makes 
+\begin_inset Formula $len(s_{max}^{j}(\theta))$
+\end_inset
+
+ in the right hand side of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "pnf-lcm-rma-comp-2"
+
+\end_inset
+
+) greater than 
+\begin_inset Formula $len(\bar{s_{j}^{k}(\theta)})$
+\end_inset
+
+.
+ Claim follows.
+\end_layout
+
+\end_body
+\end_document

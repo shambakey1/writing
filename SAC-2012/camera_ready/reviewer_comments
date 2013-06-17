@@ -1,0 +1,264 @@
+Dear Mr. Mohammed Elshambakey:
+
+it is my pleasure to inform you that the following submission:
+
+  STM Concurrency Control for Multicore Embedded
+          Real-Time Software: Time Bounds and Tradeoffs
+
+has been accepted as full paper for the EMBS track at ACM SAC 2012.
+
+Nonetheless, please remember that you are expected to follow the suggestions from the reviewers in preparing your camera-ready version, which will be checked against such recommendations.
+
+All camera-ready manuscripts must be uploaded by
+
+November 2nd, 2011,
+
+and must be strictly compliant with the "Instructions for Preparation of Manuscript" reported in the SAC Author Kit at
+http://www.acm.org/conferences/sac/sac2012/Author-kit-2012.pdf
+
+To upload your final manuscript, please use the following link:
+
+https://www.softconf.com/c/sac2012/
+
+and, on the left-hand side of the page, enter the passcode associated with your submission.
+Your passcode is as follows:
+
+    1466X-H3A4G8J8G8
+
+Alternatively, you can click on the following URL, which will take you  directly to a form to submit your final paper:
+
+https://www.softconf.com/c/sac2012/cgi-bin/scmd.cgi?scmd=aLogin&passcode=1466X-H3A4G8J8G8
+
+The reviews and comments are attached below.
+
+Congratulations on your work.  If you have any additional questions, please feel free to get in touch.
+
+
+Best Regards,
+
+Alessio Bechini
+
+SAC 2012, EMBS - Embedded Systems
+
+------------
+
+============================================================================
+SAC 2012 Reviews for Submission #1466
+============================================================================
+
+Title: STM Concurrency Control for Multicore Embedded Real-Time Software: Time Bounds and Tradeoffs
+
+Authors: Mohammed Elshambakey and Binoy Ravindran
+============================================================================
+                           REVIEWER #1
+============================================================================
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+
+         Technical Content and Accuracy: 6
+               Significance of the Work: 5
+Appropriate Title, Introduction, and Conclusion: 7
+                   Overall Organization: 4
+                Appropriateness for SAC: 7
+         Style and Clarity of the Paper: 3
+                 Originality of Content: 5
+                 OVERALL RECOMMENDATION: 6
+
+
+---------------------------------------------------------------------------
+Comments
+---------------------------------------------------------------------------
+
+The paper analysis retry bounds for transactional memory under global
+EDF and fixed priority scheduled multiprocessors.
+
+The paper covers a wider range and there is probably too much
+content for a single paper. I did not check all formulas and
+proofs. I'm wandering if there is not a simpler way to derive
+retry bounds. Especially when compared with the results in [15].
+
+I don't see why this work is only applicable to STM. Should
+also be ok for HTM.
+
+Detailed comments:
+
+The first sentence in the abstract is incomplete.
+
+Introduction:
+
+Definition of a conflict: two transactions conflict
+when the read set and the write set of the two transactions
+overlap. There is no conflict when both transactions only
+write to a shared address.
+
+Related work: [15] does explain how conflicts are resolved.
+The first transaction that gets the single commit token will
+commit and all conflicting transactions are retried.
+
+Section 3:
+
+Why sporadic tasks and not just periodic?
+
+Looking in transactions for just a single object is
+way to restrictive for TM. How would you build simple
+data structures such as lists?
+
+Section 4:
+
+What is ECM?
+
+p3: "higher priority" in EDF?
+
+I'm a little bit confused by the interference figures as
+they look like on a uniprocessor. We have more than one
+processor, right?
+
+Section 4.1
+
+Your assumption that interference can occur during the
+the whole task period (round up of Ti/Tj) is quite
+pessimistic. What if you considered just a single transaction
+per period (as in [15])? Then it can happen only once.
+If you extend then to more transactions n then interference
+can only happen n times. And using the transaction times
+that bound can probably be reduced further.
+
+Claim 2 explanation is incomplete. You should introduce
+your new symbols.
+
+Section 6
+
+Claim 4: what is rmax?
+
+Section 6.2
+
+What is RCM?
+
+============================================================================
+                           REVIEWER #2
+============================================================================
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+
+         Technical Content and Accuracy: 4
+               Significance of the Work: 4
+Appropriate Title, Introduction, and Conclusion: 4
+                   Overall Organization: 4
+                Appropriateness for SAC: 4
+         Style and Clarity of the Paper: 4
+                 Originality of Content: 5
+                 OVERALL RECOMMENDATION: 4
+
+
+---------------------------------------------------------------------------
+Comments
+---------------------------------------------------------------------------
+
+The paper is relatively well written.
+
+However, the big problem is that the presented ideas are not implemented, and
+so there are no experimental results, and it is not clear whether the ideas can
+be implemented efficiently, and how they will compare with previous work.
+
+Thus, this is a marginal paper.
+
+============================================================================
+                           REVIEWER #3
+============================================================================
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+
+         Technical Content and Accuracy: 5
+               Significance of the Work: 5
+Appropriate Title, Introduction, and Conclusion: 5
+                   Overall Organization: 5
+                Appropriateness for SAC: 5
+         Style and Clarity of the Paper: 5
+                 Originality of Content: 5
+                 OVERALL RECOMMENDATION: 5
+
+
+---------------------------------------------------------------------------
+Comments
+---------------------------------------------------------------------------
+
+This paper presents the analytical model of the performance of STM concurrency
+control for multi-core embedded real-time software. Conflict resolution
+strategy is very important for the performance of software transactional memory
+systems. Considering the requirements for real-time systems, this paper
+analyzes the time bounds and tradeoffs of STM based on contention management
+(CM) policy. The analysis is solid and convincible. However, contention
+management strategy has been proved has high abort rate, especially when there
+is high concurrency and contention in the system. Currently, there are some
+other better conflict resolution strategies are proposed and have shown their
+lower abort rate than CM. One example is the data dependency aware (DDA)
+strategies. They do not abort conflict transactions as long as the conflict
+serializability (CS) is guaranteed. It seems that this paper does not consider
+the state of the art techniques.
+
+There are also some small errors in the paper. Here are some examples:
+1, On the line on top of section 4, RC(L) is not defined. What does it mean?
+2. In first paragraph of section 4, the dj, di in dj<=di are not defined.
+Although you defined d^j_i , but that is different.
+3. In the formula (4), the gamma(teta)        should be gamma_i(teta) . Otherwise,
+you should define gamma(teta).
+
+============================================================================
+                           REVIEWER #4
+============================================================================
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+
+         Technical Content and Accuracy: 5
+               Significance of the Work: 5
+Appropriate Title, Introduction, and Conclusion: 6
+                   Overall Organization: 6
+                Appropriateness for SAC: 6
+         Style and Clarity of the Paper: 6
+                 Originality of Content: 4
+                 OVERALL RECOMMENDATION: 5
+
+
+---------------------------------------------------------------------------
+Comments
+---------------------------------------------------------------------------
+
+This paper focuses on software transactional memory (STM) as a means to control
+concurrency in multicore embedded software. It considers several algorithms for
+real-time contention managers.        It proposes an analytical analysis of retry
+costs of atomic sections depending on the contention management scheme. The
+paper shows how these costs impacts the task response times. Then it compares
+(still analytically) the STM scheme to lock-free synchronization and derives
+conditions under which the former performs better.
+
+Points in favour:
+- the paper is well written and pleasant to read. The background is clearly
+summarized.
+- the paper addresses a hot topic that is of interest for a large audience
+- the analytical model seems quite complete (but I'm not a specialist of this
+topic)
+
+Weak points:
+- this work is lacking an experimental study. It remains an analytical work. To
+what extent it is transposable to the timing analysis of real code is not that
+clear to me
+- an experimental evaluation may give an insight into the observed pessimism of
+retry bounds.
+
+Additional comment: it is often seen (it is the case in this paper) that tasks
+worst-case execution times are manipulated without precaution, simply
+adding/substracting communication/synchronisation times. It should be mentioned
+that this safe only for very simple target hardware and that modern execution
+cores would probably require a more detailed timing analysis.

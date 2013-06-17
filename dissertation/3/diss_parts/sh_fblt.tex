@@ -1,0 +1,501 @@
+\chapter{\label{ch_fblt}The FBLT Contention Manager}
+\markright{Mohammed El-Shambakey \hfill Chapter~\ref{ch_fblt}. FBLT \hfill}
+
+In this chapter, we present a novel contention manager for resolving transactional conflicts, called FBLT~\cite{6513719}. We upper bound transactional retries and task response times under FBLT, when used with the G-EDF and  G-RMA schedulers. We formally identify the conditions under which FBLT has better real-time schedulability than the previous previous CMs, lock-free and locking protocols.
+
+The rest of this Chapter is organized as follows: Section~\ref{sec:motivation} discusses limitations of previous contention managers and the motivation to FBLT. Section~\ref{sec:fblt design} give a formal description of FBLT. We upper bound retry cost and response time under FBLT in Section~\ref{fblt rc}. Schedulability comparison between FBLT and previous synchronization techniques is given in Section~\ref{schedulabiltiy comparison}. We conclude Chapter in Section~\ref{conclusion}.
+%
+\section{Motivation}\label{sec:motivation}
+%
+With multiple objects per transaction, ECM, RCM (Chapter~\ref{ecm-rcm}) and LCM (Chapter~\ref{ch_lcm}) face transitive retry as shown by Claims~\ref{ecm-rcm-transitive-retry},~\ref{clm:rcm-transitive-retry} and~\ref{clm:lcm-transitive-retry}. PNF (Chapter~\ref{ch_pnf}) is designed to avoid transitive retry by concurrently executing at most $m$ non-conflicting transactions together as shown by Claim~\ref{PNF-transitive-retry}. These executing transactions are non-preemptive. Thus, executing transactions cannot be aborted due to direct or indirect conflict with other transactions. However, with PNF, all objects accessed by each transaction must be known a-priori. Therefore, this is not suitable with dynamic STM implementations~\cite{Herlihy:2003:STM:872035.872048}. Additionally, PNF is a centralized CM. This implementation increases overhead. 
+
+Thus, we propose the \textit{First Bounded, Last Timestamp contention manager} (or FBLT) that achieves the following goals:
+\begin{compactenum}
+\item \label{goal 1} Reduce the retry cost of each transaction $s_i^k$ due to another transaction $s_j^l$, just as LCM does compared to ECM and RCM.
+\item \label{goal 2} Avoid or bound the effect of transitive retry, similar to PNF, without prior knowledge of accessed objects by each transaction, enabling dynamic STM.
+\item \label{goal 3} Decentralized design and avoid the use of locks, thereby reducing  overhead.
+\end{compactenum}
+%
+\section{The FBLT Contention Manager}\label{sec:fblt design}
+%
+\begin{algorithm}[!htpd]
+\footnotesize{
+\LinesNumbered
+\KwData{
+$s_i^k$: interfered transaction\;
+$s_j^l$: interfering transaction\;
+$\Omega_i^k$: maximum number of times $s_i^k$ can be aborted during $T_i$\;
+$\eta_i^k$: number of times $s_i^k$ has already been aborted up to now\;
+$m\_$set: contains at most $m$ non-preemptive transactions. $m$ is number of processors\;
+$m\_prio$: priority of any transaction in $m\_$set. $m\_prio$ is higher than any priority of any real-time task\;
+$r(s_i^k)$: time point at which $s_i^k$ joined $m\_$set\;
+}
+\KwResult{atomic sections that will abort}
+\uIf{\label{both preemptive}$s_i^k,\,s_j^l \not\in m\_set$}
+{
+%
+Apply LCM (Algorithm~\ref{alg_lcm})\label{apply lcm}\;
+%
+\eIf{\label{preemptive s_i^k aborted}$s_i^k$ is aborted}
+{
+\eIf{$\eta_i^k<\Omega_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{increment eta 1}\;
+}
+{
+Add $s_i^k$ to $m\_$set\label{add to m_set 1}\;
+Record $r(s_i^k)$\label{record 1}\;
+Increase priority of $s_i^k$ to $m\_prio$\label{increase priority 1}\;
+}
+}
+{
+Swap $s_i^k$ and $s_j^l$\;
+Go to Step~\ref{preemptive s_i^k aborted}\;
+}
+}
+\uElseIf{\label{s_j^l is non preemptive}$s_j^l \in m\_set,s_i^k \not\in m\_set$}
+{
+Abort $s_i^k$\;
+\eIf{$\eta_i^k < \Omega_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{increment eta 2}\;
+}
+{
+Add $s_i^k$ to $m\_$set\label{add to m_set 2}\;
+Record $r(s_i^k)$\label{record 2}\;
+Increase priority of $s_i^k$ to $m\_prio$\label{increase priority 2}\;
+}
+}
+\uElseIf{\label{s_i^k is non-preemptive}$s_i^k \in m\_set,s_j^l \not\in m\_set$}
+{
+Swap $s_i^k$ and $s_j^l$\;
+Go to Step~\ref{s_j^l is non preemptive}\label{end preemptive and non preemptive}\;
+}
+\Else
+{
+\label{both non preemptive}
+\eIf{$r(s_i^k)<r(s_j^l)$}
+{	
+Abort $s_j^l$\label{s_i^k first in m_set}\;
+}
+{
+Abort $s_i^k$\label{s_j^l first in m_set}\;
+}
+}
+}
+\caption{FBLT}\label{fblt-algorithm}
+\end{algorithm}
+%
+Algorithm~\ref{fblt-algorithm} illustrates FBLT. Each transaction $s_{i}^{k}$ can be aborted during $T_i$ for at most $\Omega_{i}^{k}$ times. $\eta_{i}^{k}$ records  the number of times $s_{i}^{k}$ has already been aborted up to now. If $s_i^k$ and $s_j^l$ have not joined the $m\_$set yet, then they are preemptive transactions. Preemptive transactions resolve conflicts using LCM (Algorithm~\ref{alg_lcm}) (step~\ref{apply lcm}). Thus, FBLT defaults to LCM when no transaction reaches its $\Omega$. If only one of the transactions is in the $m\_$set, then the non-preemptive transaction (the one in $m\_$set) aborts the other one (steps~\ref{s_j^l is non preemptive} to~\ref{end preemptive and non preemptive}). $\eta_i^k$ is incremented each time $s_i^k$ is aborted as long as $\eta_i^k < \Omega_i^k$ (steps~\ref{increment eta 1} and~\ref{increment eta 2}). Otherwise, $s_i^k$ is added to the $m\_$set and its priority is increased to $m\_prio$ (steps~\ref{add to m_set 1} to~\ref{increase priority 1} and~\ref{add to m_set 2} to~\ref{increase priority 2}). When the priority of $s_i^k$ is increased to $m\_prio$, $s_i^k$ becomes a non-preemptive transaction. Non-preemptive transactions cannot be aborted by other preemptive transactions, nor by any other real-time job. The $m\_$set can hold at most $m$ concurrent transactions because there are $m$ processors in the system. $r(s_i^k)$ records the time $s_i^k$ joined the $m\_$set (steps~\ref{record 1} and~\ref{record 2}). When non-preemptive transactions conflict together (step~\ref{both non preemptive}), the transaction that joined $m\_$set first is the one to commit first (steps~\ref{s_i^k first in m_set} and~\ref{s_j^l first in m_set}). Thus, non-preemptive transactions are executed in increasing order of joining the $m\_$set.
+%
+\subsection{Illustrative Example}\label{subsec:fblt_example}
+%
+We now illustrate FBLT's behavior with the following example:
+\begin{compactenum}
+\item Transaction $s_{i}^{k}(\theta_{1},\theta_{2})$ is released while
+$m\_set=\emptyset$. $\eta_{i}^{k}=0$ and $\Omega_{i}^{k}=3$.
+\item \label{fblt_ex_step 2} Transaction $s_{a}^{b}(\theta_{2})$ is released
+while $s_{i}^{k}(\theta_{1},\theta_{2})$ is running. $p(s_{a}^{b})>p(s_{i}^{k})$
+and $\eta_{i}^{k}<\Omega_{i}^{k}$. Applying LCM, $s_{i}^{k}(\theta_{1},\theta_{2})$
+is aborted in favor of $s_{a}^{b}$ and $\eta_{i}^{k}$ is incremented
+to 1.
+\item $s_{a}^{b}(\theta_{2})$ commits. $s_{i}^{k}(\theta_{1},\theta_{2})$
+runs again. Transaction $s_{c}^{d}(\theta_{2})$ is released while
+$s_{i}^{k}(\theta_{1},\theta_{2})$ is running. $p(s_{c}^{d})>p(s_{i}^{k})$. Applying LCM, $s_{i}^{k}(\theta_{1},\theta_{2})$ is aborted again in favor of $s_{c}^{d}(\theta_{2})$.
+$\eta_{i}^{k}$ is incremented to 2.
+\item $s_{c}^{d}(\theta_{2})$ commits. $s_{e}^{f}(\theta_{2},\theta_{3})$
+is released. $p(s_{e}^{f})>p(s_{i}^{k})$ and $\Omega_{e}^{f}=2$. $s_{i}^{k}(\theta_{1},\theta_{2})$
+is aborted in favour of $s_{e}^{f}(\theta_{2},\theta_{3})$ and $\eta_{i}^{k}$
+is incremented to 3.
+\item $s_{j}^{l}(\theta_{3})$ is released. $p(s_{j}^{l})>p(s_{e}^{f})$. $s_{e}^{f}(\theta_{2},\theta_{3})$ is aborted in favor of $s_{j}^{l}(\theta_{3})$
+and $\eta_{e}^{f}$ is incremented to 1.
+\item \label{fblt_ex_step 6} $s_{i}^{k}(\theta_{1},\theta_{2})$ and $s_{e}^{f}(\theta_{2},\theta_{3})$
+are compared again. $\because\,\eta_{i}^{k}=\Omega_{i}^{k}$, $\therefore\, s_{i}^{k}(\theta_{1},\theta_{2})$
+is added to $m\_$set. $m\_set=\left\{ s_{i}^{k}(\theta_{1},\theta_{2})\right\} $.
+$s_{i}^{k}(\theta_{1},\theta_{2})$ becomes a non-preemptive transaction.
+As $s_{e}^{f}(\theta_{2},\theta_{3})$ is a preemptive transaction, $\therefore\, s_{e}^{f}(\theta_{2},\theta_{3})$ is aborted in
+favour of $s_{i}^{k}(\theta_{1},\theta_{2})$, despite $p(s_{e}^{f})$ being greater than the original priority of $s_i^k(\theta_1,\theta_2)$. $\eta_{e}^{f}$ is incremented to 2.
+%
+\item \label{fblt_ex_step 7} $s_{j}^{l}(\theta_{3})$ commits but $s_{g}^{h}(\theta_{3})$
+is released. $p(s_{g}^{h})>p(s_{e}^{f})$ but $\eta_{e}^{f}=\Omega_{e}^{f}$.
+So, $s_{e}^{f}(\theta_{2},\theta_{3})$ becomes a non-preemptive transaction.
+$m\_set=\left\{ s_{i}^{k}(\theta_{1},\theta_{2}),s_{e}^{f}(\theta_{2},\theta_{3})\right\} $.
+%
+\item $s_{i}^{k}(\theta_{1},\theta_{2})$ and $s_{e}^{f}(\theta_{2},\theta_{3})$
+are now non-preemptive transactions. $s_{i}^{k}(\theta_{1},\theta_{2})$
+and $s_{e}^{f}(\theta_{2},\theta_{3})$ still conflict together. So,
+they are executed according to their addition order to the $m\_$set.
+So, $s_{i}^{k}(\theta_{1},\theta_{2})$ commits first, followed by $s_{e}^{f}(\theta_{2},\theta_{3})$.
+%
+\item $s_{g}^{h}(\theta_{3})$ will continue to abort and retry in favour
+of $s_{e}^{f}(\theta_{2},\theta_{3})$ until $s_{e}^{f}(\theta_{2},\theta_{3})$
+commits or $\eta_{g}^{h}=\Omega_{g}^{h}$. Even if $s_{g}^{h}(\theta_{3})$
+joined the $m\_$set, $s_{g}^{h}(\theta_{3})$ will still abort and retry
+in favour of $s_{e}^{f}(\theta_{2},\theta_{3})$, because $s_{e}^{f}(\theta_{2},\theta_{3})$ joined the $m\_$set earlier than $s_{g}^{h}(\theta_{3})$.
+\end{compactenum}
+%
+It is seen from steps \ref{fblt_ex_step 2} to \ref{fblt_ex_step 6}
+that $s_{i}^{k}(\theta_{1},\theta_{2})$ can be aborted due to direct
+conflict with other transactions, or due to transitive retry. Irrespective of 
+the reason for the conflict, once a transaction has reached its $\Omega$, the transaction becomes a non-preemptive one
+(steps \ref{fblt_ex_step 6} and \ref{fblt_ex_step 7}). Non-preemptive
+transactions have higher priority than other preemptive transactions
+(steps \ref{fblt_ex_step 6} and \ref{fblt_ex_step 7}). Non-preemptive
+transactions execute in their arrival order to the $m\_$set.
+%
+\section{Retry Cost and Response Time Bounds}\label{fblt rc}
+%
+We now derive an upper bound on the retry cost of any job $\tau_{i}^{x}$
+under FBLT during an interval $L\le T_{i}$. Since all tasks are sporadic
+(i.e., each task $\tau_{i}$ has a minimum period $T_{i}$), $T_{i}$
+is the maximum study interval for each task $\tau_{i}$. 
+%
+\begin{clm}\label{clm:total_rc_fblt}
+The total retry cost for any job $\tau_{i}^{x}$ under FBLT with G-EDF and G-RMA due to 1) conflicts between its transactions and transactions of other jobs during an interval $L\le T_{i}$ and 2) release of higher priority jobs during $L$ is upper bounded by:
+%
+\begin{equation}
+RC_{i_{to}}(L)\le\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}len(s_{i}^{k})+\sum_{\forall s_{iz}^k\in \chi_i^k} len(s_{iz}^{k})\right)+RC_{i_{re}}(L)
+\label{eq:fblt_rc}
+\end{equation} 
+where $\chi_i^k$ is the set of at most $m-1$ maximum length transactions conflicting directly or indirectly (through transitive retry) with $s_i^k$. Each transaction $s_{iz}^k \in \chi_i^k$ belongs to a distinct task $\tau_j$. $RC_{i_{re}}(L)$ is the retry cost resulting
+from the release of higher priority jobs which preempt $\tau_{i}^{x}$.
+$RC_{i_{re}}(L)$ is calculated by (\ref{eq:ecm_release_conflict}) for G-EDF, and (\ref{eq:rcm_release_conflict}) for G-RMA schedulers.
+%
+\end{clm}
+%
+\begin{proof}
+By the definition of FBLT, $s_{i}^{k}\in\tau_{i}^{x}$ can be aborted
+a maximum of $\Omega_{i}^{k}$ times before $s_{i}^{k}$ joins the $m\_$set. Transactions preceding  $s_i^k$ in the $m\_$set can conflict directly with $s_i^k$, or indirectly through transitive retry. The worst case scenario for $s_{i}^{k}$ after joining the $m\_$set occurs if $s_{i}^{k}$ is preceded by $m-1$ maximum length conflicting transactions. Hence, in the worst case, $s_{i}^{k}$ has to wait for the previous $m-1$ transactions to commit first. The priority of $s_{i}^{k}$ after joining the $m\_$set is higher than any real-time job. Therefore, the non-preemptive $s_{i}^{k}$ is not aborted due to release of any real-time job with higher priority than original priority of $s_i^k$. Following proofs of Claims~\ref{clm:ecm_release_conflict} and~\ref{clm:rcm_release_conflict}, retry cost of $s_i^k$ - before $s_i^k$ joins $m\_$set- due to release of higher priority jobs is calculated by (\ref{eq:ecm_release_conflict}) for G-EDF, and (\ref{eq:rcm_release_conflict}) for G-RMA. Transactions of each task execute sequentially. Thus, the non-preemptive $s_i^k$ cannot be preceded in the $m\_$set by two or more transactions of the same task. So, each transaction $s_{iz}^k \in \chi_i^k$ belong to a distinct task. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:blocking_time_fblt}
+%
+Under FBLT with G-EDF and G-RMA, the blocking time of a job $\tau_{i}^{x}$ due to lower priority
+jobs is upper bounded by: 
+\begin{equation}
+D(\tau_{i}^{x})=\sum_{max_{m}} \left\{s_{j_{max}}\right\}_{\forall\tau_{j}^{l},\, p_{j}^{l}<p_{i}^{x}}
+\label{eq:fblt_delay}
+\end{equation}
+where $s_{j_{max}}$ is the maximum length transaction in any job
+$\tau_{j}^{l}$ with original priority lower than $p_{i}^{x}$. The
+right hand side of (\ref{eq:fblt_delay}) is the sum of the $m$
+maximum transactional lengths in all jobs with lower priority than
+$\tau_{i}^{x}$.
+\end{clm}
+%
+\begin{proof}
+%
+The worst case blocking time for $\tau_{i}^{x}$ occurs when the maximum length $m$ transactions in lower priority jobs than $\tau_{i}^{x}$ are executing non-preemptively. The $m$ non-preemptive transactions execute sequentially if they conflict with each other. $\tau_i^x$ is delayed by the sequential execution of non-preemptive transactions if jobs with higher priority than $p_i^x$ are released as soon as one of the non-preemptive transactions commits. No transaction with lower priority than $p_i^x$ can be released while $\tau_i^x$ is waiting for a processor. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:fblt_res_time}
+The response time $R_i^{up}$ of any job $\tau_{i}^{x}$ under FBLT with G-EDF and G-RMA is upper bounded by:
+%
+\begin{equation}
+R_{i}^{up}=c_{i}+RC_{i_{to}}(R_i^{up})+D(\tau_{i}^{x})+\left\lfloor \frac{1}{m}\sum_{\forall j\ne i}I_{ij}(R_{i}^{up})\right\rfloor
+\label{eq:fblt_res_time}
+\end{equation}
+%
+where $RC_{i_{to}}(R_i^{up})$ is calculated by (\ref{eq:fblt_rc}), $D(\tau_{i}^{x})$
+is calculated by (\ref{eq:fblt_delay}), and $I_{ij}(R_{i}^{up})$
+is calculated by (\ref{eq14}) for G-EDF, and (\ref{eq12}) for G-RMA. $c_{j}$ of any job $\tau_{j}^y\ne\tau_{i}^x,\, p_{j}^y>p_{i}^x$ is inflated to $c_{ji}$ as given by (\ref{eq9}).
+\end{clm}
+%
+\begin{proof}
+%
+Using Claims~\ref{clm:ecm_response_time_upper_bound},~\ref{clm:rcm_response_time_upper_bound},~\ref{clm:total_rc_fblt} and~\ref{clm:blocking_time_fblt}, Claim follows.
+%
+\end{proof}
+%
+\section{Schedulability Comparison}\label{schedulabiltiy comparison}
+%
+We now (formally) compare the schedulability of FBLT with G-EDF and G-RMA against ECM (Chapter~\ref{ecm-rcm}), RCM (Chapter~\ref{ecm-rcm}), LCM (Chapter~\ref{ch_lcm}), PNF (Chapter~\ref{ch_pnf}), retry-loop lock-free~\cite{key-5} and locking protocols((i.e., OMLP\cite{springerlink:10.1007/s10617-012-9090-1,key-3} and RNLP\cite{6257574}). Such a comparison will reveal when FBLT outperforms others. Toward this, we compare the total utilization under FBLT, with that under the other synchronization methods. Total utilization comparison between FBLT and other synchronization techniques is done as in Sections~\ref{performance g-edf-lcm} and~\ref{rma eval} with the addition of $D(\tau_i^x)$ - as given by (\ref{eq:fblt_delay})- to the inflated execution time of any job $\tau_i^x$ under FBLT.
+%
+\subsection{FBLT versus ECM}\label{subsec:fblt_vs_ecm}
+%
+\begin{clm}\label{clm:fblt_ecm}
+Let $\Omega_i^{max}=max\{\Omega_i^k\}_{\forall s_i^k}$ be the maximum abort number for any preemptive transaction $s_i^k$ in $\tau_i$. Schedulability of FBLT is equal to or better than ECM's if $\Omega_i^{max}$ of any $\tau_i$ is not greater than double the difference between ratio of maximum number of transactions in all jobs with higher priority than current job of $\tau_{i}$ and have direct or indirect conflict with transactions in $\tau_{i}$ to total number of transactions in any job of $\tau_i$ and number of processors. Formally, schedulability of FBLT is equal or better than ECM's if for each $\tau_i$ 
+%
+\begin{equation}
+\Omega_{i}^{max}\le2\left(\frac{\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}{|s_{i}|}-m\right)
+\label{eq:fblt_ecm_comp_final}
+\end{equation}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Proof follows from proof of Claim~\ref{lcm versus ecm} with the following modification: Under FBLT, $c_i$ is inflated with $RC_{FBLT}^{to}(T_i)$ given by (\ref{eq:fblt_rc}) and $D(\tau_i^x)$ given by (\ref{eq:fblt_delay}). Thus, schedulability of FBLT is equal or better than ECM's if for each $\tau_i$:
+%
+\begin{equation}
+m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)\le\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\label{eq:fblt_ecm_comp_1}
+\end{equation}
+%
+$\because\,|s_{i}|=\sum_{\forall s_{i}^{k}}$, where $|s_{i}|$ is
+total number of transactions in any job of $\tau_{i}$. $\because \, \Omega_i^{max} \ge \Omega_i^k$, $\therefore$ (\ref{eq:fblt_ecm_comp_1}) holds if 
+% 
+\begin{equation}
+m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)\le\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\label{eq:fblt_ecm_comp_2}
+\end{equation}
+%
+\begin{equation}
+\therefore\, \Omega_{i}^{max}\le\frac{\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)\right)-\left(1+|s_{i}|\right)m+|s_{i}|}{|s_{i}|}\label{eq:fblt_ecm_comp_3}
+\end{equation}
+%
+$\because\,|s_{i}|\ge1$, $\therefore\,\frac{1+|s_{i}|}{|s_{i}|}\le2$.
+Thus, (\ref{eq:fblt_ecm_comp_3}) holds if 
+\begin{equation}
+\Omega_{i}^{max}\le2\left(\frac{\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}{|s_{i}|}-m\right)
+\label{eq:fblt_ecm_comp_4}
+\end{equation}
+%
+$\because\,\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)$
+is the maximum number of transactions in all jobs with higher priority
+than current job of $\tau_{i}$ and have direct or indirect conflict
+with transactions in $\tau_{i}$, Claim follows.
+%
+\end{proof}
+%
+\subsection{FBLT versus RCM}\label{subsec:fblt_vs_rcm}
+%
+\begin{clm}\label{clm:fblt_rcm}
+%
+Let $\Omega_i^{max}=max\{\Omega_i^k\}_{\forall s_i^k}$ be the maximum abort number for any preemptive transaction $s_i^k$ in $\tau_i$. Schedulability of FBLT is equal to or better than RCM's if $\Omega_i^{max}$ of any $\tau_i$ is not greater than double the difference between ratio of maximum number of transactions in all jobs with higher priority than $p_{i}$ and have direct or indirect conflict with transactions in $\tau_{i}$ to total number of transactions in any job of $\tau_i$ and number of processors. Formally, schedulability of FBLT is equal to or better than RCM's if for each $\tau_i$ 
+%
+\begin{equation}
+\Omega_{i}^{max}\le2\left(\frac{\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}{|s_{i}|}-m\right)
+\label{eq:fblt_ecm_comp_4}
+\end{equation}
+\end{clm}
+%
+\begin{proof}
+%
+Proof is similar to proof of Claim~\ref{clm:fblt_ecm} except that $RC_{RCM}^{to}(T_i)$ is given by (\ref{eq:grma_lcm_vs_rcm_2}).
+%
+\end{proof}
+%
+\subsection{FBLT versus G-EDF/LCM}\label{subsec:fblt_vs_gedf_lcm}
+%
+\begin{clm}\label{clm:fblt_lcm_edf}
+%
+Let $\Omega_i^{max}=max\{\Omega_i^k\}_{\forall s_i^k}$ be the maximum abort number for any preemptive transaction $s_i^k$ in $\tau_i$. Schedulability of FBLT is equal to or better than G-EDF/LCM's if double number of processors subtracted from ratio of $1+\alpha_{max}$ multiplied by maximum number of transactions in all jobs with higher priority than current job of $\tau_{i}$ and have direct or indirect conflict with transactions in $\tau_{i}$ to total number of transactions in any job of $\tau_i$ is not less than $\Omega_i^{max}$ of any $\tau_i$. Formally, schedulability of FBLT is equal to or better than G-EDF/LCM's if for each $\tau_i$ 
+%
+\begin{equation}
+\Omega_{i}^{max}\le\frac{\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\left(\Theta=\Theta_{j}^{l}\cap\Theta_{i}^{ex}\right)\neq\emptyset}\right)}{|s_{i}|}-2m
+\label{eq:fblt_ecm_comp_4}
+\end{equation}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Proof is similar to proof of Claim~\ref{clm:fblt_ecm} except that $RC_{G-EDF/LCM}^{to}(T_i)$ is given by (\ref{eq:gedf_lcm_vs_ecm_1}).
+%
+\end{proof}
+%
+\subsection{FBLT versus G-RMA/LCM}\label{subsec:fblt_vs_grma_lcm}
+%
+\begin{clm}\label{clm:fblt_lcm_rma}
+%
+Let $\Omega_i^{max}=max\{\Omega_i^k\}_{\forall s_i^k}$ be the maximum abort number for any preemptive transaction $s_i^k$ in $\tau_i$. Schedulability of FBLT is equal to or better than G-RMA/LCM's if double number of processors subtracted from ratio of sum of:
+%
+\begin{compactitem}
+\item product of $1+\alpha_{max}$ by maximum number of transactions in all jobs with higher priority than current job of $\tau_{i}$ and have direct or indirect conflict with transactions in $\tau_{i}$.
+\item product of $1-\alpha_{min}$ by maximum number of transactions in all jobs with lower priority than current job of $\tau_{i}$ and have direct or indirect conflict with transactions in $\tau_{i}$
+\end{compactitem}
+%
+to total number of transactions in any job of $\tau_i$ is not less than $\Omega_i^k$ of any $\tau_i$. Formally, schedulability of FBLT is equal to or better than G-RMA/LCM's if for each $\tau_i$ 
+%
+\begin{eqnarray}
+ & \Omega_{i}^{max}\label{eq:fblt_grma_lcm_comp_4}\\
+\le & \frac{\left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)}{|s_{i}|}\nonumber \\
++ & \frac{\left(2\left(1-\alpha_{min}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)}{|s_{i}|}-2m\nonumber 
+\end{eqnarray}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Proof is similar to proof of Claim~\ref{clm:fblt_ecm} except that $RC_{G-RMA/LCM}^{to}(T_i)$ is given by (\ref{eq:grma_lcm_vs_rcm_1}).
+%
+\end{proof}
+\subsection{FBLT versus G-EDF/PNF}\label{subsec:fblt_vs_gedf_pnf}
+%
+\begin{clm}\label{clm:fblt_pnf_edf}
+%
+Let $\Omega_i^{max}=max\{\Omega_i^k\}_{\forall s_i^k}$ be the maximum abort number for any preemptive transaction $s_i^k$ in $\tau_i$. Schedulability of FBLT is equal or better than G-EDF/PNF's if sum of double number of processors and maximum number of higher priority jobs- other than current job of $\tau_i$ - that can be released during $T_i$ subtracted from ratio of sum of:
+%
+\begin{compactitem}
+\item Maximum number of transactions- in any job of $\tau_j \neq \tau_i$ that can exist during $T_i$- that have direct conflict with any transaction in $\tau_i$.
+\item Floor of total number of transactions in any task $\tau_{j}\neq\tau_{i}$ - that has no direct conflict with any transaction in $\tau_{i}$ - divided by number of processors
+\end{compactitem}
+%
+to total number of transactions in any job of $\tau_i$ is not less than $\Omega_i^{max}$ of any $\tau_i$. Formally, schedulability of FBLT is equal to or better than G-EDF/PNF's if for each $\tau_i$ 
+%
+\begin{equation}
+\Omega_{i}^{max}
+\le \frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor }{|s_{i}|}-\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor -2m
+\label{eq:fblt_vs_gedf_pnf_3}
+\end{equation}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Proof is similar to proof of Claim~\ref{clm:fblt_ecm} except that $RC_{G-EDF/PNF}^{to}(T_i)$ is given by (\ref{rc-PNF}) and $D_i(T_i)$ given by (\ref{d-edf}).
+%
+\end{proof}
+%
+\subsection{FBLT versus G-RMA/PNF}\label{subsec:fblt_vs_grma_pnf}
+%
+\begin{clm}\label{clm:fblt_vs_grma_pnf}
+%
+Let $\Omega_i^{max}=max\{\Omega_i^k\}_{\forall s_i^k}$ be the maximum abort number for any preemptive transaction $s_i^k$ in $\tau_i$. Schedulability of FBLT is equal or better than G-RMA/PNF's if sum of double number of processors and maximum number of higher priority jobs- other than current job of $\tau_i$ - that can be released during $T_i$ subtracted from ratio of sum of:
+%
+\begin{compactitem}
+\item Maximum number of transactions- in any job of $\tau_j \neq \tau_i$ that can exist during $T_i$- that have direct conflict with any transaction in $\tau_i$.
+\item Floor of double of total number of transactions in any task $\tau_{j}$ with lower priority than $p_i$ - that has no direct conflict with any transaction in $\tau_{i}$ - divided by number of processors
+\end{compactitem}
+%
+to total number of transactions in any job of $\tau_i$ is not less than $\Omega_i^k$ of any $\tau_i$. Formally, schedulability of FBLT is equal to or better than G-RMA/PNF's if for each $\tau_i$ 
+%
+\begin{equation}
+\Omega_{i}^{max}
+\le \frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor }{|s_{i}|}-2m-\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \label{eq:fblt_vs_grma_pnf_3}
+\end{equation}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Proof is similar to proof of Claim~\ref{clm:fblt_ecm} except that $RC_{G-RMA/PNF}^{to}(T_i)$ is given by (\ref{rc-PNF}) and $D_i(T_i)$ given by (\ref{PNF-delay}).
+%
+\end{proof}
+%
+\subsection{FBLT versus Lock-free}\label{sec:fblt vs lock free}
+%
+\begin{clm}\label{clm:fblt_edf_lock-free}
+Let $\Omega_i^{max}=max\{\Omega_i^k\}_{\forall s_i^k}$ be the maximum abort number for any preemptive transaction $s_i^k$ in $\tau_i$. Under G-EDF, schedulability of FBLT is equal or better than schedulability of lock-free if for each task $\tau_i$ 
+%
+\begin{equation*}
+\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }
+\label{eq:fblt_vs_gedf_lf_3}
+\end{equation*}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Using Claim~\ref{clm:total_rc_fblt} and following the same steps of proof of Claim~\ref{clm:ecm_lf_schedulability_cmp}, schedulability of FBLT is equal or better than schedulability of retry-loop lock-free under G-EDF if for each task $\tau_i$
+%
+\begin{eqnarray}
+ & \left(m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)s_{max}\nonumber \\
+\le & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)r_{max}\label{eq:fblt_vs_gedf_lf_1}
+\end{eqnarray}
+%
+\begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }{m+\sum_{\forall s_{i}^{k}}\left(\Omega_{i}^{k}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }\label{eq:fblt_vs_gedf_lf_2}
+\end{equation}
+%
+$\because\,|s_{i}|=\sum_{\forall s_{i}^{k}}$, where $|s_{i}|$ is
+total number of transactions in any job of $\tau_{i}$. $\because\,\Omega_{i}^{max}\ge\Omega_{i}^{k}$,
+$\therefore$ (\ref{eq:fblt_vs_gedf_lf_2}) holds if 
+%
+\begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }
+\label{eq:fblt_vs_gedf_lf_3}
+\end{equation}
+%
+Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:fblt_rma_lock-free}
+%
+Let $\Omega_i^{max}=max\{\Omega_i^k\}_{\forall s_i^k}$ be the maximum abort number for any preemptive transaction $s_i^k$ in $\tau_i$. Under G-RMA, schedulability of FBLT is equal or better than schedulability of lock-free if for each task $\tau_i$ 
+%
+\begin{equation*}
+\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}+\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }
+\end{equation*}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Proof is the same as proof of Claim~\ref{clm:fblt_edf_lock-free} except that $RC_{i_{re}}$ under FBLT is given by (\ref{eq:rcm_release_conflict}) and $LRC_{to}$ under lock-free is given by (\ref{eq:lf_total_rc_grma}).
+%
+\end{proof}
+%
+\subsection{FBLT versus Locking Protocols}\label{subsec:fblt_vs_locking_comp}
+%
+\begin{clm}\label{clm:gedf_fblt_vs_omlp}
+%
+Following the same notations in Section~\ref{subsec:pi_omlp}, schedulability of FBLT is equal or better than schedulability of Global OMLP under G-EDF if for each $\tau_i$
+%
+\begin{equation*}
+\frac{s_{max}}{L_{max}}\le\frac{N_{i}\left(2m-1\right)}{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }
+\end{equation*}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Use (\ref{eq:fblt_rc}) for $RC_{i_{to}}(T_i)$ and (\ref{eq:fblt_delay}) for $D_i(T_i)$ under G-EDF/FBLT. Following the same steps of proof of Claim~\ref{clm:ecm_vs_omlp}, Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:grma_fblt_vs_omlp}
+%
+Following the same notations in Section~\ref{subsec:pi_omlp}, schedulability of FBLT is equal or better than schedulability of Global OMLP under G-RMA if for each $\tau_i$
+%
+\begin{equation*}
+\frac{s_{max}}{L_{max}}\le\frac{N_{i}\left(2m-1\right)}{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }
+\end{equation*}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Proof is the same as proof of Claim~\ref{clm:gedf_fblt_vs_omlp}.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:gedf_fblt_vs_rnlp}
+%
+Following the same notations in Section~\ref{subsec:pi_rnlp}, schedulability of FBLT is equal or better than schedulability of RNLP under G-EDF if for each $\tau_i$
+%
+\begin{equation*}
+\frac{s_{max}}{L_{max}}\le\frac{N_{i}\left(2m-1\right)}{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor }
+\end{equation*}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Use (\ref{eq:fblt_rc}) for $RC_{i_{to}}(T_i)$ and (\ref{eq:fblt_delay}) for $D_i(T_i)$ under G-EDF/FBLT. Following the same steps of proof of Claim~\ref{clm:ecm_vs_rnlp}, Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:grma_fblt_vs_rnlp}
+%
+Following the same notations in Section~\ref{subsec:pi_rnlp}, schedulability of FBLT is equal or better than schedulability of RNLP under G-RMA if for each $\tau_i$
+%
+\begin{equation*}
+\frac{s_{max}}{L_{max}}\le\frac{N_{i}\left(2m-1\right)}{m+|s_{i}|\left(\Omega_{i}^{max}+m-1\right)+\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }
+\end{equation*}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Proof is the same as proof of Claim~\ref{clm:gedf_fblt_vs_rnlp}.
+%
+\end{proof}
+%
+\section{Conclusions}\label{conclusion}
+%
+Transitive retry increases transactional retry costs under ECM, RCM, and LCM. PNF avoids transitive retry by avoiding transactional preemptions. PNF avoids transitive retry cost by concurrently executing non-conflicting transactions, which are non-preemptive. However, PNF requires a-priori knowledge about objects accessed by each transaction. Besides, PNF is a centralized CM. This is incompatible with dynamic STM implementations. Thus, we introduce the FBLT contention manager. Under FBLT, each transaction is allowed to abort for no larger than a specified number of times. Afterwards, the transaction becomes non-preemptive. Non-preemptive transactions have higher priorities than other preemptive transactions and real-time jobs. Non-preemptive transactions resolve their conflicts according to the order they become non-preemptive (i.e., FBLT aborts the later non-preemptive transaction in favour of the earlier non-preemptive transaction). 
+
+By proper adjustment of the maximum abort number for any preemptive transaction of any task $\tau_i$ (i.e., $\Omega_i^{max}$), FBLT's schedulability is equal to or better than schedulability of other CMs. Ratio between $s_{max}$ for FBLT on one side and $r_{max}$ for lock-free and $L_{max}$ for locking protocols on the other side also depends on $\Omega_i^{max}$.  As $\Omega_i^{max}$ decreases, $s_{max}/r_{max}$ and $s_{max}/L_{max}$ increase and FBLT acts more like a FIFO CM.

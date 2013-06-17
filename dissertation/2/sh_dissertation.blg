@@ -1,0 +1,77 @@
+This is BibTeX, Version 0.99d (TeX Live 2012/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: sh_dissertation.aux
+A level-1 auxiliary file: diss_parts/sh_abstract.aux
+A level-1 auxiliary file: diss_parts/sh_dedication.aux
+A level-1 auxiliary file: diss_parts/sh_achnowledgments.aux
+A level-1 auxiliary file: diss_parts/sh_introduction.aux
+A level-1 auxiliary file: diss_parts/sh_related_work.aux
+A level-1 auxiliary file: diss_parts/sh_preliminaries.aux
+A level-1 auxiliary file: diss_parts/sh_ecm_rcm.aux
+A level-1 auxiliary file: diss_parts/sh_lcm.aux
+A level-1 auxiliary file: diss_parts/sh_pnf.aux
+A level-1 auxiliary file: diss_parts/sh_fblt.aux
+A level-1 auxiliary file: diss_parts/sh_exp.aux
+A level-1 auxiliary file: diss_parts/sh_conclusion.aux
+A level-1 auxiliary file: diss_parts/sh_bib.aux
+The style file: plain.bst
+Database file #1: /e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography.bib
+You're missing a field name---line 820 of file /e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography.bib
+ :  
+ :  %url = {http://doi.acm.org/10.1145/1378704.1378725},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 1320 of file /e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography.bib
+ : @inproceedings{Dolev:2008:CSC:1400751.1400769
+ :                                              ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 2313 of file /e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography.bib
+ : @article{Moss2006186
+ :                     ,
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "pnf_emsoft12"
+Warning--empty publisher in springerlink:10.1007_11561927_23
+Warning--empty booktitle in nurtlwib
+Warning--empty year in nurtlwib
+You've used 121 entries,
+            2118 wiz_defined-function locations,
+            1178 strings with 27775 characters,
+and the built_in function-call counts, 51992 in all, are:
+= -- 5214
+> -- 2058
+< -- 90
++ -- 819
+- -- 682
+* -- 3213
+:= -- 7629
+add.period$ -- 395
+call.type$ -- 121
+change.case$ -- 690
+chr.to.int$ -- 0
+cite$ -- 124
+duplicate$ -- 2378
+empty$ -- 4348
+format.name$ -- 682
+if$ -- 11848
+int.to.chr$ -- 0
+int.to.str$ -- 121
+missing$ -- 117
+newline$ -- 612
+num.names$ -- 250
+pop$ -- 941
+preamble$ -- 1
+purify$ -- 575
+quote$ -- 0
+skip$ -- 2009
+stack$ -- 0
+substring$ -- 3544
+swap$ -- 1010
+text.length$ -- 90
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 476
+warning$ -- 3
+while$ -- 473
+width$ -- 124
+write$ -- 1355
+(There were 3 error messages)

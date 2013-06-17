@@ -1,0 +1,440 @@
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.2_0.2_0.2_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.2_0.2_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.2_0.2_0.2_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.2_0.2_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.2_0.2_0.2_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.2_0.2_0.2_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.2,0.2,0.2)}
+\label{fig:RC_results 0.2 0.2 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.2_0.2_0.2_1.eps}
+\label{Res_Time_5t_nl_g_30_0.2_0.2_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.2_0.2_0.2_1.eps}
+\label{Res_Time_10t_nl_g_30_0.2_0.2_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.2_0.2_0.2_1.eps}
+\label{Res_Time_12t_nl_g_30_0.2_0.2_0.2_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.2,0.2,0.2)}
+\label{fig:res_results 0.2 0.2 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.5_0.2_0.2_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.5_0.2_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.5_0.2_0.2_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.5_0.2_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.5_0.2_0.2_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.5_0.2_0.2_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.5,0.2,0.2)}
+\label{fig:RC_results 0.5 0.2 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.5_0.2_0.2_1.eps}
+\label{Res_Time_5t_nl_g_30_0.5_0.2_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.5_0.2_0.2_1.eps}
+\label{Res_Time_10t_nl_g_30_0.5_0.2_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.5_0.2_0.2_1.eps}
+\label{Res_Time_12t_nl_g_30_0.5_0.2_0.2_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.5,0.2,0.2)}
+\label{fig:res_results 0.5 0.2 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.5_0.5_0.2_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.5_0.5_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.5_0.5_0.2_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.5_0.5_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.5_0.5_0.2_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.5_0.5_0.2_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.5,0.5,0.2)}
+\label{fig:RC_results 0.5 0.5 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.5_0.5_0.2_1.eps}
+\label{Res_Time_5t_nl_g_30_0.5_0.5_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.5_0.5_0.2_1.eps}
+\label{Res_Time_10t_nl_g_30_0.5_0.5_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.5_0.5_0.2_1.eps}
+\label{Res_Time_12t_nl_g_30_0.5_0.5_0.2_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.5,0.5,0.2)}
+\label{fig:res_results 0.5 0.5 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.5_0.5_0.5_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.5_0.5_0.5_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.5_0.5_0.5_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.5_0.5_0.5_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.5_0.5_0.5_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.5_0.5_0.5_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.5,0.5,0.5)}
+\label{fig:RC_results 0.5 0.5 0.5}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.5_0.5_0.5_1.eps}
+\label{Res_Time_5t_nl_g_30_0.5_0.5_0.5_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.5_0.5_0.5_1.eps}
+\label{Res_Time_10t_nl_g_30_0.5_0.5_0.5_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.5_0.5_0.5_1.eps}
+\label{Res_Time_12t_nl_g_30_0.5_0.5_0.5_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.5,0.5,0.5)}
+\label{fig:res_results 0.5 0.5 0.5}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.8_0.2_0.2_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.8_0.2_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.8_0.2_0.2_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.8_0.2_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.8_0.2_0.2_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.8_0.2_0.2_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.8,0.2,0.2)}
+\label{fig:RC_results 0.8 0.2 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.8_0.2_0.2_1.eps}
+\label{Res_Time_5t_nl_g_30_0.8_0.2_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.8_0.2_0.2_1.eps}
+\label{Res_Time_10t_nl_g_30_0.8_0.2_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.8_0.2_0.2_1.eps}
+\label{Res_Time_12t_nl_g_30_0.8_0.2_0.2_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.8,0.2,0.2)}
+\label{fig:res_results 0.8 0.2 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.8_0.5_0.2_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.8_0.5_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.8_0.5_0.2_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.8_0.5_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.8_0.5_0.2_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.8_0.5_0.2_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.8,0.5,0.2)}
+\label{fig:RC_results 0.8 0.5 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.8_0.5_0.2_1.eps}
+\label{Res_Time_5t_nl_g_30_0.8_0.5_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.8_0.5_0.2_1.eps}
+\label{Res_Time_10t_nl_g_30_0.8_0.5_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.8_0.5_0.2_1.eps}
+\label{Res_Time_12t_nl_g_30_0.8_0.5_0.2_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.8,0.5,0.2)}
+\label{fig:res_results 0.8 0.5 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.8_0.5_0.5_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.8_0.5_0.5_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.8_0.5_0.5_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.8_0.5_0.5_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.8_0.5_0.5_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.8_0.5_0.5_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.8,0.5,0.5)}
+\label{fig:RC_results 0.8 0.5 0.5}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.8_0.5_0.5_1.eps}
+\label{Res_Time_5t_nl_g_30_0.8_0.5_0.5_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.8_0.5_0.5_1.eps}
+\label{Res_Time_10t_nl_g_30_0.8_0.5_0.5_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.8_0.5_0.5_1.eps}
+\label{Res_Time_12t_nl_g_30_0.8_0.5_0.5_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.8,0.5,0.5)}
+\label{fig:res_results 0.8 0.5 0.5}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.8_0.8_0.2_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.8_0.8_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.8_0.8_0.2_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.8_0.8_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.8_0.8_0.2_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.8_0.8_0.2_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.8,0.8,0.2)}
+\label{fig:RC_results 0.8 0.8 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.8_0.8_0.2_1.eps}
+\label{Res_Time_5t_nl_g_30_0.8_0.8_0.2_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.8_0.8_0.2_1.eps}
+\label{Res_Time_10t_nl_g_30_0.8_0.8_0.2_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.8_0.8_0.2_1.eps}
+\label{Res_Time_12t_nl_g_30_0.8_0.8_0.2_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.8,0.8,0.2)}
+\label{fig:res_results 0.8 0.8 0.2}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.8_0.8_0.5_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.8_0.8_0.5_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.8_0.8_0.5_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.8_0.8_0.5_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.8_0.8_0.5_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.8_0.8_0.5_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.8,0.8,0.5)}
+\label{fig:RC_results 0.8 0.8 0.5}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.8_0.8_0.5_1.eps}
+\label{Res_Time_5t_nl_g_30_0.8_0.8_0.5_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.8_0.8_0.5_1.eps}
+\label{Res_Time_10t_nl_g_30_0.8_0.8_0.5_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.8_0.8_0.5_1.eps}
+\label{Res_Time_12t_nl_g_30_0.8_0.8_0.5_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.8,0.8,0.5)}
+\label{fig:res_results 0.8 0.8 0.5}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_5t_nl_g_30_0.8_0.8_0.8_1.eps}
+\label{Abr_dur_5t_nl_g_30_0.8_0.8_0.8_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_10t_nl_g_30_0.8_0.8_0.8_1.eps}
+\label{Abr_dur_10t_nl_g_30_0.8_0.8_0.8_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Abr_dur_12t_nl_g_30_0.8_0.8_0.8_1.eps}
+\label{Abr_dur_12t_nl_g_30_0.8_0.8_0.8_1.eps}
+}
+\caption{Task retry costs under LCM and competitor synchronization methods (0.8,0.8,0.8)}
+\label{fig:RC_results 0.8 0.8 0.8}
+\end{figure}
+%
+
+\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_5t_nl_g_30_0.8_0.8_0.8_1.eps}
+\label{Res_Time_5t_nl_g_30_0.8_0.8_0.8_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_10t_nl_g_30_0.8_0.8_0.8_1.eps}
+\label{Res_Time_10t_nl_g_30_0.8_0.8_0.8_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/Res_Time_12t_nl_g_30_0.8_0.8_0.8_1.eps}
+\label{Res_Time_12t_nl_g_30_0.8_0.8_0.8_1.eps}
+}
+\caption{Task response times under LCM and competitor synchronization methods (0.8,0.8,0.8)}
+\label{fig:res_results 0.8 0.8 0.8}
+\end{figure}
+%
+

@@ -1,0 +1,12 @@
+Here it is. 
+
+
+Comments:
+- I have read and edited the new sections. 
+- I found numerous errors elsewhere in the paper (e.g., sentences ending without a period)! You better proof-read the whole paper carefully
+- I have been able to save you almost half a column of space. Use this judiciously -- maybe include one additional plot
+- At many places, you say "...is given by Theorem X in [Y]." Is that really necessary, as opposed to ".....is given in [Y]"? (Recall EMSOFT comments)
+- When referring to an equation, say "...is given by (X)..." as opposed to "...given as (X)..."
+
+
+Fix all and submit.

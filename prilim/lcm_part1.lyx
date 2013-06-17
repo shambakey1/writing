@@ -1,0 +1,6973 @@
+#LyX file created by tex2lyx 2.0.0
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref 0
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+
+Length-based CM
+\end_layout
+
+\begin_layout Standard
+
+LCM resolves conflicts based on the priority of conflicting jobs, besides the length of the interfering atomic section, and the length of the interfered atomic section. This is in contrast to ECM and RCM
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+, where conflicts are resolved using the priority of the conflicting jobs. This strategy allows lower priority jobs, under LCM, to retry for lesser time than that under ECM and RCM, but higher priority jobs, sometimes, wait for lower priority ones with bounded priority-inversion.
+\end_layout
+
+\begin_layout Subsection
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec 9.1"
+
+\end_inset
+
+ Design and Rationale
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%Begin algorithm here
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+
+\size footnotesize
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+LinesNumbered
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+KwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $s_i^k(\theta)\rightarrow$
+\end_inset
+
+ interfered atomic section.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $s_j^l(\theta)\rightarrow$
+\end_inset
+
+ interfering atomic section.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\psi\rightarrow$
+\end_inset
+
+ predefined threshold 
+\begin_inset Formula $\in [0,1]$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\delta_i^k(\theta)\rightarrow$
+\end_inset
+
+ remaining execution length of 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+KwResult
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+which atomic section of 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ or 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ aborts
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+eIf
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $p_i^k > p_j^l$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ aborts
+\begin_inset CommandInset label
+LatexCommand label
+name "step_sicommits"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $c_{ij}^{kl}=len(s_j^l(\theta))/len(s_i^k(\theta))$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "step_cijkl"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\alpha_{ij}^{kl}=ln(\psi)/(ln(\psi)-c_{ij}^{kl})$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "step_alphaijkl"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\alpha=\left(len(s_i^k(\theta))-\delta_i^k(\theta)\right)/len(s_i^k(\theta))$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+eIf
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\alpha \le \alpha_{ij}^{kl}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ aborts
+\begin_inset CommandInset label
+LatexCommand label
+name "step_siaborts"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ aborts
+\begin_inset CommandInset label
+LatexCommand label
+name "step_sjaborts"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+\size footnotesize
+
+LCM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size footnotesize
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg_lcm"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%End algorithm here
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+For both ECM and RCM, 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ can be totally repeated if 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ --- which belongs to a higher priority job 
+\begin_inset Formula $\tau_{j}^b$
+\end_inset
+
+ than 
+\begin_inset Formula $\tau_{i}^a$
+\end_inset
+
+ --- conflicts with 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ at the end of its execution, while 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ is just about to commit. Thus, LCM, shown in Algorithm
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg_lcm"
+
+\end_inset
+
+, uses the remaining length of 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ when it is interfered, as well as 
+\begin_inset Formula $len(s_{j}^{l}(\theta))$
+\end_inset
+
+, to decide which transaction must be aborted. If 
+\begin_inset Formula $p_i^k$
+\end_inset
+
+ was greater than 
+\begin_inset Formula $p_j^l$
+\end_inset
+
+, then 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ would be the one that commits, because it belongs to a higher priority job, and it started before 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ (step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "step_sicommits"
+
+\end_inset
+
+). Otherwise, 
+\begin_inset Formula $c_{ij}^{kl}$
+\end_inset
+
+ is calculated (step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "step_cijkl"
+
+\end_inset
+
+) to determine whether it is worth aborting 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ in favor of 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+, because 
+\begin_inset Formula $len(s_j^l(\theta))$
+\end_inset
+
+ is relatively small compared to the remaining execution length of 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ (explained further).
+\end_layout
+
+\begin_layout Standard
+
+We assume that: 
+\begin_inset Formula \begin{equation}
+c_{ij}^{kl}=len(s_{j}^{l}(\theta))/len(s_{i}^{k}(\theta))
+\label{cm_eq}\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $c_{ij}^{kl}\in]0,\infty[$
+\end_inset
+
+, to cover all possible lengths of 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+. Our idea is to reduce the opportunity for the abort of 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ if it is close to committing when interfered and 
+\begin_inset Formula $len(s_{j}^{l}(\theta))$
+\end_inset
+
+ is large. This abort opportunity is increasingly reduced as 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ gets closer to the end of its execution, or 
+\begin_inset Formula $len(s_{j}^{l}(\theta))$
+\end_inset
+
+ gets larger.
+\end_layout
+
+\begin_layout Standard
+
+On the other hand, as 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ is interfered early, or 
+\begin_inset Formula $len(s_{j}^{l}(\theta))$
+\end_inset
+
+ is small compared to 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+'s remaining length, the abort opportunity is increased even if 
+\begin_inset Formula $s_i^k (\theta)$
+\end_inset
+
+ is close to the end of its execution. To decide whether 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ must be aborted or not, we use a threshold value 
+\begin_inset Formula $\psi\in[0,1]$
+\end_inset
+
+ that determines 
+\begin_inset Formula $\alpha_{ij}^{kl}$
+\end_inset
+
+ (step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "step_alphaijkl"
+
+\end_inset
+
+), where 
+\begin_inset Formula $\alpha_{ij}^{kl}$
+\end_inset
+
+ is the maximum percentage of 
+\begin_inset Formula $len(s_i^k(\theta))$
+\end_inset
+
+ below which 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ is allowed to abort 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+. Thus, if the already executed part of 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ --- when 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ interferes with 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ --- does not exceed 
+\begin_inset Formula $\alpha_{ij}^{kl}len(s_i^k(\theta))$
+\end_inset
+
+, then 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ is aborted (step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "step_siaborts"
+
+\end_inset
+
+). Otherwise, 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ is aborted (step
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "step_sjaborts"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float figure
+placement htbp
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/figure16.eps
+	scale 40
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig16"
+
+\end_inset
+
+Interference of 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ by various lengths of 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+The behavior of LCM is illustrated in Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig16"
+
+\end_inset
+
+. In this figure, the horizontal axis corresponds to different values of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ ranging from 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $1$
+\end_inset
+
+, and the vertical axis corresponds to different values of abort opportunities, 
+\begin_inset Formula $f(c_{ij}^{kl},\alpha)$
+\end_inset
+
+, ranging from 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $1$
+\end_inset
+
+ and calculated by
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq49"
+
+\end_inset
+
+): 
+\begin_inset Formula \begin{equation}
+f(c_{ij}^{kl},\alpha)=e^{\frac{-c_{ij}^{kl}\alpha}{1-\alpha}}
+\label{eq49}\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $c_{ij}^{kl}$
+\end_inset
+
+ is calculated by
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cm_eq"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig16"
+
+\end_inset
+
+ shows one atomic section 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ (whose 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ changes along the horizontal axis) interfered by five different lengths of 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+. For a predefined value of 
+\begin_inset Formula $f(c_{ij}^{kl},\alpha)$
+\end_inset
+
+ (denoted as 
+\begin_inset Formula $\psi$
+\end_inset
+
+ in Algorithm
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg_lcm"
+
+\end_inset
+
+), there corresponds a specific value of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ (which is 
+\begin_inset Formula $\alpha_{ij}^{kl}$
+\end_inset
+
+ in Algorithm
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg_lcm"
+
+\end_inset
+
+) for each curve. For example, when 
+\begin_inset Formula $len(s_j^l(\theta))=0.1 \times len(s_i^k(\theta))$
+\end_inset
+
+, 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ aborts 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ if the latter has not executed more than 
+\begin_inset Formula $\alpha3$
+\end_inset
+
+ percentage (shown in Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig16"
+
+\end_inset
+
+) of its execution length. As 
+\begin_inset Formula $len(s_{j}^{l}(\theta))$
+\end_inset
+
+ decreases, the corresponding 
+\begin_inset Formula $\alpha_{ij}^{kl}$
+\end_inset
+
+ increases (as shown in Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig16"
+
+\end_inset
+
+, 
+\begin_inset Formula $\alpha3>\alpha2>\alpha1$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+Equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq49"
+
+\end_inset
+
+) achieves the desired requirement that the abort opportunity is reduced as 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ gets closer to the end of its execution (as 
+\begin_inset Formula $\alpha\rightarrow1,\, f(c_{ij}^{kl},1)\rightarrow0$
+\end_inset
+
+), or as the length of the conflicting transaction increases (as 
+\begin_inset Formula $c_{ij}^{kl}\rightarrow\infty,\, f(\infty,\alpha)\rightarrow0$
+\end_inset
+
+). Meanwhile, this abort opportunity is increased as 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ is interfered closer to its release (as 
+\begin_inset Formula $\alpha\rightarrow0,\, f(c_{ij}^{kl},0)\rightarrow1$
+\end_inset
+
+), or as the length of the conflicting transaction decreases (as 
+\begin_inset Formula $c_{ij}^{kl}\rightarrow0,\, f(0,\alpha)\rightarrow1$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+LCM is not a centralized CM, which means that, upon a conflict, each transactions has to decide whether it must commit or abort.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "LCM_higher_rc"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ interfere once with 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ at 
+\begin_inset Formula $\alpha_{ij}^{kl}$
+\end_inset
+
+. Then, the maximum contribution of 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ to 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+'s retry cost is: 
+\begin_inset Formula \begin{equation}
+W_i^k(s_j^l(\theta))\le \alpha_{ij}^{kl}len\Big(s_{i}^{k}(\theta)\Big)+len\Big(s_{j}^{l}(\theta)\Big)\label{eq47}\end{equation}
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ If 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ interferes with 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ at a 
+\begin_inset Formula $\Upsilon$
+\end_inset
+
+ percentage, where 
+\begin_inset Formula $\Upsilon<\alpha_{ij}^{kl}$
+\end_inset
+
+, then the retry cost of 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ is 
+\begin_inset Formula $\Upsilon len(s_{i}^{k}(\theta))+len(s_{j}^{l}(\theta))$
+\end_inset
+
+, which is lower than that calculated in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq47"
+
+\end_inset
+
+). Besides, if 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ interferes with 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ after 
+\begin_inset Formula $\alpha_{ij}^{kl}$
+\end_inset
+
+ percentage, then 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ will not abort. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "LCM_lower_rc"
+
+\end_inset
+
+ An atomic section of a higher priority job, 
+\begin_inset Formula $\tau_{j}^b$
+\end_inset
+
+, may have to abort and retry due to a lower priority job, 
+\begin_inset Formula $\tau_{i}^a$
+\end_inset
+
+, if 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ interferes with 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ after the 
+\begin_inset Formula $\alpha_{ij}^{kl}$
+\end_inset
+
+ percentage. 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+'s retry time, due to 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+, is upper bounded by: 
+\begin_inset Formula \begin{equation}
+W_j^l(s_i^k(\theta))\le \Big(1-\alpha_{ij}^{kl}\Big)len\Big(s_{i}^{k}(\theta)\Big)\label{eq48}\end{equation}
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ It is derived directly from Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "LCM_higher_rc"
+
+\end_inset
+
+, as 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ will have to retry for the remaining length of 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%sh-start
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "no priority inversion in lcm"
+
+\end_inset
+
+ Under LCM, there is no priority inversion. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Assume three atomic sections, 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+, 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+, and 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+, where 
+\begin_inset Formula $p_j > p_i$
+\end_inset
+
+ and 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ interferes with 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ after 
+\begin_inset Formula $\alpha_{ij}^{kl}$
+\end_inset
+
+. Then, 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ will have to abort and retry. At this time, if 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+ interferes with the other two atomic sections, then LCM decides which transaction to commit by comparing the two transactions. So, we have the following cases: 
+\end_layout
+
+\begin_layout Itemize
+
+
+\begin_inset Formula $p_a < p_i < p_j$
+\end_inset
+
+. Now, 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+ will not abort any one because it is still in its beginning and it is of the lowest priority. Thus, 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ is not indirectly blocked by 
+\begin_inset Formula $\tau_a$
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Itemize
+
+
+\begin_inset Formula $p_i<p_a<p_j$
+\end_inset
+
+. Now, even if 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+ interferes with 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ before 
+\begin_inset Formula $\alpha_{ia}^{kb}$
+\end_inset
+
+, and 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+ is allowed to abort 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+, after comparing 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+, LCM will select 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ to commit and abort 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+, because the latter is still at its beginning, and 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ is of higher priority. If 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+ is not allowed to abort 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+, the situation is still the same, because 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ was already retrying until 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ finishes. So, the medium priority instance of 
+\begin_inset Formula $\tau_a$
+\end_inset
+
+ does not increase the delay time of the higher priority instance of 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Itemize
+
+
+\begin_inset Formula $p_a>p_j>p_i$
+\end_inset
+
+. Now, if 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+ is chosen to commit, this will not cause a priority inversion for 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ because 
+\begin_inset Formula $\tau_a$
+\end_inset
+
+ is of higher priority. 
+\end_layout
+
+\begin_layout Itemize
+
+if 
+\begin_inset Formula $\tau_a$
+\end_inset
+
+ preempts 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+, then LCM will compare only between 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+. If 
+\begin_inset Formula $p_a<p_j$
+\end_inset
+
+, then 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ will commit because of its task's higher priority and 
+\begin_inset Formula $s_a^b(\theta)$
+\end_inset
+
+ is still at its beginning. Otherwise, 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ will retry, but this will not be priority inversion, because 
+\begin_inset Formula $\tau_a$
+\end_inset
+
+ is already of higher priority than 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+. If 
+\begin_inset Formula $\tau_a$
+\end_inset
+
+ does not access any object but it preempts 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+, then LCM will choose 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ to commit, since only already running transactions are competing together. 
+\end_layout
+
+\begin_layout Standard
+
+From the previous cases, it appears that priority inversion can never happen under LCM. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "priority_inversion"
+
+\end_inset
+
+ A higher priority job, 
+\begin_inset Formula $\tau_j^v$
+\end_inset
+
+, can be delayed by lower priority jobs for at most number of atomic sections in 
+\begin_inset Formula $\tau_j^v$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ By generalizing the cases mentioned in the proof of Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "no priority inversion in lcm"
+
+\end_inset
+
+ to any number of conflicting jobs, it can be seen that when an atomic section, 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+, of a higher priority job conflicts with a number of atomic sections belonging to lower priority jobs, 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ can be delayed only one of them, 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+, for the remaining length of 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+, then 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ can run. Thus, the worst case scenario happens when each atomic section in the higher priority job is delayed by one of the atomic sections belonging to lower priority jobs. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%sh-end
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "max_pri_inv"
+
+\end_inset
+
+ The maximum delay suffered by 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ due to lower priority jobs is caused by the maximum length atomic section accessing object 
+\begin_inset Formula $\theta$
+\end_inset
+
+, which belongs to a lower priority job than 
+\begin_inset Formula $\tau_j^b$
+\end_inset
+
+ that owns 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Assume three atomic sections, 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+, 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+, and 
+\begin_inset Formula $s_h^z(\theta)$
+\end_inset
+
+, where 
+\begin_inset Formula $p_j>p_i$
+\end_inset
+
+, 
+\begin_inset Formula $p_j>p_h$
+\end_inset
+
+, and 
+\begin_inset Formula $len(s_i^k(\theta))>len(s_h^z(\theta))$
+\end_inset
+
+. Now, 
+\begin_inset Formula $\alpha_{ij}^{kl}>\alpha_{hj}^{zl}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{ij}^{kl}<c_{hj}^{zl}$
+\end_inset
+
+. By applying
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq48"
+
+\end_inset
+
+) to obtain the contribution of 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $s_h^z(\theta)$
+\end_inset
+
+ to the priority inversion of 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+ and dividing them, we get: 
+\begin_inset Formula \begin{eqnarray*}
+\frac{W_{j}^{l}(s_{i}^{k}(\theta))}{W_{j}^{l}(s_{h}^{z}(\theta))} & = & \frac{\left(1-\alpha_{ij}^{kl}\right)len(s_{i}^{k}(\theta))}{\left(1-\alpha_{hj}^{zl}\right)len(s_{h}^{z}(\theta))}
+\end{eqnarray*}
+\end_inset
+
+ By substitution for 
+\begin_inset Formula $\alpha$
+\end_inset
+
+s from
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq49"
+
+\end_inset
+
+): 
+\begin_inset Formula \begin{eqnarray*}
+ & = & \frac{(1-\frac{ln\psi}{ln\psi-c_{ij}^{kl}})len(s_{i}^{k}(\theta))}{(1-\frac{ln\psi}{ln\psi-c_{hj}^{zl}})len(s_{h}^{z}(\theta))}
+  =  \frac{(\frac{-c_{ij}^{kl}}{ln\psi-c_{ij}^{kl}})len(s_{i}^{k}(\theta))}{(\frac{-c_{hj}^{zl}}{ln\psi-c_{hj}^{zl}})len(s_{h}^{z}(\theta))}\end{eqnarray*}
+\end_inset
+
+ 
+\begin_inset Formula $\because ln\psi \le 0$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{ij}^{kl},c_{hj}^{kl} > 0, \therefore$
+\end_inset
+
+ by substitution from
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cm_eq"
+
+\end_inset
+
+) 
+\begin_inset Formula \begin{eqnarray*}
+ & = & \frac{len(s_{j}^{l}(\theta))/(ln\psi-c_{ij}^{kl})}{len(s_{j}^{l}(\theta))/(ln\psi-c_{hj}^{zl})}
+  =  \frac{ln\psi-c_{hj}^{zl}}{ln\psi-c_{ij}^{kl}}>1\end{eqnarray*}
+\end_inset
+
+ Thus, as the length of the interfered atomic section increases, the delay suffered by the interfering atomic section increases. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "response g-edf/lcm"
+
+\end_inset
+
+ Response Time of G-EDF/LCM
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%Toward establishing the response time under G-EDF/LCM, we introduce a set of Claims.
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "GEDF/LCM response time"
+
+\end_inset
+
+ 
+\begin_inset Formula $RC(T_i)$
+\end_inset
+
+ for a task 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+ under G-EDF/LCM is upper bounded by: 
+\begin_inset Formula \begin{eqnarray}
+RC(T_i) & = & \Bigg(\sum_{\forall \tau_h \in \gamma_i}\sum_{\forall\theta \in \theta_i \wedge \theta_h}\Bigg(\left\lceil\frac{T_{i}}{T_{h}}\right\rceil\sum_{\forall s_{h}^{l}(\theta)}len\Big(s_{h}^{l}(\theta)\Big)\nonumber\\
+& + & \alpha_{max}^{hl}len\Big(s_{max}^{h}(\theta)\Big)\Bigg)\Bigg)\nonumber\\
+& + & \sum_{\forall s_{i}^{y}(\theta)}\Big(1-\alpha_{max}^{iy}\Big)len\Big(s_{max}^i(\theta)\Big)  
+\label{eq78}\end{eqnarray}
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha_{max}^{hl}$
+\end_inset
+
+ is the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ value that corresponds to 
+\begin_inset Formula $\psi$
+\end_inset
+
+ due to the interference of 
+\begin_inset Formula $s_{max}^h(\theta)$
+\end_inset
+
+ by 
+\begin_inset Formula $s_h^l(\theta)$
+\end_inset
+
+. 
+\begin_inset Formula $\alpha_{max}^{iy}$
+\end_inset
+
+ is the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ value that corresponds to 
+\begin_inset Formula $\psi$
+\end_inset
+
+ due to the interference of 
+\begin_inset Formula $s_{max}^i(\theta)$
+\end_inset
+
+ by 
+\begin_inset Formula $s_i^y(\theta)$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ The maximum number of higher priority instances of 
+\begin_inset Formula $\tau_h$
+\end_inset
+
+ that can interfere with 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+ is 
+\begin_inset Formula $\left\lceil\frac{T_i}{T_h}\right\rceil$
+\end_inset
+
+, as shown in Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig17"
+
+\end_inset
+
+, where one instance of 
+\begin_inset Formula $\tau_h$
+\end_inset
+
+ and 
+\begin_inset Formula $\tau_h^p$
+\end_inset
+
+ coincides with the absolute deadline of 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+By using Claims
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "LCM_higher_rc"
+
+\end_inset
+
+,
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "LCM_lower_rc"
+
+\end_inset
+
+,
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "priority_inversion"
+
+\end_inset
+
+, and
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "max_pri_inv"
+
+\end_inset
+
+, and Claim 1 in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ to determine the effect of atomic sections belonging to higher and lower priority instances of interfering tasks to 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+, Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Response time of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ is calculated by (11) in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+. 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+\align center
+
+
+\begin_inset Graphics 
+	filename figures/figure18.eps
+	scale 60
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig17"
+
+\end_inset
+
+
+\begin_inset Formula $\tau_h^p$
+\end_inset
+
+ has a higher priority than 
+\begin_inset Formula $\tau_i^x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+Schedulability of G-EDF/LCM and ECM
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "performance g-edf-lcm"
+
+\end_inset
+
+ We now compare the schedulability of G-EDF/LCM with ECM
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%(FMLP and OMLPprotocols~
+\backslash
+cite{key-4,brandenburg2008comparison,key-3}), 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+to understand when G-EDF/LCM will perform better. Toward this, we compare the total utilization of ECM with that of G-EDF/LCM. For each method, we inflate the 
+\begin_inset Formula $c_i$
+\end_inset
+
+ of each task 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+ by adding the retry cost suffered by 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+. Thus, if method 
+\begin_inset Formula $A$
+\end_inset
+
+ adds retry cost 
+\begin_inset Formula $RC_A(T_i)$
+\end_inset
+
+ to 
+\begin_inset Formula $c_i$
+\end_inset
+
+, and method 
+\begin_inset Formula $B$
+\end_inset
+
+ adds retry cost 
+\begin_inset Formula $RC_B(T_i)$
+\end_inset
+
+ to 
+\begin_inset Formula $c_i$
+\end_inset
+
+, then the schedulability of 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+ are compared as: 
+\begin_inset Formula \begin{eqnarray}
+\sum_{\forall \tau_{i}}\frac{c_{i}+RC_A(T_{i})}{T_{i}} & \le & \sum_{\forall \tau_{i}}\frac{c_{i}+RC_B(T_{i})}{T_{i}}\nonumber\\
+\sum_{\forall \tau_{i}}\frac{RC_A(T_{i})}{T_{i}} & \le & \sum_{\forall \tau_{i}}\frac{RC_B(T_{i})}{T_{i}}
+\label{eqa}\end{eqnarray}
+\end_inset
+
+ Thus, schedulability is compared by substituting the retry cost added by the synchronization methods in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eqa"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lcm versus ecm"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ be the maximum length atomic section accessing any object 
+\begin_inset Formula $\theta$
+\end_inset
+
+. Let 
+\begin_inset Formula $\alpha_{max}$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha_{min}$
+\end_inset
+
+ be the maximum and minimum values of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ for any two atomic sections 
+\begin_inset Formula $s_i^k(\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+. Given a threshold 
+\begin_inset Formula $\psi$
+\end_inset
+
+, schedulability of G-EDF/LCM is equal or better than ECM if for any task 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+: 
+\begin_inset Formula \begin{equation}
+\frac{1-\alpha_{min}}{1-\alpha_{max}} \le \sum_{\forall \tau_h \in \gamma_i}\left\lceil\frac{T_i}{T_h}\right\rceil
+\label{edf-lcm-ecm}\end{equation}
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Under ECM, 
+\begin_inset Formula $RC(T_{i})$
+\end_inset
+
+ is upper bounded by: 
+\begin_inset Formula \begin{equation}
+RC(T_{i})\le\sum_{\forall \tau_{h}\in\gamma_{i}}\sum_{\forall \theta\in\ (\theta_{i}\wedge\theta_{h})}\left(\left\lceil\frac{T_{i}}{T_{h}}\right\rceil\sum_{\forall s_{h}^{z}(\theta)}2len(s_{max})\right)\label{eq61}\end{equation}
+\end_inset
+
+ with the assumption that all lengths of atomic sections of (4) and (8) in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ and
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq78"
+
+\end_inset
+
+) are replaced by 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%~
+\backslash
+cite{stmconcurrencycontrol:emsoft11}. 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $\alpha_{max}^{hl}$
+\end_inset
+
+ in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq78"
+
+\end_inset
+
+) be replaced with 
+\begin_inset Formula $\alpha_{max}$
+\end_inset
+
+, and 
+\begin_inset Formula $\alpha_{max}^{iy}$
+\end_inset
+
+ in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq78"
+
+\end_inset
+
+) be replaced with 
+\begin_inset Formula $\alpha_{min}$
+\end_inset
+
+. As 
+\begin_inset Formula $\alpha_{max}$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha_{min}$
+\end_inset
+
+, and 
+\begin_inset Formula $len(s_{max})$
+\end_inset
+
+ are all constants, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq78"
+
+\end_inset
+
+) is upper bounded by: 
+\begin_inset Formula \begin{eqnarray}
+RC(T_i) & \le & \Bigg(\sum_{\forall \tau_h \in \gamma_i}\sum_{\forall\theta \in \theta_i \wedge \theta_h}\Bigg(\left\lceil\frac{T_{i}}{T_{h}}\right\rceil\sum_{\forall s_{h}^{l}(\theta)}\left(1+\alpha_{max}\right)\nonumber\\
+& & len\Big(s_{max}\Big)\Bigg)\Bigg)
+ +  \sum_{\forall s_{i}^{y}(\theta)}\Big(1-\alpha_{min}\Big)len\Big(s_{max}\Big)\nonumber\\ 
+\label{eq101}\end{eqnarray}
+\end_inset
+
+ If 
+\begin_inset Formula $\beta_1^{ih}$
+\end_inset
+
+ is the total number of times any instance of 
+\begin_inset Formula $\tau_h$
+\end_inset
+
+ accesses shared objects with 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+, then 
+\begin_inset Formula $\beta_1^{ih}=\sum_{\forall \theta\in(\theta_{i}\wedge\theta_{h})}\sum_{\forall s_{h}^{z}(\theta)}$
+\end_inset
+
+. Furthermore, if 
+\begin_inset Formula $\beta_2^i$
+\end_inset
+
+ is the total number of times any instance of 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+ accesses shared objects with any other instance, 
+\begin_inset Formula $\beta_2^i=\sum_{\forall s_{i}^{y}(\theta)}$
+\end_inset
+
+
+\shape italic
+, where 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is shared with another task
+\shape default
+. Then, 
+\begin_inset Formula $\beta_{i}=max\{max_{\forall \tau_h \in \gamma_i}\{\beta_1^{ih}\},\beta_2^i\}$
+\end_inset
+
+ is the maximum number of accesses to all shared objects by any instance of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ or 
+\begin_inset Formula $\tau_{h}$
+\end_inset
+
+. Thus, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq61"
+
+\end_inset
+
+) becomes: 
+\begin_inset Formula \begin{equation}
+RC(T_{i})\le\sum_{\tau_{h}\in\gamma_{i}}2\left\lceil\frac{T_{i}}{T_{h}}\right\rceil\beta_{i}len(s_{max})
+\label{eq63}\end{equation}
+\end_inset
+
+ and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq101"
+
+\end_inset
+
+) becomes: 
+\begin_inset Formula \begin{eqnarray}
+RC(T_{i}) & \le & \beta_{i}len(s_{max}) \Bigg((1-\alpha_{min})\nonumber\\
+& + & \sum_{\forall \tau_h \in \gamma_i}\left\lceil\frac{T_{i}}{T_{h}}\right\rceil(1+\alpha_{max})\Bigg)
+\label{eq102}\end{eqnarray}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+We can now compare the total utilization of G-EDF/LCM with that of ECM by comparing
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq101"
+
+\end_inset
+
+) and
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq102"
+
+\end_inset
+
+) for all 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+: 
+\begin_inset Formula \begin{eqnarray}
+& & \sum_{\forall \tau_{i}}\frac{(1-\alpha_{min})+\sum_{\forall \tau_{h}\in\gamma_{i}}\left(\left\lceil\frac{T_{i}}{T_{h}}\right\rceil(1+\alpha_{max})\right)}{T_{i}} \nonumber\\
+& \le &   \sum_{\forall \tau_{i}}\frac{\sum_{\forall \tau_{h}\in\gamma_{i}}2\left\lceil\frac{T_{i}}{T_{h}}\right\rceil}{T_{i}}\label{eqc}\end{eqnarray}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eqc"
+
+\end_inset
+
+) is satisfied if for each 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+, the following condition is satisfied: 
+\begin_inset Formula \begin{equation*}
+(1-\alpha_{min})+\sum_{\forall \tau_h \in \gamma_i}\left(\left\lceil\frac{T_{i}}{T_{h}}\right\rceil(1+\alpha_{max})\right)  \le  2\sum_{\forall \tau_h \in \gamma_i}\left\lceil\frac{T_{i}}{T_{h}}\right\rceil
+\end{equation*}
+\end_inset
+
+ 
+\begin_inset Formula \begin{equation*}
+\therefore\frac{1-\alpha_{min}}{1-\alpha_{max}}  \le  \sum_{\forall \tau_h \in \gamma_i}\left\lceil\frac{T_{i}}{T_{h}}\right\rceil
+\end{equation*}
+\end_inset
+
+ Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+G-EDF/LCM versus Lock-free
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "gedf-lcm-lock-free"
+
+\end_inset
+
+ We consider the retry-loop lock-free synchronization for G-EDF given in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+. This lock-free approach is the most relevant to our work.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "gedf-lcm-lock-free_clm"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ denote 
+\begin_inset Formula $len(s_{max})$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+ denote the maximum execution cost of a single iteration of any retry loop of any task in the retry-loop lock-free algorithm in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+. Now, G-EDF/LCM achieves higher schedulability than the retry-loop lock-free approach if the upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ under G-EDF/LCM ranges between 0.5 and 2 (which is higher than that under ECM). 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ From
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+, the retry-loop lock-free algorithm is upper bounded by: 
+\begin_inset Formula \begin{equation}
+RL(T_{i})=\sum_{\tau_{h}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{i}r_{max}\label{eq32_1}
+\end{equation}
+\end_inset
+
+ where 
+\begin_inset Formula $\beta_{i}$
+\end_inset
+
+ is as defined in Claim
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lcm versus ecm"
+
+\end_inset
+
+. The retry cost of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ in G-EDF/LCM is upper bounded by (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq102"
+
+\end_inset
+
+). By comparing G-EDF/LCM's total utilization with that of the retry-loop lock-free algorithm, we get: 
+\begin_inset Formula \begin{eqnarray*}
+ & \sum_{\forall\tau_{i}}\frac{\left((1-\alpha_{min})+\sum_{\forall\tau_{h}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil (1+\alpha_{max})\right)\right)\beta_{i}s_{max}}{T_{i}}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{h}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{i}r_{max}}{T_{i}}
+\end{eqnarray*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Formula \begin{eqnarray}
+\therefore\frac{s_{max}}{r_{max}}\le\frac{\sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{h}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil +1\right)\beta_{i}}{T_{i}}}{\sum_{\forall\tau_{i}}\frac{\left((1-\alpha_{min})+\sum_{\forall\tau_{h}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{h}}\right\rceil (1+\alpha_{max})\right)\right)\beta_{i}}{T_{i}}}\label{u-gedf-lcm-ecm}
+\end{eqnarray}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Let the number of tasks that have shared objects with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ be 
+\begin_inset Formula $\omega$
+\end_inset
+
+ (i.e., 
+\begin_inset Formula $\sum_{\tau_{h}\in\gamma_{i}}=\omega\ge1$
+\end_inset
+
+ since at least one task has a shared object with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+; otherwise, there is no conflict between tasks). Let the total number of tasks be 
+\begin_inset Formula $n$
+\end_inset
+
+, so 
+\begin_inset Formula $1\le\omega\le n-1$
+\end_inset
+
+, and 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{h}}\right\rceil \in[1,\infty[$
+\end_inset
+
+. To find the minimum and maximum values for the upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+, we consider the following cases: 
+\end_layout
+
+\begin_layout Itemize
+
+
+\begin_inset Formula $\alpha_{min}\rightarrow0,\alpha_{max}\rightarrow0$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\therefore$
+\end_inset
+
+
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "u-gedf-lcm-ecm"
+
+\end_inset
+
+) will be: 
+\begin_inset Formula \begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & 1+\frac{\sum_{\forall\tau_{i}}\frac{\omega-1}{T_{i}}}{\sum_{\forall\tau_{i}}\frac{1+\sum_{\forall\tau_{h}\in\gamma_{i}}\left\lceil \frac{T_{i}}{T_{h}}\right\rceil }{T_{i}}}\nonumber \\
+\label{s-r-1}
+\end{eqnarray}
+\end_inset
+
+ By substituting the edge values for 
+\begin_inset Formula $\omega$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{h}}\right\rceil $
+\end_inset
+
+ in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "s-r-1"
+
+\end_inset
+
+), we derive that the upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ lies between 1 and 2. 
+\end_layout
+
+\begin_layout Itemize
+
+
+\begin_inset Formula $\alpha_{min}\rightarrow0,\alpha_{max}\rightarrow1$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "u-gedf-lcm-ecm"
+
+\end_inset
+
+) becomes 
+\begin_inset Formula \begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & 0.5+\frac{\sum_{\forall\tau_{i}}\frac{\omega-0.5}{T_{i}}}{\sum_{\forall\tau_{i}}\frac{1+2\sum_{\forall\tau_{h}\in\gamma_{i}}\left\lceil \frac{T_{i}}{T_{h}}\right\rceil }{T_{i}}}\label{s-r-2}
+\end{eqnarray}
+\end_inset
+
+ By applying the edge values for 
+\begin_inset Formula $\omega$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{h}}\right\rceil $
+\end_inset
+
+ in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "s-r-2"
+
+\end_inset
+
+), we derive that the upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ lies between 0.5 and 1. 
+\end_layout
+
+\begin_layout Itemize
+
+
+\begin_inset Formula $\alpha_{min}\rightarrow1,\alpha_{max}\rightarrow0$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+
+This case is rejected since 
+\begin_inset Formula $\alpha_{min}\le\alpha_{max}$
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Itemize
+
+
+\begin_inset Formula $\alpha_{min}\rightarrow1,\alpha_{max}\rightarrow1$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\therefore$
+\end_inset
+
+
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "u-gedf-lcm-ecm"
+
+\end_inset
+
+) becomes: 
+\begin_inset Formula \begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & 0.5+\frac{\sum_{\tau_{i}}\frac{\omega}{T_{i}}}{2\sum_{\tau_{i}}\frac{\sum_{\forall\tau_{h}\in\gamma_{i}}\left\lceil \frac{T_{i}}{T_{h}}\right\rceil }{T_{i}}}\label{s-r-4}
+\end{eqnarray}
+\end_inset
+
+ By applying the edge values for 
+\begin_inset Formula $\omega$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{h}}\right\rceil $
+\end_inset
+
+ in
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "s-r-4"
+
+\end_inset
+
+), we derive that the upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ lies between 0.5 and 1, which is similar to that achieved by ECM.
+\end_layout
+
+\begin_layout Standard
+
+Summarizing from the previous cases, the upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ lies between 0.5 and 2, whereas for ECM
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+, it lies between 0.5 and 1. Claim follows.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+Response Time of G-RMA/LCM
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "rma"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "response g-rma/lcm"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\lambda_{2}(j,\theta)=\sum_{\forall s_{j}^{l}(\theta)}len(s_{j}^{l}(\theta))+\alpha_{max}^{jl}len(s_{max}^{j}(\theta))$
+\end_inset
+
+, where 
+\begin_inset Formula $\alpha_{max}^{jl}$
+\end_inset
+
+ is the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ value corresponding to 
+\begin_inset Formula $\psi$
+\end_inset
+
+ due to the interference of 
+\begin_inset Formula $s_{max}^j(\theta)$
+\end_inset
+
+ by 
+\begin_inset Formula $s_j^l(\theta)$
+\end_inset
+
+. The retry cost of any task 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+ under G-RMA/LCM during 
+\begin_inset Formula $T_i$
+\end_inset
+
+ is given by: 
+\begin_inset Formula \begin{eqnarray}
+RC\left(T_i\right) & = &
+  \sum_{\forall \tau_{j}^{*}}\left(\sum_{\theta\in(\theta_{i}\wedge\theta_{j})}\left(\left(\left\lceil\frac{T_i}{T_{j}}\right\rceil +1\right)\lambda_{2}(j,\theta)\right)\right)\nonumber\\
+& + & \sum_{\forall s_{i}^{y}(\theta)}\Big(1-\alpha_{max}^{iy}\Big)len\Big(s_{max}^i(\theta)\Big)
+\label{eq60}
+\end{eqnarray}
+\end_inset
+
+ where 
+\begin_inset Formula $\tau_{j}^{*}=\{\tau_{j}|(\tau_{j}\in\gamma_{i})\wedge(p_{j}>p_{i})\}$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Under G-RMA, all instances of a higher priority task, 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+, can conflict with a lower priority task, 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+, during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+. (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq47"
+
+\end_inset
+
+) can be used to determine the contribution of each conflicting atomic section in 
+\begin_inset Formula $\tau_j$
+\end_inset
+
+ to 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+. Meanwhile, all instances of any task with lower priority than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ can conflict with 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+ during 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+. Claims
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "LCM_lower_rc"
+
+\end_inset
+
+ and
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "priority_inversion"
+
+\end_inset
+
+ can be used to determine the contribution of conflicting atomic sections in lower priority tasks to 
+\begin_inset Formula $\tau_i$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%over the whole $t(T_i)$ (unlike the case of G-EDF/LCM, where (
+\backslash
+ref{eq59}) chooses which equation to use depending on whether or not $L$ is less than $
+\backslash
+left
+\backslash
+lfloor
+\backslash
+frac{t(T_{i})-c_{h}}{t(T_{h})}
+\backslash
+right
+\backslash
+rfloor t(T_{h})+c_{h}$).
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+Using the previous notations and Claim 3 in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+, the Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+The response time is calculated by (17) in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ with replacing 
+\begin_inset Formula $RC(R_i^{up})$
+\end_inset
+
+ with 
+\begin_inset Formula $RC(T_i)$
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%BR: You should say "..with $RC(T_i)$ replacing $RC(R_i^{up})$."
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+Schedulability of G-RMA/LCM and RCM
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "rma eval"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "rma_eval_clm"
+
+\end_inset
+
+ Under the same assumptions of Claims
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lcm versus ecm"
+
+\end_inset
+
+ and
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "response g-rma/lcm"
+
+\end_inset
+
+, G-RMA/LCM's schedulability is equal or better than RCM if: 
+\begin_inset Formula \begin{equation}
+\frac{1-\alpha_{min}}{1-\alpha_{max}}\le \sum_{\forall \tau_j^*}\left( \left\lceil\frac{T_i}{T_j}\right\rceil +1 \right)
+\label{eq70}\end{equation}
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Under the same assumptions as that of Claims
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lcm versus ecm"
+
+\end_inset
+
+ and
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "response g-rma/lcm"
+
+\end_inset
+
+, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq60"
+
+\end_inset
+
+) can be upper bounded as: 
+\begin_inset Formula \begin{eqnarray}
+RC(T_i) & \le & \sum_{\forall \tau_{j}^{*}}\bigg(\left(\left\lceil\frac{T_{i}}{T_{j}}\right\rceil +1\right)(1+\alpha_{max})
+ len(s_{max})\beta_{i}\bigg)\nonumber\\
+ & + & (1-\alpha_{min})len(s_{max})\beta_{i}\label{eq68}\end{eqnarray}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+For RCM, (16) in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol:emsoft11"
+
+\end_inset
+
+ for 
+\begin_inset Formula $RC(T_{i})$
+\end_inset
+
+ is upper bounded by: 
+\begin_inset Formula \begin{equation*}
+RC(T_{i})\le\sum_{\forall \tau_{j}^{*}}\left(\left\lceil\frac{T_{i}}{T_{j}}\right\rceil +1\right)2\beta_{i}len(s_{max})\label{eq69}\end{equation*}
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+By comparing the total utilization of G-RMA/LCM with that of RCM, we get: 
+\begin_inset Formula \begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{len\left(s_{max}\right)\beta_{i}\left(\left(1-\alpha_{min}\right)+\sum_{\forall\tau_{j}^{*}}\left(\left(\left\lceil\frac{T_{i}}{T_{j}}\right\rceil+1\right)\left(1+\alpha_{max}\right)\right)\right)}{T_{i}}\nonumber\\
+\le & \sum_{\forall\tau_{i}}\frac{2len\left(s_{max}\right)\beta_{i}\sum_{\forall\tau_{j}^{*}}\left(\left\lceil\frac{T_{i}}{T_{j}}\right\rceil+1\right)}{T_{i}}\label{grma-lcm-rcm}\end{eqnarray}
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "grma-lcm-rcm"
+
+\end_inset
+
+) is satisfied if 
+\begin_inset Formula $\forall \tau_i$
+\end_inset
+
+
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq70"
+
+\end_inset
+
+) is satisfied. Claim follows. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%NEWNEW-start
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+G-RMA/LCM versus Lock-free
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "g-rma lcm vs lock-free"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Although
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+ considers retry-loop lock-free synchronization for G-EDF systems,
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+ also applies for G-RMA systems.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lcm rma lock-free comparison clm"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Let 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ denote 
+\begin_inset Formula $len(s_{max})$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+ denote the maximum execution cost of a single iteration of any retry loop of any task in the retry-loop lock-free algorithm in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "key-5"
+
+\end_inset
+
+. G-RMA/LCM achieves higher schedulability than the retry-loop lock-free approach if the upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ under G-RMA/LCM is no less than 0.5. Upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ can extend to large values when 
+\begin_inset Formula $\alpha_{min}$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha_{max}$
+\end_inset
+
+ are very large.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Retry cost for G-RMA/LCM is upper bounded by
+\begin_inset space ~
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq60"
+
+\end_inset
+
+). Let 
+\begin_inset Formula $\gamma_{i}=\tau_{j}^{*}\cup\bar{\tau_{j}}$
+\end_inset
+
+, where 
+\begin_inset Formula $\tau_{j}^{*}$
+\end_inset
+
+ is the set of higher priority tasks than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ sharing objects with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+. 
+\begin_inset Formula $\bar{\tau_{j}}$
+\end_inset
+
+ is the set of lower priority tasks than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ sharing objects with it. We follow the same definitions of 
+\begin_inset Formula $\beta_{i},\, r_{max}$
+\end_inset
+
+ and 
+\begin_inset Formula $RL(T_{i})$
+\end_inset
+
+ given in the proof of Claim (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "gedf-lcm-lock-free_clm"
+
+\end_inset
+
+). Schedulability of G-RMA/LCM equals or exceeds schedulability of retry-loop lock-free if
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Formula \begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & \frac{\sum_{\forall\tau_{i}}\frac{\sum_{\tau_{j}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)}{T_{i}}}{\sum_{\forall\tau_{i}}\frac{\Big(1-\alpha_{min}\Big)+\sum_{\tau_{j}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\left(1+\alpha_{max}\right)}{T_{i}}}\nonumber\\
+ & + & \frac{2\sum_{\forall\tau_{i}}\frac{\sum_{\forall\bar{\tau_{j}}}}{T_{i}}}{\sum_{\forall\tau_{i}}\frac{\Big(1-\alpha_{min}\Big)+\sum_{\tau_{j}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\left(1+\alpha_{max}\right)}{T_{i}}}\nonumber\\
+ & & \label{eq:lcm rma lock-free comparison 1} 
+\end{eqnarray}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+If 
+\begin_inset Formula $p_{j}<p_{i},\,\therefore\,\left\lceil \frac{T_{i}}{T_{j}}\right\rceil =1$
+\end_inset
+
+ because the system assumes impilicit deadline tasks and uses G-RMA scheduler. Let 
+\begin_inset Formula $\omega_{1}$
+\end_inset
+
+ be size of 
+\begin_inset Formula $\tau_i^*$
+\end_inset
+
+ and 
+\begin_inset Formula $\omega_{2}$
+\end_inset
+
+ be size of 
+\begin_inset Formula $\bar{\tau_i}$
+\end_inset
+
+. 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ 
+\begin_inset Formula $\omega_{1}^{i}\ge 1$
+\end_inset
+
+ and 
+\begin_inset Formula $\omega_{2}^{i}\ge1$
+\end_inset
+
+. Otherwise, there is no conflict with 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+. To find the maximum and minimum upper bounds for 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+, the following cases are considered: 
+\end_layout
+
+\begin_layout Itemize
+
+
+\begin_inset Formula $\alpha_{min}\rightarrow0,\,\alpha_{max}\rightarrow0$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+
+\begin_inset Formula \begin{equation}
+\therefore\frac{s_{max}}{r_{max}}\le1+\frac{\sum_{\forall\tau_{i}}\frac{2\omega_{2}^{i}-1}{T_{i}}}{\sum_{\forall\tau_{i}}\frac{1+\sum_{\tau_{j}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)}{T_{i}}}\label{eq:lcm rma lock-free comparison 3}
+\end{equation}
+\end_inset
+
+ As the second term in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:lcm rma lock-free comparison 3"
+
+\end_inset
+
+) is alawys positive (because 
+\begin_inset Formula $\omega_{2}^{i}\ge1$
+\end_inset
+
+), then the minimum upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+. To get the maximum upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+, let 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+\end_inset
+
+ approaches its minimum value 
+\begin_inset Formula $1$
+\end_inset
+
+, 
+\begin_inset Formula $\omega_{1}^{i}\rightarrow0,\,\omega_{2}^{i}\rightarrow n-1$
+\end_inset
+
+ (the maximum and minimum values for 
+\begin_inset Formula $\omega_{1}^{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $\omega_{2}^{i}$
+\end_inset
+
+ respectively. 
+\begin_inset Formula $n$
+\end_inset
+
+ is number of tasks), then 
+\begin_inset Formula \[
+\therefore\frac{s_{max}}{r_{max}}\le\left(2n-2\right)
+\]
+\end_inset
+
+ Of course, 
+\begin_inset Formula $n$
+\end_inset
+
+ cannot be lower than 
+\begin_inset Formula $2$
+\end_inset
+
+. Otherwise, there will be no conflicting tasks.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+
+\begin_inset Formula $\alpha_{min}\rightarrow0,\,\alpha_{max}\rightarrow1$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{1}{2}+\frac{\sum_{\forall\tau_{i}}\frac{4\omega_{2}^{i}-1}{T_{i}}}{2\sum_{\forall\tau_{i}}\frac{1+2\sum_{\tau_{j}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)}{T_{i}}}\label{eq:lcm rma lock-free comparison 4}
+\end{equation}
+\end_inset
+
+ The minimum upper bound for 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ is 
+\begin_inset Formula $0.5$
+\end_inset
+
+. This can happen when 
+\begin_inset Formula $T_{i}\gg T_{j}$
+\end_inset
+
+. To get the maximum upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+, let 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+\end_inset
+
+ approaches its minimum value 
+\begin_inset Formula $1$
+\end_inset
+
+, 
+\begin_inset Formula $\omega_{2}^{i}\rightarrow n-1,\,\omega_{1}^{i}\rightarrow0$
+\end_inset
+
+, then 
+\begin_inset Formula \[
+\frac{s_{max}}{r_{max}}\le2n-2
+\]
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+
+\begin_inset Formula $\alpha_{min}\rightarrow1,\,\alpha_{max}\rightarrow0$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+This case is rejected because 
+\begin_inset Formula $\alpha_{max}$
+\end_inset
+
+ must be greater or equal to 
+\begin_inset Formula $\alpha_{min}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+
+\begin_inset Formula $\alpha_{min}\rightarrow1,\,\alpha_{max}\rightarrow1$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{1}{2}+\frac{\sum_{\forall\tau_{i}}\frac{\omega_{2}^{i}}{T_{i}}}{\sum_{\forall\tau_{i}}\frac{\sum_{\tau_{j}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)}{T_{i}}}\label{eq:lcm rma lock-free comparison 5}
+\end{equation}
+\end_inset
+
+ The minimum upper bound for 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ is 
+\begin_inset Formula $0.5$
+\end_inset
+
+. This can happen when 
+\begin_inset Formula $T_{i}\gg T_{j}$
+\end_inset
+
+. To get the maximum upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+, let 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+\end_inset
+
+ approaches its minimum value 
+\begin_inset Formula $1$
+\end_inset
+
+, 
+\begin_inset Formula $\omega_{2}^{i}\rightarrow n-1,\,\omega_{1}^{i}\rightarrow0$
+\end_inset
+
+, then 
+\begin_inset Formula \[
+\frac{s_{max}}{r_{max}}\rightarrow\infty
+\]
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+From the previous cases, we can derive that upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ extends from 
+\begin_inset Formula $0.5$
+\end_inset
+
+ to large values. Claim follows.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%NEWNEW-end
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+Experimental Evaluation
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "exp_eval"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Having established LCM's retry and response time upper bounds, and the conditions under which it outperforms ECM, RCM, and lock-free synchronization, we now would like to understand how LCM's retry and response times in practice (i.e., on average) compare with that of competitor methods. Since this can only be understood experimentally, we implement LCM and the competitor methods and conduct experimental studies.
+\end_layout
+
+\begin_layout Subsection
+
+Experimental Setup
+\end_layout
+
+\begin_layout Standard
+
+We used the ChronOS real-time Linux kernel
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "dellinger2011chronos"
+
+\end_inset
+
+ and the RSTM library
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "marathe2006lowering"
+
+\end_inset
+
+. We modified RSTM to include implementations of ECM, RCM, G-EDF/LCM, and G-RMA/LCM contention managers, and modified ChronOS to include implementations of G-EDF and G-RMA schedulers.
+\end_layout
+
+\begin_layout Standard
+
+For the retry-loop lock-free implementation, we used a loop that reads an object and attempts to write to the object using a compare-and-swap (CAS) instruction. The task retries until the CAS succeeds. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%We call this lock-free operation, CAS-loop operation.
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+We use an 8 core, 2GHz AMD Opteron platform. The average time taken for one write operation by RSTM on any core is 0.0129653375
+\begin_inset Formula $\mu s$
+\end_inset
+
+, and the average time taken by one CAS-loop operation on any core is 0.0292546250 
+\begin_inset Formula $\mu s$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+We used the periodic task set shown in Table
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Task-set-1"
+
+\end_inset
+
+. Each task runs in its own thread and has a set of atomic sections. Atomic section properties are probabilistically controlled (for experimental evaluation) using three parameters: the maximum and minimum lengths of any atomic section within the task, and the total length of atomic sections within any task. All task atomic sections access the same object, and do write operations on the object (thus, contention is the highest).
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Task-set-1"
+
+\end_inset
+
+Task sets. (a) 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Task-sets-(a)"
+
+\end_inset
+
+ Task set 1: 5-task set; 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Task-sets-(b)"
+
+\end_inset
+
+ (b) Task set 2: 10-task set; 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Task-sets-(c)"
+
+\end_inset
+
+ (c) Task set 3: 12-task set
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular 
+<lyxtabular version="3" rows="7" columns="3">
+<features>
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell multicolumn="1" alignment="none" valignment="top" usebox="none" special="c">
+\begin_inset Text
+
+\begin_layout Standard
+
+(a)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="none" valignment="top" rightline="true" usebox="none" special="c">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $T_{i}(\mu s)$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $c_{i}(\mu s)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{1}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+500000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+150000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{2}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+227000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{3}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1500000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+410000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{4}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+3000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+299000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{5}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+5000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+500000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Tabular 
+<lyxtabular version="3" rows="12" columns="3">
+<features>
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell multicolumn="1" alignment="none" valignment="top" usebox="none" special="c">
+\begin_inset Text
+
+\begin_layout Standard
+
+(b)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="none" valignment="top" rightline="true" usebox="none" special="c">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $T_{i}(\mu s)$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $c_{i}(\mu s)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{1}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+400000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+75241
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{2}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+750000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+69762
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{3}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1200000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+267122
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{4}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1500000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+69863
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{5}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+2400000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+152014
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{6}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+4000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+286301
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{7}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+7500000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+493150
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{8}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+10000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+794520
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{9}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+15000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1212328
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{10}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+20000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1775342
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Tabular 
+<lyxtabular version="3" rows="14" columns="3">
+<features>
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell multicolumn="1" alignment="none" valignment="top" usebox="none" special="c">
+\begin_inset Text
+
+\begin_layout Standard
+
+(c)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="none" valignment="top" rightline="true" usebox="none" special="c">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $T_{i}(\mu s)$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $c_{i}(\mu s)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{1}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+400000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+58195
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{2}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+750000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+53963
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{3}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+206330
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{4}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1200000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+53968
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{5}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1500000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+117449
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{6}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+2400000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+221143
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{7}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+3000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+290428
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{8}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+4000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+83420
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{9}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+7500000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+380917
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{10}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+10000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+613700
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{11}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+15000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+936422
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+
+\begin_inset Formula $\tau_{12}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+20000000 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+1371302
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+Results
+\end_layout
+
+\begin_layout Standard
+
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:RC_results"
+
+\end_inset
+
+ shows the retry cost (RC) for each task in the three task sets in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Task-set-1"
+
+\end_inset
+
+, where each task has a single atomic section of length equal to 0.2 of the task length. Each data point in the figure has a confidence level of 0.95. We observe that G-EDF/LCM and G-RMA/LCM achieve shorter or comparable retry cost than ECM and RCM. Since all tasks are initially released at the same time, and due to the specific nature of task properties, tasks with lower IDs somehow have higher priorities under the G-EDF scheduler. Note that tasks with lower IDs have higher priorities under G-RMA, since tasks are ordered in non-decreasing order of their periods.
+\end_layout
+
+\begin_layout Standard
+
+Thus, we observe that G-EDF/LCM and G-RMA/LCM achieve comparable retry costs to ECM and RCM for some tasks with lower IDs. But when task ID increases, LCM --- for both schedulers --- achieves much shorter retry costs than ECM and RCM. This is because, higher priority tasks in LCM can be delayed by lower priority tasks, which is not the case for ECM and RCM. However, as task priority decreases, LCM, by definition, prevents higher priority tasks from aborting lower priority ones if a higher priority task interferes with a lower priority one after a specified threshold. In contrast, under ECM and RCM, lower priority tasks abort in favor of higher priority ones. G-EDF/LCM and G-RMA/LCM also achieve shorter retry costs than the retry-loop lock-free algorithm.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float figure
+placement htbp
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 1]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Abr_dur_5t_nl_g_30_0.2_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-RC-set1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 2]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Abr_dur_10t_nl_g_30_0.2_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-RC-set2"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 3]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Abr_dur_12t_nl_g_30_0.2_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-RC-set3"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+Task retry costs under LCM and competitor synchronization methods
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:RC_results"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:res_results-1"
+
+\end_inset
+
+ shows the response time of each task of the task sets in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Task-set-1"
+
+\end_inset
+
+ with a confidence level of 0.95. (Again, each task's atomic section length is equal to half of the task length.) We observe that G-EDF/LCM and G-RMA/LCM achieve shorter response time than the retry-loop lock-free algorithm, and shorter or comparable response time than ECM and RCM.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float figure
+placement htbp
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 1]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Res_Time_5t_nl_g_30_0.2_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-res-set1-1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 2]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Res_Time_10t_nl_g_30_0.2_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-res-set2-1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 3 ]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Res_Time_12t_nl_g_30_0.2_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-res-set3-1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+Task response times under LCM and competitor synchronization methods
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:res_results-1"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+We repeated the experiments by varying the number and length of atomic sections. Due to space limitation, only subset of results are shown in Figures
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:RC_results 5 2 2"
+
+\end_inset
+
+ to
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:res_results 8 5 2"
+
+\end_inset
+
+. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%NEWNEW-start
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+A complete set of results are shown in Appendix B in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "stmconcurrencycontrol_techreport"
+
+\end_inset
+
+. Each figure has three parameters 
+\begin_inset Formula $x,y,z$
+\end_inset
+
+ in the lable. 
+\begin_inset Formula $x$
+\end_inset
+
+ specifies the relative total length of all atomic sections to the length of the task. 
+\begin_inset Formula $y$
+\end_inset
+
+ specifies the maximum relative length of any atomic section to the length of the task. 
+\begin_inset Formula $z$
+\end_inset
+
+ specifies the minimum relative length of any atomic section to the length of the task. These figures show a consistent trend with previous results. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%NEWNEW-end
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float figure
+placement htbp
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 1]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Abr_dur_5t_nl_g_30_0.5_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-RC-set1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 2]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Abr_dur_10t_nl_g_30_0.5_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-RC-set2"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 3]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Abr_dur_12t_nl_g_30_0.5_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-RC-set3"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+Task retry costs under LCM and competitor synchronization methods (0.5,0.2,0.2)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:RC_results 5 2 2"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float figure
+placement htbp
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 1]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Res_Time_5t_nl_g_30_0.5_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-res-set1-1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 2]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Res_Time_10t_nl_g_30_0.5_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-res-set2-1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 3 ]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Res_Time_12t_nl_g_30_0.5_0.2_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-res-set3-1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+Task response times under LCM and competitor synchronization methods (0.5,0.2,0.2)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:res_results 5 2 2"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float figure
+placement htbp
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 1]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Abr_dur_5t_nl_g_30_0.8_0.5_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-RC-set1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 2]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Abr_dur_10t_nl_g_30_0.8_0.5_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-RC-set2"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 3]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Abr_dur_12t_nl_g_30_0.8_0.5_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-RC-set3"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+Task retry costs under LCM and competitor synchronization methods (0.8,0.5,0.2)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:RC_results 8 5 2"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float figure
+placement htbp
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 1]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Res_Time_5t_nl_g_30_0.8_0.5_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-res-set1-1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 2]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Res_Time_10t_nl_g_30_0.8_0.5_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-res-set2-1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+subfigure[Task set 3 ]{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figures/Res_Time_12t_nl_g_30_0.8_0.5_0.2_1.eps
+	scale 60
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig-res-set3-1"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+Task response times under LCM and competitor synchronization methods (0.8,0.5,0.2)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:res_results 8 5 2"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+Conclusions
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:conclusions_lcm"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+In ECM and RCM, a task incurs at most 
+\begin_inset Formula $2s_{max}$
+\end_inset
+
+ retry cost for each of its atomic section due to conflict with another task's atomic section. With LCM, this retry cost is reduced to 
+\begin_inset Formula $(1+\alpha_{max})s_{max}$
+\end_inset
+
+ for each aborted atomic section. In ECM and RCM, tasks do not retry due to lower priority tasks, whereas in LCM, they do so. In G-EDF/LCM, retry due to a lower priority job is encountered only from a task 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+'s last job instance during 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+'s period. This is not the case with G-RMA/LCM, because, each higher priority task can be aborted and retried by any job instance of lower priority tasks. Schedulability of G-EDF/LCM and G-RMA/LCM is better or equal to ECM and RCM, respectively, by proper choices for 
+\begin_inset Formula $\alpha_{min}$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha_{max}$
+\end_inset
+
+. Schedulability of G-EDF/LCM is better than retry-loop lock-free synchronization for G-EDF if the upper bound on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ is between 0.5 and 2, which is higher than that achieved by ECM. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%sh-new-start
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+G-RMA/LCM acheives higher schedulability than retry-loop lock-free if 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ is not less than 0.5. For high values of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ in G-RMA/LCM, 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ can extend to large values. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%sh-new-end
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

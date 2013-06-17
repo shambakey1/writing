@@ -1,0 +1,3 @@
+18_.4 139-QE784
+STM Concurrency Control for Embedded Real-Time Software with Tighter Time Bounds
+Chair:	Frank Slomka - :frank.slomka@uni-ulm.de

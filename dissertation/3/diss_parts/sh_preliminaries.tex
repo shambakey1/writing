@@ -1,0 +1,17 @@
+\chapter{\label{models_assmuptions}Models and Assumptions}
+\markright{Mohammed El-Shambakey \hfill Chapter~\ref{models_assmuptions}. Models/Assumptions \hfill}
+%
+\textbf{BE SURE TO MENTION THAT ALL ANALYSIS IS DONE ASSUMING EACH JOB FINISHES WITHIN ITS DEADLINE}
+%
+We consider a multicore system with $m$ identical processors and $n$ sporadic tasks $\tau_1, \tau_2,\ldots, \tau_n$. The $k^{th}$ instance (or job) of a task $\tau_i$ is denoted $\tau_i^k$. Each task $\tau_i$ is specified by its worst case execution time (WCET) $c_i$, its minimum period $T_i$ between any two consecutive instances, and its relative deadline $D_i$, where $D_i=T_i$. Job $\tau_i^j$ is released at time $r_i^j$ and must finish no later than its absolute deadline $d_i^j=r_i^j+D_i$. Under a fixed priority scheduler such as G-RMA, $p_i$ determines $\tau_i$'s (fixed) priority and it is constant for all instances of $\tau_i$. Under a dynamic priority scheduler such as G-EDF, $\tau_i^j$'s priority, $p_i^j$, is determined by its absolute deadline. 
+A task $\tau_j$ may interfere with task $\tau_i$ for a number of times during a duration $L$, and this number is denoted as $G_{ij}(L)$. 
+$\tau_j$'s workload that interferes with $\tau_i$ during $L$ is denoted $W_{ij}(L)$.
+
+\textit{Shared objects.} A task may need to access (i.e., read, write) shared, in-memory objects while it is executing any of its atomic sections, which are synchronized using STM. 
+The set of atomic sections of task $\tau_i$ is denoted $s_i$. $s_i^k$ is the $k^{th}$ atomic section of $\tau_i$. 
+Each object, $\theta$, can be accessed by multiple tasks. The set of distinct objects accessed by $\tau_i$ is $\theta_i$. The set of atomic sections used by $\tau_i$ to access $\theta$ is $s_i(\theta)$, and the sum of the lengths of those atomic sections is $len(s_i(\theta))$. $s_i^k(\theta)$ is the $k^{th}$ atomic section of $\tau_i$ that accesses $\theta$. $s_i^k(\theta_1,\theta_2, .. ,\theta_n)$ is the $k^{th}$ atomic section of $\tau_i$ that accesses objects $\theta_1,\theta_2, .. ,\theta_n$. $s_i^k(\theta)$  executes for a duration $len(s_i^k(\theta))$.
+
+If $\theta$ is shared by multiple tasks, then $s(\theta)$ is the set of atomic sections of all tasks accessing $\theta$, and the set of tasks sharing $\theta$ with $\tau_i$ is denoted $\gamma_i(\theta)$. Atomic sections are non-nested. Each atomic section is assumed to access only one object; this allows a head-to-head comparison with lock-free synchronization~\cite{key-5}.  (Allowing multiple object access per transaction is future work.) The maximum-length atomic section in $\tau_i$ that accesses $\theta$ is denoted $s_{i_{max}} (\theta)$, while the maximum one among all tasks is $s_{max} (\theta)$, and the maximum one among tasks with priorities lower than that of $\tau_i$ is $s_{max}^i (\theta)$.
+
+\textit{STM retry cost.} If two or more atomic sections conflict, the CM will commit one section and abort and retry the others, increasing the time to execute the aborted sections. The increased time that an atomic section $s_i^p (\theta)$ will take to execute due to interference with another section $s_j^k (\theta)$, is denoted $W_{i}^{p}(s_{j}^{k}(\theta))$. The total time that a task $\tau_i$'s atomic sections have to retry is denoted $RC(\tau_i)$.
+When this retry cost is calculated over the task period $T_i$ or an interval $L$, it is denoted, respectively, as $RC(T_i)$ and $RC(L)$.

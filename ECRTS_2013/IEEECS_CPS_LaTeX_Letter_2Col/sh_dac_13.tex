@@ -1,0 +1,920 @@
+\documentclass[letter]{sig-alternate}
+\special{papersize=8.5in,11in}
+%\documentclass{acm_proc_article-sp}
+
+%\makeatletter
+%\newif\if@restonecol
+
+%\let\algorithm\relax
+%\let\endalgorithm\relax
+%\usepackage[tight,footnotesize]{subfigure}
+
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{cite}
+%\usepackage[cmex10]{amsmath}
+\usepackage{subfigure}
+\usepackage{url}
+%\usepackage{array}
+%\usepackage{amsmath}
+\usepackage{graphicx}
+%\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{url}
+%\makeatother
+%\makeatletter
+%\providecommand{\tabularnewline}{\\}
+\usepackage[ruled]{algorithm2e}
+
+
+\newtheorem{clm}{Claim}
+
+\usepackage{pslatex}
+\begin{document}
+
+\begin{comment}
+\conferenceinfo{DAC 2012,} {June 3-7, 2012, San Francisco, California, USA.}
+\CopyrightYear{2012}
+\crdata{978-1-4503-1199-1/12/06}
+\end{comment}
+
+%\title{\Large{Closed Nested STM Concurrency Control for Embedded Real-Time Software with Tighter Time Bounds}}
+
+\title{Closed Nested STM Concurrency Control for Embedded Real-Time Software with Tighter Time Bounds}
+
+\numberofauthors{2}
+
+\begin{comment}
+\author{
+\alignauthor Mohammed El-Shambakey\\
+\affaddr{ECE Dept., Virginia Tech}\\
+\affaddr{Blacksburg, VA 24060, USA}\\
+\email{shambake@vt.edu}
+%author
+\alignauthor Binoy Ravindran\\
+\affaddr{ECE Dept., Virginia Tech}\\
+\affaddr{Blacksburg, VA 24060, USA}\\
+\email{binoy@vt.edu}
+}
+\end{comment}
+
+\maketitle
+
+\begin{abstract}
+We consider closed nested software transactional memory (STM) concurrency control for embedded multicore real-time software, and present a modified version of FBLT contention manager called closed nested FBLT. We upper bound transactional retries and task response times under closed nested FBLT, and identify when closed nested FBLT is a more appropriate alternative to non-nested FBLT
+\end{abstract}
+
+\category{C.3}{Special-Purpose and Application-based Systems}{Real-time and embedded systems}
+
+\terms
+Design, Experimentation, Measurement
+
+\keywords
+Software transactional memory (STM), real-time contention manager
+
+%\maketitle
+
+\section{Introduction}
+
+\label{sec:intro}
+
+Embedded systems sense physical processes and control their behavior, typically through feedback loops. Since physical processes are concurrent, computations that control them must also be concurrent, enabling them to process multiple streams of sensor input and control multiple actuators, all concurrently while satisfying time constraints. 
+%Often, such computations need to concurrently read/write shared data objects. They must also process sensor input and react, while satisfying time constraints. 
+
+The de facto standard for concurrent programming is the threads abstraction, and the 
+de facto synchronization abstraction is locks. Lock-based concurrency control has significant programmability, scalability, and composability challenges~\cite{Herlihy:2006:AMP:1146381.1146382}. Transactional memory (TM) is an alternative synchronization model for shared memory objects that promises to alleviate these difficulties. With TM, code that read/write shared objects is organized as \textit{memory transactions}, which execute speculatively, while logging changes made to objects. Two transactions conflict if they access the same object and at least one access is a write. When that happens, a contention manager (CM)~\cite{Guerraoui:2005:TTT:1073814.1073863} resolves the conflict by aborting one and allowing the other to commit, yielding (the illusion of) atomicity. Aborted transactions are re-started, after rolling back the changes. In addition to a simple programming model, TM provides performance comparable to lock-free approach, especially for high contention and read-dominated workloads (see an example TM system's performance in~\cite{Saha:2006:MHP:1122971.1123001}), and is composable~\cite{Harris:2005:CMT:1065944.1065952}. TM has been proposed in hardware, called HTM, and in software, called STM, with the usual tradeoffs: HTM has lesser overhead, but needs transactional support in hardware; STM is available on any hardware.
+
+Given STM's programmability, scalability, and composability advantages, it is a compelling concurrency control technique also for multicore embedded real-time software. However, this requires  bounding transactional  retries, as real-time threads, which subsume transactions, must satisfy time constraints.  Retry bounds under STM are dependent on the CM policy at hand. 
+
+Past real-time CM research 
+%(Section~\ref{sec:fblt design}) 
+has proposed resolving transactional contention using dynamic and fixed priorities of parent threads, resulting in Earliest Deadline CM (ECM) and Rate Monotonic CM (RCM)~\cite{6045438,stmconcurrencycontrol:emsoft11,lcmdac2012}, which are intended to be used with global EDF (G-EDF) and global RMS (G-RMS) multicore real-time schedulers \cite{Davis:2011:SHR:1978802.1978814}, respectively.
+In particular,~\cite{stmconcurrencycontrol:emsoft11} shows that ECM and RCM achieve higher schedulability -- i.e., greater number of task sets meeting their time constraints -- than lock-free synchronization only under some ranges for the maximum atomic section length. That range is significantly expanded with the Length-based CM (LCM) in~\cite{lcmdac2012}, increasing the coverage of STM's timeliness superiority. ECM, RCM, and LCM suffer from transitive retry and cannot handle multiple objects per transaction efficiently. These limitations are overcome with the Priority with Negative value and First access CM (PNF)~\cite{pnf_dac_asp,shambake_phd_proposal}. However, PNF requires a-priori knowledge of all objects accessed by each transaction. This significantly limits programmability, and is incompatible with dynamic STM implementations~\cite{Herlihy:2003:STM:872035.872048}. Additionally, PNF is a centralized CM, which increases overheads and retry costs, and has a complex implementation. First Bounded, Last Timestamp CM (or FBLT)~\cite{fblt}, in contrast to PNF, does not require a-priori knowledge of objects accessed by transactions. Moreover, FBLT allows each transaction to access multiple objects with shorter transitive retry cost than ECM, RCM and LCM. Additionally, FBLT is a decentralized CM and does not use locks in its implementation. Implementation of FBLT is also simpler than PNF.
+
+Previous CMs consider only non-nested transactions. Nested transactions~\cite{Turcu:2012:OND:2367589.2367601,turcu2012closed} can be: 1) flat: If a child transaction aborts, then the parent transaction also aborts. If a child commits, no effect is taken until the parent commits. Modifications made by the child transaction are only visible to the parent until the parent commits, after which they are externally visible. 2) Closed: Similar to flat nesting, except that if a child transaction conflicts, it is aborted and retried, without aborting the parent, potentially improving concurrency over flat nesting. 3) Open: If a child transaction commits, its modifications are immediately externally visible, releasing memory isolation of objects used by the child, thereby potentially improving concurrency over closed nesting. However, if the parent conflicts after the child commits, then compensating actions are executed to undo the actions of the child, before retrying the parent and the child.
+
+We introduce closed-nested FBLT that extends original FBLT to closed nested transactions (Section~\ref{sec:closed_nested_fblt_design}). We present the motivation for introducing closed nesting into FBLT (Section~\ref{sec:motivation}). We establish closed-nested FBLT's retry and response time upper bounds under G-EDF and G-RMA schedulers (Section~\ref{sec:closed_nested_fblt rc}). We also identify the conditions under which closed-nested FBLT is a better alternative to non-nested FBLT (Section~\ref{sec:schedulabiltiy comparison}). 
+%
+\begin{comment}
+We implement FBLT and competitor CM techniques in the Rochester STM framework~\cite{marathe2006lowering} and conduct experimental studies (Section~\ref{exp_eval}). Our results reveal that FBLT has shorter retry cost than ECM, RCM, LCM and lock-free. FBLT's retry cost is comparable to that of PNF, especially in case of non-transitive retry, but it doesn't require a-priori knowledge of objects accessed by transactions, unlike PNF. 
+
+Thus, the paper's contribution is the FBLT contention manager with superior timeliness properties. FBLT, thus allows programmers to reap STM's significant programmability and composability benefits for a broader range of multicore embedded real-time software than what was previously possible.
+\end{comment}
+
+\section{Related Work}
+\label{sec:past}
+
+\begin{comment}
+Transactional-like concurrency control without using locks, for real-time systems, has been previously studied in the context of non-blocking data structures (e.g.,~\cite{anderson95realtime}). Despite their numerous advantages over locks 
+(e.g., deadlock-freedom), 
+their programmability has remained a challenge. 
+Past studies show that they are best suited for simple data structures where their retry cost is competitive to the cost of lock-based synchronization~\cite{bc+08}.  In contrast, STM is semantically simpler~\cite{Herlihy:2006:AMP:1146381.1146382}, and is often the only viable lock-free solution for complex data structures (e.g., red/black tree)~\cite{key-1} and nested critical sections~\cite{Saha:2006:MHP:1122971.1123001}.
+\end{comment}
+
+The main focus of previous research on real-time STM's CMs is on non-nested transactions. Non-nested STM concurrency control for real-time systems has been previously studied in~\cite{manson2006preemptible,fahmy2009bounding,sarni2009real,schoeberl2010rttm,key-1,barrosmanaging,stmconcurrencycontrol:emsoft11,lcmdac2012,pnf_dac_asp,fblt}.
+
+
+\cite{manson2006preemptible} proposes a restricted version of STM for uniprocessors. %Uniprocessors do not need contention management. 
+\cite{fahmy2009bounding} bounds response times in distributed  systems with STM synchronization. They consider Pfair scheduling, limit to small atomic regions with fixed size, and limit transaction execution to span at most two quanta. 
+%In contrast, we allow transaction lengths with  arbitrary duration. 
+\cite{sarni2009real} presents real-time scheduling of transactions and serializes transactions based on deadlines. 
+%However, the work does not bound retries and response times. In contrast, we establish such bounds. 
+\cite{schoeberl2010rttm} proposes real-time HTM. \cite{schoeberl2010rttm} assumes that the worst case conflict between atomic sections of different tasks occurs when the sections are released at the same time. 
+%The work does not describe how transactional conflicts are resolved. Besides, the retry bound assumes that the worst case conflict between atomic sections of different tasks occurs when the sections are released at the same time. However, we show that this is not the worst case. We develop retry and response time upper bounds based on much worse conditions.
+\cite{key-1} upper bounds retries and response times for ECM with G-EDF, and identify the tradeoffs with locking and lock-free protocols. Similar to~\cite{schoeberl2010rttm},~\cite{key-1} also assumes that the worst case conflict between atomic sections occurs when the sections are released simultaneously. The ideas in~\cite{key-1} are extended in~\cite{barrosmanaging}, which presents three real-time CM designs. 
+%But no retry bounds or schedulability analysis techniques are presented for those CMs. 
+\cite{stmconcurrencycontrol:emsoft11} presents the ECM and RCM contention managers, and upper bounds transactional retries and task response times under them. 
+%The work also identifies the conditions under which ECM and RCM are superior to locking and lock-free techniques. In particular, \cite{stmconcurrencycontrol:emsoft11} shows that, STM's superiority holds only under some ranges for the maximum atomic section length.  Moreover,~\cite{stmconcurrencycontrol:emsoft11} restricts transactions to access only one object.
+%
+\cite{lcmdac2012} presents the LCM contention manager, and upper bounds its transactional retries and task response times under the G-EDF and G-RMA schedulers. 
+%This work also compares (analytically and experimentally) LCM with ECM, RCM, and lock-free synchronization. However, similar to~
+\cite{lcmdac2012,stmconcurrencycontrol:emsoft11} restrict transactions to access only one object. 
+%
+\cite{pnf_dac_asp} presents the PNF contention manager, which allows transactions to access  multiple objects and avoids the consequent transitive retry effect. 
+%The work also upper bounds transactional retries and task response times under G-EDF and G-RMA. 
+However, PNF requires a-priori knowledge of the objects accessed by each transaction, which is not always possible. 
+%, limits programmability, and is incompatible with dynamic STM implementations~\cite{Herlihy:2003:STM:872035.872048}. Additionally, PNF is a centralized CM and uses locks in its implementation, which increases overheads.
+%
+\cite{fblt} presents the FBLT contention manager. In contrast to PNF, FBLT does not require prior knowledge of required objects by each transaction. FBLT premits multiple objects per transaction.
+%Under FBLT, each transaction can be aborted for a specific number of times. Afterwards, the transaction becomes non-preemptive. Non-preemptive transactions have higher priority than other preemptive transactions and real-time tasks. Non-preemptive transactions resolve conflicts based on the time they became non-preemptive. 
+
+Past research in distributed real-time database systems provide different concurrency control algorithms for nested transactions~\cite{chen2002efficient,4709120,1420972,316159}. 
+\begin{comment}
+Nested transactions are represented as trees. The outermost transaction is the root of the tree. Children of the root are either sub-transactions or leaf nodes. Each sub-transaction itself consists of other sub-transactions and/or leaf nodes. Data can be accessed in leaf nodes and/or sub-transactions by ``read'' and ``write'' operations. Relation between children of any node is done by AND or OR operations. AND means all children of the node must commit for their parent to commit. OR means only one child should commit for its parent to commit. \cite{chen2002efficient,4709120,1420972} are concerned with closed nesting. A parent and child transactions execute asynchronously if they both can run concurrently. Otherwise,
+if the parent stops to let the child run, then this is a synchronous mode. 
+\end{comment}
+%
+\cite{chen2002efficient} presents a priority assignment scheme called \textit{flexible high reward for nested transactions (FHRN)} and a real-time concurrency control protocol for nested transactions in DRTDBS called \textit{two phase locking with high priority for nested
+transactions (2PL-HPN)}. FHRN considers number of parameters in priority assignment for each nested transaction. These parameters include deadline, assigned value, slack time, communication time, number of leaves and nesting depth.
+%There have been several ways to assign priorities to transactions. \textit{Earliest Deadline} (ED) \cite{Abbott:1988:SRT:44203.44209} gives higher priority to shorter transaction. \textit{Highest Value} (HV) \cite{Haritsa:1993:VSR:615164.615166} gives a value to a transaction if finished before deadline. A transaction with higher value has higher priority. \textit{Higest Rewared and Urgency} (HRU) \cite{Harder:1993:CCI:615159.615161} considers both deadline and value in priority assignment. Higher priority is given to transactions with higher value and shorter deadline. \textit{Flexible High Reward} (FHR) \cite{Chen:2001:SVT:645609.757937} extends HRU to take communication delay of distributed systems into account. \cite{chen2002efficient} extends FHR to FHRN where higher number of leaves and nesting levels increase priorities in FHRN. 
+\begin{comment}
+Under FHRN, a nested transaction can be aborted by any other transaction. So, FHRN cannot bound worst case upper bound on retry cost in real-time systems. 
+\end{comment}
+2PL-HPN is based on two phase locking protocol with high priority scheme (2PL-HP) \textbf{\cite{Abbott:1988:SRT:44203.44209}} with priority inheritance and conditional restart. Under 2PL-HPN, higher priority transaction access objects first. Higher priority transaction is blocked if its slacking time allows current lower priority transactions to complete. Priority inheritance is used to prevent priority inversion. Transactions belonging to the same family should not abort each other. Priority inheritance is used among transactions of the same family.
+
+\cite{4709120} presents \textit{multiversion optimistic concurrency control for nested transactions} (MVOCC-NT) protocol for mobile real-time nested transactions in mobile broadcast environments. In MVOCC-NT, each transaction is assigned a timestamp at its start. Each object can have multiple versions. Each version has two flags indicating largest timestamps of transactions created and read that object version. 
+%Each read and write operation access object version that just precedes transaction's timestamp. If a transaction tries to write an object with a larger read flag, then the writing transaction is restarted. Otherwise, a new object version is created. A read (written) object version is kept in the read (write) set of the transaction. Transaction's restart can be expensive. So, multiversion dynamic adjustment is used to prevent unnecessary restarts. Read(write) set of a validating transaction can conflict with write(read) set of an active transaction respectively. Serialization order should indicate that validating transaction precedes active transaction. 
+Each transaction has a validating interval that is initialized to $[0,\infty]$. For each conflict, lower or upper bound of the validating interval is modified. Thus, serialization is maintained without unnecessary restarts. If the validating interval is empty, then transaction must be restarted. 
+%Validation is done on two phases: pre-validation and final validation. Pre-validation is done locally at the mobile host. If a transaction passes pre-validation, then it is sent to the server for final validation. When a transaction passes final validation, it is assigned a final timestamp. After final validation, server broadcasts committed and aborted transactions with read and write sets of committed transactions. Splitting validation on two phases reduces number of aborted transactions at the server, hence reduces restart cost.
+%
+\cite{1420972} presents 2PL-NT-HP concurrency control protocol and 2PC-RT-NT commit protocol. %2PL-NT-HP solves data conflicts between nested transactions in distributed real-time database systems (DRTDBS). 2PC-RT-NT ensures atomicity of distributed nested transactions in DRTDBM. 
+Priorities are assigned to each sub-transaction by adding the sub-transaction level to its parent priority. The base priority of the outermost transaction is assigned by EDF. Under 2PL-RT-HP, conflicts are resolved based on higher priority. (Sub)transactions in the same family do not abort each other. Lower priority (sub)transactions are allowed to complete if higher priority (sub)transactions have enough slack. Priority inheritance is used to prevent priority inversion. 
+%If both the higher and lower priority (sub)transactions belong to the same tree, lower priority (sub)transaction inherits priority of the higher priority one. Otherwise, the lower (sub)transaction is allowed to execute only if the slack time of the higher priority (sub)transaction allows all lower priority (sub)transactions to complete their execution without violating deadline of the higher priority (sub)transaction. In this case, lower priority (sub)transactions inherit priority of higher priority (sub)transaction. Otherwise, lower priority (sub)transactions are aborted and restarted if a the wasted resource manager permits them.~
+\cite{1530682} extends~\cite{1420972} to deal with impreciseness in nested transactions. (Sub)transactions can be essential (with firm deadlines) and non-essential (without firm deadline). 
+%Essential (sub)transactions have firm deadlines in contrast to non-essential (sub)transactions. Essential (sub)transactions are favored over non-essential ones. Conflict between transactions of the same type is solved by EDF.
+
+\cite{620423} introduces a new model for nested transactions based on Serialization Graphs (SG). 
+%SG consists of a set of nodes and edges. Each node represents a transaction. Each edge represents a conflict between two transactions. An edge starts from the transaction that should precede the transaction at the end of the edge. 
+An SG is serializable if it is acyclic. Usually, for nested SG, each parent and its children are represented by one node. So, any conflict between a (sub)transaction and another (sub)transaction appears as a conflict between the roots of both (sub)transactions. 
+%In this model, sub-transactions are ``illegal'' transactions (i.e., they lack ``consistency'' and ``durability'' properties). 
+In the new model, only ``leaf'' transactions are ``legal'' transactions. 
+%\cite{620423} presents the notion of ``virtually commitment'' to overcome the error of aborting a parent after committing a child. 
+A transaction ``virtually commits'' when it completed its work, all transaction it reads from are committed, and some of its children have not yet committed. When a transaction ``virtually commits'', it cannot be aborted. A transaction actually commits when it virtually committed and all its children have committed. 
+%This new model allows for more concurrency than the traditional model for nested transactions. 
+To avoid deadlock in the new model, a (sub)transaction that writes to a parent of sub-transactions, extends edges to these sub-transactions. 
+%
+\cite{316159} discusses some issues related to nested transactions in DRTBS like propagating deadline from parents to children. 
+%\cite{316159} presents how deadlines can propagate from parents to children. 
+One way is the absolute deadline propagation, in which deadline of the child is the same as the parent except for communication delay. 
+%This approach may not leave enough time for the rest of the parent to finish within deadline. This problem is solved by 
+Another way is the normal propagation approach, in which remaining time of the parent is taken into consideration. 
+%For nested transactions, the normal priority propagation might face priority reversal situations. 
+The average priority propagation assigns the same priority to all sub-transactions in the same family. The assigned priority value is the average of the sum of normal (sub)transactions' priorities.
+
+\cite{6267834} presents a Reactive Transactional Scheduler (RTS) to schedule closed nested transactions in distributed systems. \cite{6267834} assumes a data flow model in which objects move to transactional nodes. RTS compares between aborting or enqueuing a parent transaction. The choice depends on execution length of aborted transaction and contention level. 
+%Enqueuing parent transaction avoids re-requesting objects by child transactions. Thus, object communication time is reduced in distributed systems. Each enqueued parent transaction is assigned a back-off time after which the enqueued transaction aborts.
+%
+\begin{comment}
+Our work builds upon~\cite{stmconcurrencycontrol:emsoft11,lcmdac2012,pnf_dac_asp}. FBLT allows multiple objects per transaction with no a-priori knowledge needed about those objects. We upper bound transactional retries and task response times under FBLT, and identify the conditions under which FBLT has  better schedulability than other synchronization techniques.
+\end{comment}
+%
+\section{Preliminary}
+
+We consider a multiprocessor system with $m$ identical processors and $n$ sporadic tasks $\tau_1, \tau_2,\ldots, \tau_n$. The $k^{th}$ instance (or job) of a task $\tau_i$ is denoted $\tau_i^k$. Each task $\tau_i$ is specified by its worst case execution time (WCET) $c_i$, its minimum period $T_i$ between any two consecutive instances, and its relative deadline $D_i$, where $D_i=T_i$. Job $\tau_i^j$ is released at time $r_i^j$ and must finish no later than its absolute deadline $d_i^j=r_i^j+D_i$. Under a fixed priority scheduler such as G-RMA, $p_i$ determines $\tau_i$'s (fixed) priority and it is constant for all instances of $\tau_i$. Under a dynamic priority scheduler such as G-EDF, a job $\tau_i^j$'s priority, $p_i^j$, differs from one instance to another. 
+A task $\tau_j$ may interfere with task $\tau_i$ for a number of times during an interval $L$, and this number is denoted as $G_{ij}(L)$. 
+
+
+\textit{Shared objects.}
+ A task may need to read/write shared, in-memory data objects while it is executing any of its atomic sections (transactions), which are synchronized using STM. 
+The set of atomic sections of task $\tau_i$ is denoted $s_i$. $s_i^k$ is the $k^{th}$ atomic section of $\tau_i$. 
+Each object, $\theta$, can be accessed by multiple tasks. The set of distinct objects accessed by $\tau_i$ is $\Theta_i$ without repeating objects.
+The set of atomic sections used by $\tau_i$ to access $\theta$ is $s_i(\theta)$, and the sum of the lengths of those atomic sections is $len(s_i(\theta))$. $s_i^k(\theta)$ is the $k^{th}$ atomic section of $\tau_i$ that accesses $\theta$.
+%
+ $s_i^k$ can access one or more objects in $\theta_i$. So, $s_i^k$ refers to the transaction itself, regardless of the objects accessed by the transaction. We denote the set of all accessed objects by $s_i^k$ as $\Theta_i^k$. While $s_i^k(\theta)$ implies that $s_i^k$ accesses an object $\theta \in \Theta_i^k$, $s_i^k(\Theta)$ implies that $s_i^k$ accesses a set of objects $\Theta=\{\theta \in \Theta_i^k$ \}. $\bar{s_i^k}=\bar{s_i^k}(\Theta)$ refers only once to $s_i^k$, regardless of the number of objects in $\Theta$. So, $|\bar{s_i^k}(\Theta)|_{\forall \theta \in \Theta}=1$.
+%
+ $s_i^k(\theta)$  executes for a duration $len(s_i^k(\theta))$. $len(s_i^k)=len(s_i^k(\theta))=len(s_i^k(\Theta))=len(s_i^k(\Theta_i^k))$ The set of tasks sharing $\theta$ with $\tau_i$ is denoted $\gamma_i(\theta)$. 
+
+The maximum-length atomic section in $\tau_i$ that accesses $\theta$ is denoted $s_{i_{max}} (\theta)$, while the maximum one among all tasks is $s_{max} (\theta)$, and the maximum one among tasks with priorities lower than that of $\tau_i$ is $s_{max}^i (\theta)$. $s_{max}^i(\Theta_h^i)=max\{s_{max}^i(\theta):\forall \theta \in \Theta_h^i\}$.
+
+\textit{STM retry cost.} If two or more atomic sections conflict, the CM will commit one section and abort and retry the others, increasing the time to execute the aborted sections. The increased time that an atomic section $s_i^p (\theta)$ will take to execute due to a conflict with another section $s_j^k (\theta)$, is denoted $W_{i}^{p}(s_{j}^{k}(\theta))$. If an atomic section, $s_i^p$, is already executing, and another atomic section $s_j^k$ tries to access a shared object with $s_i^p$, then $s_j^k$ is said to ``interfere" or ``conflict" with $s_i^p$. The job $s_j^k$ is the ``interfering job", and the job $s_i^p$ is the ``interfered job".
+
+Due to \textit{transitive retry}~\cite{pnf_dac_asp,fblt}, an atomic section $s_i^k(\Theta_i^k)$ may retry due to another atomic section $s_j^l(\Theta_j^l)$, where $\Theta_i^k \cap \Theta_j^l = \emptyset$. $\Theta_i^*$ denotes the set of objects not accessed directly by atomic sections in $\tau_i$, but can cause transactions in $\tau_i$ to retry due to transitive retry. $\Theta_i^{ex}(=\Theta_i + \Theta_i^*)$ is the set of all objects that can cause transactions in $\tau_i$ to retry directly or through transitive retry. $\Theta_i^{k^{ex}}$ is the subset of objects in $\Theta_i^{ex}$ that can cause direct or transitive conflict to $s_i^k$. $\gamma_i^*$ is the set of tasks that accesses  objects in $\Theta_i^*$. $\gamma_i^{ex}(=\gamma_i + \gamma_i^*)$ is the set of all tasks that can directly or indirectly (through transitive retry) cause transactions in $\tau_i$ to abort and retry. $\gamma_i^k$ is the set of tasks that can directly cause $s_i^k$ to abort and retry. $\gamma_i^{k^{ex}}$ is the set of tasks that can directly or indirectly (through transitive retry) cause $s_i^k$ to abort and retry.
+
+The total time that a task $\tau_i$'s atomic sections have to retry over $T_i$ is denoted $RC(T_i)$. The additional amount of time by which all interfering jobs of $\tau_j$ increases the response time of any job of $\tau_i$ during $L$, without considering retries due to atomic sections, is denoted $W_{ij}(L)$.
+
+
+\textit{Nested transactions:} A nested transaction $s_{i}^{k}$ is represented as a \textit{tree} or a \textit{transactional family}, where $s_{i}^{k}$ is the \textit{root} or \textit{Top Tree Level (TTL)}. Any (sub)transaction that contains other (sub)transactions is called
+a \textit{parent}, while a sub-transaction is called a \textit{child}.
+Thus, a sub-transaction can be a parent and a child at the same time.
+Root does not have a parent. A sub-transaction without children is
+called a \textit{leaf}. $s_{i*}^{k}$ can be any (sub)transaction
+lying in the tree whose root is $s_{i}^{k}$, including $s_{i}^{k}$
+itself, down to the leaves. Root of the tree to which $s_{i*}^{k}$
+belongs is denoted as $R(s_{i*}^{k})$. $s_{i*}^{k}$ begins after
+start of $s_{i}^{k}$ by at least $\nabla_{i*}^{k}$. Set of leaves
+of the tree whose root is $s_{i*}^{k}$ is denoted as $L(s_{i*}^{k})$.
+Parent of $s_{i*}^{k}$ is denoted as $Par(s_{i*}^{k})$. Set of direct
+children of $s_{i*}^{k}$ is denoted as $Ch(s_{i*}^{k})$. Set of
+children of any (sub)transaction $s_{i*}^{k}$, including grand children
+down to leaves, are called \textit{descendants} of $s_{i*}^{k}$,
+$Des(s_{i*}^{k})$. Set of parents and grand parents of $s_{i*}^{k}$
+up to the root are called \textit{ancestors}, $Anc(s_{i*}^{k})$.
+A (sub)transaction $s_{i*}^{k}$ and its descendants are represented
+as a set of (sub)transactions $\left\{ s_{i*}^{k}\right\} $. Thus,
+$\{s_{i*}^{k}\}$ is a \textit{tree} or a \textit{transactional family}
+whose root is $s_{i*}^{k}$. (Sub)transactions in $\{s_{i*}^{k}\}$
+are ordered by their start time relative to $s_{i*}^{k}$ with ties
+broken arbitrarily. Thus, if $s_{i1*}^{k}$($s_{i2*}^{k}$) begins
+after start of $s_{i*}^{k}$ by $\nabla_{i1*}^{k}$($\nabla_{i2*}^{k}$)
+respectively, and $\nabla_{i1*}^{k}<\nabla_{i2*}^{k}$, then $s_{i1*}^{k}$
+comes before $s_{i2*}^{k}$ in $\{s_{i*}^{k}\}$. The $a^{th}$ direct
+child of $s_{i*}^{k}$ is $s_{i*-a}^{k}$. Thus, $s_{i*-a}^{k}\in\left\{ s_{i*}^{k}\right\} $.
+The set of $s_{i*-a}^{k}$ and its descendants is a subset of $\left\{ s_{i*}^{k}\right\} $
+(i.e., $\left\{ s_{i*-a}^{k}\right\} \subseteq\left\{ s_{i*}^{k}\right\} $).
+A parent precedes its children in order, thus $s_{i*}^{k}<s_{i*-a}^{k}$.
+$len(s_{i*}^{k})$ includes lengths of all its children, as any $s_{i*-a}^{k}$
+executes inside $s_{i*}^{k}$. $\Theta_{i*}^{k}$ represents set of
+objects accessed by $s_{i*}^{k}$. $\Theta_{i*-a}^{k}$ represents
+set of objects accessed by $s_{i*-a}^{k}$. $\Theta_{i*-a}^{k}$ may
+contain objects not in $\Theta_{i*}^{k}$. Thus, if $\theta$ is accessed
+by both $s_{i*}^{k}$ and $s_{i*-a}^{k}$, then $\theta\in\Theta_{i*}^{k},\,\Theta_{i*-a}^{k}$.
+If $\theta$ is accessed by $s_{i*}^{k}$ but not $s_{i*-a}^{k}$,
+then $\theta\in\Theta_{i*}^{k}$ but $\theta\not\in\Theta_{i*-a}^{k}$.
+If $\theta$ is accessed by $s_{i*-a}^{k}$ but not by $s_{i*}^{k}$,
+then $\theta\in\Theta_{i*-a}^{k}$, but $\theta\not\in\Theta_{i*}^{k}$.
+The set of objects accessed by all (sub)transactions in $\{s_{i*}^{k}\}$
+is $\{\Theta_{i*}^{k}\}=\cup_{\forall s_{i*}^{k}\in\{s_{i*}^{k}\}}\Theta_{i*}^{k}$. $\Theta_{i}^{k^{ex}}$
+is the same for any $s_{i*}^{k}\in\{s_{i}^{k}\}$ (i.e., $\Theta_{i}^{k^{ex}}=\Theta_{i*}^{k^{ex}},\,\forall s_{i*}^{k}\in\{s_{i}^{k}\}$).
+This is because children abort with their parents under closed nesting.
+Thus, objects accessed by $Par\{s_{i*}^{k}\}$ are included in $\Theta_{i*}^{k^{ex}}$. $p(s_{i*}^{k})$ is priority of (sub)transaction $s_{i*}^{k}$. Generally,
+we assume $p(s_{i*}^{k}),\,\forall s_{i*}^{k}\in\{s_{i*}^{k}\}$ is
+the same unless otherwise stated.
+
+\textit{Conflicting (sub)Transaction:} $CT(s_{i*}^{k},s_{j*}^{l},a)$
+is the $a^{th}$ subtransaction in $\{s_{j*}^{l}\}$ that can conflict
+directly with any (sub)transaction in $\{s_{i*}^{k}\}$. Let the set
+of objects accessed by $CT(s_{i*}^{k},s_{j*}^{l},a)$ be $\Theta1$.
+By definition of $CT(s_{i*}^{k},s_{j*}^{l},a)$, $\Theta1\cap\{\Theta_{i*}^{k}\}\neq\emptyset$.
+Let $CT(s_{i*}^{k},s_{j*}^{l},a)$ begins after start of $s_{j*}^{l}$
+by $\nabla1$. Let $CT(s_{i*}^{k},s_{j*}^{l},b)$ begins after start
+of $s_{j*}^{l}$ by $\nabla2$. If $a<b$, then $\nabla1<\nabla2$.
+The first (sub)transaction in $\{s_{i*}^{k}\}$ that can be interfered
+by $CT(s_{i*}^{k},s_{j*}^{l},a)$ is defined as \textit{Inverse Conflicting
+(sub)Transaction} $CT^{-1}(s_{i*}^{k},s_{j*}^{l},a)$. $CT^{ex}(s_{i*}^{k},s_{j*}^{l},a)$
+is the same as $CT(s_{i*}^{k},s_{j*}^{l},a)$ except that $\Theta1\cap\Theta_{i*}^{k^{ex}}\neq\emptyset$.
+By definition of $\Theta_{i*}^{k^{ex}}$, $CT^{ex}(s_{i*}^{k},s_{j*}^{l},a)$
+may not directly conflict with any (sub)transaction in $\{s_{i*}^{k}\}$.
+Thus, there will be no definition for \textit{Inverse Conflicting
+(sub)Transaction} in transitive retry.
+
+
+\section{Motivation}\label{sec:motivation}
+
+When a child transaction aborts in closed and open nesting, the parent
+transaction does not have to abort. By proper organization of objects
+within (sub)transactions, only child transactions need to be aborted.
+Thus, retry cost can be reduced.
+
+Behaviour of CM, such as PNF~\cite{pnf_dac_asp}, can make nesting useless. PNF requires a priori knowledge of accessed objects within transactions. Only the first $m$ non-conflicting transactions are allowed to execute concurrently and non-preemptively. Thus, PNF makes no use of nesting. A non-preemptive parent transaction will enforce its children to be non-preemptive also. So, no other (sub)transaction can abort a non-preemptive transaction, nor its children. If PNF is modified such that only objects accessed by parent is known a priori, then deadlock is inevitable. This is illustrated by the following example.
+
+\textbf{Example 1}\label{Example-1:pnf_nesting_deadlock}: Assume $s_{i}^{k}(\theta_{1})$ is a parent transaction that has a child sub-transaction $s_{i-1}^{k}(\theta_{2})$. $s_{i}^{k}$ accesses only $\theta_{1}$, and $s_{i-1}^{k}(\theta_{2})$ access only $\theta_{2}$. $s_{j}^{l}(\theta_{2})$ is another parent transaction that has a child $s_{j-1}^{l} (\theta_{1})$. $s_{j}^{l}(\theta_{2})$ accesses only $\theta_{2}$, and $s_{j-1}^{l}(\theta_{1})$ accesses only $\theta_{1}$. Initially, $s_{i}^{k}(\theta_{1})$ and $s_{j}^{l}(\theta_{2})$ can execute non-preemptively in parallel. $s_{i-1}^{k}(\theta_{2})$ conflicts with the non-preemptive transaction $s_{j}^{l}(\theta_{2})$. So, $s_{i-1}^{k}(\theta_{2})$ has to wait until $s_{j}^{l}(\theta_{2})$ finishes. $s_{j-1}^{l}(\theta_{1})$ conflicts with the non-preemptive transaction $s_{i}^{k}(\theta_{1})$. Thus, $s_{j-1}^{l}(\theta_{1})$ waits until $s_{i}^{k}(\theta_{1})$ finishes. But $s_{i}^{k}(\theta_{1})$ waits until its child $s_{i-1}^{k}(\theta_{2})$ finishes, and $s_{j}^{l}(\theta_{2})$ waits until its child $s_{j-1}^{l}(\theta_{1})$ finishes. This cycle represents a deadlock.
+
+FBLT\cite{fblt}, by definition, depends on LCM. LCM, in turn, depends
+on ECM (RCM) for G-EDF (G-RMA), respectively. Experimental results
+show superiority of FBLT over LCM, ECM and RCM\cite{fblt}. Thus, we extend FBLT to closed-nested FBLT to reduce retry cost than the non-nested FBLT.
+
+\section{Closed-nested FBLT}\label{sec:closed_nested_fblt_design}
+
+Closed-nested FBLT depends on FBLT which in turn depends on LCM~\cite{lcmdac2012}. Thus, LCM is extended to closed-nested LCM for closed nested transactions. In all the following Claims, it will be assumed that 
+$\Pi(x)=\begin{cases}
+x & \mbox{, if }x>0\\
+0 & \mbox{, Otherwise}
+\end{cases}$.
+
+\subsection{Closed-nested LCM}\label{sec:closed_nested_lcm}
+
+Design of closed-nested LCM depends on Claim~\ref{closed_nesting_fblt_one_alpha}.
+
+\begin{clm}\label{closed_nesting_fblt_one_alpha}
+
+Let $\{s_{i}^{k}\}$ and $\{s_{j}^{l}\}$ be conflicting nested transactions where $p(s_{j}^{l})>p(s_{i}^{k})$. $\alpha_{ij}^{kl}$ is the result of interference of $s_{i}^{k}$ by $s_{j}^{l}$ as defined by LCM. Using the same $\alpha_{ij}^{kl}$ to resolve conflict of
+all (sub)transactions $s_{i*}^{k}\in\{s_{i}^{k}\}$ interfered by
+any $s_{j*}^{l}\in\{s_{j}^{l}\}$ is preferable than using different
+$\alpha_{i*j*}^{kl}$ for different (sub)transactions (i.e., $s_{i*}^{k}$
+aborts if $s_{j*}^{l}$ conflicts with $s_{i*}^{k}$ before $s_{i}^{k}$
+reaches $\alpha_{ij}^{kl}$ of $len(s_{i}^{k})$).
+
+\end{clm}
+(Proofs of all claims are provided in the Supplementary Material section at the end of the paper). Closed-nested LCM is shown in Algorithm~\ref{closed-nested-alg_lcm}. 
+%
+\begin{algorithm}[!htpd]
+\footnotesize{
+\LinesNumbered
+\KwData{$s_{i*}^k \in \{s_i^k\}\rightarrow$ interfered (sub)transaction.\\
+$s_{j*}^l \in \{s_j^l\}\rightarrow$ interfering (sub)transaction.\\
+$\psi\rightarrow$ predefined threshold $\in [0,1]$.\\
+$\epsilon_i^k\rightarrow$ remaining execution length of $\{s_i^k\}$}
+\KwResult{which (sub)transaction of $s_{i*}^k$ or $s_{j*}^l$ aborts}
+\eIf{$p_i^k > p_j^l$}
+	{$s_{j*}^l$ aborts\label{closed-nested-step_sicommits}\;}
+	{$c_{ij}^{kl}=len(s_j^l)/len(s_i^k)$\label{closed-nested-step_cijkl}\;
+	$\alpha_{ij}^{kl}=ln(\psi)/(ln(\psi)-c_{ij}^{kl})$\label{closed-nested-step_alphaijkl}\;
+	$\alpha=\left(len(s_i^k)-\epsilon_i^k\right)/len(s_i^k)$\;
+	\eIf{$\alpha \le \alpha_{ij}^{kl}$}
+	{$s_{i*}^k$ aborts\label{closed-nested-step_siaborts}\;}
+	{$s_{j*}^l$ aborts\label{closed-nested-step_sjaborts}\;}
+	}
+	}
+\caption{closed-nested LCM}
+\label{closed-nested-alg_lcm}
+\end{algorithm}
+%
+Closed-nested LCM uses the remaining length of $\{s_{i}^{k}\}$ when it is interfered,
+as well as $len(s_{j}^{l})$, to decide which (sub)transaction must be aborted. If $p_i^k > p_j^l$, then $s_{j*}^l$ would be the (sub)transaction to abort because of its higher priority, and $R(s_{i*}^k)$ started before $R(s_j^l)$ (step~\ref{closed-nested-step_sicommits}). Otherwise, $c_{ij}^{kl}$ is calculated (step~\ref{closed-nested-step_cijkl}) to determine whether it is worth aborting $s_{i*}^k$ in favour of $s_{j*}^l$, because $len(s_j^l)$ is relatively small compared to the remaining execution length of $\{s_i^k\}$.
+
+\subsection{Design of Closed-Nested FBLT}
+
+Design of closed-nested FBLT depends on Claim~\ref{closed_nesting_fblt_one_delta}
+%
+\begin{clm}\label{closed_nesting_fblt_one_delta}
+
+Under closed nesting FBLT, it is preferable to use one $\delta_{i}^{k}$
+for all (sub)transactions $s_{i*}^{k}\in\{s_{i}^{k}\}$ than to use
+different $\delta_{i*}^{k}$ for each $s_{i*}^{k}$ (i.e., $\delta_{i}^{k}$
+includes abortion of any $s_{i*}^{k}\in\{s_{i}^{k}\}$).
+
+\end{clm}
+%
+Algorithm~\ref{closed-nested-fblt-algorithm} illustrates closed-nested FBLT. 
+%
+\begin{algorithm}[!htpd]
+\footnotesize{
+\LinesNumbered
+\KwData{
+$s_{i*}^k \in \{s_i^k\}$: interfered (sub)transaction\;
+$s_{j*}^l \in \{s_j^l\}$: interfering (sub)transactions\;
+$\delta_i^k$: the maximum number of times $\{s_i^k\}$ can be aborted during $T_i$\;
+$\eta_i^k$: number of times $\{s_i^k\}$ has already been aborted up to now\;
+$m\_$set: contains at most $m$ non-preemptive nested transactions. $m$ is number of processors\;
+$m\_prio$: priority of any nested transaction in $m\_$set. $m\_prio$ is higher than any priority of any real-time task\;
+$r(s_i^k)$: time point at which $\{s_i^k\}$ joined $m\_$set\;
+}
+\KwResult{(sub)transactions that will abort}
+\uIf{\label{closed-nested-both preemptive}$\{s_i^k\},\,\{s_j^l\} \not\in m\_set$}
+{
+%
+Apply closed-nested LCM~\cite{lcmdac2012}\label{apply closed-nested-lcm}\;
+%
+\eIf{\label{closed-nested-preemptive s_i^k aborted}$s_{i*}^k$ is aborted}
+{
+\eIf{$\eta_i^k<\delta_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{closed-nested-increment eta 1}\;
+}
+{
+Add $\{s_i^k\}$ to $m\_$set\label{closed-nested-add to m_set 1}\;
+Record $r(s_i^k)$\label{closed-nested-record 1}\;
+Increase priority of $\{s_i^k\}$ to $m\_prio$\label{closed-nested-increase priority 1}\;
+}
+}
+{
+Swap $s_{i*}^k$ and $s_{j*}^l$\;
+Go to Step~\ref{closed-nested-preemptive s_i^k aborted}\;
+}
+}
+\uElseIf{\label{closed-nested-s_j^l is non preemptive}$\{s_j^l\} \in m\_set,\{s_i^k\} \not\in m\_set$}
+{
+Abort $s_{i*}^k$\;
+\eIf{$\eta_i^k < \delta_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{closed-nested-increment eta 2}\;
+}
+{
+Add $\{s_i^k\}$ to $m\_$set\label{closed-nested-add to m_set 2}\;
+Record $r(s_i^k)$\label{closed-nested-record 2}\;
+Increase priority of $\{s_i^k\}$ to $m\_prio$\label{closed-nested-increase priority 2}\;
+}
+}
+\uElseIf{\label{closed-nested-s_i^k is non-preemptive}$\{s_i^k\} \in m\_set,\{s_j^l\} \not\in m\_set$}
+{
+Swap $s_{i*}^k$ and $s_{j*}^l$\;
+Go to Step~\ref{closed-nested-s_j^l is non preemptive}\label{closed-nested-end preemptive and non preemptive}\;
+}
+\Else
+{
+\label{closed-nested-both non preemptive}
+\eIf{$r(s_i^k)<r(s_j^l)$}
+{	
+Abort $s_{j*}^l$\label{closed-nested-s_i^k first in m_set}\;
+}
+{
+Abort $s_{i*}^k$\label{closed-nested-s_j^l first in m_set}\;
+}
+}
+}
+\caption{The Closed-nested FBLT Algorithm}\label{closed-nested-fblt-algorithm}
+\end{algorithm}
+%
+Each nested transaction $s_{i}^{k}$- including its descendants- can be aborted during $T_i$ for at most $\delta_{i}^{k}$ times. $\eta_{i}^{k}$ records  the number of times $\{s_{i}^{k}\}$- including its descendants- has already been aborted up to now. If $\{s_i^k\}$ and $\{s_j^l\}$ have not joined the $m\_$set yet, then they are preemptive transactions. Preemptive transactions resolve conflicts using closed-nested LCM (step~\ref{apply closed-nested-lcm}). Thus, closed-nested FBLT defaults to closed-nested LCM when no nested transaction reaches its $\delta$. If only one of the nested transactions is in the $m\_$set, then the non-preemptive (sub)transaction (the one in $m\_$set) aborts the other one (steps~\ref{closed-nested-s_j^l is non preemptive} to~\ref{closed-nested-end preemptive and non preemptive}). $\eta_i^k$ is incremented each time any $s_{i*}^k \in \{s_i^k\}$ is aborted as long as $\eta_i^k < \delta_i^k$ (steps~\ref{closed-nested-increment eta 1} and~\ref{closed-nested-increment eta 2}). Otherwise, the whole $\{s_i^k\}$ is added to the $m\_$ set and priority of any $s_{i*}^k \in \{s_i^k\}$ is increased to $m\_prio$ (steps~\ref{closed-nested-add to m_set 1} to~\ref{closed-nested-increase priority 1} and~\ref{closed-nested-add to m_set 2} to~\ref{closed-nested-increase priority 2}). When the priority of $\{s_i^k\}$ is increased to $m\_prio$, $\{s_i^k\}$ becomes a non-preemptive transaction. Non-preemptive nested transactions cannot be aborted by other preemptive nested transactions, nor by any other real-time job. The $m\_$set can hold at most $m$ concurrent transactions because there are $m$ processors in the system. $r(s_i^k)$ records the time $\{s_i^k\}$ joined the $m\_$set (steps~\ref{closed-nested-record 1} and~\ref{closed-nested-record 2}). When non-preemptive (sub)transactions conflict together (step~\ref{closed-nested-both non preemptive}), the (sub)transaction with the smaller $r()$ commits first (steps~\ref{closed-nested-s_i^k first in m_set} and~\ref{closed-nested-s_j^l first in m_set}). Thus, non-preemptive (sub)transactions are executed in FIFO order of the $m\_$set.
+
+\section{Retry cost with closed nesting}\label{sec:closed_nested_fblt rc}
+
+\begin{clm}\label{clm:parent_child_retry_cost}
+
+Let $s_{j*}^{l}$ be the first descendant of $s_{j}^{l}$ that can
+conflict with some (sub)transaction in $\{s_{i}^{k}\}$ (i.e., $CT(s_{i}^{k},s_{j}^{l},1)$).
+$s_{j*}^{l}$ begins after start of $s_{j}^{l}$ by $\nabla_{j*}^{l}$.
+Let $s_{i*}^{k}$ be the first descendant of $s_{i}^{k}$ that can
+be interfered by some (sub)transaction in $\{s_{j}^{l}\}$. $s_{i*}^{k}$
+is the same first (sub)transaction in $\{s_{i}^{k}\}$ that can conflict
+with some (sub)transaction in $\{s_{j}^{l}\}$ (i.e., $CT(s_{j}^{l},s_{i}^{k},1)$).
+$s_{i*}^{k}$ begins after start of $s_{i}^{k}$ by $\nabla_{i*}^{k}$.
+$s_{j}^{l}$ starts after $s_{i}^{k}$ by $\triangle$. If $\triangle<0$,
+then $s_{j}^{l}$ starts before $s_{i}^{k}$. No other (sub)transaction
+can conflict with any (sub)transaction in $\{s_{j}^{l}\}$ or $\{s_{i}^{k}\}$.
+Under closed nesting, $s_{i}^{k}$ aborts and retries due to $s_{j}^{l}$
+for 
+\begin{equation}
+RC0_{ij}^{kl}=\begin{cases}
+\Pi\left(len\left(s_{j}^{l}\right)-\nabla_{i*}^{k}+\triangle\right) & \mbox{, if }\begin{gathered}\triangle\ge\nabla_{i*}^{k}-len\left(s_{j}^{l}\right)\\
+\triangle\le len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}
+\end{gathered}
+\\
+0 & \mbox{, Otherwise}
+\end{cases}\label{eq:parent_child_retry_cost}
+\end{equation}
+%
+$RC0_{ij}^{kl}$ is upper bounded by $len\left(s_{j}^{l}+s_{i}^{k}\right)-\nabla_{j*}^{l}-\nabla_{i*}^{k}$.
+
+\end{clm}
+
+\begin{clm}\label{clm:closed_nested_lcm_before_alpha_two_tx}
+
+Under closed nested FBLT, any (sub)transaction $s_{i*}^{k}\in\{s_{i}^{k}\}$
+uses closed nested LCM to resolve conflicts before $s_{i}^{k}$ becomes
+non-preemptive. Under closed nested LCM, $\{s_{i}^{k}\}$ aborts and
+retries due to only one interference of higher priority $\{s_{j}^{l}\}$
+by at most 
+
+\begin{equation}
+RC1_{ij}^{kl}=\begin{cases}
+\Pi\left(len\left(s_{j}^{l}\right)-\nabla_{i*}^{k}+\triangle\right) & \mbox{,}\begin{gathered}\triangle\ge\nabla_{i*}^{k}-len\left(s_{j}^{l}\right)\\
+\triangle\le min\left(\begin{gathered}len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}\\
+\alpha_{ij}^{kl}len\left(s_{i}^{k}\right)
+\end{gathered}
+\right)
+\end{gathered}
+\\
+0 & \mbox{, Otherwise}
+\end{cases}\label{eq:closed_nested_lcm_before_alpha_two_tx}
+\end{equation}
+where $\nabla_{j*}^{l}$ is the time interval between starts of $s_{j}^{l}$
+and $CT(s_{i}^{k},s_{j}^{l},1)$. $\nabla_{i*}^{k}$ is the time interval
+between starts of $s_{i}^{k}$ and $CT(s_{j}^{l},s_{i}^{k},1)$.
+
+\end{clm}
+
+\begin{clm}\label{clm:closed_nested_lcm_after_alpha}
+
+Under closed nested FBLT, any (sub)transaction $s_{i*}^{k}\in\{s_{i}^{k}\}$
+uses closed nested LCM to resolve conflicts before $s_{i}^{k}$ becomes
+non-preemptive. Under closed nested LCM, $\{s_{j}^{l}\}$ aborts and
+retries due to lower priority $\{s_{i}^{k}\}$ if $s_{i}^{k}$ has
+passed $\alpha_{ij}^{kl}$ of its execution length. Under closed nested
+LCM, $\{s_{j}^{l}\}$ aborts and retries due to lower priority $\{s_{i}^{k}\}$
+by at most 
+\begin{equation}
+RC2_{ji}^{lk}=\begin{cases}
+\Pi\left(len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}-\triangle\right) & ,\,\begin{gathered}\triangle\ge\alpha_{ij}^{kl}len\left(s_{i}^{k}\right)\\
+\triangle\le len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}
+\end{gathered}
+\\
+0 & ,\mbox{ Otherwise}
+\end{cases}\label{eq:closed_nested_lcm_after_alpha_two_tx}
+\end{equation}
+ where $\nabla_{j*}^{l}$ is the time interval between starts of $s_{j}^{l}$
+and $CT(s_{i}^{k},s_{j}^{l},1)$.
+
+\end{clm}
+
+\begin{clm}\label{clm:closed_nested_lcm_before_delta}
+
+Let $\omega1_{i}^{j}=\begin{cases}
+\left\lceil \frac{T_{i}}{T_{j}}\right\rceil  & \mbox{, G-EDF}\\
+\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1 & \mbox{, G-RMA}
+\end{cases}$
+
+$\omega2_{i}=\begin{cases}
+1 & \mbox{, G-EDF}\\
+2 & \mbox{, G-RMA}
+\end{cases}$. Let
+\begin{eqnarray}
+RC3_{i}^{k} & = & \sum_{\forall\tau_{j}\in\gamma_{i}^{k^{ex}}}\omega1_{i}^{j}\sum_{\begin{array}{cc}
+\forall\{s_{j}^{l}\}\\
+\{\Theta_{j}^{l}\}\cap\Theta_{i}^{k^{ex}}\neq\emptyset
+\end{array}}max_{\begin{array}{cc}
+\forall\{s_{x}^{y}\},\forall\tau_{x}\\
+p_{i}^{k}\le p_{x}^{y}<p_{j}^{l}
+\end{array}}\left(RC1_{ix}^{ky}\right)\nonumber \\
+ & + & \omega2_{i}\sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\sum_{\begin{array}{cc}
+\forall\{s_{j}^{l}\}\\
+\{\Theta_{j}^{l}\}\cap\Theta_{i}^{k^{ex}}\neq\emptyset
+\end{array}}max\left(RC2_{ij}^{kl}\right)\label{eq:closed_nested_lcm_before_delta}
+\end{eqnarray}
+where $RC1_{ix}^{ky}$ is calculated by (\ref{eq:closed_nested_lcm_before_alpha_two_tx})
+and $RC2_{ij}^{kl}$ is calculated by (\ref{eq:closed_nested_lcm_after_alpha_two_tx}).
+Under closed nested FBLT, the maximum retry cost of any transactional
+family $\{s_{i}^{k}\}\in\tau_{i}^{x}$ before $s_{i}^{k}$ becomes
+non-preemptive due to other conflicting (sub)transactions is upper
+bounded by 
+\begin{equation}
+RC4_{i}^{k}=\begin{cases}
+RC3_{i}^{k} & \mbox{, if }\left\lceil \frac{RC3_{i}^{k}}{len\left(s_{i}^{k}\right)}\right\rceil <\delta_{i}^{k}\\
+\delta_{i}^{k}len\left(s_{i}^{k}\right) & \mbox{, Otherwise}
+\end{cases}\label{eq:closed_nested_fblt_before_delta}
+\end{equation}
+
+\end{clm}
+
+\begin{clm}\label{clm:closed_nested_fblt_final}
+
+Let $\{s_{i}^{k}\}$ be a nested transaction under closed nested FBLT.
+Let $RC5_{ij}^{kl}=RC0_{ij}^{kl}$ as defined in Claim \ref{clm:parent_child_retry_cost}
+except that $\nabla_{i*}^{k}-len\left(s_{j}^{l}\right)\le\triangle\le min\left(0,len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}\right)$.
+Let $\chi_{i}^{k}$ be set of nested transactions $\{s_{j}^{l}\}$
+that can conflict directly or transitively with $\{s_{i}^{k}\}$ arranged
+in non-increasing order of $RC0_{ij}^{kl}$. Each $\{s_{j}^{l}\}\in\chi_{i}^{k}$
+belongs to a distinct task $\tau_{j}$. $\chi_{i}^{k}(a)$ is the
+$a^{th}$ nested transaction in $\chi_{i}^{k}$. $\chi_{i}^{k}=\left\{ \{s_{j}^{l}\}|\left(\Theta_{i}^{k^{ex}}\cap\{\Theta_{j}^{l}\}\neq\emptyset\right)\wedge\left(RC5_{i}^{k}(a)\ge RC5_{i}^{k}(a+1)\right)\right\} $
+where $RC5_{i}^{k}(a)=RC5_{ij}^{kl}|\,\chi_{i}^{k}(a)=\{s_{j}^{l}\}$.
+The total retry cost of any job $\tau_{i}^{x}$ during $T_{i}$ under
+closed nested FBLT due to 1) directly and transitively conflicting
+transactions with any $\{s_{i}^{k}\}$. 2) release of higher priority
+jobs is upper bounded by 
+\begin{eqnarray}
+RC_{i} & = & \sum_{\forall s_{i}^{k}}\begin{cases}
+RC3_{i}^{k} & \,\left\lceil \frac{RC3_{i}^{k}}{len\left(s_{i}^{k}\right)}\right\rceil <\delta_{i}^{k}\\
+\delta_{i}^{k}len\left(s_{i}^{k}\right)+\sum_{\forall\chi_{i}^{k}(a),\, a=1}^{a\le m-1}RC5_{ij}^{kl}(a) & \mbox{, otherwise}
+\end{cases}\nonumber \\
+ & + & RC_{re}(T_{i})\label{eq:closed_nested_fblt_after_delta}
+\end{eqnarray}
+$RC3_{i}^{k}$ is calculated by Claim \ref{clm:closed_nested_lcm_before_delta}.
+$RC_{re}(T_{i})$ is the retry cost resulting from release of higher
+priority jobs which preempt $\tau_{i}^{x}$. $RC_{re}(T_{i})$ is
+calculated by as defined by Claim 1 in \cite{fblt}.
+
+\end{clm}
+
+Any newly released task $\tau_{i}^{x}$ can be blocked by $m$ lower
+priority non-preemptive nested transactions. $\tau_{i}^{x}$ has to
+wait at most for the whole length of a non-preemptive nested transaction.
+Thus, $D_{i}$ is independent of nesting. Blocking time of $\tau_{i}^{x}$
+($D_{i}$) due to the longest $m$ lower priority non-preemptive nested
+transaction is calculated by Claim 3 in \cite{fblt}. Claim 2 in \cite{fblt}
+is used to calculate response time under closed nested FBLT where
+$RC_{to}(T_{i})$ is calculated by (\ref{eq:closed_nested_fblt_after_delta}).
+
+
+\section{Closed nested vs. non-nested FBLT}\label{sec:schedulabiltiy comparison}
+
+\begin{clm}\label{clm:closed_nested_non_nested_fblt_schedulabiltiy_comp}
+
+Schedulability of closed-nested FBLT is better or equal to non-nested
+FBLT's if the conflicting (sub)transactions in each $\{s_{i}^{k}\}$
+begin lately relative to start of $s_{i}^{k}$.
+
+\end{clm}
+
+\section{Conclusion}\label{sec:conclusion}
+
+Past research on real-time CMs focused on non-nested transactions. Nested transactions can be flat, closed and open. In this paper, we analysed effect of closed nesting over FBLT CM. Analysis shows that retry cost, hence schedulability, can be reduced if conflicting (sub)transactions start lately relative to their roots. Some CMs make no use of nesting due to behaviour of that CM (e.g, under PNF, all non-preemptive transactions are non-conflicting). Experimental evaluation of closed-nested FBLT, compared to non-nested FBLT, will be done in future work. Also, open nesting will be analysed to reveal whether retry cost and schedulability can be more improved than closed and non-nested FBLT. 
+
+\bibliographystyle{abbrv}
+\small{\bibliography{/e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography}}
+\normalsize
+
+\renewcommand{\thesubsection}{S.\arabic{subsection}}
+
+\section*{Supplementary Material}
+
+This section includes proofs of all Claims.
+\subsection{\label{proof_closed_nesting_fblt_one_alpha}Proof of Claim~\ref{closed_nesting_fblt_one_alpha}}
+
+\begin{proof}
+
+Let there be only one $\alpha_{ij}^{kl}$
+for any (sub)transaction $s_{i*}^{k}\in\{s_{i}^{k}\}$ interfered
+by $s_{j*}^{l}\in\{s_{j}^{l}\}$. $\{s_{i}^{k}\}$ can be represented
+as a single non-nested transaction, and so is $\{s_{j}^{l}\}$. Thus,
+using the same $\alpha_{ij}^{kl}$ for nested transactions will not
+increase retry cost nor blocking time over non-nested case. On the
+other hand, using different $\alpha_{i*j*}^{kl}$ for different (sub)transactions
+can increase retry cost and/or blocking time as given by the following
+cases:
+\begin{enumerate}
+\item Each (sub)transaction $s_{i*}^{k}\in\{s_{i}^{k}\}$ has its own $\alpha_{i*\, j}^{kl}$
+due to interference by $s_{j}^{l}$. Assume $s_{i}^{k}$ has a child
+$s_{i-1}^{k}$. Assume $s_{j}^{l}$ has $\alpha_{ij}^{kl}$ ($\alpha_{i-1\, j}^{kl}$)
+when it interferes with $s_{i}^{k}$($s_{i-1}^{k}$) respectively.
+$p_{j}^{l}>p_{i}^{k},\, p_{i-1}^{k}$. Assume conflict between $s_{j}^{l}$
+and $s_{i-1}^{k}$ is detected before $s_{j}^{l}$ conflicts with
+$s_{i}^{k}$ and before $s_{i}^{k}$ reaches $\alpha_{ij}^{kl}$ from
+its execution length. Let $s_{i-1}^{k}$ has passed $\alpha_{i-1\, j}^{kl}$
+of its execution length. By LCM, $s_{j}^{l}$ will abort and retry.
+In non-nested case, $s_{j}^{l}$ will not abort because $s_{i}^{k}$
+has not reached $\alpha_{ij}^{kl}$ from its execution length yet.
+Thus, blocking time due to lower priority tasks in closed nesting
+is increased over non-nested case. The closer $s_{i*}^{k}$ gets to
+the start of $s_{i}^{k}$ and the shorter $len(s_{i*}^{k})$ becomes,
+the more blocking time of $s_{j}^{l}$ suffers. This problem is avoided
+if there is only one $\alpha_{ij}^{kl}$ for any $s_{i*}^{k}\in\{s_{i}^{k}\}$
+interfered by $s_{j}^{l}$.
+\item Using the previous scenario. Let $s_{i*}^{k}$ finishes before $s_{i}^{k}$
+reaches $\alpha_{ij}^{kl}$ of its execution length. $s_{j}^{l}$
+aborts and retries due to $s_{i*}^{k}$. After $s_{i*}^{k}$ finishes,
+$s_{i}^{k}$ will abort and retry because it has not reached $\alpha_{ij}^{kl}$
+of its execution length yet. $s_{i*}^{k}$ will also retry with $s_{i}^{k}$.
+Thus, previous abortion of $s_{j}^{l}$ is useless. This problem is
+avoided if there is only one $\alpha_{ij}^{kl}$ for any $s_{i*}^{k}\in\{s_{i}^{k}\}$
+interfered by $s_{j}^{l}$.
+\item $s_{j}^{l}$ detects conflict with $s_{i-1}^{k}$ before $s_{j}^{l}$
+conflicts with $s_{i}^{k}$. Conflict between $s_{j}^{l}$ and $s_{i-1}^{k}$
+occurs before $s_{i-1}^{k}$ reaches $\alpha_{i-1\, j}^{kl}$ from
+its execution length, but after $s_{i}^{k}$ passes $\alpha_{ij}^{kl}$
+from its execution length. By LCM, $s_{i-1}^{k}$ aborts and retries
+in favor of $s_{j}^{l}$. After that, $s_{j}^{l}$ detects conflict
+with $s_{i}^{k}$. By LCM, $s_{j}^{l}$ aborts and retries in favor
+of $s_{i}^{k}$. Thus, retry cost of $s_{i}^{k}$ is increased by
+the retry cost of $s_{i-1}^{k}$ which would not have happened in
+non-nested case. This problem is avoided if there is only one $\alpha_{ij}^{kl}$
+for any $s_{i*}^{k}\in\{s_{i}^{k}\}$ interfered by $s_{j}^{l}$.
+\item Previous cases consider multiple (sub)transactions in $\{s_{i}^{k}\}$
+interfered by the same $s_{j}^{l}$. Now, we consider one transaction
+$s_{i}^{k}$ interfered by multiple (sub)transactions in $\{s_{j}^{l}\}$.
+Let $s_{j}^{l}$ and $s_{j-1}^{l}$ interfere with $s_{i}^{k}$. $\alpha_{ij}^{kl}$
+and $\alpha_{ij-1}^{kl}$ result from interference of $s_{i}^{k}$
+by $s_{j}^{l}$ and $s_{j-1}^{l}$. By definition of LCM, $\alpha_{ij-1}^{kl}len(s_{i}^{k})\ge\alpha_{ij}^{kl}len(s_{i}^{k})$.
+Assume $s_{j-1}^{l}$ conflicts with $s_{i}^{k}$ when $s_{i}^{k}$
+reaches some point in $\alpha_{ij-1}^{kl}-\alpha_{ij}^{kl}$ of its
+execution length. $s_{j}^{l}$ has not conflicted with $s_{i}^{k}$
+yet. According to $\alpha_{ij-1}^{kl}$, $s_{i}^{k}$ should abort
+and retry, but according to $\alpha_{ij}^{kl}$, $s_{j}^{l}$ is the
+one to abort and retry. In non-nested case, $s_{j}^{l}$ would abort
+and retry. Thus, using $\alpha_{ij-1}^{kl}$ increases retry cost
+of $s_{i}^{k}$ over non-nested case. On the other hand, if $s_{j-1}^{l}$
+aborts, blocking time of $s_{j}^{l}$ due to $s_{i}^{l}$ would be
+the same as in non-nested case. The increase in retry cost is avoided
+if there is only one $\alpha_{ij}^{kl}$ for any $s_{i}^{k}$ interfered
+by multiple (sub)transactions in $\{s_{j}^{l}\}$.
+\end{enumerate}
+Claim follows.
+
+\end{proof}
+
+\subsection{\label{proof_closed_nesting_fblt_one_delta}Proof of Claim~\ref{closed_nesting_fblt_one_delta}}
+
+\begin{proof}
+
+Nested (sub)transactions $\{s_{i*}^{k}\}$ can be represented as one
+non-nested transaction of length $len(s_{i}^{k})$ and accessed objects
+$\{\Theta_{i}^{k}\}$. Thus, upper bound on retry cost using one $\delta_{i}^{k}$
+for all $s_{i*}^{k}\in\{s_{i}^{k}\}$ will be the same as in non-nested
+case. Using different $\delta_{i*}^{k}$ for each $s_{i*}^{k}\in\{s_{i}^{k}\}$
+imposes extra constraints on nested transactions compared to non-nested
+transactions as illustrated by the following cases:
+\begin{enumerate}
+\item Let $s_{i}^{k}$ has only one child $s_{i-a}^{k}$. In non-nested
+case, $\{s_{i}^{k}\}$ is treated as one transaction with $\delta\_max_{i}^{k}$
+maximum abort times. Under closed nesting FBLT, assume $s_{i}^{k}$
+has $\delta{}_{i}^{k}$ maximum abort times, and $s_{i-a}^{k}$ has
+$\delta_{i-a}^{k}$ maximum abort times. $s_{i-a}^{k}$ can be non-preemptive
+before $s_{i}^{k}$. After $s_{i-a}^{k}$ commits (relatively to its
+parent because of closed nesting), $s_{i}^{k}$ may abort, enforcing
+$s_{i-a}^{k}$ to retry again. Then it will be useless to let a child
+be non-preemptive while one of its ancestors is not. If $s_{i-a}^{k}$
+is aborted $\delta_{i-a}^{k}$ times for each time $s_{i}^{k}$ aborts,
+then the total abort times of $s_{i}^{k}$ and $s_{i-a}^{k}$ will
+be $\delta_{i}^{k}\left(1+\delta_{i-a}^{k}\right)$. Thus, for nested
+transactions to reach the same abort number in non-nested case, $\delta_{i}^{k}\left(1+\delta_{i-a}^{k}\right)$
+should equal $\delta\_max_{i}^{k}$. Thus, $\delta_{i}^{k}$ is inversely
+related to $\delta_{i-a}^{k}$. As nesting level increases, $\delta_{i*}^{k}$
+for any $s_{i*}^{k}$ will be inversely related to maximum abort number
+of $Par(s_{i*}^{k})$ and $Ch(s_{i*}^{k})$. This problem is avoided
+by using one $\delta_{i}^{k}$ for all $s_{i*}^{k}\in\{s_{i}^{k}\}$.
+\item Following the previous case except that $s_{i}^{k}$ becomes non-preemptive
+before $s_{i-a}^{k}$. Then either $s_{i}^{k}$ enforces $s_{i-a}^{k}$
+to be non-preemptive, or $s_{i}^{k}$ waits for $s_{i-a}^{k}$ to
+be non-preemptive after $s_{i-a}^{k}$ aborts for $\delta_{i-a}^{k}$.
+If $s_{i}^{k}$ enforces $s_{i-a}^{k}$ to be non-preemptive, then
+$\delta_{i-a}^{k}$ is useless. Otherwise, if $s_{i}^{k}$ waits for
+$s_{i-a}^{k}$ to become non-preemptive, then $s_{i}^{k}$ is delayed
+by $s_{i-a}^{k}$. Thus, retry cost of $s_{i}^{k}$ is increased over
+non-nested case. This problem is avoided by using one $\delta_{i}^{k}$
+for all $s_{i*}^{k}\in\{s_{i}^{k}\}$.
+\end{enumerate}
+Claim follows.
+
+\end{proof}
+
+\subsection{\label{proof_clm:parent_child_retry_cost}Proof of Claim~\ref{clm:parent_child_retry_cost}}
+
+\begin{proof}
+
+$s_{j*}^{l}$ is the first (sub)transaction in $\{s_{j}^{l}\}$ that
+conflicts with any (sub)transaction in $\{s_{i}^{k}\}$. Thus, before
+$s_{j*}^{l}$ begins, $\{s_{i}^{k}\}$ detects no conflict with $\{s_{j}^{l}\}$,
+and $\{s_{i}^{k}\}$ and $\{s_{j}^{l}\}$ can run concurrently. Due
+to closed nesting, effects of $s_{j*}^{l}$ appear only after $s_{j}^{l}$
+commits. $s_{j*}^{l}$ is the first descendant of $s_{j}^{l}$ that
+can conflict with any (sub)transaction in $\{s_{i}^{k}\}$. So, there
+is no $s_{j*+1}^{l}\neq s_{j*}^{l}$ such that $\left(\Theta_{j*+1}^{l}\cap\{\Theta_{i}^{k}\}\neq\emptyset\right)\wedge\left(\nabla_{j*+1}^{l}<\nabla_{j*}^{l}\right)$.
+Thus, during $len(s_{j}^{l})-\nabla_{j*}^{l}$, $s_{i}^{k}$ aborts
+and retries due to $s_{j*}^{l}$ and/or later sub-transactions in
+$\{s_{j}^{l}\}$. $s_{i*}^{k}$ is the first (sub)transaction in $\{s_{i}^{k}\}$
+that can be interfered by any (sub)transaction in $\{s_{j}^{l}\}$.
+Due to closed nesting, parent (sub)transaction does not abort due
+to child abortion. Thus, the first descendant of $s_{i}^{k}$ that
+needs to abort and retry is $s_{i*}^{k}$. For $\{s_{j}^{l}\}$ to
+conflict with $\{s_{i}^{k}\}$, $s_{j}^{l}$ should start no less
+than $\nabla_{i*}^{k}-len\left(s_{j}^{l}\right)$ relative to start
+of $s_{i}^{k}$. Otherwise, $\{s_{j}^{l}\}$ would have finished before
+$s_{i*}^{k}$ starts and there will be no conflict between $\{s_{j}^{l}\}$
+and $\{s_{i}^{k}\}$. $s_{j*}^{l}$ must start before end of $s_{i}^{k}$.
+Otherwise, $s_{i}^{k}$ would have finished before $s_{j*}^{l}$ starts,
+and there will be no conflict between $\{s_{i}^{k}\}$ and $\{s_{j}^{l}\}$.
+The worst conflict scenario between $\{s_{i}^{k}\}$ and $\{s_{j}^{l}\}$
+occurs when $s_{j*}^{l}$ starts just before $s_{i}^{k}$ commits.
+Thus, $s_{i}^{k}$ aborts and retries for at most $len(s_{j}^{l})-\nabla_{j*}^{l}+len(s_{i}^{k})-\nabla_{i*}^{k}$.
+If $\{s_{i}^{k}\}$ and $\{s_{j}^{l}\}$ are overlapping, then the
+overlapping of conflicting sub-transactions in $\{s_{i}^{k}\}$ and
+$\{s_{j}^{l}\}$ should be subtracted from the maximum retry cost,
+otherwise the overlapping part will be summed twice. The conflicting
+overlapping part of $\{s_{j}^{l}\}$ during $\{s_{i}^{k}\}$ is $len(s_{i}^{k})-\triangle-\nabla_{j*}^{l}$.
+Retry cost must be positive. Otherwise, there is no conflict. That
+is why $\Pi(x)$ is used. Claim follows.
+
+\end{proof}
+
+\subsection{\label{proof_clm:closed_nested_lcm_before_alpha_two_tx}Proof of Claim~\ref{clm:closed_nested_lcm_before_alpha_two_tx}}
+
+\begin{proof}
+
+Under closed nested LCM, any (sub)transaction $s_{i*}^{k}\in\{s_{i}^{k}\}$
+aborts and retries due to $s_{j*}^{l}\in\{s_{j}^{l}\}$ if $s_{j}^{l}$
+begins before $s_{i}^{k}$ reaches $\alpha_{ij}^{kl}$ of its execution
+length (i.e., $\alpha_{ij}^{kl}len(s_{i}^{k})$). Following Claim
+\ref{clm:parent_child_retry_cost}, retry cost of $\{s_{i}^{k}\}$
+due to interference of $\{s_{j}^{l}\}$ can be calculated by (\ref{eq:parent_child_retry_cost})
+conditioning that $\triangle\le\alpha_{ij}^{kl}len\left(s_{i}^{k}\right)$.
+Lower bound of $\triangle$ given in (\ref{eq:parent_child_retry_cost})
+should be less than $\alpha_{ij}^{kl}$ (i.e., $\nabla_{i*}^{k}-len\left(s_{j}^{l}\right)\le\alpha_{ij}^{kl}$).
+Otherwise, $s_{j}^{l}$ starts after $s_{i}^{k}$ reaches $\alpha_{ij}^{kl}$
+of its execution length, and $\{s_{i}^{k}\}$ will not abort due to
+$\{s_{j}^{l}\}$. Claim follows.
+
+\end{proof}
+
+\subsection{\label{proof_clm:closed_nested_lcm_after_alpha}Proof of Claim~\ref{clm:closed_nested_lcm_after_alpha}}
+
+\begin{proof}
+
+Proof is the same as proof of Claim \ref{clm:parent_child_retry_cost}
+except for:
+
+$s_{i*}^{k}$ can overlap with $s_{j*}^{l}$ for $\triangle+len\left(s_{j}^{l}\right)-\nabla_{i*}^{k}$.
+Thus, $\{s_{j}^{l}\}$ can abort and retry due to $\{s_{i}^{k}\}$
+for $len\left(s_{j}^{l}+s_{i}^{k}\right)-\nabla_{j*}^{l}-\nabla_{i*}^{k}-\triangle-len\left(s_{j}^{l}\right)+\nabla_{i*}^{k}=len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}-\triangle$.
+$s_{j}^{l}$ must start not less than $\alpha_{ij}^{kl}len\left(s_{i}^{k}\right)$,
+and $\alpha_{ij}^{kl}\left(s_{i}^{k}\right)\le len\left(s_{i}^{k}\right)-\nabla_{j*}^{l}$.
+Otherwise, $\{s_{j}^{l}\}$ will not abort and retry due to $\{s_{i}^{k}\}$
+by definition of LCM. Claim follows.
+
+\end{proof}
+
+\subsection{\label{proof_clm:closed_nested_lcm_before_delta}Proof of Claim~\ref{clm:closed_nested_lcm_before_delta}}
+
+\begin{proof}
+
+$\omega1_{i}^{j}$ is maximum number of higher priority jobs $\tau_{j}^{h}$
+that can be released during $T_{i}$. $\omega2_{i}$ is number of
+lower priority jobs $\tau_{j}^{l}$ that can be released during $T_{i}$.
+Under G-EDF, only one instance of each $\tau_{j}$ can be of lower
+priority than current job $\tau_{i}^{f}$. So, remaining jobs of $\tau_{j}$
+is the maximum number of higher priority jobs released during $T_{i}$
+(i.e., $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $). Under G-RMA,
+all jobs of $\tau_{j}$ are of higher priority than any job of $\tau_{i}$
+if $p_{j}>p_{i}$ (i.e., $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1$).
+Also, all jobs of $\tau_{j}$ are of lower priority than any job of
+$\tau_{i}$ if $p_{j}<p_{i}$ (i.e., $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1$).
+Under G-RMA with implicit deadlines, $T_{j}>T_{i}$ if $p_{j}<p_{i}$.
+Thus, maximum number of lower priority jobs $\tau_{j}^{l}$ that can
+be released during $T_{i}$ is $2$.
+
+Under closed nested FBLT, any (sub)transaction $\{s_{i}^{k}\}$ uses
+closed nested LCM to resolve conflicts before $\{s_{i}^{k}\}$ is
+aborted $\delta_{i}^{k}$ times. If maximum abort number of $\{s_{i}^{k}\}$
+is less than $\delta_{i}^{k}$, then retry cost of $\{s_{i}^{k}\}$
+is calculated by (\ref{eq:closed_nested_lcm_before_delta}). Equation
+(\ref{eq:closed_nested_lcm_before_delta}) is derived from proof of
+Claim 5 (Claim 8) in \cite{lcmdac2012} for G-EDF (G-RMA) respectively,
+except for two points: 1) Claims 5 and 8 in \cite{lcmdac2012} calculates
+retry cost for all transactions in any job $\tau_{i}^{x}$, while
+(\ref{eq:closed_nested_lcm_before_delta}) calculates retry cost for
+only one $\{s_{i}^{k}\}$. Thus, Claims \ref{clm:closed_nested_lcm_before_alpha_two_tx}
+and \ref{clm:closed_nested_lcm_after_alpha} are used to calculate
+(\ref{eq:closed_nested_lcm_before_delta}). 2) In Claim 5 in \cite{lcmdac2012},
+each higher priority transaction $s_{i}^{k}$ can be aborted only
+once by any lower priority transaction. In closed nested LCM, due
+to multiple objects per transaction and nested transactions, each
+$\{s_{i}^{k}\}$ can be aborted by all directly and transitively conflicting
+lower priority transactions. By definition of closed nested FBLT,
+$\{s_{i}^{k}\}$ retries for at most $RC3_{i}^{k}$ before $\{s_{i}^{k}\}$
+becomes non-preemptive if maximum abort number of $\{s_{i}^{k}\}$
+is less than $\delta_{i}^{k}$ (i.e., $\left\lceil \frac{RC3_{i}^{k}}{len\left(s_{i}^{k}\right)}\right\rceil <\delta_{i}^{k}$).
+Otherwise, $\{s_{i}^{k}\}$ aborts and retries for at most $\delta_{i}^{k}len\left(s_{i}^{k}\right)$
+before $\{s_{i}^{k}\}$ becomes non-preemptive. Claim follows.
+
+\end{proof}
+
+\subsection{\label{proof_clm:closed_nested_fblt_final}Proof of Claim~\ref{clm:closed_nested_fblt_final}}
+
+\begin{proof}
+
+Non-preemptive (sub)transaction $\{s_{i}^{k}\}$ resolves conflicts
+based on the time $\{s_{i}^{k}\}$ becomes non-preemptive. Thus, non-preemptive
+$\{s_{i}^{k}\}$ can be interfered at most by $m-1$ nested transactions
+that precede $\{s_{i}^{k}\}$ in the $m\_set$ as defined in closed
+nested FBLT. As defined by closed-nested FBLT, nested transactions
+in the $m\_$set are arranged in FIFO order. Thus, if $\{s_{j}^{l}\}$
+precedes $\{s_{i}^{k}\}$ in $m\_$set, then $\{s_{i}^{k}\}$ must
+have started as a non-preemptive transaction not before non-preemptive
+$\{s_{j}^{l}\}$. So, $RC0_{ij}^{kl}$ is modified to $RC5_{ij}^{kl}$
+to indicate the proper time interval for start of $s_{j}^{l}$ relative
+to $s_{i}^{k}$. The $m-1$ nested transactions preceding $\{s_{i}^{k}\}$
+result in maximum retry cost to $\{s_{i}^{k}\}$ (i.e., $\sum_{\forall\chi_{i}^{k}(a),\, a=1}^{a\le m-1}RC5_{ij}^{kl}(a)$).
+Based on the previous notion and Claims \ref{clm:closed_nested_lcm_before_delta},
+\ref{clm:parent_child_retry_cost} and Claim 1 in \cite{fblt}, Claim
+follows.
+
+\end{proof}
+
+\subsection{\label{proof_clm:closed_nested_non_nested_fblt_schedulabiltiy_comp}Proof of Claim~\ref{clm:closed_nested_non_nested_fblt_schedulabiltiy_comp}}
+
+\begin{proof}
+
+Let upper bound on retry cost of any task $\tau_{i}^{x}$ during $T_{i}$
+under non-nested FBLT be denoted as $RC_{i}^{nn}$. $RC_{i}^{nn}$
+is calculated by Claim 1 in \cite{fblt}. Let upper bound on retry
+cost of any task $\tau_{i}^{x}$ during $T_{i}$ under closed-nested
+FBTL be denoted as $RC_{i}^{cn}$. $RC_{i}^{cn}$ is calculated by
+(\ref{eq:closed_nested_fblt_after_delta}). Let $D_{i}$ be the upper
+bound on blocking time of any newly released task $\tau_{i}^{x}$
+during $T_{i}$ due to lower priority jobs. Any newly released task
+$\tau_{i}^{x}$ can suffer $D_{i}$ blocking time if there are $m$
+non-preemptive executing transactions. Thus, $D_{i}$ is the same
+for both closed-nested and non-nested FBLT. $D_{i}$ is calculated
+by Claim 2 in \cite{fblt} for both closed-nested and non-nested FBLT.
+For closed-nested FBLT schedulability to be better than schedulability
+of non-nested FBLT: 
+\begin{equation}
+\sum_{\forall\tau_{i}}\frac{c_{i}+RC_{i}^{cn}+D_{i}}{T_{i}}\le\sum_{\forall\tau_{i}}\frac{c_{i}+RC_{i}^{nn}+D_{i}}{T_{i}}\label{eq:schedulability_comparison}
+\end{equation}
+$\because$ $D_{i}$ and $c_{i}$ are the same for each $\tau_{i}$
+under closed-nested and non-nested FBLT, then (\ref{eq:schedulability_comparison})
+holds if:
+\[
+\forall\tau_{i},\, RC_{i}^{cn}\le RC_{i}^{nn}
+\]
+
+
+\[
+\therefore\,\delta_{i}^{k}len\left(s_{i}^{k}\right)+\sum_{\forall\chi_{i}^{k}(a),\, a=1}^{a\le m-1}RC5_{ij}^{kl}(a)\le\delta_{i}^{k}len\left(s_{i}^{k}\right)+\sum_{\forall s_{iz}^{k}\in\Upsilon_{i}^{k}}len\left(s_{iz}^{k}\right)
+\]
+\begin{equation}
+\therefore\,\sum_{\forall\chi_{i}^{k}(a),\, a=1}^{a\le m-1}RC5{}_{ij}^{kl}(a)\le\sum_{\forall s_{iz}^{k}\in\Upsilon_{i}^{k}}len\left(s_{iz}^{k}\right)\label{eq:closed_nest_vs_non_nested_fblt_1}
+\end{equation}
+where $\Upsilon_{i}^{k}$ is the set of at most $m-1$ longest transactions
+conflicting directly or transitively with $s_{i}^{k}$ as defined
+in Claim 1 in \cite{fblt}. If $\{s_{j}^{l}\}=RC5_{ij}^{kl}(a)$,
+then by definition of $RC5_{ij}^{kl}$, $\triangle=len(s_{i}^{k})-\nabla_{j*}^{l}$
+if $len(s_{i}^{k})-\nabla_{j*}^{l}<0$. So, $max\left(RC5_{ij}^{kl}(a)\right)=\Pi\left(len(s_{j}^{l})-\nabla_{i*}^{k}\right)$.
+$\therefore$ by substitution in (\ref{eq:closed_nest_vs_non_nested_fblt_1})
+\begin{equation}
+\therefore\,\sum_{\forall\{s_{j}^{l}\}=\chi_{i}^{k}(a),\, a=1}^{a\le m-1}\Pi\left(len(s_{j}^{l})-\nabla_{i*}^{k}\right)\le\sum_{\forall s_{iz}^{k}\in\Upsilon_{i}^{k}}len\left(s_{iz}^{k}\right)\label{eq:closed_nest_vs_non_nested_fblt_2}
+\end{equation}
+(\ref{eq:closed_nest_vs_non_nested_fblt_2}) holds as $\nabla_{i*}^{k}$
+increases. Claim follows.
+
+\end{proof}
+
+\end{document}

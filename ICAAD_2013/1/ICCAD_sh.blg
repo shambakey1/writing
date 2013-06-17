@@ -1,0 +1,65 @@
+This is BibTeX, Version 0.99d (TeX Live 2012/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: ICCAD_sh.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: IEEEabrv.bib
+Database file #2: /e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography.bib
+You're missing a field name---line 820 of file /e/lectures/real-time/PhD-work/STM/Dropbox/writing/global_bibliography/global_bibliography.bib
+ :  
+ :  %url = {http://doi.acm.org/10.1145/1378704.1378725},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "pnf_dac_asp"
+Warning--I didn't find a database entry for "fblt"
+-- IEEEtran.bst version 1.12 (2007/01/11) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 26 entries,
+            4024 wiz_defined-function locations,
+            1332 strings with 19346 characters,
+and the built_in function-call counts, 20974 in all, are:
+= -- 1636
+> -- 429
+< -- 182
++ -- 240
+- -- 63
+* -- 976
+:= -- 2983
+add.period$ -- 60
+call.type$ -- 26
+change.case$ -- 27
+chr.to.int$ -- 474
+cite$ -- 26
+duplicate$ -- 1498
+empty$ -- 1897
+format.name$ -- 86
+if$ -- 4934
+int.to.chr$ -- 0
+int.to.str$ -- 26
+missing$ -- 253
+newline$ -- 103
+num.names$ -- 26
+pop$ -- 626
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 1635
+stack$ -- 0
+substring$ -- 1133
+swap$ -- 1179
+text.length$ -- 24
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 26
+warning$ -- 0
+while$ -- 107
+width$ -- 28
+write$ -- 263
+(There was 1 error message)

@@ -1,0 +1,245 @@
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\lambda_{1}(j,\theta)=\sum_{\forall s_{j}^{l}(\theta)\in[d(T_{j}^{1})-\delta,d(T_{j}^{1}))]^{*}}len(s_{j}^{l^{*}}(\theta)+s_{max}(\theta))$
+\end_inset
+
+, 
+\begin_inset Formula $\chi_{1}(i,j,\theta)=\lfloor\frac{t(T_{i})}{t(T_{j})}\rfloor\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}(\theta))$
+\end_inset
+
+, 
+\begin_inset Formula $\lambda_{2}(j,\theta)=\sum_{\forall s_{j}^{l}(\theta)\in[d(T_{j}^{1})-\delta,d(T_{j}^{1}))]^{*}}len(s_{j}^{l^{*}}(\theta)+s_{max}^{*}(\theta))$
+\end_inset
+
+ and 
+\begin_inset Formula $\chi_{2}(i,j,\theta)=(\lceil\frac{t(T_{i})}{t(T_{j})}\rceil\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}^{*}(\theta)))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC_{}(t(T_{i}))=\sum_{\theta\in\theta_{i}}min\begin{cases}
+\begin{cases}
+((\sum_{T_{j}\in\gamma(\theta)}\lambda_{1}(j,\theta)+\chi_{1}(i,j,\theta))\\
+-s_{max}(\theta)+s_{i_{max}}(\theta))\end{cases}\\
+\begin{cases}
+((\sum_{T_{j}\in\gamma(\theta)}\lambda_{2}(j,\theta)+\chi_{2}(i,j,\theta))\\
+-\bar{s}_{max}(\theta)+s_{i_{max}}(\theta))\end{cases}\end{cases}\label{eq15}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\upsilon(L,j)=\lceil\frac{L-c_{j}}{t(T_{j})}\rceil+1$
+\end_inset
+
+, 
+\begin_inset Formula $\lambda_{3}(j,\theta)=\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}(\theta))$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{4}(j,\theta)=\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}^{*}(\theta))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC(L(T_{i}))=\sum_{\theta\in\theta_{i}}min\begin{cases}
+\begin{cases}
+(\sum_{T_{j}\in\gamma(\theta)}(\upsilon(L,j)\lambda_{3}(j,\theta)))\\
+-s_{max}(\theta)+s_{i_{max}}(\theta)\end{cases}\\
+\begin{cases}
+(\sum_{T_{j}\in\gamma(\theta)}(\upsilon(L,j)\lambda_{4}(j,\theta)))\\
+-\bar{s}_{max}(\theta)+s_{i_{max}}(\theta)\end{cases}\end{cases}\label{eq16}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $T_{j}^{*}=\{T_{j}|T_{j}\in\gamma(\theta))\wedge(p(T_{j})\ge p(T_{i})\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\pi(j,\theta)=\sum_{\forall s_{j}^{l}(\theta)}len(s_{j}^{l}(\theta)+s_{max}^{j}(\theta))$
+\end_inset
+
+
+\begin_inset Formula \begin{eqnarray}
+RC_{}(L(T_{i})) & = & \sum_{\theta\in\theta_{i}}((\sum_{T_{j}^{*}}((\lceil\frac{L-c_{j}}{t(T_{j})}\rceil+1)\pi(j,\theta)))\nonumber \\
+ & - & s_{max}^{j}(\theta)+s_{i_{max}}(\theta))\label{eq20}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Delta_{1}(L,j,\theta)=\lceil\frac{L}{t(T_{j})}\rceil.\sum_{k=1}^{m-1}\omega_{high}(k,\theta)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Delta_{2}(L,j,\theta)=(\lceil\frac{L-c_{j}}{t(T_{j})}\rceil+1).\sum_{\forall s_{j}^{l}(\theta)}len(s_{j}^{l}(\theta))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+RC_{}(L(T_{i}))= & \sum_{\theta\in\theta_{i}}(\sum_{k=1}^{min(n-1,m-1)}\omega(k,\theta)+\label{eq24}\\
+ & \sum_{T_{j}^{*}}min^{*}(\Delta_{1}(L,j,\theta),\Delta_{2}(L,j,\theta)))\nonumber \end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $T_{j}^{*}=\{T_{j}|(T_{j}\in\gamma(\theta))\wedge(D(T_{j})\le D(T_{i}))\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Delta_{3}(L,j,\theta)=(\lfloor\frac{L}{t(T_{j})}\rfloor).\sum_{k=1}^{m-1}(\omega_{high}(k,\theta))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\Delta_{4}(L,j,\theta)=(\lceil\frac{L-c_{j}}{T_{j}}\rceil+1).\sum_{\forall s_{j}^{l}(\theta)}len(s_{j}^{l}(\theta))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Delta_{5}(i,j,\theta)=\lfloor\frac{t(T_{i})}{t(T_{j})}\rfloor.\sum_{\forall s_{j}^{l}(\theta)}len(s_{j}^{l}(\theta))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+RC(L(T_{i})) & = & \sum_{\theta\in\theta_{i}}(\sum_{k=1}^{min(n-1,m-1)}\omega(k,\theta)+\label{eq25}\\
+ &  & \sum_{T_{j}^{*}}min^{*}(\Delta_{3}(L,j,\theta),min\begin{cases}
+\Delta_{4}(L,j,\theta)\\
+\Delta_{5}(i,j,\theta)\end{cases}))\nonumber \end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

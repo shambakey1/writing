@@ -1,0 +1,9045 @@
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Response Time Analysis of G-EDF and G-RMA based Multiprocessors with Contention
+ Manager
+\end_layout
+
+\begin_layout Author
+Mohammed Elshambakey, Binoy Ravindran
+\end_layout
+
+\begin_layout Abstract
+This paper addresses the the problem of response time analysis of multiprocessor
+ systems scheduled with G-EDF and G-RMA with synchronization handled by
+ STM.
+ Three types of contention managers are used; EDF CM with G-EDF systems,
+ RMA CM with G-RMA systems, and FIFO CM with both G-RMA and G-EDF systems.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+Not finished.
+\end_layout
+
+\begin_layout Section
+Notations
+\end_layout
+
+\begin_layout Standard
+\align left
+\begin_inset Tabular
+<lyxtabular version="3" rows="38" columns="2">
+<features>
+<column alignment="left" valignment="top" width="3cm">
+<column alignment="left" valignment="top" width="15cm">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\align left
+Task 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $j^{th}$
+\end_inset
+
+ Instance (job) of task 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Minumum period of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $D(T_{i})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Relative deadline of any instance of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $r(T_{i}^{j})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Release time of job 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $d(T_{i}^{j})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Absolute deadline of 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{j}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+WCET of any instance of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p(T_{i})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\align left
+Priority of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $c_{ji}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The new WCET of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ relative to the studied task 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ This length changes according to the studied task.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+An object that can be accessed by any task.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Set of objects accessed by 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ without repeatition.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\gamma(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Set of tasks that share object 
+\begin_inset Formula $\theta$
+\end_inset
+
+ with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s_{i}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Set of atomic sections of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ that access object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Set of atomic sections in all tasks that share object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The 
+\begin_inset Formula $k^{th}$
+\end_inset
+
+ atomic section of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ that accesses object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The 
+\begin_inset Formula $k^{th}$
+\end_inset
+
+ atomic section of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ regrdless of which object it accesses.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Set of atomic sections in 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $len(s_{i}^{k}(\theta))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Length of 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $len(s_{i}(\theta))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sum of all atomic sections in 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ that access object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s_{max}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The maximum atomic section in all tasks that share object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s_{i_{max}}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The maximum atomic section in 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ that accesses object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $s_{max}^{i}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The maximum atomic section in all tasks with priority lower than or equal
+ to that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ that share object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $W_{i}^{p}(s_{j}^{k}(\theta))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Contribution or workload by 
+\begin_inset Formula $s_{j}^{k}(\theta)$
+\end_inset
+
+ in the retrial cost of 
+\begin_inset Formula $s_{i}^{p}(\theta)$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $RC(T_{i})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Maximum transactional retrial cost of atomic sections in 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ due to conflict between atomic sections.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $RC(L(T_{i}))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The same as 
+\begin_inset Formula $RC(T_{i})$
+\end_inset
+
+ but calculated only in a period of length 
+\begin_inset Formula $L$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $RC(t(T_{i}))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The same as 
+\begin_inset Formula $RC(T_{i})$
+\end_inset
+
+ over the whole 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G_{ij}(L)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Number of interferences made by 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ during period of length 
+\begin_inset Formula $L$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $W_{ij}(L)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\align left
+Workload contributed by 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ during period of length 
+\begin_inset Formula $L$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s\_\theta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A short resource.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $l\_\theta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A long resource.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $g(s\_\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A group containing only short resource.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $g(l\_\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A group containing only long resources.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $R_{k}(g(s\_\theta))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Request made by 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ to the 
+\begin_inset Formula $g(s\_\theta)$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $R_{k}(g(l\_\theta))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Request made by 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ to the 
+\begin_inset Formula $g(l\_\theta)$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $|R_{k}(g(s\_\theta))|$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The size of the request and it equals the sum of all nested accesses to
+ resources in 
+\begin_inset Formula $g(s\_\theta)$
+\end_inset
+
+ made by 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $|R_{k}(g(l\_\theta))|$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The sum of nested requests by 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ to the group containing 
+\begin_inset Formula $l\_\theta$
+\end_inset
+
+, plus 
+\begin_inset Formula $max_{s\_\theta\in\theta_{k}}[\sum_{h=1,h\ne k}^{min(m,n)-1}|R_{h}(g(s\_\theta))|]$
+\end_inset
+
+, if 
+\begin_inset Formula $s\_\theta$
+\end_inset
+
+ can be called inside 
+\begin_inset Formula $l\_\theta$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{i,l}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The number of times 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+ requests long resources.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{i,s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The number of times 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+ requests short resources.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+System model
+\end_layout
+
+\begin_layout Standard
+Sporadic, hard real time multiprocessor system with G-EDF, G-RMA.
+ EDF CM is used with G-EDF systems, RMA CM is used with G-RMA, and FIFO
+ CM is used with both.
+ Any instance 
+\begin_inset Formula $T_{i}^{k}$
+\end_inset
+
+ can have any number of atomic sections, of different lengths, and the relative
+ deadline of each task is equal to its period.
+\end_layout
+
+\begin_layout Section
+Response time of G-EDF system with EDF CM
+\end_layout
+
+\begin_layout Standard
+To get the response time of task 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ with synchronization controlled by STM with EDF CM, it must be noted that
+ atomic sections of different tasks that access the same object run in a
+ sequential order, not in parallel, because only one atomic section will
+ execute while the others retry, or will discover that they should retry.
+ This means that an atomic section of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ can be delayed by the commulative sum of atomic sections of other tasks
+ that share the same atomic object, not by parallelizing these atomic sections
+ (as is done in response time analysis of multiprocessor system without
+ shared resources).
+ Toward this goal, we must first determine the maximum number of interferences
+ of task 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Maximum Interference of tasks with G-EDF scheduler
+\end_layout
+
+\begin_layout Standard
+The maximum number of instances of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ that can occur within the period of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ occurs when the deadline of one instance of the former coincides with the
+ deadline of the latter as depicted in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+
+\end_inset
+
+ and shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig1"
+
+\end_inset
+
+.
+ The first instance (
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+) is delayed by a suitable amount of jitter (
+\begin_inset Formula $j_{j}$
+\end_inset
+
+) that makes it contributes by all its execution time into the period of
+ 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure1.eps
+	scale 50
+	BoundingBox 0bp 0bp 542bp 162bp
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig1"
+
+\end_inset
+
+Maximum interference between two tasks in G-EDF system
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+This can be proved by noting that 
+\begin_inset Formula $\frac{T_{i}}{T_{j}}=c.T_{j}+\delta$
+\end_inset
+
+.
+ 
+\series bold
+\shape italic
+In case 
+\begin_inset Formula $\delta\ne0$
+\end_inset
+
+
+\series default
+,
+\shape default
+ then part of an instance of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ contributes in the period of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ If this part is 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+, then it has a workload over 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ because it has a shorter absolute deadline than 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ Otherwise, if this part is left to the end, and the first instance of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ , 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+, conincides in its release with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig2"
+
+\end_inset
+
+, this means that 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ has been shifted to right, and the absolute deadline of 
+\begin_inset Formula $T_{j}^{k}$
+\end_inset
+
+ will be greater than that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, so it will have no effect on it, and the workload of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ is lowered by one instance.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure2.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig2"
+
+\end_inset
+
+Relase of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ coinciedes with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ is shifted to left by any amount until the deadline of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+coincides with the start of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, this will not have higher effect on 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ because the deadline of 
+\begin_inset Formula $T_{j}^{k+1}$
+\end_inset
+
+ is still longer than that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ which will make no effect for this instance, meanwhile, it reduces the
+ effect of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+.
+ This is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig3"
+
+\end_inset
+
+.
+ Thus the maximum number of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ instances that can interfere with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ in this case is 
+\begin_inset Formula $\lceil\frac{T_{i}}{T_{j}}\rceil$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure3.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig3"
+
+\end_inset
+
+Deadline of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ coincides with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\shape italic
+In case 
+\begin_inset Formula $\delta=0$
+\end_inset
+
+,
+\series default
+\shape default
+ as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig4"
+
+\end_inset
+
+, then the maximum number of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ instances interfering with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is still 
+\begin_inset Formula $\lceil\frac{T_{i}}{T_{j}}\rceil$
+\end_inset
+
+ because if 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+is shifted right and delayed with jitter, it will enforce the deadline of
+ 
+\begin_inset Formula $T_{j}^{k}$
+\end_inset
+
+ to exceed that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, so the addition of one instance resulted in subtraction of another.
+ And if 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ is shifted left, this will not make 
+\begin_inset Formula $T_{j}^{k+1}$
+\end_inset
+
+ has any effect on 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ , because its absolute deadline is still longer than that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, until the deadline of 
+\begin_inset Formula $T_{j}^{k+1}$
+\end_inset
+
+ coincides with that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, but in this case, 
+\begin_inset Formula $T_{j}^{2}$
+\end_inset
+
+ will be removed completely from the period of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, and as before, the addition of one instance resulted in the cancelation
+ of anoter.
+ Then, the maximum number of interfering instances is still the same as
+ before.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure4.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig4"
+
+\end_inset
+
+
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+ is an integral multiple of 
+\begin_inset Formula $t(T_{j})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This last case differs from that mentioned in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+
+\end_inset
+
+, where the maximum number of interferences is 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $\lfloor\frac{T_{i}}{T_{j}}\rfloor+1$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+, which equals 
+\begin_inset Formula $c+1$
+\end_inset
+
+, wherease it should be only 
+\begin_inset Formula $c$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+So, in all cases, the maximum number of instances of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ that can be released during 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+ is 
+\begin_inset Formula \begin{equation}
+G_{ij}(t(T_{i}))=\lceil\frac{t(T_{i})}{t(T_{j})}\rceil\label{eq1}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and the maximum workload contributed by 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ during the whole period of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+W_{ij}(t(T_{i}))=G_{ij}(t(T_{j})).c_{j}\label{eq8}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The workload defined in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq8"
+
+\end_inset
+
+ is consistent with situation shown in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig1"
+
+\end_inset
+
+ and may be an upper bound for the maximum workload because in the case
+ shown in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig9-a"
+
+\end_inset
+
+, 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ contributes partially to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ rather than with all its WCET.
+ So, a tighter value than that of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq8"
+
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+W_{ij}^{*}(t(T_{i}))=\lfloor\frac{t(T_{i})}{t(T_{j})}\rfloor.c_{j}+min(c_{j},t(T_{i})-\lfloor\frac{t(T_{i})}{t(T_{j})}\rfloor.t(T_{j}))\label{eq11}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The bounds used in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+
+\end_inset
+
+ to calculate an upper bound on the response time for EDF systems compares
+ between three formulas to take the minimum.
+ The first one is useful when the calculated upper bound is not extended
+ to reach the last instance of the interfering task, while the second one
+ is used in that case because the maximum pattern of interference of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ changes according to whether it is calculated over the whole period of
+ 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, or part of it.
+ This is illustrated in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig9"
+
+\end_inset
+
+ where in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig9-a"
+
+\end_inset
+
+, the first instance 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ can contribute partially to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, but the last instance 
+\begin_inset Formula $T_{j}^{k}$
+\end_inset
+
+ contributes by its total WCET, this is the worst pattern of interference
+ over 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+, wherease in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig9-b"
+
+\end_inset
+
+, interference pattern is calculated only over 
+\begin_inset Formula $L$
+\end_inset
+
+, so the WCET of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ is totally included in the pattern, because instances of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ up to 
+\begin_inset Formula $T_{j}^{k-1}$
+\end_inset
+
+ can contribute to the total workload over 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ as their deadlines are shorter than that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, while in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig9-a"
+
+\end_inset
+
+, the inclusion of the whole WCET of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ will exclude 
+\begin_inset Formula $T_{j}^{k}$
+\end_inset
+
+ because this will make its absolute deadline longer than that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ So, over period 
+\begin_inset Formula $L$
+\end_inset
+
+, contribution of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is 
+\begin_inset Formula \begin{equation}
+\hat{W}{}_{ij}(L)=(\lceil\frac{L-c_{j}}{t(T_{j})}\rceil+1).c_{j}\label{eq12}\end{equation}
+
+\end_inset
+
+which is a little different than that mentioned in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+
+\end_inset
+
+ because 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+
+\end_inset
+
+ disscusses response time analysis for a set of feasible tasks, but here
+ it is not known yet whether these tasks are feasible or not.
+\end_layout
+
+\begin_layout Standard
+So, the overall workload will be
+\begin_inset Formula \begin{equation}
+W_{ij}(L)=min(\hat{W}_{ij}(L),W_{ij}^{*}(t(T_{i})))\label{eq13}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/figure9-a.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig9-a"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/figure9-b.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig9-b"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig9"
+
+\end_inset
+
+(a)Maximum interference during 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+ (b)Maximum interference during part 
+\begin_inset Formula $L$
+\end_inset
+
+ of 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Retrial cost of atomic sections
+\end_layout
+
+\begin_layout Standard
+To get the retrial cost of any atomic section under different types of scheduler
+s with the specified CM, it must be noted that there are two reasons for
+ retrial:- 1) conflict occurs between atomic sections.
+ 2) a task with lower priority, running on one of the processors, gets preempted
+ by a higher priority task while the former is executing an atomic section.
+ So, retrial cost of both must be calculated and summed together.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+\shape italic
+Retrial cost due to confliction between atomic sections
+\end_layout
+
+\begin_layout Standard
+If there are two tasks 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+, where the former is of longer absolute deadline than the latter, then
+ EDF CM will give priority to conflicting atomic sections of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ over 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+
+\end_inset
+
+.
+ So, an atomic section of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+, will exprience its maximum dealy when it is at the end, and the one of
+ 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+, 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+, is just beginning, then the CM will enforce 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ to retry.
+ Despite validation time (i.
+ e., eager or lazy), 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ will retry for the same amount of time, which is the time of 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+, as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig5"
+
+\end_inset
+
+.
+ In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig5-a"
+
+\end_inset
+
+, 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ validates at its beginning, because of early validation, and a conflict
+ is detected.
+ So, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ retries multiple times (because at each start of retrial, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ validates) during the execution of 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ finishes its atomic section, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ executes its own.
+ In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig5-b"
+
+\end_inset
+
+, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ tries to validate at its end (because it is lazy validation), but it finds
+ a conflict with 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+, so it has to retry, and beacuse its atomic section length is shorter than
+ that of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+, it tries to validate again within the execution period of 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+, but EDF CM tells it to retry again.
+ This process continues until 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ finishes its atomic section.
+ If 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+'s atomic section length is longer than that of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+'s, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ would have taken the same amount of tiem to retry, because 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ will validate when 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is retrying, and 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will retry again as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig5-c"
+
+\end_inset
+
+.
+ So, the retrial cost of 
+\begin_inset Formula $s_{i}^{k}(\theta)$
+\end_inset
+
+ will be 
+\begin_inset Formula $len(s_{i}^{k}(\theta)+s_{j}^{l}(\theta))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/figure5-a.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig5-a"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/figure5-b.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig5-b"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure5-c.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\align center
+
+\size small
+\begin_inset CommandInset label
+LatexCommand label
+name "fig5-c"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig5"
+
+\end_inset
+
+(a)Early validation (b)Lazy validation with 
+\begin_inset Formula $s_{i}^{k}(\theta)\le s_{j}^{l}(\theta)$
+\end_inset
+
+ (c)
+\size small
+Lazy validation with 
+\begin_inset Formula $s_{i}^{k}(\theta)>s_{j}^{l}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+But what if there are multiple tasks interfering with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ or interfering with each other and 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, as shown in Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig6-a"
+
+\end_inset
+
+,
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig6-b"
+
+\end_inset
+
+.
+ We should note that these figures are only two examples of many possible
+ patterns for interference between tasks and the resulting transactional
+ retries.
+\end_layout
+
+\begin_layout Standard
+In each case, each atomic section of the shorter deadline tasks contribute
+ to the dealy of 
+\begin_inset Formula $s_{i}^{p}(\theta)$
+\end_inset
+
+ by its total length, plus a retrial to some atomic section in the longer
+ deadline tasks.
+ For example, 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ contributes by 
+\begin_inset Formula $len(s_{j}^{l}(\theta)+s_{i}^{p}(\theta))$
+\end_inset
+
+ in both figures, 
+\begin_inset Formula $s_{k}^{y}(\theta)$
+\end_inset
+
+ causes a retrial to 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig6-b"
+
+\end_inset
+
+, and 
+\begin_inset Formula $s_{h}^{w}(\theta)$
+\end_inset
+
+ causes a retrial to 
+\begin_inset Formula $s_{k}^{y}(\theta)$
+\end_inset
+
+ in the same figure.
+\end_layout
+
+\begin_layout Standard
+As it is not known in advance what atomic section will be retried because
+ of another one, then it can be assumed that each atomic section (that share
+ the same object with the studied one) in a longer deadline task contributes
+ by its total length, in addition to the maximum length between all atomic
+ sections that share the same object, 
+\begin_inset Formula $len(s_{max}(\theta))$
+\end_inset
+
+.
+\begin_inset Formula \begin{equation}
+\mbox{\ensuremath{W_{i}^{p}(s_{j}^{k}(\theta))=len(s_{j}^{l}(\theta)+s_{max}(\theta))}}\label{eq2}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure6-a.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig6-a"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure6-b.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="center" valignment="top" width="1.5cm">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/circle.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Replaced in calculations by 
+\begin_inset Formula $s_{max}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/dotted_circle.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Replaced in calculations by 
+\begin_inset Formula $s_{i_{max}}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig6"
+
+\end_inset
+
+(a)Other tasks interfere only with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ (b)
+\begin_inset CommandInset label
+LatexCommand label
+name "fig6-b"
+
+\end_inset
+
+All tasks interfere with each other and 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So, the total contribution- of all atomic sections of all other tasks that
+ share objects with the studeid task- to the retrial cost of the studied
+ task in the period 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+ is 
+\begin_inset Formula \begin{eqnarray}
+RC_{conflict}(T_{i}) & = & \sum_{\theta\in\theta_{i}}((\sum_{T_{j}\in\gamma(\theta)}(\lceil\frac{T_{i}}{T_{j}}\rceil\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}(\theta))))\label{eq3}\\
+ &  & -s_{max}(\theta)+s_{i_{max}}(\theta))\nonumber \end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\lceil\frac{T_{i}}{T_{j}}\rceil\sum_{\forall s_{j}(\theta)\in s_{j}}len(s_{j}(\theta)+s_{max}(\theta))$
+\end_inset
+
+ referes to the contribution of all instances of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+-as calculated by eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq1"
+
+\end_inset
+
+) - during the period of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, and this contribution is added to all tasks.
+ The last part in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq3"
+
+\end_inset
+
+)- 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $s_{i_{max}}(\theta)-s_{max}(\theta)$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+- is added because the it is known that the last atomic section to execute
+ is 
+\begin_inset Formula $s_{i}^{p}(\theta)$
+\end_inset
+
+, and one of the other atomic sections (e.
+ g.; 
+\begin_inset Formula $s_{m}^{n}(\theta)$
+\end_inset
+
+) should have as a contribution 
+\begin_inset Formula $len(s_{m}^{n}(\theta)+s_{i_{max}}(\theta))$
+\end_inset
+
+ instead of 
+\begin_inset Formula $len(s_{m}^{n}(\theta)+s_{max}(\theta))$
+\end_inset
+
+, that is why one 
+\begin_inset Formula $s_{max}(\theta)$
+\end_inset
+
+ is subtracted, and 
+\begin_inset Formula $s_{i_{max}}(\theta)$
+\end_inset
+
+ is added.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $s_{i_{max}}(\theta)$
+\end_inset
+
+ is taken to get the worst case contribution by all other tasks to the studied
+ task, as one atomic section in the latter can be interfered by more than
+ one atomic section in any task, but the reverse is not true, and there
+ can be multiple atomic sections in the studied task that share the same
+ object.
+\end_layout
+
+\begin_layout Standard
+Eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq3"
+
+\end_inset
+
+) can be modified a little by noting that an atomic section conflicts with
+ the sections of other tasks, not with its own task, because it is a hard
+ real time sporadic model, so each instance must finish before the next
+ begins.
+ So, eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq3"
+
+\end_inset
+
+) will turn to eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq4"
+
+\end_inset
+
+).
+\begin_inset Formula \begin{eqnarray}
+RC_{conflict}(T_{i}) & = & \sum_{\theta\in\theta_{i}}((\sum_{T_{j}\in\gamma(\theta)}(\lceil\frac{T_{i}}{T_{j}}\rceil\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}^{*}(\theta))))\label{eq4}\\
+ &  & -\bar{s}_{max}(\theta)+s_{i_{max}}(\theta))\nonumber \end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where:-
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $s_{max}^{*}(\theta)\in s(\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{max}^{*}(\theta)\not\in s_{j}(\theta)$
+\end_inset
+
+ because 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ will not cause a retrial to one of its instances.
+\end_layout
+
+\begin_layout Itemize
+To get 
+\begin_inset Formula $\bar{s}{}_{max}(\theta)$
+\end_inset
+
+, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+the maximum atomic section of each task that accesse object 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is grouped into an array of non increasing order of their lengths, and
+ 
+\begin_inset Formula $s_{max}(\theta)$
+\end_inset
+
+ will be the first one, while 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\noun default
+\color inherit
+
+\begin_inset Formula $\bar{s}{}_{max}(\theta)$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+ will be the next.
+ This can be illustrated by Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig7"
+
+\end_inset
+
+, where the maximum atomic section of each task that access object 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is associated with its corresponding task.
+ When eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq4"
+
+\end_inset
+
+) is applied, all tasks but 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ will choose 
+\begin_inset Formula $s_{j_{max}}(\theta)$
+\end_inset
+
+ as the value of 
+\begin_inset Formula $s_{max}^{*}(\theta)$
+\end_inset
+
+, as it is the maximum atomic section not assciated with the interfering
+ task.
+ But when 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ is the one whose contribution is studeid, it will choose 
+\begin_inset Formula $s_{k_{max}}(\theta)$
+\end_inset
+
+ as it is the maximum one not assciated with 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+.
+ This way, it can be seen that the maximum value alawys lies between two
+ values.
+ Of course, these two values can be equal, or the maximum value can be associate
+d with the studeid task itself, not with any one of the interfering tasks,
+ in which case, the chosen value will alawys be the one associated with
+ the studied task, but still the chosen value lies between the most two
+ maximum values.
+ This means that the subtracted 
+\begin_inset Formula $s_{max}(\theta)$
+\end_inset
+
+ in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq3"
+
+\end_inset
+
+) must be replaced with one of these two values, but as it is not known
+ a priori which one to use as it is not known which one will interfer with
+ the studied task, the minimum between them is chosen to get the worst case
+ retrial cost (as this value is going to be subtracted), and this minimum
+ is the second maximum.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure7.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig7"
+
+\end_inset
+
+Values associated with 
+\begin_inset Formula $s_{max}^{*}(\theta)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the maximum atomic section (
+\begin_inset Formula $s_{i_{max}}(\theta)$
+\end_inset
+
+) is associated with the studeid task (
+\begin_inset Formula $T_{i}$
+\end_inset
+
+), then all other tasks will choose it, and the result of eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq3"
+
+\end_inset
+
+) for this specific object 
+\begin_inset Formula $\theta$
+\end_inset
+
+ (i.
+ e.; if 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is the only shared object between tasks) will be 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $Const+p.s_{i_{max}}(\theta)-s_{i_{max}}(\theta)+s_{i_{max}}(\theta)$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+, wherease eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq4"
+
+\end_inset
+
+) will result in 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $Const+p.s_{i_{max}}(\theta)-s_{k_{max}}(\theta)+s_{i_{max}}(\theta)$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ (assuming that 
+\begin_inset Formula $\bar{s}_{max}(\theta)=s_{k_{max}}(\theta)$
+\end_inset
+
+), but as 
+\begin_inset Formula $s_{k_{max}}(\theta)\leq s_{i_{max}}(\theta)$
+\end_inset
+
+, then eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq3"
+
+\end_inset
+
+) will give a smaller or equal value to eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq4"
+
+\end_inset
+
+) for object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If the maximum atomic section (
+\begin_inset Formula $s_{j_{max}}(\theta)$
+\end_inset
+
+) is associated with some other task (
+\begin_inset Formula $T_{j}$
+\end_inset
+
+), not with the studied task (
+\begin_inset Formula $T_{i}$
+\end_inset
+
+), and 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ has 
+\begin_inset Formula $n$
+\end_inset
+
+ atomic sections that share object 
+\begin_inset Formula $\theta$
+\end_inset
+
+, and 
+\begin_inset Formula $\bar{s}_{max}(\theta)=s_{k_{max}}(\theta)$
+\end_inset
+
+.
+ Then, eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq3"
+
+\end_inset
+
+)- for object 
+\begin_inset Formula $\theta$
+\end_inset
+
+- will result in 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $Const+p.s_{j_{max}}(\theta)+n.s_{j_{max}}(\theta)-s_{j_{max}}(\theta)+s_{i_{max}}(\theta)=Const+(p+n-1).s_{j_{max}}(\theta)+s_{i_{max}}(\theta)$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+, while eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq4"
+
+\end_inset
+
+) will result in 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $Const+p.s_{j_{max}}(\theta)+n.s_{k_{max}}(\theta)-s_{k_{max}}(\theta)+s_{i_{max}}(\theta)=Const+p.s_{j_{max}}(\theta)+(n-1).s_{k_{max}}(\theta)+s_{i_{max}}(\theta)$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ If 
+\begin_inset Formula $n=1$
+\end_inset
+
+, then both equations give the same result, otherwise, eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq4"
+
+\end_inset
+
+) will give a smaller value than eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq3"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+It can be seen that the two equations can differ according the considered
+ object, but we can alawys take the minimum one for the considered object.
+ So, equations (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq3"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq4"
+
+\end_inset
+
+) can be combined into eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq5"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC_{conflict}(T_{i})=\sum_{\theta\in\theta_{i}}min\begin{cases}
+\begin{cases}
+((\sum_{T_{j}\in\gamma(\theta)}(\lceil\frac{T_{i}}{T_{j}}\rceil\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}(\theta))))\\
+-s_{max}(\theta)+s_{i_{max}}(\theta))\end{cases}\\
+\\\begin{cases}
+((\sum_{T_{j}\in\gamma(\theta)}(\lceil\frac{T_{i}}{T_{j}}\rceil\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}^{*}(\theta))))\\
+-\bar{s}_{max}(\theta)+s_{i_{max}}(\theta))\end{cases}\\
+\\\end{cases}\label{eq5}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+\shape italic
+Retrial cost due to preemption by higher priority tasks
+\end_layout
+
+\begin_layout Standard
+When the studeid task (
+\begin_inset Formula $T_{i}$
+\end_inset
+
+) has the longest absolute deadline among all tasks running on the 
+\begin_inset Formula $m$
+\end_inset
+
+ processors, and another task (
+\begin_inset Formula $T_{j}$
+\end_inset
+
+) is released with a shorter absolute deadline that 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, then 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will be preempted in favor of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+, but this can happen when 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is at the end of one of its atomic sections, which will enforce it to retry-
+ despite there is no conflict .
+ This situation is illustrated in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig8"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+It should be noted that 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ cannot be interfered by tasks with longer relative deadline, because 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is already allocated to a released, so any other task- that is going to
+ interfere with it- is going to be released after 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, so it must haave a shorter relative deadline, so its absolute deadline
+ may be shorter than that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ and be able to preempt 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ So, to get the 
+\begin_inset Formula $RC_{release}(T_{i})$
+\end_inset
+
+, only tasks with shorter relative deadline than that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ are going to be considered as shown in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq6"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC_{release}(T_{i})=\sum_{T_{k}\in\zeta(T_{i})}[\lfloor\frac{T_{i}}{T_{k}}\rfloor.s_{i_{max}}(\theta)]\label{eq6}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq6"
+
+\end_inset
+
+), the floor is taken, not the ceiling, because each instance of 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ is expected to be released at or after the release of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, so the last one may be a carried out job whose absolute deadline is after
+ that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ and it will not cause an interference to it.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure8.eps
+	scale 70
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig8"
+
+\end_inset
+
+Transactional retries due to release of higher priority tasks
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So, the total retrial cost of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will be
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC(T_{i})=RC_{conflict}(T_{i})+RC_{release}(T_{i})\label{eq7}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Upper bound on response time
+\end_layout
+
+\begin_layout Standard
+To get an upper bound on the response time of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $RC(T_{i})$
+\end_inset
+
+ must be added to the workload by other tasks during the non-atomic execution
+ of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ But this requires modification of WCET of each task as follows:-
+\end_layout
+
+\begin_layout Standard
+WCET (
+\begin_inset Formula $c_{j}$
+\end_inset
+
+) of each interfering task (
+\begin_inset Formula $T_{j}$
+\end_inset
+
+) should be inflated to accomodate for the interference of tasks other than
+ the studied one (
+\begin_inset Formula $T_{k},$
+\end_inset
+
+ 
+\begin_inset Formula $k\ne j,i$
+\end_inset
+
+), meanwhile, atomic region that access shared objects between 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ should not be considered in the inflation cost becuase they are already
+ calculated in the retrial cost of the studied task (
+\begin_inset Formula $T_{i}$
+\end_inset
+
+).
+ So, the new WCET for 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ will be
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+c_{ji}=c_{j}-\sum_{\theta\in(\theta_{j}\wedge\theta_{i})}len(s_{j}(\theta))+RC_{conflict}(T_{ji})+RC_{releas}(T_{ji})\label{eq9}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where:-
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $c_{ji}$
+\end_inset
+
+ is the new WCET of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ relative to the studied task 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ This length changes according to the studied task.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $len(s_{j}(\theta))$
+\end_inset
+
+ is the sum of lengths of all atomic sections in 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ that access object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $RC_{conflict}(T_{ji})$
+\end_inset
+
+ is calculated as in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq5"
+
+\end_inset
+
+ without including shared objects between 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $RC_{release}(T_{ji})$
+\end_inset
+
+ is calculated as in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq6"
+
+\end_inset
+
+ without considering the release of any instance of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The second term in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq9"
+
+\end_inset
+
+ is included because the length of these atomic sections is already included
+ in the retrial cost of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, so as in the third term.
+ The last term excludes any release of any instance of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ because it is assumed that 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ is the one that affects 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, not the reverse.
+ Because of this, the calculated WCET is relative to the studied task, as
+ it changes form task to task.
+\end_layout
+
+\begin_layout Standard
+So, the upper bound on the response time of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will be calculated by the iterative equation (which is modified from theorm
+ 6 in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+
+\end_inset
+
+):-
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+R_{i}^{up}=c_{i}+RC(T_{i})+\lfloor\frac{1}{m}\sum_{j\ne i}W_{ij}(R_{i}^{up})\rfloor\label{eq10}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where:-
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $R_{i}^{up}$
+\end_inset
+
+ is the iterative calculated upper bound on the response time of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, and its initial value is 
+\begin_inset Formula $c_{i}+RC(T_{i})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $W_{ij}(R_{i}^{up})$
+\end_inset
+
+ is calculated by 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq13"
+
+\end_inset
+
+, but 
+\begin_inset Formula $W_{ij}^{*}(t(T_{i}))$
+\end_inset
+
+ will be calculated by eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq11"
+
+\end_inset
+
+) with replacing 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ with 
+\begin_inset Formula $c_{ji}$
+\end_inset
+
+, and 
+\begin_inset Formula $\hat{W}_{ij}(L)$
+\end_inset
+
+ will be changed to 
+\begin_inset Formula \begin{equation}
+\hat{W}_{ij}(L(T_{i}))=max\begin{cases}
+(\lceil\frac{L-c_{ji}-\sum_{\theta\in(\theta_{j}\wedge\theta_{i})}len(s_{j}(\theta))}{t(T_{j})}\rceil+1).c_{ji}\\
+\lceil\frac{L-c_{j}}{t(T_{j})}\rceil.c_{ji}+c_{j}-\sum_{\theta\in(\theta_{j}\wedge\theta_{i})}len(s_{j}(\theta))\end{cases}\label{eq14}\end{equation}
+
+\end_inset
+
+where the top term is the same as that calculated by eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq12"
+
+\end_inset
+
+) but with replacing 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ with 
+\begin_inset Formula $c_{ji}$
+\end_inset
+
+ and addition of legnths of atomic sections shared between 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+.
+ Although these lengths are already included in the retrial cost of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, but they are added here to get an approximate right start time for other
+ instances of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ that affect 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ It is approximate because the added atomic sections are not subject to
+ retrial by other tasks (because the retrial is included in 
+\begin_inset Formula $RC(T_{i})$
+\end_inset
+
+), but calculations are still valid because inclusion of retrial to these
+ sections will reduce the output of the ceiling in the top term, so it still
+ gives a maximum value.
+ 
+\end_layout
+
+\begin_layout Standard
+The lower term in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq14"
+
+\end_inset
+
+) does the same except for the first instance of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ which contributes by only 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+, and the shared atomic sections between 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ are excluded from this first instance.
+\end_layout
+
+\begin_layout Standard
+These two terms are compared becuase 
+\begin_inset Formula $\lceil\frac{L-c_{j}}{t(T_{j})}\rceil.c_{ji}>\lceil\frac{L-c_{ji}}{t(T_{j})}\rceil.c_{ji}$
+\end_inset
+
+ but 
+\begin_inset Formula $c_{ji}>c_{j}$
+\end_inset
+
+, this makes a tradeoff beween these two terms, so the maximum is chosen.
+\end_layout
+
+\begin_layout Subsubsection
+Tighter upper bound on response time
+\end_layout
+
+\begin_layout Standard
+To get a tighter upper bound on response time of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, the 
+\begin_inset Formula $RC(T_{i})$
+\end_inset
+
+ will not be fixed (as is done in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq10"
+
+\end_inset
+
+) because it is calculated over the entire period of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+), rather it will change according to 
+\begin_inset Formula $R_{i}^{up}$
+\end_inset
+
+.
+ So, eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq5"
+
+\end_inset
+
+) will be changed to include the modified number of interfering instances
+ in the same way this number is calculated in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq13"
+
+\end_inset
+
+), but when calculating this number for the entire 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+, a situation like that shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig10"
+
+\end_inset
+
+ can happen.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure10.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig10"
+
+\end_inset
+
+Atomic sections of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ contributing to 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Atomic sections of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ that are contained in period 
+\begin_inset Formula $\delta$
+\end_inset
+
+ are the only ones that at most can contribute to the 
+\begin_inset Formula $RC(T_{i})$
+\end_inset
+
+, of course they can be lower, but cannot be greater because 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ has been delayed by its maximum jitter, so no more atomic sections can
+ enter period 
+\begin_inset Formula $[d(T_{j}^{1})-\delta,d(T_{j}^{1})]$
+\end_inset
+
+.
+ Besides, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ can be released in the middle of any atomic section that shares an object
+ with it, so only length 
+\begin_inset Formula $\mu$
+\end_inset
+
+ of this atomic section will be considered, but the effect of this 
+\begin_inset Formula $\mu$
+\end_inset
+
+ will still be the retrial of one of the other atomic sections.
+ So, eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq5"
+
+\end_inset
+
+) will be modified as shown in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq15"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC_{conflict}(t(T_{i}))=\sum_{\theta\in\theta_{i}}min\begin{cases}
+\begin{cases}
+((\sum_{T_{j}\in\gamma(\theta)}(\sum_{\forall s_{j}^{l}(\theta)\in[d(T_{j}^{1})-\delta,d(T_{j}^{1}))]^{*}}len(s_{j}^{l^{*}}(\theta)+s_{max}(\theta)))+\\
+(\lfloor\frac{t(T_{i})}{t(T_{j})}\rfloor\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}(\theta))))-s_{max}(\theta)+s_{i_{max}}(\theta))\end{cases}\\
+\\\begin{cases}
+((\sum_{T_{j}\in\gamma(\theta)}(\sum_{\forall s_{j}^{l}(\theta)\in[d(T_{j}^{1})-\delta,d(T_{j}^{1}))]^{*}}len(s_{j}^{l^{*}}(\theta)+s_{max}^{*}(\theta)))+\\
+(\lceil\frac{t(T_{i})}{t(T_{j})}\rceil\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)+s_{max}^{*}(\theta))))-\bar{s}_{max}(\theta)+s_{i_{max}}(\theta))\end{cases}\\
+\\\end{cases}\label{eq15}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where:-
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $s_{j}^{l^{*}}(\theta)$
+\end_inset
+
+ is the part of 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ that is included in 
+\begin_inset Formula $[d(T_{j}^{1})-\delta,d(T_{j}^{1}))]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $[d(T_{j}^{1})-\delta,d(T_{j}^{1}))]^{*}$
+\end_inset
+
+ contains 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ if it is partially or totaly included in it.
+ In the latter case, 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+ will contribute by its included length 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now, it is time to compute 
+\begin_inset Formula $RC_{conflict}(T_{i})$
+\end_inset
+
+ during a period of length 
+\begin_inset Formula $L$
+\end_inset
+
+ which does not extend to the last instance of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+.
+ In this case, eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq5"
+
+\end_inset
+
+) will be (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq16"
+
+\end_inset
+
+) .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC_{conflict}(L(T_{i}))=\sum_{\theta\in\theta_{i}}min\begin{cases}
+\begin{cases}
+((\sum_{T_{j}\in\gamma(\theta)}((\lceil\frac{L-c_{j}}{T_{j}}\rceil+1)\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)\\
++s_{max}(\theta))))-s_{max}(\theta)+s_{i_{max}}(\theta))\end{cases}\\
+\begin{cases}
+((\sum_{T_{j}\in\gamma(\theta)}((\lceil\frac{L-c_{j}}{T_{j}}\rceil+1)\sum_{\forall s_{j}^{l}(\theta)\in s_{j}(\theta)}len(s_{j}^{l}(\theta)\\
++s_{max}^{*}(\theta))))-\bar{s}_{max}(\theta)+s_{i_{max}}(\theta))\end{cases}\end{cases}\label{eq16}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So, 
+\begin_inset Formula $RC_{conflict}$
+\end_inset
+
+ during the upper bound on the response time of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ can be calculated as in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq17"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC_{conflict}(R_{i}^{up})=min\begin{cases}
+RC_{conflict}(R_{i}^{up}(T_{i}))\\
+RC_{conflict}(t(T_{i}))\end{cases}\label{eq17}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\begin_inset Formula $RC_{release}(T_{i})$
+\end_inset
+
+
+\series default
+ is also modified to eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq18"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC_{release}(R_{i}^{up})=\sum_{T_{k}\in\zeta(T_{i})}(\lfloor\frac{R_{i}}{T_{k}}\rfloor.s_{i_{max}}(\theta))\label{eq18}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and the final retrial cost of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will be calculated in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq19"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC(R_{i}^{up})=RC_{conflict}(R_{i}^{up})+RC_{release}(R_{i}^{up})\label{eq19}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So, the final upper bound on response time of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will be calculated as in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq10"
+
+\end_inset
+
+) with replacing 
+\begin_inset Formula $RC_{conflict}(T_{i})$
+\end_inset
+
+ with 
+\begin_inset Formula $RC(R_{i}^{up})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Response time of G-RMA system with RMA CM
+\end_layout
+
+\begin_layout Standard
+As G-RMA is a fixed scheduler, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will be interfered by a specific set of tasks whose priorities are higher
+ than or equal to that of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ (
+\begin_inset Formula $p(T_{j})\ge p(T_{i})$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
+Maximum Interference of tasks with G-RMA scheduler
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig11"
+
+\end_inset
+
+ represents the maximum interference of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ under G-RMA.
+ As 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ is of higher priority than 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, then 
+\begin_inset Formula $T_{j}^{k}$
+\end_inset
+
+ will interfere with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ even if it is not totally included in 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+.
+ Unlike the G-EDF case shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig10"
+
+\end_inset
+
+ where only the 
+\begin_inset Formula $\delta$
+\end_inset
+
+ part of 
+\begin_inset Formula $T_{j}^{1}$
+\end_inset
+
+ is considered, in G-RMA, 
+\begin_inset Formula $T_{j}^{k}$
+\end_inset
+
+ will contribute with the whole 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ and all atomic sections contained in 
+\begin_inset Formula $T_{j}^{k}$
+\end_inset
+
+ will be considered.
+ This is becasue in G-EDF, the worst case pattern releases 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ before 
+\begin_inset Formula $d(T_{j}^{1})$
+\end_inset
+
+ by
+\begin_inset Formula $\delta$
+\end_inset
+
+ time units, and 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ cannot be interfered before it is released, but in G-RMA, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is already released, and can be interfered by the whole 
+\begin_inset Formula $T_{j}^{k}$
+\end_inset
+
+ even if this is going to render it infeasible.
+\end_layout
+
+\begin_layout Standard
+So, the maximum contribution of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ for any period 
+\begin_inset Formula $L$
+\end_inset
+
+ can be deduced from Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig11"
+
+\end_inset
+
+ as 
+\begin_inset Formula $W_{ij}(L(T_{i}))=(\lceil\frac{L-c_{j}}{t(T_{j})}\rceil+1).c_{j}$
+\end_inset
+
+, where 
+\begin_inset Formula $L$
+\end_inset
+
+ can extend to 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+, and not like the case of G-EDF where the pattern of interference is different
+ for each interval.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure11.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig11"
+
+\end_inset
+
+Maximum interference of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ in G-RMA
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Retrial cost due to conflict between atomic sections
+\end_layout
+
+\begin_layout Standard
+Eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq20"
+
+\end_inset
+
+) is used to calculate the retrial cost due to conflict between atomic sections.
+ It is the same as eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq16"
+
+\end_inset
+
+) with some modifications as we do not have get the minimum of two formulas,
+ because any atomic section in 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ will cause retrial to one of the atomic sections in lower or equal priority
+ tasks; that is why 
+\begin_inset Formula $s_{max}^{j}(\theta)$
+\end_inset
+
+ is used.
+ Also, only tasks of higher or equal priority to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ are considered as they are the only ones to interfere with it.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+RC_{conflict}(L(T_{i})) & = & \sum_{\theta\in\theta_{i}}((\sum_{(T_{j}\in\gamma(\theta))\wedge(p(T_{j})\ge p(T_{i}))}((\lceil\frac{L-c_{j}}{t(T_{j})}\rceil+1).\label{eq20}\\
+ &  & \sum_{\forall s_{j}^{l}(\theta)}len(s_{j}^{l}(\theta)+s_{max}^{j}(\theta))))-s_{max}^{j}(\theta)+s_{i_{max}}(\theta))\nonumber \end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $L(T_{i})$
+\end_inset
+
+ can be extended to 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+ because of the fixed priority.
+\end_layout
+
+\begin_layout Subsection
+Retrial cost due to release of higher priority tasks
+\end_layout
+
+\begin_layout Standard
+Eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq18"
+
+\end_inset
+
+) can be modified to get the retrial cost due to release of higher priority
+ tasks.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+RC_{release}(L(T_{i}))=\sum_{p(T_{k})\ge p(T_{i})}(\lceil\frac{L}{T_{k}}\rceil.s_{i_{max}}(\theta))\label{eq21}\end{equation}
+
+\end_inset
+
+The interval 
+\begin_inset Formula $L$
+\end_inset
+
+ in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq20"
+
+\end_inset
+
+) can be extended to cover the whole period of 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+.
+ So, the total retrial cost of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ (
+\begin_inset Formula $RC(R_{i}^{up})$
+\end_inset
+
+) can be calculated as in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq19"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
+Upper bound on response time
+\end_layout
+
+\begin_layout Standard
+Upper bound can be calculated by eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq22"
+
+\end_inset
+
+)
+\begin_inset Formula \begin{equation}
+R_{i}^{up}=c_{i}+RC(R_{i}^{up})+\lfloor\frac{1}{m}\sum_{j\ne i}\hat{W}{}_{ij}(R_{i}^{up})\rfloor\label{eq22}\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\hat{W}_{ij}(R_{i}^{up})$
+\end_inset
+
+ is calculated as in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq14"
+
+\end_inset
+
+) and 
+\begin_inset Formula $c_{ji}$
+\end_inset
+
+ is calculated by eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq9"
+
+\end_inset
+
+) but 
+\begin_inset Formula $RC_{conflict}(T_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $RC_{release}(T_{i})$
+\end_inset
+
+ are calculated by eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq20"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq21"
+
+\end_inset
+
+) respectively.
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Response-time-of FIFO CM"
+
+\end_inset
+
+Response time of G-EDF and G-RMA system with FIFO CM
+\end_layout
+
+\begin_layout Standard
+In FIFO CM, transactions are executed in the order they arrive.
+ This way, the effect of an atomic section of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ to one in 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig12-a"
+
+\end_inset
+
+ for early validation and Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig12-b"
+
+\end_inset
+
+ for lazy validation.
+ In both cases, 
+\begin_inset Formula $s_{i}^{l}(\theta)$
+\end_inset
+
+ must retry for at most 
+\begin_inset Formula $len(s_{j}^{p}(\theta))$
+\end_inset
+
+, which is less than that of EDF CM and RMA CM, but a higher priority task
+ can be delayed by a lower one if the latter's atomic section arrives earlier
+ than the former.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure12-a.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig12-a"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure12-b.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig12-b"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig12"
+
+\end_inset
+
+(a)Early validation (b)Lazy validation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Retrial of atomic sections here does not depend on the scheduler, rather
+ it only depends on the arrival pattern, so conflict retrial cost (
+\begin_inset Formula $RC_{conflict}$
+\end_inset
+
+) will be the same for both G-EDF and G-RMA systems, and the maximum pattern
+ of interference will also be the same as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig11"
+
+\end_inset
+
+, but this pattern differs when calculating the release retrial cost (
+\begin_inset Formula $RC_{release}$
+\end_inset
+
+) and the contribution of other tasks during the non-atomic part of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $RC_{conflict}$
+\end_inset
+
+ can be calculated by eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq23"
+
+\end_inset
+
+)
+\begin_inset Formula \begin{equation}
+RC_{conflict}(L(T_{i}))=\sum_{\theta\in\theta_{i}}((\sum_{T_{j}\in\gamma(\theta)}((\lceil\frac{L-c_{j}}{t(T_{j})}\rceil+1).\sum_{\forall s_{j}^{l}(\theta)}len(s_{j}^{l}(\theta)))))\label{eq23}\end{equation}
+
+\end_inset
+
+where the lengths of all atomic sections in all tasks that share object
+ 
+\begin_inset Formula $\theta$
+\end_inset
+
+ with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ are summed together, and 
+\begin_inset Formula $L$
+\end_inset
+
+ can extend to cover 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+.
+ It should be noted that one instance can have multiple atomic sections
+ that access the same object, then how can an atomic section of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ be interfered by all of them while it should be interfered by only one
+ of them according to its arrival time, the others will come after that
+ of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+? This can happen if 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ was trying to execute its atomic section, then it is replaced by a higher
+ priority job, then 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ gets back to the processor.
+ In the time of preemption, another atomic section of the same conflicting
+ task can come and execute.
+ This situation is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig13"
+
+\end_inset
+
+ where 
+\begin_inset Formula $s_{i}^{l}$
+\end_inset
+
+ retries while 
+\begin_inset Formula $s_{j}^{p}$
+\end_inset
+
+ is executing, then 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ is released, preempting 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ to get its processor and before it finished, 
+\begin_inset Formula $s_{j}^{p+1}$
+\end_inset
+
+ executes, so when 
+\begin_inset Formula $s_{i}^{l}$
+\end_inset
+
+ returns after 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ finishes, it will be after 
+\begin_inset Formula $s_{j}^{p+1}$
+\end_inset
+
+ and it will have to retry until it finishes.
+ For this, eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq23"
+
+\end_inset
+
+) sums the lengths of all atomic sections in each instance that access the
+ same object as the studeid task.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure13.eps
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig13"
+
+\end_inset
+
+Retrial of 
+\begin_inset Formula $s_{i}^{l}$
+\end_inset
+
+ by multiple atomic sections of 
+\begin_inset Formula $s_{j}^{p}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The rest of analysis for both schedulers is done as before, only 
+\begin_inset Formula $RC_{conflict}(L(T_{i}))$
+\end_inset
+
+ is changed.
+\end_layout
+
+\begin_layout Subsection
+
+\series medium
+In case of G-RMA
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $RC_{conflict}$
+\end_inset
+
+ can be reduced for G-RMA by noting that the case shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig13"
+
+\end_inset
+
+ can happen only if 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is the lowest priority among all running tasks, which reduces number of
+ conflicting tasks to only those of higher or equal priority to that of
+ 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ Meanwhile, if there are 
+\begin_inset Formula $m$
+\end_inset
+
+ processors, this means that before 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ gets preempted, it will retry for the duration of at most the maximum 
+\begin_inset Formula $m-1$
+\end_inset
+
+ atomic sections sharing the same object with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+After 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ gets preempted, no lower priority task can allocate a processor while 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is waiting, but as 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ can get preempted again and again by higher priority tasks, it can be delayed
+ by the sum of all atomic sections in higher priority tasks that access
+ the same object as 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, or for each release of a higher priority job, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will be delayed by the maximum 
+\begin_inset Formula $m-1$
+\end_inset
+
+ higher or equal priority tasks
+\end_layout
+
+\begin_layout Standard
+So, 
+\begin_inset Formula $RC_{conflict}$
+\end_inset
+
+ in the case of G-RMA can be calculated as in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq24"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+RC_{conflict}(L(T_{i}))= & \sum_{\theta\in\theta_{i}}(\sum_{k=1}^{min(n-1,m-1)}(\omega(k,\theta))+(\sum_{(T_{j}\in\gamma(\theta))\wedge(p(T_{j})\ge p(T_{i}))}min((\lceil\frac{L}{t(T_{j})}\rceil).\label{eq24}\\
+ & \sum_{k=1}^{m-1}(\omega_{high}(k,\theta)),((\lceil\frac{L-c_{j}}{t(T_{j})}\rceil+1).\sum_{\forall s_{j}^{l}(\theta)}len(s_{j}^{l}(\theta)))))_{0\, if\, n\le m})\nonumber \end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where:-
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\omega(k,\theta)$
+\end_inset
+
+ is the set of 
+\begin_inset Formula $s_{p_{max}}(\theta)$
+\end_inset
+
+ arranged in non-increasing order.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\omega_{high}(k,\theta)$
+\end_inset
+
+ is the set of 
+\begin_inset Formula $s_{p_{max}}(\theta)$
+\end_inset
+
+ arranged in non-increasing order, where 
+\begin_inset Formula $p(T_{p})\ge p(T_{i})$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The second term is zero in case number of tasks is less than or equal to
+ number of processors, because 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will not have to be preempted because of enough number of processors for
+ tasks.
+ The rest of the analysis for 
+\begin_inset Formula $RC_{releas}$
+\end_inset
+
+ and workload of other tasks is the same.
+\end_layout
+
+\begin_layout Subsection
+
+\series medium
+In case of G-EDF
+\end_layout
+
+\begin_layout Standard
+G-EDF is similar to G-RMA in that 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+- before it is preempted- it can be delayed by the maximum 
+\begin_inset Formula $min(m-1,n-1)$
+\end_inset
+
+ tasks, but when if it is preempted, this means that 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is the least priority task and all other 
+\begin_inset Formula $m-1$
+\end_inset
+
+ tasks are of higher or equal priority, and 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+- or one of higher or equal priority- is allowed to allocate a processor
+ when one is available, so no 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ of longer relative deadline than 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ will start before it because it will have a longer absolute deadline.
+ So, 
+\begin_inset Formula $RC_{conflict}$
+\end_inset
+
+ in the case of G-EDF will be calculated as shown in eq(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq24"
+
+\end_inset
+
+) where 
+\begin_inset Formula $L$
+\end_inset
+
+ can be extended to 
+\begin_inset Formula $t(T_{i})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+RC_{conflict}(L(T_{i}))= & \sum_{\theta\in\theta_{i}}(\sum_{k=1}^{min(n-1,m-1)}(\omega(k,\theta))+(\sum_{(T_{j}\in\gamma(\theta))\wedge(D(T_{j})\le D(T_{i}))}min((\lfloor\frac{L}{t(T_{j})}\rfloor).\nonumber \\
+ & \sum_{k=1}^{m-1}(\omega_{high}(k,\theta)),(min[\lceil\frac{L-c_{j}}{T_{j}}\rceil+1,\lfloor\frac{T_{i}}{T_{j}}\rfloor].\sum_{\forall s_{j}^{l}(\theta)}len(s_{j}^{l}(\theta)))))_{0\, if\, n\le m}) & \text{}\label{eq25}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $RC_{release}$
+\end_inset
+
+ and workload of other tasks is the same as before.
+\end_layout
+
+\begin_layout Section
+Comparison between different synchronization approaches
+\end_layout
+
+\begin_layout Subsection
+Comparison between EDF CM, RMA CM and FIFO CM
+\end_layout
+
+\begin_layout Standard
+In both EDF CM and RMA CM, any atomic section 
+\begin_inset Formula $s_{i}^{l}$
+\end_inset
+
+ can suffer from retrial cost of 
+\begin_inset Formula $len(s_{i}^{l}+s_{j}^{k})$
+\end_inset
+
+ from an interfering task 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+, whereas, FIFO CM suffers only from 
+\begin_inset Formula $len(s_{j}^{k})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In case of G-RMA scheduler, both RMA CM and FIFO CM suffer from higher priority
+ tasks (although the latter suffers from 
+\begin_inset Formula $min(m-1,n-1)$
+\end_inset
+
+ tasks, but due to preemption by higher priority tasks, it can be affected
+ by all of them as depicted in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq24"
+
+\end_inset
+
+)) and any task 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is interfered by the same number of instances of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ for both approaches (this number can extend to the carry out job during
+ the whole period of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+), but FIFO CM initially suffers from 
+\begin_inset Formula $m-1$
+\end_inset
+
+ tasks that have their atomic sections ordered in the queue before it.
+\end_layout
+
+\begin_layout Standard
+EDF CM is somehow similar to FIFO CM in that it initially suffers from all
+ tasks, even those with longer relative deadline, because they may have
+ shorter or equal aboslute deadline, but afterwards, it can suffer from
+ those of shorter relative deadline if their coming instances still have
+ shorter absolute deadline during the period of the studied task; in that
+ it differs from RMA CM which is affected only by the higher priority tasks,
+ but EDF CM is not affected by carry out instances, so a task 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ may be interfereb by a lower number of instances of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+So, it can be seen that the major factors that differentiate the three contentio
+n managers are:- the number of interfering tasks, which in turn is affected
+ by the priority of the task, and the number of instances of any conflicting
+ task.
+\end_layout
+
+\begin_layout Subsection
+Comparison between lock-free and STM
+\end_layout
+
+\begin_layout Standard
+In order to know when the previously mentioned STM systems are better than
+ lock free approach, we follow the comparison made in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+
+\end_inset
+
+ by comparing the total utilization of each one.
+ Lock free method is implemented using retrial loops 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+
+\end_inset
+
+.
+ In each approach, execution time of each task is inflated by the retrial
+ cost (in case of STM), or the loop retrial cost (in case of lock free).
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:G-EDF-scheduler-with"
+
+\end_inset
+
+G-EDF scheduler with EDF CM against lock-free
+\end_layout
+
+\begin_layout Standard
+Equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq17"
+
+\end_inset
+
+) can be upper bounded by (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq30"
+
+\end_inset
+
+)
+\begin_inset Formula \begin{equation}
+RC(T_{i})=\sum_{T_{j}\in\gamma_{i}}(\sum_{\theta\in\theta_{i}}(\lceil\frac{t(T_{i})}{t(T_{j})}\rceil\sum_{\forall s_{j}^{l}(\theta)}(2.s_{max})))\label{eq30}\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $s_{j}^{l}(\theta)$
+\end_inset
+
+, 
+\begin_inset Formula $s_{max}(\theta)$
+\end_inset
+
+, 
+\begin_inset Formula $s_{i_{max}}(\theta)$
+\end_inset
+
+, 
+\begin_inset Formula $s_{max}^{*}(\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $\bar{s}_{max}(\theta)$
+\end_inset
+
+ are replaced by 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+, and the order of the first two summation are replaced by each other with
+ 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ is the set of tasks that share objects with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ These two changes are done to simplify the comparison, in addition to assuming
+ that 
+\begin_inset Formula $\sum_{\theta\in\theta_{i}}\sum_{\forall s_{j}^{l}(\theta)}=\beta_{i,j}^{*}$
+\end_inset
+
+.
+ So, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq30"
+
+\end_inset
+
+) can be modified to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq31"
+
+\end_inset
+
+)
+\begin_inset Formula \begin{equation}
+RC(T_{i})=\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.2\beta_{i,j}^{*}.s_{max}\label{eq31}\end{equation}
+
+\end_inset
+
+The loop retrial cost is defined in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+
+\end_inset
+
+ as (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq33"
+
+\end_inset
+
+) 
+\begin_inset Formula \begin{equation}
+\sum_{T_{j}\in\gamma_{i}}(\lceil\frac{t(T_{i})}{t(T_{j})}\rceil+1).\beta_{i,j}.r_{max}\label{eq32}\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ is number of retry loops of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ that access the same object as accessed by some retry loop of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, but as the shared objects are the same in both STM and lock free, so 
+\begin_inset Formula $\beta_{i,j}=\beta_{i,j}^{*}$
+\end_inset
+
+, and 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+ is the maximum execution cost of a single iteration of any retry loop of
+ any task.
+\end_layout
+
+\begin_layout Standard
+\align left
+So, STM acheives better or equal performance to lock-free if the total utilizati
+on of the former is less than or equal to the latter as shown in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq33"
+
+\end_inset
+
+)
+\begin_inset Formula \begin{eqnarray}
+\sum_{T_{i}}\frac{c_{i}+\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.2\beta_{i,j}.s_{max}}{t(T_{i})} & \le & \sum_{T_{i}}\frac{c_{i}+\sum_{T_{j}\in\gamma_{i}}(\lceil\frac{t(T_{i})}{t(T_{j})}\rceil+1).\beta_{i,j}.r_{max}}{t(T_{i})}\nonumber \\
+\therefore\frac{s_{max}}{r_{max}} & \le & \frac{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}(\lceil\frac{t(T_{i})}{t(T_{j})}\rceil+1).\beta_{i,j})/t(T_{i})}{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.2\beta_{i,j})/t(T_{i})}\nonumber \\
+ & = & \frac{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.\beta_{i,j})/t(T_{i})}{2\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.\beta_{i,j})/t(T_{i})}+\frac{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\beta_{i,j})/t(T_{i})}{2\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.\beta_{i,j})/t(T_{i})}\nonumber \\
+ & = & \frac{1}{2}+\frac{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\beta_{i,j})/t(T_{i})}{2\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.\beta_{i,j})/t(T_{i})}\label{eq33}\end{eqnarray}
+
+\end_inset
+
+Let 
+\begin_inset Formula $\zeta_{1}=\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\beta_{i,j})/t(T_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $\zeta_{2}=\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.\beta_{i,j})/t(T_{i})$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\zeta_{1}\le\zeta_{2}$
+\end_inset
+
+ depending on 
+\begin_inset Formula $\lceil\frac{t(T_{i})}{t(T_{j})}\rceil$
+\end_inset
+
+, and the maximum value of 
+\begin_inset Formula $\frac{\zeta_{1}}{2.\zeta_{2}}=\frac{1}{2}$
+\end_inset
+
+ which can happen if 
+\begin_inset Formula $t(T_{j})\ge t(T_{i})\,\therefore\lceil\frac{t(T_{i})}{t(T_{j})}\rceil=1$
+\end_inset
+
+, and 
+\begin_inset Formula $(\ref{eq33})=1$
+\end_inset
+
+ which is its maximum value.
+ Of course, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $t(T_{j})\ge t(T_{i})$
+\end_inset
+
+ means that there is small number of interferences from other tasks to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, consequently, low number of conflict, so 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ is allowed to be as large as 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The theoritical minimum value for 
+\begin_inset Formula $\frac{\zeta_{1}}{2.\zeta_{2}}$
+\end_inset
+
+ is 
+\begin_inset Formula $0$
+\end_inset
+
+ which can be asymptotically reached if 
+\begin_inset Formula $t(T_{j})\ll t(T_{i})$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,\lceil\frac{t(T_{i})}{t(T_{j})}\rceil\rightarrow\infty$
+\end_inset
+
+ and 
+\begin_inset Formula $\zeta_{2}\rightarrow\infty$
+\end_inset
+
+, so 
+\begin_inset Formula $(\ref{eq33})\rightarrow1/2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+So, it can be seen that 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ has littel effect on 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ as it is contained in both numerator and denominator, but number of interences
+ of other tasks to 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $\lceil\frac{t(T_{i})}{t(T_{j})}\rceil$
+\end_inset
+
+, has the main effect as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig14"
+
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure14.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig14"
+
+\end_inset
+
+Effect of 
+\begin_inset Formula $\lceil\frac{t(T_{i})}{t(T_{j})}\rceil$
+\end_inset
+
+ on 
+\begin_inset Formula $\frac{s_{max}}{r_{max}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+G-RMA scheduler with RMA CM against lock-free
+\end_layout
+
+\begin_layout Standard
+Equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq20"
+
+\end_inset
+
+) is upper bounded by (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq34"
+
+\end_inset
+
+) 
+\begin_inset Formula \begin{equation}
+\sum_{(T_{j}\in\gamma_{i})\wedge(p(T_{j})\ge p(T_{i}))}(\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).2.\beta_{i,j}.s_{max}\label{eq34}\end{equation}
+
+\end_inset
+
+by considering the same assumptions as in sec 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:G-EDF-scheduler-with"
+
+\end_inset
+
+, and using subscripts 
+\begin_inset Formula $k,\, l$
+\end_inset
+
+ instead of 
+\begin_inset Formula $i,\, j$
+\end_inset
+
+ for tasks in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq34"
+
+\end_inset
+
+) as it will be needed to discriminate between them, then the ratio 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ will be
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}(\lceil\frac{t(T_{i})}{t(T_{j})}\rceil+1).\beta_{i,j})/t(T_{i})}{\sum_{T_{k}}(\sum_{(T_{l}\in\gamma_{k})\wedge(p(T_{l})\ge p(T_{k}))}(\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil+1).2.\beta_{kl})/t(T_{k})}\label{eq35}\end{equation}
+
+\end_inset
+
+The main difference between the RMA CM and the lock free is that the former
+ is affected only by the higher priority tasks, while the latter is affected
+ by all tasks (just as in G-EDF wiht EDF CM), but RMA CM is still affected
+ by 
+\begin_inset Formula $2.\beta_{i,j}$
+\end_inset
+
+ (just as in G-EDF with EDF CM).
+ The subtraction of 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ in the numerator in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq34"
+
+\end_inset
+
+ may not have a great effect on the ratio of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq35"
+
+\end_inset
+
+ as the loop retrial cost can also be modified to account for the effect
+ of the first interfering instance of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq35"
+
+\end_inset
+
+) can be
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}(\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).\beta_{i,j})/t(T_{i})}{\sum_{T_{k}}(\sum_{(T_{l}\in\gamma_{k})\wedge(p(T_{l})\ge p(T_{k}))}(\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil+1).2.\beta_{kl})/t(T_{k})}\label{eq43}\end{equation}
+
+\end_inset
+
+If tasks in both numerator and denominator are arranged in non-increasing
+ order of priority, so that 
+\begin_inset Formula $i=k$
+\end_inset
+
+, 
+\begin_inset Formula $j=l$
+\end_inset
+
+ 
+\begin_inset Formula $\therefore$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & \frac{\sum_{T_{i}}(\sum_{(T_{j}\in\gamma_{i})\wedge(p(T_{j})\ge p(T_{i}))}(\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).\beta_{i,j})/t(T_{i})}{2.\sum_{T_{k}}(\sum_{(T_{l}\in\gamma_{k})\wedge(p(T_{l})\ge p(T_{k}))}(\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil+1).\beta_{kl})/t(T_{k})}+\frac{\sum_{T_{i}}(\sum_{(T_{j}\in\gamma_{i})\wedge(p(T_{j})<p(T_{i}))}(\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).\beta_{i,j})/t(T_{i})}{2.\sum_{T_{k}}(\sum_{(T_{l}\in\gamma_{k})\wedge(p(T_{l})\ge p(T_{k}))}(\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil+1).\beta_{kl})/t(T_{k})}\nonumber \\
+ & = & \frac{1}{2}+\frac{\sum_{T_{i}}(\sum_{(T_{j}\in\gamma_{i})\wedge(p(T_{j})<p(T_{i}))}(\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).\beta_{i,j})/t(T_{i})}{2.\sum_{T_{k}}(\sum_{(T_{l}\in\gamma_{k})\wedge(p(T_{l})\ge p(T_{k}))}(\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil+1).\beta_{kl})/t(T_{k})}\label{eq36}\end{eqnarray}
+
+\end_inset
+
+Let 
+\begin_inset Formula $\zeta_{1}=\sum_{T_{i}}(\sum_{(T_{j}\in\gamma_{i})\wedge(p(T_{j})<p(T_{i}))}(\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).\beta_{i,j})/t(T_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $\zeta_{2}=\sum_{T_{k}}(\sum_{(T_{l}\in\gamma_{k})\wedge(p(T_{l})\ge p(T_{k}))}(\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil+1).\beta_{kl})/t(T_{k})$
+\end_inset
+
+.
+ But, 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ is of lower priority than 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, which means 
+\begin_inset Formula $D(T_{j})>D(T_{i})$
+\end_inset
+
+ because of the G-RMA scheduler, and this means that 
+\begin_inset Formula $t(T_{j})>t(T_{i})$
+\end_inset
+
+.
+ Consequently, 
+\begin_inset Formula $\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil=1$
+\end_inset
+
+ for all 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $\zeta_{1}=\sum_{T_{i}}(\sum_{(T_{j}\in\gamma_{i})\wedge(p(T_{j})<p(T_{i}))}(2.\beta_{i,j}))/t(T_{i})$
+\end_inset
+
+, and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq36"
+
+\end_inset
+
+) will be 
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{1}{2}+\frac{\sum_{T_{i}}(\sum_{(T_{j}\in\gamma_{i})\wedge(p(T_{j})<p(T_{i}))}(2.\beta_{i,j}))/t(T_{i})}{2.\sum_{T_{k}}(\sum_{(T_{l}\in\gamma_{k})\wedge(p(T_{l})\ge p(T_{k}))}(\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil+1).\beta_{kl})/t(T_{k})}\label{eq44}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\because$
+\end_inset
+
+ 
+\begin_inset Formula $\zeta_{1}$
+\end_inset
+
+ contains all 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ of lower priority than 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, and 
+\begin_inset Formula $\zeta_{2}$
+\end_inset
+
+ contains all 
+\begin_inset Formula $T_{l}$
+\end_inset
+
+ of higher or equal priority to 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+, and tasks are arranged in non-increasing order of priority, then for each
+ 
+\begin_inset Formula $T_{i,j}$
+\end_inset
+
+, there exists 
+\begin_inset Formula $T_{k,l}$
+\end_inset
+
+ such that 
+\begin_inset Formula $i=l$
+\end_inset
+
+ and 
+\begin_inset Formula $j=k$
+\end_inset
+
+.
+ This can be shown in the following figure.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="9">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\begin{array}{cccccc}
+ & j & 1 & 2 & \cdots & n\\
+i\\
+1 &  & 0 & 1 & \cdots & 1\\
+2 &  & 0 & 0 &  & \vdots\\
+\vdots &  & \vdots & \vdots & \ddots & 1\\
+n &  & 0 & 0 & \cdots & 0\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{cccccc}
+ & l & 1 & 2 & \cdots & n\\
+k\\
+1 &  & 0 & 0 & \cdots & 0\\
+2 &  & 1 & 0 &  & \vdots\\
+\vdots &  & \vdots & \vdots & \ddots & 0\\
+n &  & 1 & \cdots & 1 & 0\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 0 means 
+\begin_inset Quotes eld
+\end_inset
+
+This pair of 
+\begin_inset Formula $i,j$
+\end_inset
+
+ does not exist in 
+\begin_inset Formula $\zeta_{1}$
+\end_inset
+
+, and this pair of 
+\begin_inset Formula $k,l$
+\end_inset
+
+ does not exist in 
+\begin_inset Formula $\zeta_{2}$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+, and 1 is the reverse.
+ So, it can be seen that both matrices are transpose of each other, consequently
+, for each 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ there exist 
+\begin_inset Formula $\beta_{k,l}$
+\end_inset
+
+ such that 
+\begin_inset Formula $i=l$
+\end_inset
+
+ and 
+\begin_inset Formula $j=k$
+\end_inset
+
+, but the number of times 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ accesses a shared object with 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ may not be the same as number of times 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ accesses that same object, so 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ does not have to be the same as 
+\begin_inset Formula $\beta_{k,l}$
+\end_inset
+
+, even if 
+\begin_inset Formula $i,j$
+\end_inset
+
+ and 
+\begin_inset Formula $k,l$
+\end_inset
+
+ are transpose of each other.
+ So, we can analize behavior of 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ depending on the three parameters 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+, 
+\begin_inset Formula $\beta_{k,l}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ is increased so that 
+\begin_inset Formula $\beta_{i,j}\rightarrow\infty$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore\,(\ref{eq44})\rightarrow\infty$
+\end_inset
+
+, and this is natureal as 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ represents times lower priority tasks 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ access shared objects with the higher priority task 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ While this number has a great effect in lock-free, it does not have any
+ effect in RMA CM because lower priority tasks does not affect higher priority
+ ones, so 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ is allowed to be much greater than 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Although the minimum value for 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ is 1, but from a mathematical point if 
+\begin_inset Formula $\beta_{i,j}\rightarrow0$
+\end_inset
+
+, then 
+\begin_inset Formula $(\ref{eq44})\rightarrow1/2$
+\end_inset
+
+.
+ Despite changing 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ does not affect retrial cost of RMA CM as lower priority tasks does not
+ affect higher ones, but it does affect retrial cost of lock-free bacause
+ contention between tasks will be reduced, thus 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ had to be reduced in this case to a little more than half of 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+(it is 
+\begin_inset Quotes eld
+\end_inset
+
+a little more
+\begin_inset Quotes erd
+\end_inset
+
+ because the minimum value of 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ is actually 1 not 0).
+ The change of 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig15-a"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\beta_{k,l}\rightarrow\infty\,\therefore\,(\ref{eq44})\rightarrow1/2$
+\end_inset
+
+.
+ This can be explained as 
+\begin_inset Formula $\beta_{k,l}$
+\end_inset
+
+ represent number of times a higher priority task 
+\begin_inset Formula $T_{l}$
+\end_inset
+
+ accesses shared objects with a lower prirority one 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+.
+ In case of RMA CM, this will increase retrial cost, thus reducing 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+.
+ But if 
+\begin_inset Formula $\beta_{k,l}\rightarrow0,\,\therefore\,(\ref{eq44})\rightarrow\infty$
+\end_inset
+
+, which is explained by lower contention from higher priority task 
+\begin_inset Formula $T_{l}$
+\end_inset
+
+ to the lower priority one 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+, consequently reduces retrial cost in case of RMA CM and allows 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ to be very large compared with 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+.
+ Of course, the actual minimum value for 
+\begin_inset Formula $\beta_{k,l}$
+\end_inset
+
+ is 1, but this is done for mathematical illustration which is shown in
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig15-b"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The third parameter that can affect 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ is the 
+\begin_inset Formula $t(T_{k})/t(T_{l})$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $t(T_{l})\ll t(T_{k}),\,\therefore\,\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil\rightarrow\infty$
+\end_inset
+
+, and 
+\begin_inset Formula $(\ref{eq44})\rightarrow1/2$
+\end_inset
+
+.
+ This is explained by a high number of interferences of higher priority
+ tasks 
+\begin_inset Formula $T_{l}$
+\end_inset
+
+ to a lower priority one 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ that increases retrial cost in case of RMA CM, consequently, reduces 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+.
+ But if 
+\begin_inset Formula $t(T_{l})=t(T_{k})$
+\end_inset
+
+ (which is the maximum value for 
+\begin_inset Formula $t(T_{l})$
+\end_inset
+
+ as 
+\begin_inset Formula $D(T_{l})\le D(T_{k})$
+\end_inset
+
+ because 
+\begin_inset Formula $T_{l}$
+\end_inset
+
+ is of higher or equal priority to 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+), 
+\begin_inset Formula $\therefore\,\lceil\frac{t(T_{k})-c_{l}}{t(T_{l})}\rceil\rightarrow1$
+\end_inset
+
+ and the right side of 
+\begin_inset Formula $([eq44])\rightarrow\frac{1}{2}+\frac{\sum_{T_{i}}(\sum_{(T_{j}\in\gamma_{i})\wedge(p(T_{j})<p(T_{i}))}(2.\beta_{i,j}))/t(T_{i})}{2.\sum_{T_{k}}(\sum_{(T_{l}\in\gamma_{k})\wedge(p(T_{l})\ge p(T_{k}))}(2.\beta_{kl}))/t(T_{k})}$
+\end_inset
+
+ which renders the system one of the two previous cases shown in Figures
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig15-a"
+
+\end_inset
+
+,
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig15-b"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure15-a.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig15-a"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/figure15-b.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig15-b"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig15"
+
+\end_inset
+
+Change of 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+a) 
+\begin_inset Formula $\frac{s_{max}}{r_{max}}$
+\end_inset
+
+ vs.
+ 
+\begin_inset Formula $\beta_{i,j}$
+\end_inset
+
+ b) 
+\begin_inset Formula $\frac{s_{max}}{r_{max}}$
+\end_inset
+
+ vs.
+ 
+\begin_inset Formula $\beta_{k,l}$
+\end_inset
+
+ c)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+FIFO CM against lock-free
+\end_layout
+
+\begin_layout Standard
+For both G-EDF and G-RMA with FIFO CM, the retrial cost is the same, and
+ the 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ will be
+\begin_inset Formula \begin{eqnarray}
+\frac{s_{max}}{r_{max}} & \le & \frac{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}((\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).\beta_{i,j}))/t(T_{i})}{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}((\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).\beta_{i,j}))/t(T_{i})}\nonumber \\
+ & \le & 1\label{eq37}\end{eqnarray}
+
+\end_inset
+
+So, in the case of FIFO CM, 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ is allowed to be as large as that of 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+ without degrading performance than lock free implementation.
+\end_layout
+
+\begin_layout Subsection
+Comparison between FMLP and G-EDF with EDF CM and FIFO CM
+\end_layout
+
+\begin_layout Standard
+As FMLP is used with G-EDF, G-EDF with EDF CM and FIFO CM are compared here.
+ For the case of non-nested requests, each resource (short or long) will
+ be contained in its own group, and the three terms of blocking by FMLP
+ can be upper bounded as follows:-
+\begin_inset Formula \begin{eqnarray*}
+BW(T_{i}) & \le & \sum_{s\_\theta\in\theta_{i}}(m-1).|s\_\theta|_{i,max}\\
+ & = & N_{i,s}.(m-1).|s\_\theta|_{i,max}\\
+ & \le & N_{i,s}.(m-1).|s\_\theta|_{max}\end{eqnarray*}
+
+\end_inset
+
+where 
+\begin_inset Formula $N_{i,s}$
+\end_inset
+
+ is the number of times 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ requests a short resource, and 
+\begin_inset Formula $|s\_\theta|_{i,max}$
+\end_inset
+
+ is the maximum request for a short resource by 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, and 
+\begin_inset Formula $|s\_\theta|_{max}$
+\end_inset
+
+ is the maximum short request by any task.
+ And 
+\begin_inset Formula \begin{eqnarray*}
+NPB(T_{i}) & \le & (1+N_{i,l}).max(BW_{k\ne i}(T_{k})+|s\_\theta|_{k,max})\\
+ & \le & (1+N_{i,l}).max(BW_{k\ne i}(T_{k})+|s\_\theta|_{max})\\
+ & = & (1+N_{i,l}).|s\_\theta|_{max}.max_{k\ne i}(N_{k,s}.(m-1)+1)\end{eqnarray*}
+
+\end_inset
+
+and
+\begin_inset Formula \begin{eqnarray*}
+DB(T_{i}) & \le & N_{i,l}.(n-1).|l\_\theta|_{i,max}\\
+ & \le & N_{i,l}.(n-1).|l\_\theta|_{max}\end{eqnarray*}
+
+\end_inset
+
+if 
+\begin_inset Formula $|l\_\theta|_{max}\le c1.|s\_\theta|_{max}$
+\end_inset
+
+ where 
+\begin_inset Formula $c1$
+\end_inset
+
+ is the minimum constant that satisfies this relation, then
+\begin_inset Formula \[
+DB(T_{i})\le N_{i,l}.(n-1).c1.|s\_\theta|_{max}\]
+
+\end_inset
+
+The total blocking of each task is added to its execution time, and as before,
+ the total utilization of G-EDF system (with both contention managers) is
+ compared to that of FMLP.
+ For performance of G-EDF with EDF CM to be better than FMLP, then
+\begin_inset Formula \begin{eqnarray*}
+s_{max}\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.2\beta_{i,j})/t(T_{i}) & \le|s\_\theta|_{max}\sum_{T_{i}}[( & N_{i,s}.(m-1)+\\
+ & + & (1+N_{i,l}).max_{k\ne i}(N_{k,s}.(m-1)+1)\\
+ & + & N_{i,l}.(n-1).c1)]/t(T_{i})\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Formula $\therefore$
+\end_inset
+
+
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{|s\_\theta|_{max}}\le\frac{\sum_{T_{i}}[(N_{i,s}.(m-1)+(1+N_{i,l}).max_{k\ne i}(N_{k,s}.(m-1)+1)+N_{i,l}.(n-1).c1)]/t(T_{i})}{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.2\beta_{i,j})/t(T_{i})}\label{eq38}\end{equation}
+
+\end_inset
+
+and for G-EDF with FIFO CM, this ratio will be
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{|s\_\theta|_{max}}\le\frac{\sum_{T_{i}}[(N_{i,s}.(m-1)+(1+N_{i,l}).max_{k\ne i}(N_{k,s}.(m-1)+1)+N_{i,l}.(n-1).c1)]/t(T_{i})}{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}((\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).\beta_{i,j}))/t(T_{i})}\label{eq39}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq38"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq39"
+
+\end_inset
+
+), it can be seen that 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, in FMLP, depends on 
+\begin_inset Formula $m,\, n$
+\end_inset
+
+ and number of times it requests resources (in contrast to G-EDF with EDF
+ or FIFO CM, which depends on number of times the conflicting 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+ requests resources).
+ So, if 
+\begin_inset Formula $N_{i,s},\, N_{i,l}$
+\end_inset
+
+ and 
+\begin_inset Formula $N_{k,s}$
+\end_inset
+
+ can all be upper bounded by some constant 
+\begin_inset Formula $C_{2}$
+\end_inset
+
+, which is the maximum number of times any 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ can ask for a short or long resource, then the numerator in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq38"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq39"
+
+\end_inset
+
+) is 
+\begin_inset Formula $O(n(n+m))$
+\end_inset
+
+, while the denominator is 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+.
+ So, 
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{|s\_\theta|_{max}}=O(\frac{m}{n})\label{eq45}\end{equation}
+
+\end_inset
+
+which means, for 
+\begin_inset Formula $n<m$
+\end_inset
+
+, contention between tasks in both STM and FMLP is low (even for short resources
+ in FMLP), but FMLP is more affected by 
+\begin_inset Formula $NTB$
+\end_inset
+
+.
+ But when 
+\begin_inset Formula $n>m$
+\end_inset
+
+, contention increases, but FMLP arranges requests in a FIFO queue, so it
+ is leass affected than EDF CM which sufferes from number of conflicting
+ tasks and number of instances of each conflicting one.
+ FMLP is not affected by number of instances of each conflicting task, and
+ FIFO CM, although arranging requests in a FIFO order, but this order can
+ change due to release in higher priority tasks as previously discussed
+ in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Response-time-of FIFO CM"
+
+\end_inset
+
+, so FIFO CM is also affected by number of instances of conflicting tasks.
+\end_layout
+
+\begin_layout Section
+Comparison of OMLP with STM
+\end_layout
+
+\begin_layout Standard
+As blocking time for OMLP is 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+bounded by
+\begin_inset Formula \[
+b_{i}\triangleq\sum_{k=1}^{q}N_{i,k}.2.(m-1).max_{1\le i\le n}\{L_{i,k}\}\]
+
+\end_inset
+
+where 
+\begin_inset Formula $N_{i,k}$
+\end_inset
+
+ is the maximum number of times 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ requests resource 
+\begin_inset Formula $k$
+\end_inset
+
+, and 
+\begin_inset Formula $L_{i,k}$
+\end_inset
+
+ is the maximum length of such a request.
+ So, if 
+\begin_inset Formula $L_{max}=max_{\forall i,\forall k}L_{i,k}$
+\end_inset
+
+, 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\noun default
+\color inherit
+
+\begin_inset Formula $\therefore$
+\end_inset
+
+
+\begin_inset Formula \[
+bi\le2.(m-1).L_{max}\sum_{k=1}^{q}N_{i,k}\]
+
+\end_inset
+
+and for performance of G-EDF with EDF CM to be better than global OMLP,
+ then
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{L_{max}}\le\frac{\sum_{T_{i}}(2.(m-1)\sum_{k=1}^{q}N_{i,k})/t(T_{i})}{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}\lceil\frac{t(T_{i})}{t(T_{j})}\rceil.2\beta_{i,j})/t(T_{i})}\label{eq40}\end{equation}
+
+\end_inset
+
+For G-RMA with RMA CM, the ratio will be
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{L_{max}}\le\frac{\sum_{T_{i}}(2.(m-1)\sum_{k=1}^{q}N_{i,k})/t(T_{i})}{\sum_{T_{i}}(\sum_{(T_{j}\in\gamma_{i})\wedge(p(T_{j})\ge p(T_{i}))}(\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).2.\beta_{i,j})/t(T_{i})}\label{eq41}\end{equation}
+
+\end_inset
+
+and for FIFO CM for both G-EDF and G-RMA schedulers
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{L_{max}}\le\frac{\sum_{T_{i}}(2.(m-1)\sum_{k=1}^{q}N_{i,k})/t(T_{i})}{\sum_{T_{i}}(\sum_{T_{j}\in\gamma_{i}}((\lceil\frac{t(T_{i})-c_{j}}{t(T_{j})}\rceil+1).\beta_{i,j}))/t(T_{i})}\label{eq42}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\sum_{k=1}^{q}N_{i,k}$
+\end_inset
+
+ is upper bounded by 
+\begin_inset Formula $C_{3}$
+\end_inset
+
+, which is a constant representing the maximum total number of requests
+ for resources by any 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+, then 
+\begin_inset Formula \begin{equation}
+\frac{s_{max}}{L_{max}}=O(\frac{nm}{n^{2}})=O(\frac{m}{n})\label{eq46}\end{equation}
+
+\end_inset
+
+for each of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq40"
+
+\end_inset
+
+), (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq41"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq42"
+
+\end_inset
+
+) which is similar to that of FMLP.
+\end_layout
+
+\begin_layout Subsection
+Conclusion on comparison between synchronization techniques
+\end_layout
+
+\begin_layout Standard
+Comparison between STM, with the three contention managers, against lock-free
+ is somehow different than that between STM and locking protocols in that
+ the former have similar parameters that affect retrial cost of both STM
+ and lock-free (i.
+ e.; number of conflicting tasks, number of instances of these conflicting
+ tasks, number of shared objects and number of their requests by conflicting
+ tasks).
+ So, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is mostly affected by the nature of other tasks.
+ But blocking time in FMLP and OMLP depend on some different parameters
+ than that in STM and lock-free, as requests are arranged in a queue, and
+ the order of the request in the queue does not change (except for the case
+ of the priority queue in OMLP), so blocking time depend on number of tasks
+ but not on number of instances of conflicting tasks, and it depends on
+ number of requests made by 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ itself, and not the coflicting tasks; it also depends on number of processors
+ in both protocols, which is not the case in STM and lock-free.
+ That is why comparison between STM and locking protocols has the asymptotic
+ nature, while in STM and lock-free, effect of different parameters can
+ be compared together.
+\end_layout
+
+\begin_layout Standard
+For the comparison between STM and lock-free, it has been seen that both
+ EDF and RMA CM suffer from 
+\begin_inset Formula $2.s_{max}$
+\end_inset
+
+ retrial cost for each atomic section of 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ by one atomic section of 
+\begin_inset Formula $T_{j}$
+\end_inset
+
+, while FIFO CM does not.
+ Retrial in RMA, FIFO CM and lock-free is affected by a larger number of
+ conflicting instances than that of EDF CM, while EDF, FIFO CM and lock-free
+ can be affected by all other tasks, but RMA CM is affected only by higher
+ priority tasks.
+ Due to the different parameters affecting STM and lock-free, the 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ differs to keep STM better or good as lock-free.
+ In G-EDF with EDF CM, this ratio cannot exceed 1 and it can be kept at
+ one half for higher number of conflicting tasks.
+ For, G-RMA with RMA CM, it differs according to different parameters, but
+ 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ can be larger than 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+ by many times at some cases, but the common case to keep STM performance
+ well, is to keep it at one half of 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+.
+ For the FIFO CM, 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ can be as large as 
+\begin_inset Formula $r_{max}$
+\end_inset
+
+, so it increased the minimum bound for 
+\begin_inset Formula $s_{max}/r_{max}$
+\end_inset
+
+ over that of EDF and RMA CM, but RMA can have a larger 
+\begin_inset Formula $s_{max}$
+\end_inset
+
+ in some cases.
+\end_layout
+
+\begin_layout Standard
+So, it appears that each method has its merits and disadvantages.
+ It is up to the designer to choose according to the parameters values of
+ its application, in addition to noting the simplisity of STM programability,
+ in contrast to that of lock-free approache.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+
+\series bold
+\size larger
+\bar under
+This part is collected from locking and lock free papers
+\end_layout
+
+\begin_layout Section
+
+\series bold
+\bar under
+From 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-3"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+According to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-3"
+
+\end_inset
+
+, the lower bound on maximum blocking time (which they call pi-blocking)
+ for any task due to s-oblivious locking protocols, for any gloabl or partitione
+d JLSP (Job Level Static Priority) scheduler (i.
+ e., G-EDF and P-EDF), is 
+\begin_inset Formula $\Omega(m)$
+\end_inset
+
+ where 
+\begin_inset Formula $m$
+\end_inset
+
+ is the number of processors.
+ And the lower bound on the total blocking time for the whole task set is
+ 
+\begin_inset Formula $\Omega(n.m)$
+\end_inset
+
+, where 
+\begin_inset Formula $n$
+\end_inset
+
+ is the number of tasks.
+\end_layout
+
+\begin_layout Standard
+According to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-3,key-4,key-5"
+
+\end_inset
+
+, the FMLP protocol (which is used with P-EDF and G-EDF) uses both spin-based
+ for short resources and suspension-based for long resources.
+ A tighter bound is obtained for spin based protocols where jobs busy-wait
+ non-preemptively in FIFO order, and they must wait for at most 
+\begin_inset Formula $m-1$
+\end_inset
+
+ earlier requests, whereas for long resources, susbension protocol is used
+ and jobs can incur 
+\begin_inset Formula $\Theta(n)$
+\end_inset
+
+ s-oblivious pi-blocking.
+ At the time of writing this paper, FMLP was the only prior locking protocol
+ that supports G-EDF.
+\end_layout
+
+\begin_layout Standard
+The global OMLP protocol is developed, which is suspension-based.
+ Jobs incur at most 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ s-oblivious pi-blocking.
+ This bound is calculated in lemma 4
+\begin_inset Formula \begin{equation}
+b_{i}\triangleq\sum_{k=1}^{q}N_{i,k}.2.(m-1).max_{1\le i\le n}\{L_{i,k}\}\label{eq29}\end{equation}
+
+\end_inset
+
+where:-
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N_{i,k}$
+\end_inset
+
+ is the number of requests of resource 
+\begin_inset Formula $k$
+\end_inset
+
+ by 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $k$
+\end_inset
+
+ is a resource identifier.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q$
+\end_inset
+
+ is the number of resources.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L_{i,k}$
+\end_inset
+
+ is the maximum request length of resource 
+\begin_inset Formula $k$
+\end_inset
+
+ by task 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $N_{i,k}$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{i,k}$
+\end_inset
+
+ are assumed to be constants, so the s-oblivious pi-blocking is 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ and according to theorm 1, it is optimal.
+ Theorm 4 checks schedulability of a set of tasks scheduled with G-EDF and
+ OMLP using previous G-EDF tests that treat tasks as independent ones, so
+ the 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ cost calculated by lemma 4 for each task is added to its execution time
+ 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ (because of the s-oblivious nature) and then used in the schedulability
+ test.
+ 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+caculated by lemma 4 does not depend on the G-EDF, so it can be used for
+ any JLSP scheduler.
+\end_layout
+
+\begin_layout Standard
+For the case of partitioned scheduling, partitioned OMLP is used with P-EDF
+ and the s-oblivious 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ for each task is calculated by lemma 9 and it is independent on the EDF
+ scheduler.
+ Also, it was proved by theorem 3 that the s-oblivious 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ under partitioned OMLP is optimal.
+\end_layout
+
+\begin_layout Standard
+s-aware OMLP cannot acheive the 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ as 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ cost, and it has a lower bound of 
+\begin_inset Formula $\Omega(n)$
+\end_inset
+
+.
+ Actually, for any locking protocol and JLSP scheduler, the s-aware analysis
+ has a max 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ of 
+\begin_inset Formula $\Omega(n)$
+\end_inset
+
+ and a total 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ of 
+\begin_inset Formula $\Omega(n^{2})$
+\end_inset
+
+.
+ Accordingly, s-aware pi-blocking under the global suspension based FMLP
+ for any JLSP is asymptotically optimal, as proved in theorem 5, whereas
+ in partitioned case, a simple partitioned FIFO protocol (SPFP) can be proved
+ to be asymptotically optimal (by theorem 6) despite impractical.
+ It should be noted that the use of FIFO queue helps in acheiving this asymptoti
+c optimality as it was proved that ordering requests with EDF or static
+ priority under any JLSP scheduler will have a maximum 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ of 
+\begin_inset Formula $\Omega(mn)$
+\end_inset
+
+ and a total one of 
+\begin_inset Formula $\Omega(m(n-m)^{2})+m^{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The final results for different protocols optimality is shown in table 1.
+\end_layout
+
+\begin_layout Section
+From 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-4"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The motivation to the design of FMLP is the shortcomings of the previously
+ multiprocessor locking protocols such as:-
+\end_layout
+
+\begin_layout Enumerate
+Almost all previous schemes use parititioning schedulers, whereas FMLP support
+ both paritioning and global scheduling.
+\end_layout
+
+\begin_layout Enumerate
+Most previous schemes impose restrictive assumptions such as the proscription
+ of nested access to global critical sections.
+\end_layout
+
+\begin_layout Enumerate
+Most of them are inefficient when implementing non-nested locks, which is
+ the common case.
+\end_layout
+
+\begin_layout Standard
+The FMLP is optimized to execute non-nested resource access more efficiently;
+ it is applied to G-EDF, P-EDF and PD2, besides, it supports nested resource
+ access without constraining limitations.
+\end_layout
+
+\begin_layout Standard
+Global FMLP uses a variant of G-EDF, named G-EDF algorithm for suspendable
+ and non-preemptable jobs (GSN-EDF), which discriminates between linke job
+ and scheduled one (the former means the job is assigned to a processor
+ by G-EDF but it does not have to be scheduled on it right now because of
+ non-preemptive blocking).
+ GSN-EDF permits for non-preemptable jobs and bounds the time a job is non-preem
+ptively blocked by a lower priority job to the maximum time of a non-preemptive
+ section of a job that can be linked to the processor of the higher priority
+ job, and this non-preemptive blocking can only happen when the higher priority
+ job is released or resumed as proved by theorems 1, 2.
+\end_layout
+
+\begin_layout Standard
+There are three types of blocking that can be incured by any task in global
+ FMLP.
+ These are busy-wait blocking, non-preemptive blocking and direct blocking.
+ The final blocking term for a job is the sum of these three terms.
+ Execution time of each task is inflated by this blocking amount (
+\begin_inset Formula $e_{i}+b_{i}$
+\end_inset
+
+), then any G-EDF schedulability test can be used.
+ It is not mentioned in the paper how to dereive values or upper bounds
+ for the blocking terms, so we try to derive them here as follows:-
+\end_layout
+
+\begin_layout Enumerate
+For the 
+\begin_inset Formula $BW(T_{i})$
+\end_inset
+
+, a job 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+ busy-waits when it is scheduled on a processor and it cannot be removed
+ by any other task, even higher priority ones, until its request is satisfied,
+ and as busy-waiting tasks are organized in a FIFO and they are non-preemptable,
+ then 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+ can be blocked by at most the maximum 
+\begin_inset Formula $m-1$
+\end_inset
+
+ requests, where each request can consist of sum of nested requests to some
+ resources in the same group.
+ This process proceeds for each short resource requested by 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+
+\begin_inset Formula \begin{equation}
+BW(T_{i})\le\sum_{s\_\theta\in\theta_{i}}(max[\sum_{k=1,k\ne i}^{min(m,n)-1}|R_{k}(g(s\_\theta))|])\label{eq26}\end{equation}
+
+\end_inset
+
+where:-
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $s\_\theta$
+\end_inset
+
+ is a short request for object 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $g(s\_\theta)$
+\end_inset
+
+ is the group containing short resource 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $R_{k}(g(s\_\theta))$
+\end_inset
+
+ is a request made by 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ to the 
+\begin_inset Formula $g(s\_\theta)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $|R_{k}(g(s\_\theta))|$
+\end_inset
+
+ is the size of the request and it equals the sum of all nested accesses
+ to resources in 
+\begin_inset Formula $g(s\_\theta)$
+\end_inset
+
+ made by 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Of course, the max sum of the highest 
+\begin_inset Formula $min(m,n)-1$
+\end_inset
+
+ requests equals the sum of the highest 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $min(m,n)-1$
+\end_inset
+
+ requests.
+\end_layout
+
+\begin_layout Enumerate
+For the 
+\begin_inset Formula $NPB(T_{i})$
+\end_inset
+
+, Job 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+ can be non-preemptively blocked, either at its release or when it resumes,
+ by at most the maximum (nested) request to any short resource.
+ So,
+\begin_inset Formula \begin{equation}
+NPB(T_{i})=(1+N_{i,l}).max_{k\ne i}|R_{k}(g(s\_\theta))|\label{eq27}\end{equation}
+
+\end_inset
+
+where:-
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N_{i,l}$
+\end_inset
+
+ is the number of times 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+ requests long resources.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+1 is added to 
+\begin_inset Formula $N_{i,l}$
+\end_inset
+
+ because 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ can be non-preemptively blocked at its release in addition to suspension
+ times.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+For the 
+\begin_inset Formula $DB(T_{i})$
+\end_inset
+
+, 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+ can be blocked by all other 
+\begin_inset Formula $n-1$
+\end_inset
+
+ tasks for any long resource.
+ Any of these 
+\begin_inset Formula $n-1$
+\end_inset
+
+ requests can be a nested request to long resources belonging to the same
+ group, besides any of these requests can contain a request to a short resource
+ and it can busy-wait on it.
+ So, each request in the 
+\begin_inset Formula $n-1$
+\end_inset
+
+ requests, requiring access to a short resource, can be delayed by at most
+ the maximum 
+\begin_inset Formula $m-1$
+\end_inset
+
+ requests to the group containing that short resource.
+ So, 
+\begin_inset Formula \begin{equation}
+DB(T_{i})\le\sum_{l\_\theta\in\theta_{i}}[max_{k=1,k\ne i}^{n-1}|R_{k}(g(l\_\theta))|]\label{eq28}\end{equation}
+
+\end_inset
+
+where:-
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $|R_{k}(g(l\_\theta))|$
+\end_inset
+
+ is the sum of nested requests by 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ to the group containing 
+\begin_inset Formula $l\_\theta$
+\end_inset
+
+, plus 
+\begin_inset Formula $max_{s\_\theta\in\theta_{k}}[\sum_{h=1,h\ne k}^{min(m,n)-1}|R_{h}(g(s\_\theta))|]$
+\end_inset
+
+, if 
+\begin_inset Formula $s\_\theta$
+\end_inset
+
+ can be called inside 
+\begin_inset Formula $l\_\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-3"
+
+\end_inset
+
+, an upper bound was developed for 
+\begin_inset Formula $DB(T_{i})$
+\end_inset
+
+ but without considering the effect of requesting a short resource within
+ a long one, besides it did not develope bounds for the other two terms
+ as its main concentration was on the suspension-based part of FMLP.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+From 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "barrosmanaging"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The idea of bounding number of retries and preventing starvation is good,
+ but as the paper is still work in progress, it may need some modifications
+ in the underlying algorithms, or in the conditions used to bound number
+ of retrials.
+\end_layout
+
+\begin_layout Section
+From 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "shavit2011data"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It generally descripes how the evolution of multicore systems affect concurrent
+ data structures, in design and semantics, but says nothing about relation
+ between lock-free or wait-free objects to real-time systems.
+\end_layout
+
+\begin_layout Section
+From 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the lock-free implementation mentioned in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+
+\end_inset
+
+, the blocking cost is added to the execution cost for each task in equation
+ (11).
+ So, the total response time for 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is as calculated by equation (11), in addition to interference from higher
+ priority tasks.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Some synchronization protocols 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="18" columns="8">
+<features>
+<column alignment="center" valignment="middle" width="4cm">
+<column alignment="center" valignment="middle" width="2cm">
+<column alignment="center" valignment="middle" width="0">
+<column alignment="center" valignment="middle" width="0">
+<column alignment="center" valignment="middle" width="0">
+<column alignment="center" valignment="middle" width="0">
+<column alignment="center" valignment="middle" width="0">
+<column alignment="center" valignment="middle" width="1.5cm">
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none" width="1.5cm">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Multiprocessor
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Protocol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Uniprocessor
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Global
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none" width="1.5cm">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Partitioned
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+G-EDF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+PFair
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Others
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+P-EDF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Static Priority
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Others
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+PCP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "chen1990dynamic"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+SRP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "baker1991stack"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+PCP variant
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Rajkumar:1991:SRS:532621"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+PCP variant
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sha1990priority"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+MPCP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lakshmanan2009coordinated,rajkumar2002real"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+DPCP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rajkumar2002real-2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset CommandInset citation
+LatexCommand cite
+key "chen1998multiprocessor"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+SRP implementation
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lopez2004utilization"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+SRP implementation
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gai2003comparison"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset CommandInset citation
+LatexCommand cite
+key "holman2006locking"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+PPCP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "easwaran2009resource"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+PIP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "easwaran2009resource"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+FMLP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-4,brandenburg2008implementation"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+(GSN-EDF)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+(PSN-EDF)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+OMLP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+JLSP
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\align center
+
+\size small
+\begin_inset Formula $\checkmark$
+\end_inset
+
+JLSP
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintAll"
+bibfiles "global_bibliography"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

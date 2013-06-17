@@ -1,0 +1,61 @@
+\select@language {english}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Maximum interference between two tasks, running on different processors, under G-EDF}}{25}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Maximum interference during an interval $L$ of $T_{i}$}}{25}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Retry of $s_i^k(\theta )$ due to $s_j^l(\theta )$}}{26}{figure.4.3}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Early validation}}}{26}{figure.4.3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Lazy validation with $len(s_{i}^{k}(\theta ))\le len(s_{j}^{l}(\theta ))$}}}{26}{figure.4.3}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Lazy validation with $len(s_{i}^{k}(\theta ))>len(s_{j}^{l}(\theta ))$}}}{26}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Retry of $s_i^p(\theta )$ due to other atomic sections}}{27}{figure.4.4}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Other atomic sections interfere only with $s_i^p(\theta )$}}}{27}{figure.4.4}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {All atomic sections interfere with each other and $s_i^p(\theta )$}}}{27}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Values associated with $s_{max}^{*}(\theta )$}}{28}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Atomic sections of job $\tau _{j}^{1}$ contributing to period $T_i$}}{30}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Max interference of $\tau _{j}$ to $\tau _{i}$ in G-RMA}}{32}{figure.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Effect of $\left \delimiter "4264306 \frac {T_{i}}{T_{j}}\right \delimiter "5265307 $ on $\frac {s_{max}}{r_{max}}$}}{35}{figure.4.8}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Task association for lower priority tasks than $T_i$ and higher priority tasks than $T_k$}}{37}{figure.4.9}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Change of $s_{max}/r_{max}$: a) $\frac {s_{max}}{r_{max}}$ versus $\beta _{i,j}$ and b) $\frac {s_{max}}{r_{max}}$ versus $\beta _{k,l}$}}{38}{figure.4.10}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{38}{figure.4.10}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{38}{figure.4.10}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Interference of $s_{i}^{k}(\theta )$ by various lengths of $s_{j}^{l}(\theta )$}}{41}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces $\tau _h^p$ has a higher priority than $\tau _i^x$}}{45}{figure.5.2}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Average retry cost for 1 object per transaction for different values of total, maximum and minimum atomic section length under all synchronization techniques}}{73}{figure.7.1}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{73}{figure.7.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{73}{figure.7.1}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{73}{figure.7.1}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Average retry cost for 1 object per transaction for different values of total, maximum and minimum atomic section length under contention managers only}}{74}{figure.7.2}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{74}{figure.7.2}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{74}{figure.7.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{74}{figure.7.2}
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Average retry cost for 20 objects per transaction, 40\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{75}{figure.7.3}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{75}{figure.7.3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{75}{figure.7.3}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{75}{figure.7.3}
+\contentsline {figure}{\numberline {7.4}{\ignorespaces Average retry cost for 20 objects per transaction, 80\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{76}{figure.7.4}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{76}{figure.7.4}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{76}{figure.7.4}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{76}{figure.7.4}
+\contentsline {figure}{\numberline {7.5}{\ignorespaces Average retry cost for 20 objects per transaction, 100\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{77}{figure.7.5}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{77}{figure.7.5}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{77}{figure.7.5}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{77}{figure.7.5}
+\contentsline {figure}{\numberline {7.6}{\ignorespaces Average retry cost for 40 objects per transaction, 40\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{78}{figure.7.6}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{78}{figure.7.6}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{78}{figure.7.6}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{78}{figure.7.6}
+\contentsline {figure}{\numberline {7.7}{\ignorespaces Average retry cost for 40 objects per transaction, 80\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{79}{figure.7.7}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{79}{figure.7.7}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{79}{figure.7.7}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{79}{figure.7.7}
+\contentsline {figure}{\numberline {7.8}{\ignorespaces Average retry cost for 40 objects per transaction, 100\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{80}{figure.7.8}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {4 tasks}}}{80}{figure.7.8}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {8 tasks}}}{80}{figure.7.8}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {20 tasks}}}{80}{figure.7.8}
+\addvspace {10\p@ }
+\addvspace {10\p@ }

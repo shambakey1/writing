@@ -1,0 +1,188 @@
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.HDhuge {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 68px; font-weight: bold; color: #666666}
+.HD1 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 17px; font-weight: bold; color: #666666}
+.HD1bold { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; color: #000000}
+.Bt1 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000033}
+.Bt1bold { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #000000; font-weight: bold}
+.HD2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; color: #3366CC}
+.HD2bold { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; color: #3366CC}
+.HD3bold { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; color: #000000}
+a:link {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #0000CC; text-decoration: none}
+a:visited {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #0000CC; text-decoration: none}
+a:active {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #0066FF}
+a:hover {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #FF3300; text-decoration: none}
+
+A.index:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #CCCCCC;
+	text-decoration: none;
+}
+A.index:visited { font-family: Verdana, Arial, Helvetica, sans-serif; color: #CCCCCC; text-decoration: none}
+A.index:active {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFCC00} 
+A.index:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #00CCFF;
+	text-decoration: underline;
+}.f1 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #000000}
+.T1 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #0000CC}
+.f1blk { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000}
+.f1red { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: red}
+.f1dkgrey { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #666666 }
+.Bt2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000}
+.HD4bold { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #6633FF}
+.f1blkbg { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000 ; background-color: #A4D1FF}
+.f1bg { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #CCCCCC ; background-color: #000099; font-weight: bold}
+.f1blkbg2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #FFFFFF; background-color: #3399FF}
+.Bt3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #990000}
+.HD5bold { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #0000FF; text-decoration: underline}
+.HD0 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 17px; font-weight: normal; color: #990000 }
+.f1blkbg3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; background-color: #FFE7CE}
+.Bt3bg1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #FFFFFF;
+	background-color: #999999;
+
+}
+.Bt4 {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #FFFFFF
+}
+.f2 {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #FFFFFF
+}
+.f1bg3 {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; background-color: #E9F9FE; font-weight: normal
+}
+.f1blkbg4 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #000000 ; background-color: #FFFFFF}
+.f1blkbg5 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color: #F0F5F9;
+	font-weight: normal;
+}
+
+.f1blkbg6 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color: #999999;
+	font-weight: normal;
+}
+
+
+
+.f1bg2 {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #000000; background-color: #EFEFEF; font-weight: normal
+}
+.f1blkbg2A {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; background-color: #3399FF
+}
+.T1bg1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #330099;
+	background-color: #BDDAFA;
+
+}
+.T2bg1 {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000000;
+	background-color: #BDDAFA;
+}
+.f2bgyell {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color: #FFFF00;
+
+}
+.f3 {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #990000}
+.f2bg1 {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #FFFFFF; background-color: #0000CC}
+.f2bg {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #FFFFFF; background-color: #9b72cf;
+}
+.Bt1brd {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000033;
+	background-color: #F3F3F3;
+	border: 1px dotted #999999;
+}
+.Bt1brd2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000033;
+	border-top: 1px none #999999;
+	border-right: 1px none #999999;
+	border-bottom: 1px dotted #999999;
+	border-left: 1px none #999999;
+}
+.Bt1brd3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333333;
+	border-top: 1px solid #FF6600;
+	border-right: 1px none #FF6600;
+	border-bottom: 1px none #FF6600;
+	border-left: 1px none #FF6600;
+	background-color: #FEEFC7;
+}
+.Bt2 {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-top: 1px solid #FF6600;
+        border-right: 1px solid #FF6600;
+        border-bottom: 1px solid #FF6600;
+        border-left: 1px solid #FF6600;
+        background-color: #FEEFC7;
+}
+.Bt2f9 {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 9px;
+        color: #333333;
+        border-top: 1px solid #FF6600;
+        border-right: 1px solid #FF6600;
+        border-bottom: 1px solid #FF6600;
+        border-left: 1px solid #FF6600;
+        background-color: #FEEFC7;
+}
+
+.f1blkbg6 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	background-color: #EEEEEE;
+	font-weight: normal;
+}
+.Bt1brd7 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000033;
+	background-color: #D5E2EE;
+	border-top: 1px none #999999;
+	border-right: 1px dotted #999999;
+	border-bottom: 1px none #999999;
+	border-left: 1px dotted #999999;
+}
+.f1bg4 {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #000000; background-color: #DFE8FF; font-weight: normal
+}
+.f11bldbg4 {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; background-color: #DFE8FF; font-weight: bold
+}
+.f12bldbg4 {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; background-color: #DFE8FF; font-weight: bold
+.HD1f14 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; color: #666666}
+.HD1f12 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #666666}
+}

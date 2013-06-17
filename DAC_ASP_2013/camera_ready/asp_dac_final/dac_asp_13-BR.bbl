@@ -1,0 +1,59 @@
+\begin{thebibliography}{10}
+
+\bibitem{key-2}
+M.~Bertogna and M.~Cirinei.
+\newblock Response-time analysis for globally scheduled symmetric
+  multiprocessor platforms.
+\newblock In {\em RTSS}, pages 149--160, 2007.
+
+\bibitem{dellinger2011chronos}
+M.~Dellinger et~al.
+\newblock {ChronOS Linux}: a best-effort real-time multiprocessor {Linux}
+  kernel.
+\newblock In {\em DAC}, pages 474--479, 2011.
+
+\bibitem{key-5}
+U.~Devi et~al.
+\newblock Efficient synchronization under global {EDF} scheduling on
+  multiprocessors.
+\newblock In {\em ECRTS}, pages 10 pp. --84, 2006.
+
+\bibitem{lcmdac2012}
+M.~El-Shambakey and B.~Ravindran.
+\newblock {STM} concurrency control for embedded real-time software with
+  tighter time bounds.
+\newblock In {\em DAC}, pages 437--446, 2012.
+
+\bibitem{stmconcurrencycontrol:emsoft11}
+M.~El-Shambakey and B.~Ravindran.
+\newblock {STM} concurrency control for multicore embedded real-time software:
+  time bounds and tradeoffs.
+\newblock In {\em SAC}, pages 1602--1609, 2012.
+
+\bibitem{6045438}
+S.~Fahmy and B.~Ravindran.
+\newblock On {STM} concurrency control for multicore embedded real-time
+  software.
+\newblock In {\em SAMOS}, pages 1 --8, 2011.
+
+\bibitem{Guerraoui:2005:TTT:1073814.1073863}
+R.~Guerraoui et~al.
+\newblock Toward a theory of transactional contention managers.
+\newblock In {\em PODC}, pages 258--264, 2005.
+
+\bibitem{Harris:2005:CMT:1065944.1065952}
+T.~Harris, S.~Marlow, S.~P. Jones, and M.~Herlihy.
+\newblock Composable memory transactions.
+\newblock {\em Commun. ACM}, 51:91--100, Aug 2008.
+
+\bibitem{Herlihy:2006:AMP:1146381.1146382}
+M.~Herlihy.
+\newblock The art of multiprocessor programming.
+\newblock In {\em PODC}, pages 1--2, 2006.
+
+\bibitem{marathe2006lowering}
+V.~J. Marathe et~al.
+\newblock Lowering the overhead of nonblocking software transactional memory.
+\newblock In {\em TRANSACT}, 2006.
+
+\end{thebibliography}

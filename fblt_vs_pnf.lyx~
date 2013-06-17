@@ -1,0 +1,760 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\series bold
+BEGING_CLAIM
+\end_layout
+
+\begin_layout Standard
+Schedulability of FBLT is equal or better than PNF if: 1) For each transaction
+ 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+, maximum abort times 
+\begin_inset Formula $\delta_{i}^{k}$
+\end_inset
+
+ equals at most the ratio between difference of 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+total length of all transactions that can conflict only with 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ and total length of at most 
+\begin_inset Formula $m-1$
+\end_inset
+
+ longest transactions that can conflict directly or transitively with 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ to length of 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+.
+ 2) For any job 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+, ratio between longest transaction in 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ or lower priority jobs to smallest transaction in lower priority jobs equals
+ at most the ratio between 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+minimum number of times 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ can be blocked due to non-conflicting transactions in all lower priority
+ jobs to maximum release time of all jobs not belonging to 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+END_CLAIM
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+BEGIN_PROOF
+\end_layout
+
+\begin_layout Standard
+By substituting 
+\begin_inset Formula $RC_{A}(T_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $RC_{B}(T_{i})$
+\end_inset
+
+ in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+) with (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_rc"
+
+\end_inset
+
+) and (3) in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pnf_dac_asp"
+
+\end_inset
+
+ respectively.
+ Substituting 
+\begin_inset Formula $D_{A}(\tau_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $D_{B}(\tau_{i})$
+\end_inset
+
+ by (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_delay"
+
+\end_inset
+
+) and (4) in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pnf_dac_asp"
+
+\end_inset
+
+ respectively.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}len(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)+RC_{re}(T_{i})+\sum_{max\_m}\left\{ s_{j_{max},\forall\tau_{j}^{l},\, p_{j}^{l}<p_{i}^{x}}\right\} }{T_{i}}\label{eq:fblt_pnf_comparison_0}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\sum_{\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}}(\theta)}len\left(\bar{s_{j}^{h}}(\theta)\right)\right)+\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\ddot{s_{j}^{h}}}len\left(\ddot{s_{j}^{h}}\right)\right)\right\rfloor }{T_{i}}\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\bar{s_{j}^{h}}(\theta)$
+\end_inset
+
+ can access multiple objects.
+ 
+\begin_inset Formula $\bar{s_{j}^{h}}(\theta)$
+\end_inset
+
+ is included only once for all objects accessed by it.
+ 
+\begin_inset Formula $RC_{re}(T_{i})$
+\end_inset
+
+ is given by (6.8) in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "shambake_phd_proposal"
+
+\end_inset
+
+ in case of G-EDF, and (6.10) in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "shambake_phd_proposal"
+
+\end_inset
+
+ in case of G-RMA.
+ Substituting 
+\begin_inset Formula $RC_{re}(T_{i})=\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)s_{i_{max}}$
+\end_inset
+
+, covers 
+\begin_inset Formula $RC_{re}(T_{i})$
+\end_inset
+
+ given by (6.8) and (6.10) in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "shambake_phd_proposal"
+
+\end_inset
+
+ and maintains correctness of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_0"
+
+\end_inset
+
+).
+ 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_0"
+
+\end_inset
+
+) becomes 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}len(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)+\sum_{\forall\tau_{j}\in\zeta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)s_{i_{max}}+\sum_{max\_m}\left\{ s_{j_{max},\forall\bar{\tau_{j}^{l}}}\right\} }{T_{i}}\label{eq:fblt_pnf_comparison_1}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\sum_{\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}}(\theta)}len\left(\bar{s_{j}^{h}}(\theta)\right)\right)+\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\ddot{s_{j}^{h}}}len\left(\ddot{s_{j}^{h}}\right)\right)\right\rfloor }{T_{i}}\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\beta_{i}^{1}=\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}len(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)$
+\end_inset
+
+, 
+\begin_inset Formula $\beta_{i}^{2}=\sum_{\forall\tau_{j}\in\zeta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)s_{i_{max}}+\sum_{max\_m}\left\{ s_{j_{max},\forall\bar{\tau_{j}^{l}}}\right\} $
+\end_inset
+
+, 
+\begin_inset Formula $\beta_{i}^{3}=\sum_{\forall\tau_{j}\in\gamma_{i}}\sum_{\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}}(\theta)}len\left(\bar{s_{j}^{h}}(\theta)\right)\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{i}^{4}=\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\ddot{s_{j}^{h}}}len\left(\ddot{s_{j}^{h}}\right)\right)\right\rfloor $
+\end_inset
+
+.
+ So, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_1"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\beta_{i}^{1}+\beta_{i}^{2}}{T_{i}}\label{eq:fblt_pnf_comparison_2}\\
+\le & \sum_{\forall\tau_{i}}\frac{\beta_{i}^{3}+\beta_{i}^{4}}{T_{i}}\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_2"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula $\forall\,\tau_{i}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\beta_{i}^{1}+\beta_{i}^{2}\le\beta_{i}^{3}+\beta_{i}^{4}\label{eq:fblt_pnf_comparison_3}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_3"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula $\forall\,\tau_{i}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{eqnarray}
+\beta_{i}^{1}\le\beta_{i}^{3} & and & \beta_{i}^{2}\le\beta_{i}^{4}\label{eq:fblt_pnf_comparison_5}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+According to first part of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_5"
+
+\end_inset
+
+)
+\begin_inset Formula 
+\begin{equation}
+\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}len(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\right)\le\sum_{\forall\tau_{j}\in\gamma_{i}}\sum_{\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}}(\theta)}len\left(\bar{s_{j}^{h}}(\theta)\right)\right)\label{eq:fblt_pnf_comparison_6}
+\end{equation}
+
+\end_inset
+
+For each 
+\begin_inset Formula $s_{i}^{k}\in s_{i}$
+\end_inset
+
+, there are a set of zero or more 
+\begin_inset Formula $\bar{s_{j}^{h}}(\Theta)\in\tau_{j},\,\forall\tau_{j}\ne\tau_{i}$
+\end_inset
+
+ that are conflicting with 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+.
+ Assuming this set of conflicting transactions with 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ is denoted as 
+\begin_inset Formula $\eta_{i}^{k}(j)=\left\{ \bar{s_{j}^{h}}(\Theta)\in\tau_{j}:\left(\Theta\in\theta_{i}\right)\wedge\left(\tau_{j}\ne\tau_{i}\right)\wedge\left(\bar{s_{j}^{h}}(\Theta)\not\in\eta_{i}^{l},\, l\ne k\right)\right\} $
+\end_inset
+
+.
+ The last condition 
+\begin_inset Formula $\bar{s_{j}^{h}}(\Theta)\not\in\eta_{i}^{l},\, l\ne k$
+\end_inset
+
+ in definition of 
+\begin_inset Formula $\eta_{i}^{k}$
+\end_inset
+
+ ensures that common transactions 
+\begin_inset Formula $\bar{s_{j}^{h}}$
+\end_inset
+
+ that can conflict with more than one transaction 
+\begin_inset Formula $s_{i}^{k}\in\tau_{i}$
+\end_inset
+
+ are split among different 
+\begin_inset Formula $\eta_{i}^{k}(j),\, k=1,..,|s_{i}|$
+\end_inset
+
+.
+ This condition is necessary because in PNF, no two or more transactions
+ of 
+\begin_inset Formula $\tau_{i}^{x}$
+\end_inset
+
+ can be aborted by the same transaction of 
+\begin_inset Formula $\tau_{j}^{h}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\gamma_{i}^{k}$
+\end_inset
+
+ be subset of 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ that contains tasks with transactions conflicting directly with 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+.
+ By substitution of 
+\begin_inset Formula $\eta_{i}^{k}(j)$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{i}^{k}$
+\end_inset
+
+ in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_6"
+
+\end_inset
+
+), (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_6"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula $\forall\, s_{i}^{k}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\delta_{i}^{k}len(s_{i}^{k})+\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})\le\sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}}(\Theta)\in\eta_{i}^{k}(j)}len\left(\bar{s_{j}^{h}}(\Theta)\right)\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\therefore\,\delta_{i}^{k}\le\frac{\sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}}(\Theta)\in\eta_{i}^{k}(j)}len\left(\bar{s_{j}^{h}}(\theta)\right)\right)-\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})}{len(s_{i}^{k})}\label{eq:fblt_pnf_comparison_7}
+\end{equation}
+
+\end_inset
+
+By definition of 
+\begin_inset Formula $\eta_{i}^{k}(j)$
+\end_inset
+
+, if 
+\begin_inset Formula $\bar{s_{j}^{h}}(\Theta)$
+\end_inset
+
+ can conflict with 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{i}^{l}$
+\end_inset
+
+, then 
+\begin_inset Formula $\bar{s_{j}^{h}}(\Theta)$
+\end_inset
+
+ belongs either to 
+\begin_inset Formula $\eta_{i}^{k}$
+\end_inset
+
+ or 
+\begin_inset Formula $\eta_{i}^{l}$
+\end_inset
+
+, but not both.
+ Let 
+\begin_inset Formula $\bar{\eta_{i}^{k}}(j)=\eta_{i}^{k}(j)-\left\{\bar{s_{j}^{h}}(\Theta)|\bar{s_{j}^{h}}(\Theta)\, can\, belong\, to\,\eta_{i}^{l}\, where\, l\neq k\right\}$
+\end_inset
+
+.
+ So, 
+\begin_inset Formula $\bar{\eta_{i}^{k}}(j)$
+\end_inset
+
+ equals 
+\begin_inset Formula $\eta_{i}^{k}(j)$
+\end_inset
+
+ excluding any transaction that can belong to another 
+\begin_inset Formula $\eta_{i}^{l}(j),\, l\neq k$
+\end_inset
+
+.
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_7"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{equation}
+\therefore\,\delta_{i}^{k}\le\frac{\sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}}(\Theta)\in\bar{\eta_{i}^{k}}(j)}len\left(\bar{s_{j}^{h}}(\theta)\right)\right)-\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})}{len(s_{i}^{k})}\label{eq:fblt_pnf_comparison_8}
+\end{equation}
+
+\end_inset
+
+where 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\sum_{\forall\tau_{j}\in\gamma_{i}^{k}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{h}}(\Theta)\in\bar{\eta_{i}^{k}}(j)}len\left(\bar{s_{j}^{h}}(\theta)\right)\right)$
+\end_inset
+
+ is the total length of all transactions that can conflict only with 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\sum_{s_{iz}^{k}\in\chi_{i}^{k}}len(s_{iz}^{k})$
+\end_inset
+
+ is the total length of at most 
+\begin_inset Formula $m-1$
+\end_inset
+
+ longest transactions that can conflict directly or transitively with 
+\begin_inset Formula $s_{i}^{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+According to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_5"
+
+\end_inset
+
+) 
+\begin_inset Formula 
+\begin{equation}
+\sum_{\forall\tau_{j}\in\zeta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)s_{i_{max}}+\sum_{max\_m}\left\{ s_{j_{max},\forall\bar{\tau_{j}^{l}}}\right\} \le\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\ddot{s_{j}^{h}}}len\left(\ddot{s_{j}^{h}}\right)\right)\right\rfloor \label{eq:fblt_pnf_comparison_9}
+\end{equation}
+
+\end_inset
+
+Let 
+\begin_inset Formula $s_{i,j_{max}}=max_{\forall\,\bar{\tau_{j}^{l}}}(s_{i_{max}},s_{j_{max}})$
+\end_inset
+
+.
+ So, 
+\begin_inset Formula $s_{i,j_{max}}$
+\end_inset
+
+ is the maximum transactional length in any job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ or any lower priority job.
+ Let 
+\begin_inset Formula $s_{j_{min}}=min\left\{len(s_{j}^{h}),\,\forall s_{j}^{h}\in\bar{\tau_{j}^{l}}\right\}$
+\end_inset
+
+.
+ So, 
+\begin_inset Formula $s_{j_{min}}$
+\end_inset
+
+ is the smallest transactional length in any job of 
+\begin_inset Formula $\tau_{j}$
+\end_inset
+
+ with lower priority than any job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\because\,\sum_{max\_m}\left\{ s_{j_{max},\forall\bar{\tau_{j}^{l}}}\right\} \le\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)s_{i,j_{max}}$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_9"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula 
+\begin{equation}
+\sum_{\forall\tau_{j}\in\zeta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)s_{i,j_{max}}+\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)s_{i,j_{max}}\le\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)|\ddot{s_{j}^{h}}|\, s_{j_{min}}\right)\right\rfloor \label{eq:fblt_pnf_comparison_10}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\because\,\zeta_{i}$
+\end_inset
+
+ includes all jobs with higher priority than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+, and 
+\begin_inset Formula $\bar{\tau_{j}^{l}}$
+\end_inset
+
+ includes all jobs with lower priority than 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $\therefore$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_10"
+
+\end_inset
+
+) holds if 
+\begin_inset Formula $\forall\,\tau_{i}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+\sum_{\forall\tau_{j}\neq\tau_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)s_{i,j_{max}}\le\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)|\ddot{s_{j}^{h}}|\, s_{j_{min}}\right)\right\rfloor 
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\therefore\,\frac{s_{i,j_{max}}}{s_{j_{min}}}\le\frac{\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)|\ddot{s_{j}^{h}}|\right)\right\rfloor }{\sum_{\forall\tau_{j}\neq\tau_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)}\label{eq:fblt_pnf_comparison_11}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)|\ddot{s_{j}^{h}}|\right)\right\rfloor $
+\end_inset
+
+ is the minimum number of times any job of 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ can be blocked due to non-conflicting transactions in all lower priority
+ jobs.
+ 
+\begin_inset Formula $\sum_{\forall\tau_{j}\neq\tau_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)$
+\end_inset
+
+ is the maximum release time of all jobs not belonging to 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+.
+ From (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_8"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fblt_pnf_comparison_11"
+
+\end_inset
+
+), Claim follows.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+END_PROOR
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,33 @@
+Mohammed,
+
+Here is the paper. I have proof-read the whole paper, made several edits, and have comments for you (start with %%BR). 
+
+Address all my comments (and delete my comments after doing so, so that we can easily keep track of things).
+
+Few other comments:
+
+- We now are exactly at 6 pages. Addressing my comments may cause you to exceed the 6 page limit. If that happens, here are ways to reduce space:
+* remove one sentence in Conclusions that describe a non-critical conclusion
+* remove 1 or 2 non-critical reference
+* send the paper to me!
+
+- We now have ~2.75 pages of Supplementary Material, giving you almost 1.25 pages of additional space. Include as much additional plots as possible and take advantage of this previous space! You must absolutely do this! (Toward the end of the Experimental Section, I indicate how you cite this additional results:
+"We repeated the experiments by varying .....additional results are included in the Supplementary Material section.")
+
+Other editorial-type comments (for this paper and all future papers):
+
+- Use the new title in the submission website and as many places that you can that will let you.
+
+- Use consistent style for section/subsection headings (capital for the first letter of each word). I have fixed this.
+
+- abortion versus abort. Use abort, as the word "abortion" has a -ve connotation and may offend some reviewers. I have fixed this.
+
+- Proofs of claims. For the first Claim's proof, I have said that, all proofs are in the Supplementary Material section. So you don't have to repeat it. 
+
+- Don't they need ACM's standard classification, keywords, general terms, etc. right after the abstract?
+
+- For reference 6, you must include the URL for the SAC paper. (I have included the \url{} command in the .bib for this entry. So just include the URL: Send me the SAC paper and I will post it at the lab website and will give you the URL.)
+
+- page #s for reference 13?
+
+- One of the comments in the paper about "confidence interval" try to calculate it and put it in figures.

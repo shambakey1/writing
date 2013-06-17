@@ -1,0 +1,59 @@
+\select@language {english}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Maximum interference between two tasks, running on different processors, under G-EDF}}{9}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Maximum interference during an interval $L$ of $T_{i}$}}{10}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Retry of $s_i^k(\theta )$ due to $s_j^l(\theta )$}}{10}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Early validation}}}{10}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Lazy validation with $len(s_{i}^{k}(\theta ))\le len(s_{j}^{l}(\theta ))$}}}{10}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Lazy validation with $len(s_{i}^{k}(\theta ))>len(s_{j}^{l}(\theta ))$}}}{10}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Retry of $s_i^p(\theta )$ due to other atomic sections}}{12}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Other atomic sections interfere only with $s_i^p(\theta )$}}}{12}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {All atomic sections interfere with each other and $s_i^p(\theta )$}}}{12}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Values associated with $s_{max}^{*}(\theta )$}}{13}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Atomic sections of job $\tau _{j}^{1}$ contributing to period $T_i$}}{14}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Max interference of $\tau _{j}$ to $\tau _{i}$ in G-RMA}}{16}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Effect of $\left \delimiter "4264306 \frac {T_{i}}{T_{j}}\right \delimiter "5265307 $ on $\frac {s_{max}}{r_{max}}$}}{19}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Task association for lower priority tasks than $T_i$ and higher priority tasks than $T_k$}}{21}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Change of $s_{max}/r_{max}$: a) $\frac {s_{max}}{r_{max}}$ versus $\beta _{i,j}$ and b) $\frac {s_{max}}{r_{max}}$ versus $\beta _{k,l}$}}{22}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{22}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{22}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Interference of $s_{i}^{k}(\theta )$ by various lengths of $s_{j}^{l}(\theta )$}}{25}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces $\tau _h^p$ has a higher priority than $\tau _i^x$}}{28}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Transactional retry due to release of higher priority tasks}}{46}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Task retry costs under LCM and competitor synchronization methods}}{56}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Task set 1}}}{56}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Task set 2}}}{56}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Task set 3}}}{56}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Task response times under LCM and competitor synchronization methods}}{57}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Task set 1}}}{57}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Task set 2}}}{57}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Task set 3 }}}{57}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.5,0.2,0.2)}}{58}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Task set 1}}}{58}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Task set 2}}}{58}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Task set 3}}}{58}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.5,0.2,0.2)}}{59}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Task set 1}}}{59}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Task set 2}}}{59}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Task set 3 }}}{59}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.8,0.5,0.2)}}{60}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Task set 1}}}{60}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Task set 2}}}{60}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Task set 3}}}{60}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.8,0.5,0.2)}}{61}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Task set 1}}}{61}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Task set 2}}}{61}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Task set 3 }}}{61}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Average retry cost for 1 object per transaction for different values of total, maximum and minimum atomic section length under: a) all synchronization techniques. b) only contention managers. }}{64}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {ECM, RCM, LCM, PNF, Lock-Free}}}{64}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {ECM, RCM, LCM, PNF}}}{64}
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Average retry cost for different values of total, maximum and minimum atomic section length for: a) 4 tasks. b) 8 tasks. c) 20 tasks. }}{65}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Task set 1}}}{65}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Task set 2}}}{65}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Task set 3}}}{65}
+\addvspace {10\p@ }

@@ -1,0 +1,56 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: FBLT.aux
+The style file: plain.bst
+Database file #1: /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib
+I was expecting a `,' or a `}'---line 481 of file /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib
+ :   
+ :   year={2006}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 2047 of file /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib
+ :     
+ :     %address  = "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You've used 3 entries,
+            2118 wiz_defined-function locations,
+            514 strings with 4574 characters,
+and the built_in function-call counts, 1071 in all, are:
+= -- 105
+> -- 38
+< -- 1
++ -- 15
+- -- 12
+* -- 57
+:= -- 167
+add.period$ -- 9
+call.type$ -- 3
+change.case$ -- 15
+chr.to.int$ -- 0
+cite$ -- 3
+duplicate$ -- 54
+empty$ -- 91
+format.name$ -- 12
+if$ -- 239
+int.to.chr$ -- 0
+int.to.str$ -- 3
+missing$ -- 2
+newline$ -- 18
+num.names$ -- 6
+pop$ -- 22
+preamble$ -- 1
+purify$ -- 12
+quote$ -- 0
+skip$ -- 45
+stack$ -- 0
+substring$ -- 60
+swap$ -- 22
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 12
+warning$ -- 0
+while$ -- 8
+width$ -- 4
+write$ -- 34
+(There were 2 error messages)

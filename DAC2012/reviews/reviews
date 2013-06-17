@@ -1,0 +1,179 @@
+1=unacceptable; 2=poor; 3=marginal; 4=good; 5=excellent
+
+139-QE784
+Real-Time Length-based Contention Management for STM
+
+Reviewer ID: 92895
+Overall Recommendation:
+2 - Possible Reject
+How novel or worthwhile are the ideas in the papers?
+3
+How adequately is the existing literature referenced?
+5
+How clearly is the technical contribution described?
+5
+How well are the claims and conclusions supported?
+4
+How well are the advantages and limitations described?
+4
+How well is the paper organized?
+5
+How clear is the author's use of English?
+4
+How effectively does the author use tables, figures and pictures?
+2
+
+COMMENTS TO THE AUTHOR
+Summary:
+The paper presents an extension to existing techniques for contention management (EDF, RMA) in STM systems that satisfy real time constraints. The presented CM algorithm considers the length of a transaction (LCM). Length in this case means run time (total run time is known a-priori) not number of accesses in a transaction. The claim is that the developed G-EDF/LCM and G-RMA/LCM have shorter or comparable retry costs and response times than other synchronization techniques.
+
+Strength of this paper:
+The introduction and related work are written in an easily understandable way. The preliminaries section clearly states which assumptions are made and introduces the terminology for the following claims. The claims of this paper are backed with proofs in the appendix.
+
+Weaknesses of this paper:
+* Transactions are limited to access only one object at a time (cf. Section 3. Preliminaries). This assumption may be necessary for the proofs of the real-time capabilities but it is beyond any practical consideration. If a transaction is limited to access only one object, the semantics of TM, that guarantee atomicity for an arbitrary number of memory accesses, are weakened. Further, the usefulness of a length-based CM is restricted if the length of a transaction is restricted because it can only access one object. I believe that working at lifting this assumption would make the approach more practical and substantially increase the impact of the paper.
+* The paper is based very closely on previous work [6]. Unfortunately, [6] is not published and, thus, not available yet. This makes it hard to verify the novelty of this approach and even impossible to follow one of the proofs (Proof of Claim 5) because it refers to "Claim 1 in [6]". The same holds for Section 4.5 that refers to equation (17) [6] and Section 4.5 that refers to (11) in [6].
+In terms of results, this paper seems to provide similar results for a slightly improved version (Length-based CM) of the CM (EDF, RMA) used in the previous paper.
+* Presentation of the paper does not meet the standards of a major conference:
+- Figure 3, 5, 7 are impossible to read because the results that matter are too small compared with lock-free synchronization. Figure 4 and 6 are still hard to read. LD-EDF is not introduced as abbreviation.
+- Tasks with ids 1.5 2.5 3.5 exist on the x-axis of the figures.
+- Claim 4.5 does not respect the boundaries of the text column.
+- S.10 Extended results refers to figures that are not present in the paper.
+* Experimental setup considers only one memory location that is accessed by all transactions. This may be a nice worst-case scenario but it remains unclear how this experiment should represent the average retry costs in a transactional memory application that may access thousands of memory locations.
+* The supplementary material contributes the proofs to the claims in the paper. If this is not published, a substantial part of the contribution of the paper is lost.
+
+Recommendation:
+Resubmit to a conference/journal with less space constraints, when paper [6] has been published and reviewers can more easily assess the novelty of this paper.
+
+============================================================
+
+Reviewer ID: 62830
+Overall Recommendation:
+5 - Accept
+How novel or worthwhile are the ideas in the papers?
+4
+How adequately is the existing literature referenced?
+5
+How clearly is the technical contribution described?
+5
+How well are the claims and conclusions supported?
+4
+How well are the advantages and limitations described?
+4
+How well is the paper organized?
+5
+How clear is the author's use of English?
+5
+How effectively does the author use tables, figures and pictures?
+4
+
+COMMENTS TO THE AUTHOR
+This paper address an important problem in STM and presents a solution with complete analysis and?support it with empirical data through?experimentation. The authors clearly outline the research area, identifies the limitations in this area, ?and clearly explains the problem at hand, their solution and the contributions of this paper as well as the limitations of the current solution. Few minor comments on improving the paper,?specifically?the graph in page 5-6. The numbers are very hard to read because of the scale of LF-EDF. I suggest that you make the scale based on ECM/LCM-EDF and actually write the actual values of LF-EDF with a broken bar. It is important for the reader to be able to see the?comparison?between the bars representing ECM & RCM and other bars representing LCM-EDF and LCM-RMA.?
+
+============================================================
+
+Reviewer ID: 77623
+Overall Recommendation:
+5 - Accept
+How novel or worthwhile are the ideas in the papers?
+5
+How adequately is the existing literature referenced?
+4
+How clearly is the technical contribution described?
+4
+How well are the claims and conclusions supported?
+4
+How well are the advantages and limitations described?
+4
+How well is the paper organized?
+4
+How clear is the author's use of English?
+3
+How effectively does the author use tables, figures and pictures?
+3
+
+COMMENTS TO THE AUTHOR
+This paper presents a refinement of conflict management for transactional memory (TM) in real-time systems that doesn't just rely on the priority of the tasks, but factors in the amount of progress that a lower priority task has made. This allows a bounded priority inversion in exchange for which lower priority tasks make more progress, and less time is wasted (overall) on retries.
+
+Although I'm not a big believer in TM myself, I think this is a good contribution to advance the state of the art in the use of TM in real-time systems. I would not have expected TM to be usable in such an environment, but this work makes that plausible.
+
+Some assumptions, however, which seem less realistic are that each task only accesses one data structure at a time, and that the set of atomic sections s_i is the same on each task release.
+
+The term "comparable" should be quantified. How much worse is your scheme at low task ID values?
+
+The figures obscure results where the numbers are small and close together. Consider using a log y-axis or some other way of making them clear.
+
+The writing overall is good and clear, but there are a lot of small errors, eg in 4 "besides the length" should be "in addition to the length", "it is interfered" should be "it is interfered with".
+
+Another presentation weakness is reliance on figures in the appendix (fig 7) and formulas in other papers.
+
+1, "TM provides performance" -> "TM sometimes provides performance"
+
+2, "advantages over locks...deadlock freedom" -- for which they exchange the possibility of retry-based starvation.
+
+2, "Uniprocessors do not need contention management" -- Huh? Sure they do.
+
+4, "\in ]0,\infty[" -- is the reversed bracket some notation I don't know, or did you mean [0,\infty]?
+
+============================================================
+
+Reviewer ID: 71606
+Overall Recommendation:
+5 - Accept
+How novel or worthwhile are the ideas in the papers?
+4
+How adequately is the existing literature referenced?
+4
+How clearly is the technical contribution described?
+4
+How well are the claims and conclusions supported?
+4
+How well are the advantages and limitations described?
+4
+How well is the paper organized?
+5
+How clear is the author's use of English?
+5
+How effectively does the author use tables, figures and pictures?
+5
+
+COMMENTS TO THE AUTHOR
+The paper presented a length based contention management (LCM) scheme to handle fine-grained concurrency. ?The paper is well-structured and well-written. ?The logical flow is clear and the claims made in the pare are convincing. ?A good paper!
+
+============================================================
+
+Reviewer ID: 24482
+Overall Recommendation:
+2 - Possible Reject
+How novel or worthwhile are the ideas in the papers?
+3
+How adequately is the existing literature referenced?
+4
+How clearly is the technical contribution described?
+2
+How well are the claims and conclusions supported?
+1
+How well are the advantages and limitations described?
+3
+How well is the paper organized?
+2
+How clear is the author's use of English?
+4
+How effectively does the author use tables, figures and pictures?
+3
+
+COMMENTS TO THE AUTHOR
+The paper presents a concurrency control scheme for a software transactional memory system.
+
+Strengths:
+* The techniques have been evaluated against a real machine (no simulation) running a real-time Linux kernel and a modified RSTM library.
+
+Weaknesses:
+* The abstract contains far too many acronyms. This makes the abstract very hard to read and understand for a reader who is not immediately familiar with all these acronyms. (the same applies to some extent to the introduction of the paper).
+* The paper is quite heavily oriented towards a formal presentation based on scheduling theory. While this is a benefit in terms of accuracy of description in this paper the high-level presentation of the key ideas has suffered. It would have been beneficial to use some of the space to give a plain English description of the key ideas before presenting the details.
+* The task sets used in the evaluation aren't explained. Are these synthetically generated task sets, or do they represent any particular application (benchmark?). Without this information it is difficult to see how these task sets were chosen or whether their design is biased to favour the techniques presented in this paper. In my opinion, this makes devalues the complete empirical evaluation.
+* The paper is quite long due to an included appendix. Please include this material in the main body of the paper or drop it altogether.
+
+============================================================
+
+

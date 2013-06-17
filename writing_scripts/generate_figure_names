@@ -1,0 +1,61 @@
+#!/bin/bash
+
+##########################################################################################
+##############	  THIS SCRIPT TO GENERATE LATEX "\BEGIN{FIGURE}"	##################
+##############	AND "\END{FIGURE}" ENVIRONMENTS FOR INCLUDED FIGURES	##################
+##########################################################################################
+
+scale=0.6
+
+for((c=30;c<=30;c+=30))
+do
+	#Change total_per
+	for tt in 2 5 8
+	do
+		t=0.$tt
+		#Change Max_per
+		for((jj=2;jj<=$tt;jj+=3))
+		do
+			j=0.$jj
+			#Change Min_per
+			for((kk=2;kk<=$jj;kk+=3))
+			do
+				k=0.$kk
+				for g_name in Abr_dur Res_Time
+				# Traverse through graphic name (i. e., abort duration or response time,.. etc)
+				do
+				if [ $g_name == "Abr_dur" ] ; then
+					tmp_caption="Task retry costs under LCM and competitor synchronization methods"
+					tmp_label="fig:RC_results"
+				elif [ $g_name == "Res_Time" ] ; then
+					tmp_caption="Task response times under LCM and competitor synchronization methods"
+					tmp_label="fig:res_results"
+				fi
+					echo "\begin{figure}[!htpd]
+\centering
+\subfigure[Task set 1]{
+\includegraphics[scale="$scale"]
+{figures/"$g_name"_5t_nl_g_"$c"_"$t"_"$j"_"$k"_1.eps}
+\label{"$g_name"_5t_nl_g_"$c"_"$t"_"$j"_"$k"_1.eps}
+}
+\subfigure[Task set 2]{
+\includegraphics[scale="$scale"]
+{figures/"$g_name"_10t_nl_g_"$c"_"$t"_"$j"_"$k"_1.eps}
+\label{"$g_name"_10t_nl_g_"$c"_"$t"_"$j"_"$k"_1.eps}
+}
+\subfigure[Task set 3]{
+\includegraphics[scale=0.6]
+{figures/"$g_name"_12t_nl_g_"$c"_"$t"_"$j"_"$k"_1.eps}
+\label{"$g_name"_12t_nl_g_"$c"_"$t"_"$j"_"$k"_1.eps}
+}
+\caption{"$tmp_caption" ("$t","$j","$k")}
+\label{"$tmp_label" "$t" "$j" "$k"}
+\end{figure}
+%
+"
+				done
+			done
+		done
+	done
+done
+

@@ -1,0 +1,148 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Anderson, Ramamurthy, and Jeffay}{Anderson
+  et~al\mbox{.}}{1995}]{anderson95realtime}
+{\sc Anderson, J.}, {\sc Ramamurthy, S.}, {\sc and} {\sc Jeffay, K.} 1995.
+\newblock Real-time computing with lock-free shared objects.
+\newblock In {\em RTSS}. 28--37.
+
+\bibitem[\protect\citeauthoryear{Barros and Pinho}{Barros and
+  Pinho}{2011}]{barrosmanaging}
+{\sc Barros, A.} {\sc and} {\sc Pinho, L.} 2011.
+\newblock Managing contention of software transactional memory in real-time
+  systems.
+\newblock In {\em IEEE RTSS, Work-In-Progress}.
+
+\bibitem[\protect\citeauthoryear{Brandenburg, Calandrino, Block, Leontyev, and
+  Anderson}{Brandenburg et~al\mbox{.}}{2008}]{bc+08}
+{\sc Brandenburg, B.}, {\sc Calandrino, J.}, {\sc Block, A.}, {\sc Leontyev,
+  H.}, {\sc and} {\sc Anderson, J.} 2008.
+\newblock Real-time synchronization on multiprocessors: To block or not to
+  block, to suspend or spin?
+\newblock In {\em Real-Time and Embedded Technology and Applications Symposium,
+  2008. RTAS '08. IEEE}. 342 --353.
+
+\bibitem[\protect\citeauthoryear{Davis and Burns}{Davis and
+  Burns}{2011}]{Davis:2011:SHR:1978802.1978814}
+{\sc Davis, R.~I.} {\sc and} {\sc Burns, A.} 2011.
+\newblock A survey of hard real-time scheduling for multiprocessor systems.
+\newblock {\em ACM Comput. Surv.\/}~{\em 43,\/}~4, 35:1--35:44.
+
+\bibitem[\protect\citeauthoryear{Dellinger, Garyali, and Ravindran}{Dellinger
+  et~al\mbox{.}}{2011}]{dellinger2011chronos}
+{\sc Dellinger, M.}, {\sc Garyali, P.}, {\sc and} {\sc Ravindran, B.} 2011.
+\newblock Chronos linux: a best-effort real-time multiprocessor linux kernel.
+\newblock In {\em Proceedings of the 48th Design Automation Conference}. DAC
+  '11. ACM, New York, NY, USA, 474--479.
+
+\bibitem[\protect\citeauthoryear{Devi, Leontyev, and Anderson}{Devi
+  et~al\mbox{.}}{2006}]{key-5}
+{\sc Devi, U.}, {\sc Leontyev, H.}, {\sc and} {\sc Anderson, J.} 2006.
+\newblock Efficient synchronization under global edf scheduling on
+  multiprocessors.
+\newblock In {\em 18th Euromicro Conference on Real-Time Systems}. 10 pp. --84.
+
+\bibitem[\protect\citeauthoryear{El-Shambakey}{El-Shambakey}{2012}]{shambake_p%
+hd_proposal}
+{\sc El-Shambakey, M.} 2012.
+\newblock Phd proposal.
+\newblock Ph.D. thesis, Virginia Tech.
+
+\bibitem[\protect\citeauthoryear{El-Shambakey and Ravindran}{El-Shambakey and
+  Ravindran}{2012a}]{lcmdac2012}
+{\sc El-Shambakey, M.} {\sc and} {\sc Ravindran, B.} 2012a.
+\newblock Stm concurrency control for embedded real-time software with tighter
+  time bounds.
+\newblock In {\em Proceedings of the 49th Annual Design Automation Conference}.
+  DAC '12. ACM, New York, NY, USA, 437--446.
+
+\bibitem[\protect\citeauthoryear{El-Shambakey and Ravindran}{El-Shambakey and
+  Ravindran}{2012b}]{stmconcurrencycontrol:emsoft11}
+{\sc El-Shambakey, M.} {\sc and} {\sc Ravindran, B.} 2012b.
+\newblock Stm concurrency control for multicore embedded real-time software:
+  time bounds and tradeoffs.
+\newblock In {\em Proceedings of the 27th Annual ACM Symposium on Applied
+  Computing}. SAC '12. ACM, New York, NY, USA, 1602--1609.
+
+\bibitem[\protect\citeauthoryear{Fahmy and Ravindran}{Fahmy and
+  Ravindran}{2011}]{6045438}
+{\sc Fahmy, S.} {\sc and} {\sc Ravindran, B.} 2011.
+\newblock On stm concurrency control for multicore embedded real-time software.
+\newblock In {\em International Conference on Embedded Computer Systems}.
+  SAMOS. 1 --8.
+
+\bibitem[\protect\citeauthoryear{Fahmy, Ravindran, and Jensen}{Fahmy
+  et~al\mbox{.}}{2009}]{fahmy2009bounding}
+{\sc Fahmy, S.}, {\sc Ravindran, B.}, {\sc and} {\sc Jensen, E.~D.} 2009.
+\newblock On bounding response times under software transactional memory in
+  distributed multiprocessor real-time systems.
+\newblock In {\em DATE}. 688--693.
+
+\bibitem[\protect\citeauthoryear{Fahmy}{Fahmy}{2010}]{key-1}
+{\sc Fahmy, S.~F.} 2010.
+\newblock Collaborative scheduling and synchronization of distributable
+  real-time threads.
+\newblock Ph.D. thesis, Virginia Tech.
+
+\bibitem[\protect\citeauthoryear{Guerraoui, Herlihy, and Pochon}{Guerraoui
+  et~al\mbox{.}}{2005}]{Guerraoui:2005:TTT:1073814.1073863}
+{\sc Guerraoui, R.}, {\sc Herlihy, M.}, {\sc and} {\sc Pochon, B.} 2005.
+\newblock Toward a theory of transactional contention managers.
+\newblock In {\em PODC}. 258--264.
+
+\bibitem[\protect\citeauthoryear{Harris, Marlow, Jones, and Herlihy}{Harris
+  et~al\mbox{.}}{2008}]{Harris:2005:CMT:1065944.1065952}
+{\sc Harris, T.}, {\sc Marlow, S.}, {\sc Jones, S.~P.}, {\sc and} {\sc Herlihy,
+  M.} 2008.
+\newblock Composable memory transactions.
+\newblock {\em Commun. ACM\/}~{\em 51}, 91--100.
+
+\bibitem[\protect\citeauthoryear{Herlihy}{Herlihy}{2006}]{Herlihy:2006:AMP:114%
+6381.1146382}
+{\sc Herlihy, M.} 2006.
+\newblock The art of multiprocessor programming.
+\newblock In {\em PODC}. 1--2.
+
+\bibitem[\protect\citeauthoryear{Herlihy, Luchangco, Moir, and Scherer}{Herlihy
+  et~al\mbox{.}}{2003}]{Herlihy:2003:STM:872035.872048}
+{\sc Herlihy, M.}, {\sc Luchangco, V.}, {\sc Moir, M.}, {\sc and} {\sc Scherer,
+  III, W.~N.} 2003.
+\newblock Software transactional memory for dynamic-sized data structures.
+\newblock In {\em Proceedings of the twenty-second annual symposium on
+  Principles of distributed computing}. PODC '03. ACM, New York, NY, USA,
+  92--101.
+
+\bibitem[\protect\citeauthoryear{Manson, Baker, et~al\mbox{.}}{Manson
+  et~al\mbox{.}}{2006}]{manson2006preemptible}
+{\sc Manson, J.}, {\sc Baker, J.}, {\sc et~al\mbox{.}} 2006.
+\newblock Preemptible atomic regions for real-time {Java}.
+\newblock In {\em RTSS}. 10--71.
+
+\bibitem[\protect\citeauthoryear{Marathe, Spear, Heriot, Acharya, Eisenstat,
+  Scherer~III, and Scott}{Marathe et~al\mbox{.}}{}]{marathe2006lowering}
+{\sc Marathe, V.}, {\sc Spear, M.}, {\sc Heriot, C.}, {\sc Acharya, A.}, {\sc
+  Eisenstat, D.}, {\sc Scherer~III, W.}, {\sc and} {\sc Scott, M.}
+\newblock Lowering the overhead of nonblocking software transactional memory.
+\newblock In {\em Workshop on Languages, Compilers, and Hardware Support for
+  Transactional Computing}. TRANSACT.
+
+\bibitem[\protect\citeauthoryear{Saha, Adl-Tabatabai, et~al\mbox{.}}{Saha
+  et~al\mbox{.}}{2006}]{Saha:2006:MHP:1122971.1123001}
+{\sc Saha, B.}, {\sc Adl-Tabatabai, A.-R.}, {\sc et~al\mbox{.}} 2006.
+\newblock {McRT-STM}: a high performance software transactional memory system
+  for a multi-core runtime.
+\newblock In {\em PPoPP}. 187--197.
+
+\bibitem[\protect\citeauthoryear{Sarni, Queudet, and Valduriez}{Sarni
+  et~al\mbox{.}}{2009}]{sarni2009real}
+{\sc Sarni, T.}, {\sc Queudet, A.}, {\sc and} {\sc Valduriez, P.} 2009.
+\newblock Real-time support for software transactional memory.
+\newblock In {\em RTCSA}. 477--485.
+
+\bibitem[\protect\citeauthoryear{Schoeberl, Brandner, and Vitek}{Schoeberl
+  et~al\mbox{.}}{2010}]{schoeberl2010rttm}
+{\sc Schoeberl, M.}, {\sc Brandner, F.}, {\sc and} {\sc Vitek, J.} 2010.
+\newblock {RTTM}: Real-time transactional memory.
+\newblock In {\em ACM SAC}. 326--333.
+
+\end{thebibliography}

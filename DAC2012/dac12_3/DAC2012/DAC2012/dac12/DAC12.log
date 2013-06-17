@@ -1,0 +1,968 @@
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2011.1.17)  5 DEC 2011 17:23
+entering extended mode
+ %&-line parsing enabled.
+**DAC12.tex
+(./DAC12.tex
+LaTeX2e <2005/12/01>
+Babel <v3.8h> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(./sig-alternate.cls (/usr/share/texmf-texlive/tex/latex/graphics/epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 90.
+
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2007/01/08 v0.04d Graphics/color for pdfTeX
+\Gread@gobject=\count79
+))
+\Gin@req@height=\dimen102
+\Gin@req@width=\dimen103
+)
+\epsfxsize=\dimen104
+\epsfysize=\dimen105
+)
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\@emptytoks=\toks15
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip41
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks16
+\ex@=\dimen106
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen107
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count80
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count81
+\leftroot@=\count82
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count83
+\DOTSCASE@=\count84
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen108
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count85
+\c@MaxMatrixCols=\count86
+\dotsspace@=\muskip10
+\c@parentequation=\count87
+\dspbrk@lvl=\count88
+\tag@help=\toks17
+\row@=\count89
+\column@=\count90
+\maxfields@=\count91
+\andhelp@=\toks18
+\eqnshift@=\dimen109
+\alignsep@=\dimen110
+\tagshift@=\dimen111
+\tagwidth@=\dimen112
+\totwidth@=\dimen113
+\lineht@=\dimen114
+\@envbody=\toks19
+\multlinegap=\skip42
+\multlinetaggap=\skip43
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+Document Class 'sig-alternate' <22nd. April '09>. Modified by G.K.M. Tobin/Gerr
+y Murray
+Based in part upon document Style `acmconf' <22 May 89>. Hacked 4/91 by
+shivers@cs.cmu.edu, 4/93 by theobald@cs.mcgill.ca
+Excerpts were taken from (Journal Style) 'esub2acm.cls'.
+****** Bugs/comments/suggestions/technicalities to Gerry Murray -- murray@hq.ac
+m.org ******
+Questions on the style, SIGS policies, etc. to Adrienne Griscti griscti@acm.org
+
+\footheight=\dimen115
+\@maxsep=\dimen116
+\@dblmaxsep=\dimen117
+\aucount=\count92
+\originalaucount=\count93
+\auwidth=\dimen118
+\auskip=\dimen119
+\auskipcount=\count94
+\auskip=\dimen120
+\allauboxes=\dimen121
+\addauthors=\toks21
+\addauflag=\count95
+\subtitletext=\toks22
+\savesection=\count96
+\sectioncntr=\count97
+\c@figure=\count98
+\c@table=\count99
+\titleboxnotes=\toks23
+\titleboxnoteflag=\count100
+Document Class: sig-alternate 2009/04/22 - V2.4 - based on acmproc.cls V1.3 <No
+v. 30 '99>
+(/usr/share/texmf-texlive/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+)
+\@acmtitlebox=\box28
+\titlenotecount=\count101
+\tntoks=\toks24
+\tntokstwo=\toks25
+\tntoksthree=\toks26
+\tntoksfour=\toks27
+\tntoksfive=\toks28
+\catcount=\count102
+\copyrightnotice=\toks29
+\conf=\toks30
+\confinfo=\toks31
+\c@part=\count103
+\c@section=\count104
+\c@subsection=\count105
+\c@subsubsection=\count106
+\c@paragraph=\count107
+
+Using 'Abbrev' bibliography style
+LaTeX Info: Redefining \cite on input line 1211.
+\bibindent=\dimen122
+\colcntr=\count108
+\saveb@x=\box29
+\copyrtyr=\toks32
+\acmcopyr=\toks33
+\boilerplate=\toks34
+\copyrightetc=\toks35
+(/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+(/usr/share/texmf-texlive/tex/latex/base/t1enc.def
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+)
+LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
+
+(/usr/share/texmf-texlive/tex/latex/ae/t1aer.fd
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+)))
+(/usr/share/texmf-texlive/tex/latex/paralist/paralist.sty
+Package: paralist 2002/03/18 v2.3b Extended list environments (BS)
+\pltopsep=\skip44
+\plpartopsep=\skip45
+\plitemsep=\skip46
+\plparsep=\skip47
+\pl@lab=\toks36
+)
+(/usr/share/texmf-texlive/tex/latex/comment/comment.sty
+\CommentStream=\write3
+
+Excluding comment 'comment') (/usr/share/texmf-texlive/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 149.
+LaTeX Info: Redefining \nocite on input line 214.
+Package: cite 2003/11/04  v 4.01
+) (/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip48
+\subfigcapskip=\skip49
+\subfigcaptopadj=\dimen123
+\subfigbottomskip=\skip50
+\subfigcapmargin=\dimen124
+\subfiglabelskip=\skip51
+\c@subfigure=\count109
+\c@lofdepth=\count110
+\c@subtable=\count111
+\c@lotdepth=\count112
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip52
+\subfig@bottom=\skip53
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip11
+Package: url 2005/06/27  ver 3.2  Verb mode for urls, etc.
+) (./algorithm2e.sty
+Package: algorithm2e 2008/00/00 v3.10 algorithms environments
+\c@AlgoLine=\count113
+
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf-texlive/tex/latex/tools/xspace.sty
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/relsize.sty
+Package: relsize 2003/07/04 ver 3.1
+
+
+Package relsize Warning: Failed to get list of font sizes.
+(relsize)                Falling back to old definition. on input line 81.
+
+)
+********************************************************
+Package `algorithm2e' Release 4.01 -- december 14 2009 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip54
+\skiplinenumber=\skip55
+\skiprule=\skip56
+\skiphlne=\skip57
+\skiptext=\skip58
+\skiplength=\skip59
+\algomargin=\skip60
+\skipalgocfslide=\skip61
+\algowidth=\dimen125
+\inoutsize=\dimen126
+\inoutline=\dimen127
+\interspacetitleruled=\dimen128
+\interspacealgoruled=\dimen129
+\interspacetitleboxruled=\dimen130
+\algocf@inoutbox=\box30
+\algocf@inputbox=\box31
+\AlCapSkip=\skip62
+\AlCapHSkip=\skip63
+\algocf@nlbox=\box32
+\algocf@hangingbox=\box33
+\algocf@capbox=\box34
+\algoheightruledefault=\skip64
+\algoheightrule=\skip65
+\algotitleheightruledefault=\skip66
+\algotitleheightrule=\skip67
+\c@algocfline=\count114
+\c@algocfproc=\count115
+\c@algocf=\count116
+\algocf@algoframe=\box35
+\algocf@algobox=\box36
+)
+\c@clm=\count117
+ (./DAC12.aux)
+\openout1 = `DAC12.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+ (/usr/share/texmf/tex/context/base/supp-pdf.tex
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count118
+\scratchdimen=\dimen131
+\scratchbox=\box37
+\nofMPsegments=\count119
+\nofMParguments=\count120
+\everyMPshowfont=\toks37
+\MPscratchCnt=\count121
+\MPscratchDim=\dimen132
+\MPnumerator=\count122
+\everyMPtoPDFconversion=\toks38
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 56.
+ (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 56.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+lasy on input line 56.
+
+(/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+
+LaTeX Warning: No \author given.
+
+
+Overfull \hbox (1.68747pt too wide) in paragraph at lines 59--61
+\T1/aer/m/n/9 con-flicts, called length-based CM (or LCM). We up-per bound
+ []
+
+
+LaTeX Warning: Citation `Herlihy:2006:AMP:1146381.1146382' on page \thepage  un
+defined on input line 67.
+
+
+LaTeX Warning: Citation `tm-book10' on page \thepage  undefined on input line 8
+0.
+
+
+Overfull \hbox (7.03629pt too wide) in paragraph at lines 67--81
+\T1/aer/m/n/9 cul-ties. With TM, pro-gram-mers or-ga-nize code that read/write
+ []
+
+
+Overfull \hbox (3.79413pt too wide) in paragraph at lines 67--81
+\T1/aer/m/n/9 shared ob-jects as trans-ac-tions, which ap-pear to ex-e-cute ato
+m-
+ []
+
+
+LaTeX Warning: Citation `fahmy2009bounding' on page \thepage  undefined on inpu
+t line 85.
+
+
+LaTeX Warning: Citation `fahmy2009response' on page \thepage  undefined on inpu
+t line 85.
+
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page \thepage  unde
+fined on input line 85.
+
+
+Overfull \hbox (14.09143pt too wide) in paragraph at lines 85--87
+\T1/aer/m/n/9 CM (ECM) and Rate Mono-tonic Assignment-based CM (RCM),
+ []
+
+
+LaTeX Warning: Reference `sec 9.1' on page \thepage  undefined on input line 88
+.
+
+
+LaTeX Warning: Reference `response g-edf/lcm' on page \thepage  undefined on in
+put line 88.
+
+
+LaTeX Warning: Reference `rma' on page \thepage  undefined on input line 88.
+
+
+LaTeX Warning: Reference `performance g-edf-lcm' on page \thepage  undefined on
+ input line 88.
+
+
+LaTeX Warning: Reference `gedf-lcm-lock-free' on page \thepage  undefined on in
+put line 88.
+
+
+LaTeX Warning: Reference `rma eval' on page \thepage  undefined on input line 8
+8.
+
+
+LaTeX Warning: Citation `marathe2006lowering' on page \thepage  undefined on in
+put line 90.
+
+
+LaTeX Warning: Reference `exp_eval' on page \thepage  undefined on input line 9
+0.
+
+
+LaTeX Warning: Citation `anderson95realtime' on page \thepage  undefined on inp
+ut line 98.
+
+
+LaTeX Warning: Citation `bc+08' on page \thepage  undefined on input line 101.
+
+
+LaTeX Warning: Citation `key-1' on page \thepage  undefined on input line 101.
+
+
+LaTeX Warning: Citation `Saha:2006:MHP:1122971.1123001' on page \thepage  undef
+ined on input line 101.
+
+
+Overfull \hbox (2.23015pt too wide) in paragraph at lines 98--102
+[]\T1/aer/m/n/9 Transactional-like con-cur-rency con-trol with-out us-ing locks
+,
+ []
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]
+
+LaTeX Warning: Citation `manson2006preemptible' on page \thepage  undefined on 
+input line 103.
+
+
+LaTeX Warning: Citation `sarni2009real' on page \thepage  undefined on input li
+ne 103.
+
+
+LaTeX Warning: Citation `schoeberl2010rttm' on page \thepage  undefined on inpu
+t line 103.
+
+
+LaTeX Warning: Citation `barrosmanaging' on page \thepage  undefined on input l
+ine 103.
+
+
+LaTeX Warning: Citation `key-5' on page \thepage  undefined on input line 140.
+
+
+LaTeX Warning: Reference `alg_lcm' on page \thepage  undefined on input line 17
+7.
+
+
+LaTeX Warning: Reference `step_sicommits' on page \thepage  undefined on input 
+line 178.
+
+
+LaTeX Warning: Reference `step_cijkl' on page \thepage  undefined on input line
+ 178.
+
+[2]
+
+LaTeX Warning: Reference `step_alphaijkl' on page \thepage  undefined on input 
+line 189.
+
+
+LaTeX Warning: Reference `step_siaborts' on page \thepage  undefined on input l
+ine 189.
+
+
+LaTeX Warning: Reference `step_sjaborts' on page \thepage  undefined on input l
+ine 189.
+
+
+Overfull \hbox (2.25826pt too wide) in paragraph at lines 187--190
+[]\T1/aer/m/n/9 On the other hand, as $\OML/cmm/m/it/9 s[]\OT1/cmr/m/n/9 (\OML/
+cmm/m/it/9 ^^R\OT1/cmr/m/n/9 )$ \T1/aer/m/n/9 is in-ter-fered early, or $\OML/c
+mm/m/it/9 len\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 s[]\OT1/cmr/m/n/9 (\OML/cmm/m/it/9
+ ^^R\OT1/cmr/m/n/9 ))$
+ []
+
+<figures/figure16.pdf, id=21, 556.0775pt x 416.55624pt>
+File: figures/figure16.pdf Graphic file (type pdf)
+
+<use figures/figure16.pdf>
+
+LaTeX Warning: Reference `fig16' on page \thepage  undefined on input line 199.
+
+
+
+LaTeX Warning: Reference `eq49' on page \thepage  undefined on input line 199.
+
+
+LaTeX Warning: Reference `cm_eq' on page \thepage  undefined on input line 203.
+
+
+
+LaTeX Warning: Reference `fig16' on page \thepage  undefined on input line 205.
+
+
+
+LaTeX Warning: Reference `alg_lcm' on page \thepage  undefined on input line 20
+6.
+
+
+LaTeX Warning: Reference `alg_lcm' on page \thepage  undefined on input line 20
+6.
+
+
+LaTeX Warning: Reference `fig16' on page \thepage  undefined on input line 206.
+
+
+
+LaTeX Warning: Reference `fig16' on page \thepage  undefined on input line 206.
+
+
+
+Overfull \hbox (1.36078pt too wide) in paragraph at lines 205--207
+[]\T1/aer/m/n/9 Figure [] shows one atomic sec-tion $\OML/cmm/m/it/9 s[]\OT1/cm
+r/m/n/9 (\OML/cmm/m/it/9 ^^R\OT1/cmr/m/n/9 )$ \T1/aer/m/n/9 (whose $\OML/cmm/m/
+it/9 $ \T1/aer/m/n/9 changes
+ []
+
+
+LaTeX Warning: Reference `eq49' on page \thepage  undefined on input line 208.
+
+
+Overfull \hbox (2.9276pt too wide) in paragraph at lines 219--222
+[]\T1/aer/m/it/9 Let $\OML/cmm/m/it/9 s[]\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 ^^R\OT
+1/cmr/m/n/9 )$ \T1/aer/m/it/9 in-ter-fere once with $\OML/cmm/m/it/9 s[]\OT1/cm
+r/m/n/9 (\OML/cmm/m/it/9 ^^R\OT1/cmr/m/n/9 )$ \T1/aer/m/it/9 at $\OML/cmm/m/it/
+9 []$\T1/aer/m/it/9 . Then,
+ []
+
+<figures/figure18.pdf, id=22, 377.41pt x 162.6075pt>
+File: figures/figure18.pdf Graphic file (type pdf)
+
+<use figures/figure18.pdf> [3 <./figures/figure16.pdf>]
+
+LaTeX Warning: Reference `eqa' on page \thepage  undefined on input line 281.
+
+
+Overfull \hbox (25.29324pt too wide) in paragraph at lines 302--304
+[]\T1/aer/m/it/9 Let $\OML/cmm/m/it/9 ^^U[]\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 j; ^
+^R\OT1/cmr/m/n/9 ) = [][] \OML/cmm/m/it/9 len\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 s[
+]\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 ^^R\OT1/cmr/m/n/9 )) + \OML/cmm/m/it/9 []len\
+OT1/cmr/m/n/9 (\OML/cmm/m/it/9 s[]\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 ^^R\OT1/cmr/m
+/n/9 ))$\T1/aer/m/it/9 ,
+ []
+
+
+LaTeX Warning: Reference `lcm versus ecm' on page \thepage  undefined on input 
+line 320.
+
+
+LaTeX Warning: Reference `response g-rma/lcm' on page \thepage  undefined on in
+put line 320.
+
+
+Overfull \hbox (11.4369pt too wide) in paragraph at lines 320--321
+[]\T1/aer/m/it/9 Under the same as-sump-tions of Claims [] and [],
+ []
+
+
+LaTeX Warning: Citation `dellinger2011chronos' on page \thepage  undefined on i
+nput line 331.
+
+
+LaTeX Warning: Reference `tab:Task-set-1' on page \thepage  undefined on input 
+line 343.
+
+
+Overfull \hbox (3.20226pt too wide) in paragraph at lines 343--344
+\T1/aer/m/n/9 task runs in its own thread and has an atomic sec-tion. Atomic
+ []
+
+
+LaTeX Warning: Reference `fig:RC_results' on page \thepage  undefined on input 
+line 426.
+
+
+LaTeX Warning: Reference `tab:Task-set-1' on page \thepage  undefined on input 
+line 427.
+
+[4 <./figures/figure18.pdf>]
+
+! LaTeX Error: Unknown graphics extension: .5_0.5_0.5_1.eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.448 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (5.64305pt too wide) in paragraph at lines 448--448
+[]\T1/aer/m/n/9 (a)
+ []
+
+
+Overfull \hbox (12.8971pt too wide) in paragraph at lines 448--448
+\T1/aer/m/n/9 Task
+ []
+
+
+Overfull \hbox (5.19301pt too wide) in paragraph at lines 448--448
+\T1/aer/m/n/9 set
+ []
+
+
+! LaTeX Error: Unknown graphics extension: .5_0.5_0.5_1.eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.452 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (6.15599pt too wide) in paragraph at lines 452--452
+[]\T1/aer/m/n/9 (b)
+ []
+
+
+Overfull \hbox (12.8971pt too wide) in paragraph at lines 452--452
+\T1/aer/m/n/9 Task
+ []
+
+
+Overfull \hbox (5.19301pt too wide) in paragraph at lines 452--452
+\T1/aer/m/n/9 set
+ []
+
+
+! LaTeX Error: Unknown graphics extension: .5_0.5_0.5_1.eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.456 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (5.13pt too wide) in paragraph at lines 456--456
+[]\T1/aer/m/n/9 (c)
+ []
+
+
+Overfull \hbox (12.8971pt too wide) in paragraph at lines 456--456
+\T1/aer/m/n/9 Task
+ []
+
+
+Overfull \hbox (5.19301pt too wide) in paragraph at lines 456--456
+\T1/aer/m/n/9 set
+ []
+
+
+LaTeX Warning: Reference `fig:res_results-1' on page \thepage  undefined on inp
+ut line 461.
+
+
+LaTeX Warning: Reference `tab:Task-set-1' on page \thepage  undefined on input 
+line 461.
+
+
+! LaTeX Error: Unknown graphics extension: .5_0.5_0.5_1.eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.474 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (5.64305pt too wide) in paragraph at lines 474--474
+[]\T1/aer/m/n/9 (a)
+ []
+
+
+Overfull \hbox (12.8971pt too wide) in paragraph at lines 474--474
+\T1/aer/m/n/9 Task
+ []
+
+
+Overfull \hbox (5.19301pt too wide) in paragraph at lines 474--474
+\T1/aer/m/n/9 set
+ []
+
+
+! LaTeX Error: Unknown graphics extension: .5_0.5_0.5_1.eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.478 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (6.15599pt too wide) in paragraph at lines 478--478
+[]\T1/aer/m/n/9 (b)
+ []
+
+
+Overfull \hbox (12.8971pt too wide) in paragraph at lines 478--478
+\T1/aer/m/n/9 Task
+ []
+
+
+Overfull \hbox (5.19301pt too wide) in paragraph at lines 478--478
+\T1/aer/m/n/9 set
+ []
+
+
+! LaTeX Error: Unknown graphics extension: .5_0.5_0.5_1.eps.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.482 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (5.13pt too wide) in paragraph at lines 482--482
+[]\T1/aer/m/n/9 (c)
+ []
+
+
+Overfull \hbox (12.8971pt too wide) in paragraph at lines 482--482
+\T1/aer/m/n/9 Task
+ []
+
+
+Overfull \hbox (5.19301pt too wide) in paragraph at lines 482--482
+\T1/aer/m/n/9 set
+ []
+
+(./DAC12.bbl
+LaTeX Font Info:    Try loading font information for T1+aett on input line 37.
+ (/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+) [5])
+
+LaTeX Warning: Reference `LCM_higher_rc' on page \thepage  undefined on input l
+ine 512.
+
+
+LaTeX Warning: Reference `eq47' on page \thepage  undefined on input line 516.
+
+
+LaTeX Warning: Reference `LCM_lower_rc' on page \thepage  undefined on input li
+ne 522.
+
+
+LaTeX Warning: Reference `LCM_higher_rc' on page \thepage  undefined on input l
+ine 524.
+
+
+LaTeX Warning: Reference `priority_inversion' on page \thepage  undefined on in
+put line 527.
+
+
+LaTeX Warning: Reference `max_pri_inv' on page \thepage  undefined on input lin
+e 541.
+
+
+LaTeX Warning: Reference `eq48' on page \thepage  undefined on input line 543.
+
+
+LaTeX Warning: Reference `eq49' on page \thepage  undefined on input line 547.
+
+
+LaTeX Warning: Reference `cm_eq' on page \thepage  undefined on input line 551.
+
+
+
+LaTeX Warning: Reference `GEDF/LCM response time' on page \thepage  undefined o
+n input line 558.
+
+
+LaTeX Warning: Reference `fig17' on page \thepage  undefined on input line 560.
+
+
+
+Overfull \hbox (3.8432pt too wide) in paragraph at lines 560--561
+[]\T1/aer/m/n/9 The max-i-mum num-ber of higher pri-or-ity in-stances
+ []
+
+
+LaTeX Warning: Reference `LCM_higher_rc' on page \thepage  undefined on input l
+ine 563.
+
+
+LaTeX Warning: Reference `LCM_lower_rc' on page \thepage  undefined on input li
+ne 563.
+
+
+LaTeX Warning: Reference `priority_inversion' on page \thepage  undefined on in
+put line 563.
+
+
+LaTeX Warning: Reference `max_pri_inv' on page \thepage  undefined on input lin
+e 563.
+
+
+LaTeX Warning: Reference `lcm versus ecm' on page \thepage  undefined on input 
+line 566.
+
+
+LaTeX Warning: Reference `eq78' on page \thepage  undefined on input line 571.
+
+
+LaTeX Warning: Reference `eq78' on page \thepage  undefined on input line 573.
+
+
+LaTeX Warning: Reference `eq78' on page \thepage  undefined on input line 573.
+
+
+LaTeX Warning: Reference `eq78' on page \thepage  undefined on input line 574.
+
+[6]
+
+LaTeX Warning: Reference `eq61' on page \thepage  undefined on input line 582.
+
+
+LaTeX Warning: Reference `eq101' on page \thepage  undefined on input line 586.
+
+
+
+LaTeX Warning: Reference `eq101' on page \thepage  undefined on input line 592.
+
+
+
+LaTeX Warning: Reference `eq102' on page \thepage  undefined on input line 592.
+
+
+
+LaTeX Warning: Reference `eqc' on page \thepage  undefined on input line 597.
+
+
+LaTeX Warning: Reference `gedf-lcm-lock-free_clm' on page \thepage  undefined o
+n input line 609.
+
+
+LaTeX Warning: Reference `lcm versus ecm' on page \thepage  undefined on input 
+line 615.
+
+
+LaTeX Warning: Reference `eq102' on page \thepage  undefined on input line 616.
+
+
+
+LaTeX Warning: Reference `u-gedf-lcm-ecm' on page \thepage  undefined on input 
+line 631.
+
+
+LaTeX Warning: Reference `t-gedf-lcm-ecm' on page \thepage  undefined on input 
+line 638.
+
+
+LaTeX Warning: Reference `s-r-1' on page \thepage  undefined on input line 643.
+
+
+
+LaTeX Warning: Reference `t-gedf-lcm-ecm' on page \thepage  undefined on input 
+line 648.
+
+
+LaTeX Warning: Reference `s-r-2' on page \thepage  undefined on input line 652.
+
+
+
+LaTeX Warning: Reference `t-gedf-lcm-ecm' on page \thepage  undefined on input 
+line 662.
+
+
+LaTeX Warning: Reference `s-r-4' on page \thepage  undefined on input line 666.
+
+
+[7]
+
+LaTeX Warning: Reference `response g-rma/lcm' on page \thepage  undefined on in
+put line 671.
+
+
+LaTeX Warning: Reference `eq47' on page \thepage  undefined on input line 674.
+
+
+LaTeX Warning: Reference `LCM_lower_rc' on page \thepage  undefined on input li
+ne 674.
+
+
+LaTeX Warning: Reference `priority_inversion' on page \thepage  undefined on in
+put line 674.
+
+
+LaTeX Warning: Reference `rma_eval_clm' on page \thepage  undefined on input li
+ne 680.
+
+
+LaTeX Warning: Reference `lcm versus ecm' on page \thepage  undefined on input 
+line 682.
+
+
+LaTeX Warning: Reference `response g-rma/lcm' on page \thepage  undefined on in
+put line 682.
+
+
+LaTeX Warning: Reference `eq60' on page \thepage  undefined on input line 682.
+
+
+Overfull \hbox (3.76762pt too wide) in alignment at lines 693--695
+ [][][] []
+ []
+
+
+LaTeX Warning: Reference `grma-lcm-rcm' on page \thepage  undefined on input li
+ne 696.
+
+
+LaTeX Warning: Reference `eq70' on page \thepage  undefined on input line 696.
+
+[8
+
+] (./DAC12.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 3928 strings out of 95086
+ 47897 string characters out of 1183255
+ 125467 words of memory out of 1500000
+ 7016 multiletter control sequences out of 10000+50000
+ 52502 words of font info for 75 fonts, out of 1200000 for 2000
+ 28 hyphenation exceptions out of 8191
+ 39i,14n,27p,783b,453s stack positions out of 5000i,500n,6000p,200000b,5000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
+ve/fonts/type1/bluesky/cm/cmbx5.pfb></usr/share/texmf-texlive/fonts/type1/blues
+ky/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmcsc10.pfb></
+usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmmi5.pfb></usr/share/texmf-texl
+ive/fonts/type1/bluesky/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/blue
+sky/cm/cmmi9.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr5.pfb></us
+r/share/texmf-texlive/fonts/type1/bluesky/cm/cmr6.pfb></usr/share/texmf-texlive
+/fonts/type1/bluesky/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/
+cm/cmsy5.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmsy6.pfb></usr/s
+hare/texmf-texlive/fonts/type1/bluesky/cm/cmsy9.pfb></usr/share/texmf-texlive/f
+onts/type1/bluesky/cm/cmti9.pfb></usr/share/texmf-texlive/fonts/type1/public/cm
+ex/fmex7.pfb></usr/share/texmf-texlive/fonts/type1/public/cmex/fmex9.pfb></usr/
+share/texmf-texlive/fonts/type1/bluesky/ams/msam10.pfb></usr/share/texmf-texliv
+e/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw
+/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb>
+Output written on DAC12.pdf (8 pages, 240866 bytes).
+PDF statistics:
+ 158 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 131072)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+

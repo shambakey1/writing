@@ -1,0 +1,129 @@
+%
+% PROJECT: <ETD> Electronic Thesis and Dissertation Initiative
+%   TITLE: LaTeX report template for ETDs in LaTeX
+%  AUTHOR: Neill Kipp, nkipp@vt.edu
+%     URL: http://etd.vt.edu/latex/
+% SAVE AS: etd.tex
+% REVISED: September 6, 1997 [GMc 8/30/10]
+% 
+
+% Instructions: Remove the data from this document and replace it with your own,
+% keeping the style and formatting information intact.  More instructions
+% appear on the Web site listed above.
+
+\documentclass[12pt,english]{report}
+
+\makeatletter
+\newif\if@restonecol
+
+\let\algorithm\relax
+\let\endalgorithm\relax
+%\usepackage[tight,footnotesize]{subfigure}
+\usepackage{subfigure}
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[ruled]{algorithm2e}
+\usepackage{babel}
+\makeatother
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+
+
+\newtheorem{clm}{Claim}
+\newtheorem{proof}{Proof}
+\newtheorem{mydef}{Definition}
+
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\pdfpageheight\paperheight
+\pdfpagewidth\paperwidth
+
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+
+
+\makeatother
+
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+\setlength{\evensidemargin}{0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\topmargin}{0in}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1in}
+
+% Uncomment for double-spaced document.
+% \renewcommand{\baselinestretch}{2}
+
+% \usepackage{epsf}
+
+\begin{document}
+
+\thispagestyle{empty}
+\pagenumbering{roman}
+
+Lock-based concurrency control suffers from programmability, scalability, and composability  challenges. These challenges are exacerbated in emerging multicore architectures, on which improved software performance must be achieved by exposing greater concurrency.   Transactional memory (TM) is an alternative synchronization model for shared memory objects that promises to alleviate these difficulties. 
+
+In this dissertation proposal, we consider software transactional memory (STM) for concurrency control in multicore real-time software, and present a suite of real-time STM contention managers for resolving transactional conflicts. The contention managers are called RCM, ECM, LCM, and PNF. RCM and ECM resolve conflicts using fixed and dynamic priorities of real-time tasks, respectively, and are naturally intended to be used with the fixed priority (e.g., G-RMA) and dynamic priority (e.g., G-EDF) multicore real-time schedulers, respectively. LCM resolves conflicts based on task priorities as well as atomic section lengths, and can be used with G-EDF or G-RMA.
+%SH-ST
+ Transactions under ECM, RCM and LCM can retry due to non-shared objects with higher priority tasks. PNF avoids this problem.
+%SH-END
+
+We establish upper bounds on transactional retry costs and task response times under all the contention managers through schedulability analysis. Since ECM and RCM conserve the semantics of the underlying real-time scheduler, their maximum transactional retry cost is double the maximum atomic section length. This is improved in the the design of LCM, which achieves  shorter retry costs.  However, ECM, RCM, and LCM are affected by transitive retries when transactions access multiple objects. 
+Transitive retry causes a transaction to abort and retry due to another non-conflicting transaction.  
+PNF avoids transitive retry, and also optimizes processor usage by lowering the priority of retrying transactions, enabling other non-conflicting transactions to proceed. 
+
+We also formally compare the proposed contention managers with lock-free synchronization. 
+Our comparison reveals that, for most cases, ECM, RCM, G-EDF(G-RMA)/LCM achieve higher schedulability than lock-free synchronization only when the atomic section length does not exceed half of the lock-free retry loop length. Under PNF, atomic section length can equal length of retry loop.
+%SH-ST
+ With low contention, atomic section length under ECM can equal retry loop length while still achieving better schedulabiltiy. While in RCM, atomic section length can exceed retry loop length. By adjustment of LCM design parameters, atomic section length can be of twice length of retry loop under G-EDF/LCM. While under G-RMA/LCM, atomic section length can exceed length of retry loop.
+ %SH-EDF
+
+We implement the contention managers in the Rochester STM framework and conduct experimental studies using a multicore real-time Linux kernel. Our studies confirm that, the contention managers achieve orders of magnitude shorter retry costs than lock-free synchronization. Among the contention managers, PNF performs the best.
+
+Building upon these results, we propose real-time contention managers that allow nested atomic sections -- an open problem -- for which STM is the only viable non-blocking synchronization solution. Optimizations of LCM and PNF to obtain improved retry costs and greater schedulability advantages are also proposed. 
+
+%BR: Done. 10:22PM, 4/25/2012. 
+
+\vfill
+
+% GRANT INFORMATION
+
+%\textbf{NEEDS TO BE WRITTEN}
+
+
+
+% Dedication and Acknowledgments are both optional
+% \chapter*{Dedication}
+% \chapter*{Acknowledgments}
+\bibliographystyle{plain}
+\bibliography{/e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography}
+%\bibliography{/e/lectures/real-time/PhD-work/STM/writing/global_bibliography}
+\markright{Mohammed Elshambakey \hfill Bibliography \hfill}
+
+
+\pagenumbering{arabic}
+\pagestyle{myheadings}
+
+
+\markright{Mohammed Elshambakey \hfill Bibliography \hfill}
+
+
+\end{document}

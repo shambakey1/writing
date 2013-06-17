@@ -1,0 +1,83 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.5.17)  4 JUL 2012 14:03
+entering extended mode
+ %&-line parsing enabled.
+**guide13-initial-2e.tex
+(./guide13-initial-2e.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(/usr/share/texmf-texlive/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-texlive/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (./guide13-initial-2e.aux)
+\openout1 = `guide13-initial-2e.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 96.
+LaTeX Font Info:    ... okay on input line 96.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 96.
+LaTeX Font Info:    ... okay on input line 96.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 96.
+LaTeX Font Info:    ... okay on input line 96.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 96.
+LaTeX Font Info:    ... okay on input line 96.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 96.
+LaTeX Font Info:    ... okay on input line 96.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 96.
+LaTeX Font Info:    ... okay on input line 96.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 121.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 121.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 121.
+
+Underfull \hbox (badness 1796) in paragraph at lines 133--135
+[]\OT1/cmr/m/n/10 These in-tro-duc-tions give you ba-sic guide-lines for
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 149.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 149.
+
+Overfull \hbox (9.30609pt too wide) in paragraph at lines 162--181
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--181
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 215--220
+
+ []
+
+[1
+
+
+] [2] (./guide13-initial-2e.aux) ) 
+Here is how much of TeX's memory you used:
+ 261 strings out of 495062
+ 2835 string characters out of 1182644
+ 55132 words of memory out of 3000000
+ 3504 multiletter control sequences out of 15000+50000
+ 11682 words of font info for 40 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 23i,14n,19p,199b,326s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on guide13-initial-2e.dvi (2 pages, 10208 bytes).

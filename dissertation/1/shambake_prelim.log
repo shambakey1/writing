@@ -1,0 +1,2293 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.1.24)  16 MAY 2012 20:56
+entering extended mode
+ %&-line parsing enabled.
+**shambake_prelim.tex
+(./shambake_prelim.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(/usr/share/texmf-texlive/tex/latex/base/report.cls
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-texlive/tex/latex/base/size12.clo
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip43
+\subfigcapskip=\skip44
+\subfigcaptopadj=\dimen103
+\subfigbottomskip=\skip45
+\subfigcapmargin=\dimen104
+\subfiglabelskip=\skip46
+\c@subfigure=\count88
+\c@lofdepth=\count89
+\c@subtable=\count90
+\c@lotdepth=\count91
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip47
+\subfig@bottom=\skip48
+)
+(/usr/share/texmf-texlive/tex/latex/paralist/paralist.sty
+Package: paralist 2002/03/18 v2.3b Extended list environments (BS)
+\pltopsep=\skip49
+\plpartopsep=\skip50
+\plitemsep=\skip51
+\plparsep=\skip52
+\pl@lab=\toks14
+)
+(/usr/share/texmf-texlive/tex/latex/comment/comment.sty
+\CommentStream=\write3
+
+Excluding comment 'comment')
+(/usr/share/texmf-texlive/tex/latex/tools/array.sty
+Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen105
+\extrarowheight=\dimen106
+\NC@list=\toks15
+\extratabsurround=\skip53
+\backup@length=\skip54
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip55
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks16
+\ex@=\dimen107
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen108
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count92
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count93
+\leftroot@=\count94
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count95
+\DOTSCASE@=\count96
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen109
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count97
+\c@MaxMatrixCols=\count98
+\dotsspace@=\muskip10
+\c@parentequation=\count99
+\dspbrk@lvl=\count100
+\tag@help=\toks17
+\row@=\count101
+\column@=\count102
+\maxfields@=\count103
+\andhelp@=\toks18
+\eqnshift@=\dimen110
+\alignsep@=\dimen111
+\tagshift@=\dimen112
+\tagwidth@=\dimen113
+\totwidth@=\dimen114
+\lineht@=\dimen115
+\@envbody=\toks19
+\multlinegap=\skip56
+\multlinetaggap=\skip57
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks21
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen116
+\Gin@req@width=\dimen117
+)
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2009/06/22 v3.00
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+(/usr/share/texmf-texlive/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 285.
+LaTeX Info: Redefining \nocite on input line 356.
+Package: cite 2009/08/29  v 5.2
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip11
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+) (./algorithm2e.sty
+Package: algorithm2e 2008/00/00 v3.10 algorithms environments
+\c@AlgoLine=\count104
+
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf-texlive/tex/latex/tools/xspace.sty
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/relsize.sty
+Package: relsize 2003/07/04 ver 3.1
+)
+********************************************************
+Package `algorithm2e' Release 4.01 -- december 14 2009 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip58
+\skiplinenumber=\skip59
+\skiprule=\skip60
+\skiphlne=\skip61
+\skiptext=\skip62
+\skiplength=\skip63
+\algomargin=\skip64
+\skipalgocfslide=\skip65
+\algowidth=\dimen118
+\inoutsize=\dimen119
+\inoutline=\dimen120
+\interspacetitleruled=\dimen121
+\interspacealgoruled=\dimen122
+\interspacetitleboxruled=\dimen123
+\algocf@inoutbox=\box28
+\algocf@inputbox=\box29
+\AlCapSkip=\skip66
+\AlCapHSkip=\skip67
+\algocf@nlbox=\box30
+\algocf@hangingbox=\box31
+\algocf@capbox=\box32
+\algoheightruledefault=\skip68
+\algoheightrule=\skip69
+\algotitleheightruledefault=\skip70
+\algotitleheightrule=\skip71
+\c@algocfline=\count105
+\c@algocfproc=\count106
+\c@algocf=\count107
+\algocf@algoframe=\box33
+\algocf@algobox=\box34
+) (/usr/share/texmf-texlive/tex/generic/babel/babel.sty
+Package: babel 2008/07/06 v3.8l The Babel package
+
+(/usr/share/texmf-texlive/tex/generic/babel/english.ldf
+Language: english 2005/03/30 v3.3o English support from the babel system
+
+(/usr/share/texmf-texlive/tex/generic/babel/babel.def
+File: babel.def 2008/07/06 v3.8l Babel common definitions
+\babel@savecnt=\count108
+\U@D=\dimen124
+)
+\l@british = a dialect from \language\l@english 
+\l@UKenglish = a dialect from \language\l@english 
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+))
+(/usr/share/texmf-texlive/tex/latex/listings/listings.sty
+\lst@mode=\count109
+\lst@gtempboxa=\box35
+\lst@token=\toks22
+\lst@length=\count110
+\lst@currlwidth=\dimen125
+\lst@column=\count111
+\lst@pos=\count112
+\lst@lostspace=\dimen126
+\lst@width=\dimen127
+\lst@newlines=\count113
+\lst@lineno=\count114
+\lst@maxwidth=\dimen128
+
+(/usr/share/texmf-texlive/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count115
+\lst@skipnumbers=\count116
+\lst@framebox=\box36
+)
+(/usr/share/texmf-texlive/tex/latex/listings/listings.cfg
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode not detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(/usr/share/texmf-texlive/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2009/01/23 v0.5 Provides ifxetex conditional
+)
+(/usr/share/texmf-texlive/tex/latex/oberdiek/hycolor.sty
+Package: hycolor 2009/10/02 v1.5 Code for color options of hyperref/bookmark (H
+O)
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/xcolor-patch.sty
+Package: xcolor-patch 2009/10/02 xcolor patch
+))
+\@linkdim=\dimen129
+\Hy@linkcounter=\count117
+\Hy@pagecounter=\count118
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2009/10/09 v6.79a Hyperref: PDFDocEncoding definition (HO)
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2007/12/12 v1.2 Prefix for e-TeX command names (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2007/09/09 v1.2 Providing info/warning/message (HO)
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)
+(/usr/share/texmf-texlive/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+(/usr/share/texmf-texlive/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2009/08/13 v3.4 Keyval support for LaTeX options (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2009/07/30 v1.5 Key value parser with default handler suppor
+t (HO)
+))
+Package hyperref Info: Option `breaklinks' set `true' on input line 2864.
+Package hyperref Info: Option `colorlinks' set `true' on input line 2864.
+Package hyperref Info: Hyper figures OFF on input line 2975.
+Package hyperref Info: Link nesting OFF on input line 2980.
+Package hyperref Info: Hyper index ON on input line 2983.
+Package hyperref Info: Plain pages OFF on input line 2990.
+Package hyperref Info: Backreferencing OFF on input line 2995.
+
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks ON on input line 3191.
+LaTeX Info: Redefining \url on input line 3428.
+(/usr/share/texmf-texlive/tex/generic/oberdiek/bitset.sty
+Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/intcalc.sty
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/bigintcalc.sty
+Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2009/09/23 v0.6 LuaTeX support for pdfTeX utility functions
+ (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2009/04/17 v1.2 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2009/08/05 v1.0 Some LaTeX kernel commands for general use (HO
+)
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+)))
+\Fld@menulength=\count119
+\Field@Width=\dimen130
+\Fld@charsize=\dimen131
+\Field@toks=\toks23
+Package hyperref Info: Hyper figures OFF on input line 4377.
+Package hyperref Info: Link nesting OFF on input line 4382.
+Package hyperref Info: Hyper index ON on input line 4385.
+Package hyperref Info: backreferencing OFF on input line 4392.
+Package hyperref Info: Link coloring ON on input line 4395.
+Package hyperref Info: Link coloring with OCG OFF on input line 4402.
+Package hyperref Info: PDF/A mode OFF on input line 4407.
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/atbegshi.sty
+Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
+)
+\Hy@abspage=\count120
+\c@Item=\count121
+\c@Hfootnote=\count122
+)
+
+Package hyperref Warning: Wrong driver `hpdftex.def';
+(hyperref)                pdfTeX is not running in PDF mode.
+(hyperref)                Using default driver.
+
+*hyperref using default driver hdvips*
+(/usr/share/texmf-texlive/tex/latex/hyperref/hdvips.def
+File: hdvips.def 2009/10/09 v6.79a Hyperref driver for dvips
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/pdfmark.def
+File: pdfmark.def 2009/10/09 v6.79a Hyperref definitions for pdfmark specials
+
+
+Package hyperref Warning: You have enabled option `breaklinks'.
+(hyperref)                But driver `hdvips.def' does not suppport this.
+(hyperref)                Expect trouble with the link areas of broken links.
+
+\pdf@docset=\toks24
+\pdf@box=\box37
+\pdf@toks=\toks25
+\pdf@defaulttoks=\toks26
+\Fld@listcount=\count123
+)) (/usr/share/texmf-texlive/tex/latex/oberdiek/hypcap.sty
+Package: hypcap 2008/09/08 v1.10 Adjusting anchors of captions (HO)
+)
+\c@clm=\count124
+\c@proof=\count125
+\c@mydef=\count126
+
+(./shambake_prelim.aux (./FBLT.aux
+
+LaTeX Warning: Label `s_i^k true' multiply defined.
+
+
+LaTeX Warning: Label `move to n' multiply defined.
+
+
+LaTeX Warning: Label `priority to -1' multiply defined.
+
+
+LaTeX Warning: Label `s_i^k commit' multiply defined.
+
+
+LaTeX Warning: Label `s_j^l commits' multiply defined.
+
+
+LaTeX Warning: Label `traverse n-set' multiply defined.
+
+
+LaTeX Warning: Label `n(z) no conflict' multiply defined.
+
+
+LaTeX Warning: Label `processor available' multiply defined.
+
+))
+\openout1 = `shambake_prelim.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+\c@lstlisting=\count127
+ (/usr/share/texmf-texlive/tex/latex/graphics/color.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+(/etc/texmf/tex/latex/config/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: dvips.def on input line 130.
+
+(/usr/share/texmf-texlive/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+Package hyperref Info: Link coloring ON on input line 82.
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
+Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
+)
+\c@section@level=\count128
+)
+LaTeX Info: Redefining \ref on input line 82.
+LaTeX Info: Redefining \pageref on input line 82.
+
+(./shambake_prelim.out) (./shambake_prelim.out)
+\@outlinefile=\write4
+\openout4 = `shambake_prelim.out'.
+
+\AtBeginShipoutBox=\box38
+ [1
+
+] [2] [3]
+(./shambake_prelim.toc
+LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+ (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+) [4
+
+] [5])
+\tf@toc=\write5
+\openout5 = `shambake_prelim.toc'.
+
+ [6]
+(./shambake_prelim.lof [7
+
+])
+\tf@lof=\write6
+\openout6 = `shambake_prelim.lof'.
+
+ [8] (./shambake_prelim.lot)
+\tf@lot=\write7
+\openout7 = `shambake_prelim.lot'.
+
+ [9
+
+]
+(./shambake_prelim.loa)
+\tf@loa=\write8
+\openout8 = `shambake_prelim.loa'.
+
+ [10
+
+]
+Chapter 1.
+
+LaTeX Warning: Citation `Herlihy:2006:AMP:1146381.1146382' on page 1 undefined 
+on input line 202.
+
+
+LaTeX Warning: Citation `herlihy2008art' on page 1 undefined on input line 208.
+
+
+
+LaTeX Warning: Citation `CAS64IA32' on page 1 undefined on input line 209.
+
+
+LaTeX Warning: Citation `CASitanium' on page 1 undefined on input line 209.
+
+
+LaTeX Warning: Citation `LL:CS:Sites:1993:AAA:151220.151226' on page 1 undefine
+d on input line 209.
+
+
+LaTeX Warning: Citation `lockfreeLLmichael2002high' on page 1 undefined on inpu
+t line 210.
+
+
+LaTeX Warning: Citation `lockfreeSL' on page 1 undefined on input line 210.
+
+
+LaTeX Warning: Citation `lockfreeBSTfraser2004practical' on page 1 undefined on
+ input line 210.
+
+
+LaTeX Warning: Citation `HopscotchHashing' on page 1 undefined on input line 21
+0.
+
+
+LaTeX Warning: Citation `KarySearchTreesbrown2011non' on page 1 undefined on in
+put line 210.
+
+
+LaTeX Warning: Citation `herlihy2008art' on page 1 undefined on input line 210.
+
+
+[1
+
+]
+
+LaTeX Warning: Citation `Saha:2006:MHP:1122971.1123001' on page 2 undefined on 
+input line 216.
+
+
+LaTeX Warning: Citation `Herlihy:1993:TMA:165123.165164' on page 2 undefined on
+ input line 216.
+
+
+LaTeX Warning: Citation `ham04' on page 2 undefined on input line 216.
+
+
+LaTeX Warning: Citation `UTM1385954' on page 2 undefined on input line 217.
+
+
+LaTeX Warning: Citation `Oklahoma260295' on page 2 undefined on input line 217.
+
+
+
+LaTeX Warning: Citation `AMDprocHTMchristie2010evaluation' on page 2 undefined 
+on input line 217.
+
+
+LaTeX Warning: Citation `BulkCeze:2006:BDS:1135775.1136506' on page 2 undefined
+ on input line 217.
+
+
+LaTeX Warning: Citation `sha95' on page 2 undefined on input line 217.
+
+
+LaTeX Warning: Citation `RSTM' on page 2 undefined on input line 219.
+
+
+LaTeX Warning: Citation `TinySTM' on page 2 undefined on input line 219.
+
+
+LaTeX Warning: Citation `Deucekorland2010noninvasive' on page 2 undefined on in
+put line 219.
+
+
+LaTeX Warning: Citation `AtomJavahindman2006atomicity' on page 2 undefined on i
+nput line 220.
+
+(/usr/share/texmf-texlive/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+(/usr/share/texmf-texlive/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+(/usr/share/texmf-texlive/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+)
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 225.
+
+
+(/usr/share/texmf-texlive/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 225.
+
+
+LaTeX Warning: Citation `Shriraman:2007:IHA:1250662.1250676' on page 2 undefine
+d on input line 230.
+
+
+Overfull \hbox (47.55592pt too wide) in paragraph at lines 230--231
+[]\OT1/cmr/m/n/12 Listing [][][]1.1[][][][] shows an ex-am-ple STM code writ-te
+n by RSTM [\OT1/cmr/bx/n/12 ?\OT1/cmr/m/n/12 ]'s in-ter-face. RSTM's \OT1/cmtt/
+m/n/12 BEGIN[]TRANSACTION
+ []
+
+[2]
+
+LaTeX Warning: Citation `FirstHyTMlie2004hardware' on page 3 undefined on input
+ line 232.
+
+
+LaTeX Warning: Citation `SpHTLev:2008:SHT:1345206.1345236' on page 3 undefined 
+on input line 233.
+
+
+LaTeX Warning: Citation `VTM1431581' on page 3 undefined on input line 233.
+
+
+LaTeX Warning: Citation `dam06' on page 3 undefined on input line 233.
+
+
+LaTeX Warning: Citation `logTM1598134' on page 3 undefined on input line 234.
+
+
+LaTeX Warning: Citation `logTMSE4147667' on page 3 undefined on input line 234.
+
+
+
+LaTeX Warning: Citation `manson2006preemptible' on page 3 undefined on input li
+ne 242.
+
+
+LaTeX Warning: Citation `fahmy2009bounding' on page 3 undefined on input line 2
+42.
+
+
+LaTeX Warning: Citation `holman-thesis04' on page 3 undefined on input line 242
+.
+
+
+LaTeX Warning: Citation `sarni2009real' on page 3 undefined on input line 242.
+
+
+LaTeX Warning: Citation `schoeberl2010rttm' on page 3 undefined on input line 2
+44.
+
+
+LaTeX Warning: Citation `schoeberl2010rttm' on page 3 undefined on input line 2
+44.
+
+
+LaTeX Warning: Citation `6045438' on page 3 undefined on input line 244.
+
+
+LaTeX Warning: Citation `schoeberl2010rttm' on page 3 undefined on input line 2
+44.
+
+
+LaTeX Warning: Citation `6045438' on page 3 undefined on input line 244.
+
+
+LaTeX Warning: Citation `6045438' on page 3 undefined on input line 244.
+
+
+LaTeX Warning: Citation `6045438' on page 3 undefined on input line 244.
+
+
+LaTeX Warning: Citation `barrosmanaging' on page 3 undefined on input line 244.
+
+
+[3]
+
+LaTeX Warning: Citation `buttazzo2005hard' on page 4 undefined on input line 25
+6.
+
+
+LaTeX Warning: Citation `buttazzo2005hard' on page 4 undefined on input line 25
+6.
+
+[4]
+
+LaTeX Warning: Citation `Shriraman:2007:IHA:1250662.1250676' on page 5 undefine
+d on input line 268.
+
+
+LaTeX Warning: Citation `dellinger2011chronos' on page 5 undefined on input lin
+e 268.
+
+
+LaTeX Warning: Citation `Moss2006186' on page 5 undefined on input line 274.
+
+
+LaTeX Warning: Citation `volos2009nepaltm' on page 5 undefined on input line 27
+4.
+
+[5]
+
+LaTeX Warning: Citation `chen1990dynamic' on page 6 undefined on input line 284
+.
+
+
+LaTeX Warning: Citation `6031129' on page 6 undefined on input line 284.
+
+
+LaTeX Warning: Citation `Rajkumar:1991:SRS:532621' on page 6 undefined on input
+ line 284.
+
+
+LaTeX Warning: Citation `sha1990priority' on page 6 undefined on input line 284
+.
+
+
+LaTeX Warning: Citation `lakshmanan2009coordinated' on page 6 undefined on inpu
+t line 284.
+
+
+LaTeX Warning: Citation `rajkumar2002real' on page 6 undefined on input line 28
+4.
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 6 undefined on inpu
+t line 284.
+
+
+LaTeX Warning: Citation `baker1991stack' on page 6 undefined on input line 284.
+
+
+
+LaTeX Warning: Citation `gai2003comparison' on page 6 undefined on input line 2
+84.
+
+
+LaTeX Warning: Citation `easwaran2009resource' on page 6 undefined on input lin
+e 284.
+
+
+LaTeX Warning: Citation `key-4' on page 6 undefined on input line 284.
+
+
+LaTeX Warning: Citation `brandenburg2008implementation' on page 6 undefined on 
+input line 284.
+
+
+LaTeX Warning: Citation `holman2006locking' on page 6 undefined on input line 2
+84.
+
+
+LaTeX Warning: Citation `Baruah:2007:TMG:1338441.1338647' on page 6 undefined o
+n input line 284.
+
+
+LaTeX Warning: Citation `brandenburg2008comparison' on page 6 undefined on inpu
+t line 284.
+
+[6]
+Chapter 2.
+
+LaTeX Warning: Citation `Levine:2012:PIF:2148436.2148438' on page 7 undefined o
+n input line 297.
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 7 undefined on inpu
+t line 297.
+
+
+LaTeX Warning: Citation `anderson96framework' on page 7 undefined on input line
+ 298.
+
+
+LaTeX Warning: Citation `563704' on page 7 undefined on input line 298.
+
+
+LaTeX Warning: Citation `anderson1997lock' on page 7 undefined on input line 29
+8.
+
+
+LaTeX Warning: Citation `holman2006supporting' on page 7 undefined on input lin
+e 298.
+
+
+LaTeX Warning: Citation `Lai:2009:SSR:1529282.1529660' on page 7 undefined on i
+nput line 298.
+
+
+LaTeX Warning: Citation `1656921' on page 7 undefined on input line 298.
+
+
+LaTeX Warning: Citation `726426' on page 7 undefined on input line 298.
+
+
+LaTeX Warning: Citation `4297311' on page 7 undefined on input line 298.
+
+
+LaTeX Warning: Citation `5669659' on page 7 undefined on input line 298.
+
+
+LaTeX Warning: Citation `key-5' on page 7 undefined on input line 298.
+
+
+LaTeX Warning: Citation `726426' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `1508449' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `Cho:2006:UAP:1141277.1141490' on page 7 undefined on i
+nput line 299.
+
+
+LaTeX Warning: Citation `4297311' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `1003807' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `hohmuth2001pragmatic' on page 7 undefined on input lin
+e 299.
+
+
+LaTeX Warning: Citation `1613351' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `811240' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `896371' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `896423' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `1203552' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `5953690' on page 7 undefined on input line 299.
+
+
+LaTeX Warning: Citation `563704' on page 7 undefined on input line 300.
+
+
+LaTeX Warning: Citation `Meawad:2011:RWQ:2043910.2043912' on page 7 undefined o
+n input line 300.
+
+
+LaTeX Warning: Citation `Levine:2012:PIF:2148436.2148438' on page 7 undefined o
+n input line 306.
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 7 undefined on inpu
+t line 306.
+
+
+LaTeX Warning: Citation `sha1990priority' on page 7 undefined on input line 313
+.
+
+
+LaTeX Warning: Citation `easwaran2009resource' on page 7 undefined on input lin
+e 313.
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 7 undefined on inpu
+t line 313.
+
+
+LaTeX Warning: Citation `sha1990priority' on page 7 undefined on input line 314
+.
+
+
+LaTeX Warning: Citation `easwaran2009resource' on page 7 undefined on input lin
+e 314.
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 7 undefined on inpu
+t line 314.
+
+
+LaTeX Warning: Citation `chen1990dynamic' on page 7 undefined on input line 314
+.
+
+
+LaTeX Warning: Citation `6031129' on page 7 undefined on input line 314.
+
+
+LaTeX Warning: Citation `Rajkumar:1991:SRS:532621' on page 7 undefined on input
+ line 314.
+
+
+LaTeX Warning: Citation `lakshmanan2009coordinated' on page 7 undefined on inpu
+t line 314.
+
+
+LaTeX Warning: Citation `rajkumar2002real' on page 7 undefined on input line 31
+4.
+
+
+LaTeX Warning: Citation `baker1991stack' on page 7 undefined on input line 315.
+
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 7 undefined on inpu
+t line 315.
+
+
+LaTeX Warning: Citation `990598' on page 7 undefined on input line 315.
+
+[7
+
+]
+
+LaTeX Warning: Citation `sha1990priority' on page 8 undefined on input line 317
+.
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 8 undefined on inpu
+t line 317.
+
+
+LaTeX Warning: Citation `easwaran2009resource' on page 8 undefined on input lin
+e 328.
+
+
+LaTeX Warning: Citation `sha1990priority' on page 8 undefined on input line 332
+.
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 8 undefined on inpu
+t line 332.
+
+
+LaTeX Warning: Citation `Rajkumar:1991:SRS:532621' on page 8 undefined on input
+ line 332.
+
+
+LaTeX Warning: Citation `chen1990dynamic' on page 8 undefined on input line 339
+.
+
+
+LaTeX Warning: Citation `Rajkumar:1991:SRS:532621' on page 8 undefined on input
+ line 343.
+
+
+LaTeX Warning: Citation `lakshmanan2009coordinated' on page 8 undefined on inpu
+t line 343.
+
+
+LaTeX Warning: Citation `rajkumar2002real' on page 8 undefined on input line 34
+3.
+
+
+LaTeX Warning: Citation `easwaran2009resource' on page 8 undefined on input lin
+e 351.
+
+
+LaTeX Warning: Citation `easwaran2009resource' on page 8 undefined on input lin
+e 361.
+
+[8]
+
+LaTeX Warning: Citation `6001645' on page 9 undefined on input line 364.
+
+
+LaTeX Warning: Citation `6001645' on page 9 undefined on input line 368.
+
+
+LaTeX Warning: Citation `6031129' on page 9 undefined on input line 375.
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 9 undefined on inpu
+t line 383.
+
+
+LaTeX Warning: Citation `baker1991stack' on page 9 undefined on input line 383.
+
+
+
+LaTeX Warning: Citation `990598' on page 9 undefined on input line 383.
+
+
+LaTeX Warning: Citation `gai2003comparison' on page 9 undefined on input line 3
+93.
+
+
+LaTeX Warning: Citation `key-4' on page 9 undefined on input line 399.
+
+
+LaTeX Warning: Citation `1181570' on page 9 undefined on input line 400.
+
+
+LaTeX Warning: Citation `1181570' on page 9 undefined on input line 409.
+
+
+LaTeX Warning: Citation `1181570' on page 9 undefined on input line 414.
+
+
+LaTeX Warning: Citation `key-4' on page 9 undefined on input line 419.
+
+[9]
+
+LaTeX Warning: Citation `key-3' on page 10 undefined on input line 433.
+
+
+LaTeX Warning: Citation `key-3' on page 10 undefined on input line 436.
+
+
+LaTeX Warning: Citation `6064513' on page 10 undefined on input line 446.
+
+
+LaTeX Warning: Citation `key-3' on page 10 undefined on input line 447.
+
+
+LaTeX Warning: Citation `6064513' on page 10 undefined on input line 448.
+
+
+LaTeX Warning: Citation `elliott2011optimal' on page 10 undefined on input line
+ 458.
+
+
+LaTeX Warning: Citation `6064513' on page 10 undefined on input line 459.
+
+
+LaTeX Warning: Citation `anderson96framework' on page 10 undefined on input lin
+e 470.
+
+
+LaTeX Warning: Citation `563704' on page 10 undefined on input line 470.
+
+
+LaTeX Warning: Citation `anderson1997lock' on page 10 undefined on input line 4
+70.
+
+
+LaTeX Warning: Citation `holman2006supporting' on page 10 undefined on input li
+ne 470.
+
+
+LaTeX Warning: Citation `Lai:2009:SSR:1529282.1529660' on page 10 undefined on 
+input line 470.
+
+
+LaTeX Warning: Citation `1656921' on page 10 undefined on input line 470.
+
+
+LaTeX Warning: Citation `726426' on page 10 undefined on input line 470.
+
+
+LaTeX Warning: Citation `4297311' on page 10 undefined on input line 470.
+
+
+LaTeX Warning: Citation `5669659' on page 10 undefined on input line 470.
+
+
+LaTeX Warning: Citation `726426' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `1508449' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `Cho:2006:UAP:1141277.1141490' on page 10 undefined on 
+input line 471.
+
+
+LaTeX Warning: Citation `4297311' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `1003807' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `hohmuth2001pragmatic' on page 10 undefined on input li
+ne 471.
+
+
+LaTeX Warning: Citation `1613351' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `811240' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `896371' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `896423' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `1203552' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `5953690' on page 10 undefined on input line 471.
+
+
+LaTeX Warning: Citation `anderson96framework' on page 10 undefined on input lin
+e 474.
+
+
+LaTeX Warning: Citation `563704' on page 10 undefined on input line 474.
+
+[10]
+
+LaTeX Warning: Citation `anderson96framework' on page 11 undefined on input lin
+e 485.
+
+
+LaTeX Warning: Citation `anderson96framework' on page 11 undefined on input lin
+e 486.
+
+
+LaTeX Warning: Citation `anderson96framework' on page 11 undefined on input lin
+e 488.
+
+
+LaTeX Warning: Citation `anderson96framework' on page 11 undefined on input lin
+e 490.
+
+
+LaTeX Warning: Citation `563704' on page 11 undefined on input line 496.
+
+
+LaTeX Warning: Citation `anderson96framework' on page 11 undefined on input lin
+e 496.
+
+
+LaTeX Warning: Citation `563704' on page 11 undefined on input line 500.
+
+
+LaTeX Warning: Citation `563704' on page 11 undefined on input line 501.
+
+
+LaTeX Warning: Citation `anderson1997lock' on page 11 undefined on input line 5
+04.
+
+
+LaTeX Warning: Citation `anderson96framework' on page 11 undefined on input lin
+e 505.
+
+
+LaTeX Warning: Citation `563704' on page 11 undefined on input line 505.
+
+
+LaTeX Warning: Citation `key-5' on page 11 undefined on input line 511.
+
+
+LaTeX Warning: Citation `key-5' on page 11 undefined on input line 520.
+
+
+LaTeX Warning: Citation `key-5' on page 11 undefined on input line 520.
+
+
+LaTeX Warning: Citation `key-5' on page 11 undefined on input line 522.
+
+
+LaTeX Warning: Citation `holman2006supporting' on page 11 undefined on input li
+ne 529.
+
+
+LaTeX Warning: Citation `holman2006supporting' on page 11 undefined on input li
+ne 530.
+
+
+LaTeX Warning: Citation `holman2006supporting' on page 11 undefined on input li
+ne 534.
+
+
+LaTeX Warning: Citation `holman2006supporting' on page 11 undefined on input li
+ne 536.
+
+[11]
+
+LaTeX Warning: Citation `Lai:2009:SSR:1529282.1529660' on page 12 undefined on 
+input line 541.
+
+
+LaTeX Warning: Citation `1656921' on page 12 undefined on input line 541.
+
+
+LaTeX Warning: Citation `Lai:2009:SSR:1529282.1529660' on page 12 undefined on 
+input line 542.
+
+
+LaTeX Warning: Citation `1656921' on page 12 undefined on input line 544.
+
+
+LaTeX Warning: Citation `1656921' on page 12 undefined on input line 548.
+
+
+LaTeX Warning: Citation `5669659' on page 12 undefined on input line 549.
+
+
+LaTeX Warning: Citation `1508449' on page 12 undefined on input line 558.
+
+
+LaTeX Warning: Citation `1508449' on page 12 undefined on input line 559.
+
+
+LaTeX Warning: Citation `1508449' on page 12 undefined on input line 561.
+
+
+LaTeX Warning: Citation `Cho:2006:UAP:1141277.1141490' on page 12 undefined on 
+input line 563.
+
+
+LaTeX Warning: Citation `1508449' on page 12 undefined on input line 564.
+
+
+LaTeX Warning: Citation `Cho:2006:UAP:1141277.1141490' on page 12 undefined on 
+input line 566.
+
+
+LaTeX Warning: Citation `1003807' on page 12 undefined on input line 570.
+
+
+LaTeX Warning: Citation `1613351' on page 12 undefined on input line 572.
+
+
+LaTeX Warning: Citation `811240' on page 12 undefined on input line 576.
+
+
+LaTeX Warning: Citation `811240' on page 12 undefined on input line 578.
+
+
+LaTeX Warning: Citation `896371' on page 12 undefined on input line 579.
+
+
+LaTeX Warning: Citation `896423' on page 12 undefined on input line 584.
+
+
+LaTeX Warning: Citation `896423' on page 12 undefined on input line 587.
+
+
+LaTeX Warning: Citation `1203552' on page 12 undefined on input line 588.
+
+
+LaTeX Warning: Citation `1203552' on page 12 undefined on input line 591.
+
+
+LaTeX Warning: Citation `896423' on page 12 undefined on input line 591.
+
+[12]
+
+LaTeX Warning: Citation `726426' on page 13 undefined on input line 595.
+
+
+LaTeX Warning: Citation `726426' on page 13 undefined on input line 597.
+
+
+LaTeX Warning: Citation `726426' on page 13 undefined on input line 598.
+
+
+LaTeX Warning: Citation `4297311' on page 13 undefined on input line 599.
+
+
+LaTeX Warning: Citation `4032340' on page 13 undefined on input line 600.
+
+
+LaTeX Warning: Citation `4297311' on page 13 undefined on input line 602.
+
+
+LaTeX Warning: Citation `4297311' on page 13 undefined on input line 603.
+
+
+LaTeX Warning: Citation `hohmuth2001pragmatic' on page 13 undefined on input li
+ne 608.
+
+
+LaTeX Warning: Citation `5953690' on page 13 undefined on input line 614.
+
+
+LaTeX Warning: Citation `lam1997concurrency' on page 13 undefined on input line
+ 634.
+
+
+LaTeX Warning: Citation `259432' on page 13 undefined on input line 634.
+
+
+LaTeX Warning: Citation `5532682' on page 13 undefined on input line 634.
+
+
+LaTeX Warning: Citation `1541104' on page 13 undefined on input line 634.
+
+
+LaTeX Warning: Citation `lam1997concurrency' on page 13 undefined on input line
+ 635.
+
+
+LaTeX Warning: Citation `1401009' on page 13 undefined on input line 635.
+
+
+LaTeX Warning: Citation `859541' on page 13 undefined on input line 635.
+
+
+LaTeX Warning: Citation `259432' on page 13 undefined on input line 635.
+
+
+LaTeX Warning: Citation `1541104' on page 13 undefined on input line 635.
+
+
+LaTeX Warning: Citation `495222' on page 13 undefined on input line 635.
+
+[13]
+
+LaTeX Warning: Citation `lam1997concurrency' on page 14 undefined on input line
+ 649.
+
+
+LaTeX Warning: Citation `5532682' on page 14 undefined on input line 649.
+
+
+LaTeX Warning: Citation `1541104' on page 14 undefined on input line 649.
+
+
+LaTeX Warning: Citation `lam1997concurrency' on page 14 undefined on input line
+ 650.
+
+
+LaTeX Warning: Citation `1401009' on page 14 undefined on input line 650.
+
+
+LaTeX Warning: Citation `4680843' on page 14 undefined on input line 650.
+
+
+LaTeX Warning: Citation `495222' on page 14 undefined on input line 650.
+
+
+LaTeX Warning: Citation `853991' on page 14 undefined on input line 657.
+
+
+LaTeX Warning: Citation `5532682' on page 14 undefined on input line 657.
+
+
+LaTeX Warning: Citation `lam1997concurrency' on page 14 undefined on input line
+ 659.
+
+
+LaTeX Warning: Citation `lam1997concurrency' on page 14 undefined on input line
+ 671.
+
+
+LaTeX Warning: Citation `853991' on page 14 undefined on input line 674.
+
+
+LaTeX Warning: Citation `lam1997concurrency' on page 14 undefined on input line
+ 674.
+
+
+LaTeX Warning: Citation `853991' on page 14 undefined on input line 675.
+
+
+LaTeX Warning: Citation `853991' on page 14 undefined on input line 677.
+
+
+LaTeX Warning: Citation `853991' on page 14 undefined on input line 679.
+
+
+LaTeX Warning: Citation `1401009' on page 14 undefined on input line 688.
+
+
+LaTeX Warning: Citation `4680843' on page 14 undefined on input line 698.
+
+
+LaTeX Warning: Citation `859541' on page 14 undefined on input line 705.
+
+
+LaTeX Warning: Citation `859541' on page 14 undefined on input line 707.
+
+
+LaTeX Warning: Citation `859541' on page 14 undefined on input line 709.
+
+
+LaTeX Warning: Citation `859541' on page 14 undefined on input line 715.
+
+[14]
+
+LaTeX Warning: Citation `495222' on page 15 undefined on input line 719.
+
+
+LaTeX Warning: Citation `859541' on page 15 undefined on input line 719.
+
+
+LaTeX Warning: Citation `853992' on page 15 undefined on input line 736.
+
+
+LaTeX Warning: Citation `853992' on page 15 undefined on input line 737.
+
+
+LaTeX Warning: Citation `83617' on page 15 undefined on input line 738.
+
+
+LaTeX Warning: Citation `853992' on page 15 undefined on input line 741.
+
+
+LaTeX Warning: Citation `853992' on page 15 undefined on input line 742.
+
+
+LaTeX Warning: Citation `5532682' on page 15 undefined on input line 745.
+
+
+LaTeX Warning: Citation `1541104' on page 15 undefined on input line 751.
+
+
+LaTeX Warning: Citation `1541104' on page 15 undefined on input line 752.
+
+
+LaTeX Warning: Citation `1541104' on page 15 undefined on input line 754.
+
+[15]
+
+LaTeX Warning: Citation `Scherer:2005:ACM:1073814.1073861' on page 16 undefined
+ on input line 773.
+
+
+LaTeX Warning: Citation `scherer2004contention' on page 16 undefined on input l
+ine 773.
+
+
+LaTeX Warning: Citation `Guerraoui:2005:TTT:1073814.1073863' on page 16 undefin
+ed on input line 773.
+
+
+LaTeX Warning: Citation `Guerraoui:2006:TTT:1146381.1146429' on page 16 undefin
+ed on input line 773.
+
+
+LaTeX Warning: Citation `Guerraoui:2005:TTT:1073814.1073863' on page 16 undefin
+ed on input line 778.
+
+
+LaTeX Warning: Citation `Guerraoui:2006:TTT:1146381.1146429' on page 16 undefin
+ed on input line 778.
+
+
+LaTeX Warning: Citation `Scherer:2005:ACM:1073814.1073861' on page 16 undefined
+ on input line 778.
+
+
+LaTeX Warning: Citation `scherer2004contention' on page 16 undefined on input l
+ine 778.
+
+
+LaTeX Warning: Citation `Spear:2009:CSC:1504176.1504199' on page 16 undefined o
+n input line 778.
+
+
+LaTeX Warning: Citation `springerlink:10.1007_11561927_23' on page 16 undefined
+ on input line 778.
+
+
+LaTeX Warning: Citation `Spear:2009:CSC:1504176.1504199' on page 16 undefined o
+n input line 779.
+
+
+LaTeX Warning: Citation `Maldonado:2010:SST:1693453.1693465' on page 16 undefin
+ed on input line 779.
+
+
+LaTeX Warning: Citation `Blake:2009:PTS:1669112.1669133' on page 16 undefined o
+n input line 779.
+
+
+LaTeX Warning: Citation `gottschlich2008extending' on page 16 undefined on inpu
+t line 779.
+
+
+LaTeX Warning: Citation `Scherer:2005:ACM:1073814.1073861' on page 16 undefined
+ on input line 779.
+
+
+LaTeX Warning: Citation `Dolev:2008:CSC:1400751.1400769' on page 16 undefined o
+n input line 779.
+
+
+LaTeX Warning: Citation `Scherer:2005:ACM:1073814.1073861' on page 16 undefined
+ on input line 791.
+
+
+LaTeX Warning: Citation `scherer2004contention' on page 16 undefined on input l
+ine 791.
+
+
+LaTeX Warning: Citation `Scherer:2005:ACM:1073814.1073861' on page 16 undefined
+ on input line 798.
+
+
+LaTeX Warning: Citation `scherer2004contention' on page 16 undefined on input l
+ine 798.
+
+
+LaTeX Warning: Citation `Spear:2009:CSC:1504176.1504199' on page 16 undefined o
+n input line 798.
+
+
+LaTeX Warning: Citation `springerlink:10.1007_11561927_23' on page 16 undefined
+ on input line 798.
+
+
+LaTeX Warning: Citation `Guerraoui:2005:TTT:1073814.1073863' on page 16 undefin
+ed on input line 798.
+
+
+LaTeX Warning: Citation `Guerraoui:2006:TTT:1146381.1146429' on page 16 undefin
+ed on input line 798.
+
+[16]
+
+LaTeX Warning: Citation `springerlink:10.1007/s00453-008-9195-x' on page 17 und
+efined on input line 853.
+
+
+LaTeX Warning: Citation `springerlink:10.1007/s00453-008-9195-x' on page 17 und
+efined on input line 860.
+
+
+LaTeX Warning: Citation `Guerraoui:2005:TTT:1073814.1073863' on page 17 undefin
+ed on input line 864.
+
+
+LaTeX Warning: Citation `springerlink:10.1007/s00453-008-9195-x' on page 17 und
+efined on input line 866.
+
+
+LaTeX Warning: Citation `Guerraoui:2005:TTT:1073814.1073863' on page 17 undefin
+ed on input line 868.
+
+
+LaTeX Warning: Citation `Guerraoui:2005:TTT:1073814.1073863' on page 17 undefin
+ed on input line 870.
+
+[17]
+
+LaTeX Warning: Citation `springerlink:10.1007_11561927_23' on page 18 undefined
+ on input line 874.
+
+
+LaTeX Warning: Citation `springerlink:10.1007_11561927_23' on page 18 undefined
+ on input line 875.
+
+
+LaTeX Warning: Citation `springerlink:10.1007_11561927_23' on page 18 undefined
+ on input line 877.
+
+
+LaTeX Warning: Citation `springerlink:10.1007_11561927_23' on page 18 undefined
+ on input line 884.
+
+
+LaTeX Warning: Citation `Spear:2009:CSC:1504176.1504199' on page 18 undefined o
+n input line 889.
+
+
+LaTeX Warning: Citation `Maldonado:2010:SST:1693453.1693465' on page 18 undefin
+ed on input line 896.
+
+
+LaTeX Warning: Citation `Maldonado:2010:SST:1693453.1693465' on page 18 undefin
+ed on input line 897.
+
+
+LaTeX Warning: Citation `Maldonado:2010:SST:1693453.1693465' on page 18 undefin
+ed on input line 904.
+
+
+LaTeX Warning: Citation `Maldonado:2010:SST:1693453.1693465' on page 18 undefin
+ed on input line 906.
+
+
+LaTeX Warning: Citation `Maldonado:2010:SST:1693453.1693465' on page 18 undefin
+ed on input line 912.
+
+
+LaTeX Warning: Citation `Blake:2009:PTS:1669112.1669133' on page 18 undefined o
+n input line 919.
+
+
+LaTeX Warning: Citation `Blake:2009:PTS:1669112.1669133' on page 18 undefined o
+n input line 923.
+
+[18]
+
+LaTeX Warning: Citation `gottschlich2008extending' on page 19 undefined on inpu
+t line 930.
+
+
+LaTeX Warning: Citation `Scherer:2005:ACM:1073814.1073861' on page 19 undefined
+ on input line 945.
+
+
+LaTeX Warning: Citation `Dolev:2008:CSC:1400751.1400769' on page 19 undefined o
+n input line 953.
+
+
+LaTeX Warning: Citation `Meawad:2011:RWQ:2043910.2043912' on page 19 undefined 
+on input line 969.
+
+
+LaTeX Warning: Citation `Meawad:2011:RWQ:2043910.2043912' on page 19 undefined 
+on input line 971.
+
+
+LaTeX Warning: Citation `Meawad:2011:RWQ:2043910.2043912' on page 19 undefined 
+on input line 974.
+
+
+LaTeX Warning: Citation `5694263' on page 19 undefined on input line 976.
+
+
+LaTeX Warning: Citation `6068352' on page 19 undefined on input line 981.
+
+
+LaTeX Warning: Citation `6068352' on page 19 undefined on input line 983.
+
+
+LaTeX Warning: Citation `6068352' on page 19 undefined on input line 984.
+
+
+LaTeX Warning: Citation `6068352' on page 19 undefined on input line 989.
+
+
+LaTeX Warning: Citation `6068352' on page 19 undefined on input line 991.
+
+
+LaTeX Warning: Citation `6068352' on page 19 undefined on input line 993.
+
+[19]
+
+LaTeX Warning: Citation `5665752' on page 20 undefined on input line 995.
+
+
+LaTeX Warning: Citation `5665752' on page 20 undefined on input line 999.
+
+
+LaTeX Warning: Citation `5665752' on page 20 undefined on input line 1000.
+
+
+LaTeX Warning: Citation `5665752' on page 20 undefined on input line 1001.
+
+
+LaTeX Warning: Citation `5958224' on page 20 undefined on input line 1007.
+
+[20]
+Chapter 3.
+
+LaTeX Warning: Citation `key-5' on page 21 undefined on input line 1034.
+
+[21
+
+] [22]
+Chapter 4.
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page 23 undefined o
+n input line 1044.
+
+
+LaTeX Warning: Citation `6045438' on page 23 undefined on input line 1051.
+
+
+LaTeX Warning: Citation `6045438' on page 23 undefined on input line 1051.
+
+
+LaTeX Warning: Citation `6045438' on page 23 undefined on input line 1051.
+
+
+LaTeX Warning: Citation `6045438' on page 23 undefined on input line 1051.
+
+[23
+
+]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 1070
+.
+ (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1070.
+
+
+
+LaTeX Warning: Citation `key-2' on page 24 undefined on input line 1088.
+
+[24]
+File: figures/figure9-a.eps Graphic file (type eps)
+ <figures/figure9-a.eps>
+File: figures/figure9-b.eps Graphic file (type eps)
+ <figures/figure9-b.eps>
+File: figures/figure5-a.eps Graphic file (type eps)
+ <figures/figure5-a.eps>
+File: figures/figure5-b-1.eps Graphic file (type eps)
+
+<figures/figure5-b-1.eps>
+File: figures/figure5-c-1.eps Graphic file (type eps)
+ <figures/figure5-c-1.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 1134--1134
+[]\OT1/cmr/m/n/10 (c) Lazy val-i-da-tion with
+ []
+
+[25]
+
+LaTeX Warning: Citation `austenmc:tcc:dissertation:2009' on page 26 undefined o
+n input line 1157.
+
+[26]
+File: figures/figure6-a-1.eps Graphic file (type eps)
+ <figures/figure6-a-1.eps>
+Underfull \hbox (badness 1014) in paragraph at lines 1210--1210
+[]\OT1/cmr/m/n/10 (a) Other atomic sec-tions
+ []
+
+File: figures/figure6-b.eps Graphic file (type eps)
+<figures/figure6-b.eps>
+File: figures/circle.eps Graphic file (type eps)
+ <figures/circle.eps>
+File: figures/dotted_circle.eps Graphic file (type eps)
+ <figures/dotted_circle.eps>
+[27]
+File: figures/figure7.eps Graphic file (type eps)
+ <figures/figure7.eps> [28]
+
+LaTeX Warning: Citation `key-2' on page 29 undefined on input line 1283.
+
+File: figures/figure10.eps Graphic file (type eps)
+<figures/figure10.eps> [29] [30] [31]
+File: figures/figure11.eps Graphic file (type eps)
+ <figures/figure11.eps>
+LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1431.
+
+ [32]
+
+LaTeX Warning: Citation `key-2' on page 33 undefined on input line 1446.
+
+
+LaTeX Warning: Citation `key-5' on page 33 undefined on input line 1521.
+
+
+LaTeX Warning: Citation `key-5' on page 33 undefined on input line 1527.
+
+[33] [34]
+File: figures/figure14.eps Graphic file (type eps)
+ <figures/figure14.eps>
+
+LaTeX Warning: Citation `key-5' on page 35 undefined on input line 1599.
+
+
+Overfull \hbox (30.93106pt too wide) in paragraph at lines 1608--1610
+[]\OT1/cmr/m/n/12 Consider the same as-sump-tions as in Sec-tion [][][]4.3.1[][
+][][]. Let $\OML/cmm/m/it/12 [] \OT1/cmr/m/n/12 = [][] [] \OML/cmm/m/it/12 :\O
+T1/cmr/m/n/12 2\OML/cmm/m/it/12 :^^L[]$\OT1/cmr/m/n/12 .
+ []
+
+[35] [36]
+File: figures/figure15-a.eps Graphic file (type eps)
+ <figures/figure15-a.eps>
+File: figures/figure15-b.eps Graphic file (type eps)
+ <figures/figure15-b.eps> [37] [38]
+Chapter 5.
+
+LaTeX Warning: Citation `lcmdac2012' on page 39 undefined on input line 1854.
+
+[39
+
+]
+File: figures/figure16.eps Graphic file (type eps)
+ <figures/figure16.eps> [40] [41] [42] [43] [44]
+File: figures/figure18.eps Graphic file (type eps)
+ <figures/figure18.eps>
+[45] [46]
+
+LaTeX Warning: Citation `key-5' on page 47 undefined on input line 2137.
+
+
+LaTeX Warning: Citation `key-5' on page 47 undefined on input line 2140.
+
+
+LaTeX Warning: Citation `key-5' on page 47 undefined on input line 2144.
+
+[47] [48] [49]
+
+LaTeX Warning: Citation `key-5' on page 50 undefined on input line 2278.
+
+
+LaTeX Warning: Citation `key-5' on page 50 undefined on input line 2279.
+
+
+LaTeX Warning: Citation `key-5' on page 50 undefined on input line 2285.
+
+[50] [51] [52]
+Chapter 6.
+
+LaTeX Warning: Citation `pnf_emsoft12' on page 53 undefined on input line 2385.
+
+
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page 53 undefined o
+n input line 2396.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 53 undefined on input line 2396.
+
+
+LaTeX Warning: Citation `key-5' on page 53 undefined on input line 2396.
+
+[53
+
+]
+Runaway argument?
+{\@firstoffive }\fi ). 
+! Paragraph ended before \Hy@setref@link was complete.
+<to be read again> 
+                   \par 
+l.2453 
+       
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+[54]
+Runaway argument?
+{\@firstoffive }\fi ), where $n$ stands for the number of tasks in th\ETC.
+! Paragraph ended before \Hy@setref@link was complete.
+<to be read again> 
+                   \par 
+l.2514 
+       
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+[55]
+Runaway argument?
+{\@firstoffive }\fi ), then it will allocate a slot in the $m$-set an\ETC.
+! Paragraph ended before \Hy@setref@link was complete.
+<to be read again> 
+                   \par 
+l.2528 
+       
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+Runaway argument?
+{\@firstoffive }\fi ), it is time to select one of the $n$-set transa\ETC.
+! Paragraph ended before \Hy@setref@link was complete.
+<to be read again> 
+                   \par 
+l.2545 
+       
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+[56] [57] [58] [59] [60]
+
+LaTeX Warning: Citation `key-2' on page 61 undefined on input line 2802.
+
+[61]
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page 62 undefined o
+n input line 2850.
+
+
+LaTeX Warning: Citation `lcmdac2012' on page 62 undefined on input line 2850.
+
+
+LaTeX Warning: Citation `key-5' on page 62 undefined on input line 2850.
+
+[62]
+
+LaTeX Warning: Citation `key-2' on page 63 undefined on input line 2899.
+
+
+LaTeX Warning: Citation `key-2' on page 63 undefined on input line 2899.
+
+[63] [64] [65] [66] [67]
+
+LaTeX Warning: Citation `key-5' on page 68 undefined on input line 3147.
+
+
+LaTeX Warning: Citation `stmconcurrencycontrol:emsoft11' on page 68 undefined o
+n input line 3147.
+
+
+LaTeX Warning: Citation `key-5' on page 68 undefined on input line 3156.
+
+
+LaTeX Warning: Citation `key-5' on page 68 undefined on input line 3156.
+
+
+LaTeX Warning: Citation `key-5' on page 68 undefined on input line 3161.
+
+[68] [69]
+Chapter 7.
+
+LaTeX Warning: Citation `dellinger2011chronos' on page 70 undefined on input li
+ne 3206.
+
+
+LaTeX Warning: Citation `marathe2006lowering' on page 70 undefined on input lin
+e 3207.
+
+[70
+
+] [71]
+File: figures/Abr_dur_4t_5obj_all_100wr.eps Graphic file (type eps)
+ <figures/Abr_dur_4t_5obj_all_100wr.eps>
+File: figures/Abr_dur_8t_9obj_all_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_8t_9obj_all_100wr.eps>
+File: figures/Abr_dur_20t_21obj_all_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_21obj_all_100wr.eps>
+
+LaTeX Warning: Float too large for page by 27.05377pt on input line 3354.
+
+File: figures/Abr_dur_4t_5obj_100wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_5obj_100wr.eps>
+File: figures/Abr_dur_8t_9obj_100wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_9obj_100wr.eps>
+File: figures/Abr_dur_20t_21obj_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_21obj_100wr.eps>
+
+LaTeX Warning: Float too large for page by 27.05377pt on input line 3378.
+
+File: figures/Abr_dur_4t_50obj_40wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_50obj_40wr.eps>
+File: figures/Abr_dur_8t_90obj_40wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_90obj_40wr.eps>
+File: figures/Abr_dur_20t_210obj_40wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_210obj_40wr.eps>
+
+LaTeX Warning: Float too large for page by 27.72046pt on input line 3402.
+
+File: figures/Abr_dur_4t_50obj_80wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_50obj_80wr.eps>
+File: figures/Abr_dur_8t_90obj_80wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_90obj_80wr.eps>
+File: figures/Abr_dur_20t_210obj_80wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_210obj_80wr.eps>
+
+LaTeX Warning: Float too large for page by 27.72046pt on input line 3427.
+
+File: figures/Abr_dur_4t_50obj_100wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_50obj_100wr.eps>
+File: figures/Abr_dur_8t_90obj_100wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_90obj_100wr.eps>
+File: figures/Abr_dur_20t_210obj_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_210obj_100wr.eps>
+
+LaTeX Warning: Float too large for page by 27.72046pt on input line 3451.
+
+File: figures/Abr_dur_4t_100obj_40wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_100obj_40wr.eps>
+File: figures/Abr_dur_8t_180obj_40wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_180obj_40wr.eps>
+File: figures/Abr_dur_20t_420obj_40wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_420obj_40wr.eps>
+
+LaTeX Warning: Float too large for page by 27.72046pt on input line 3475.
+
+File: figures/Abr_dur_4t_100obj_80wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_100obj_80wr.eps>
+File: figures/Abr_dur_8t_180obj_80wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_180obj_80wr.eps>
+File: figures/Abr_dur_20t_420obj_80wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_420obj_80wr.eps>
+
+LaTeX Warning: Float too large for page by 27.72046pt on input line 3499.
+
+File: figures/Abr_dur_4t_100obj_100wr.eps Graphic file (type eps)
+<figures/Abr_dur_4t_100obj_100wr.eps>
+File: figures/Abr_dur_8t_180obj_100wr.eps Graphic file (type eps)
+ <figures/Abr_dur_8t_180obj_100wr.eps>
+File: figures/Abr_dur_20t_420obj_100wr.eps Graphic file (type eps)
+
+<figures/Abr_dur_20t_420obj_100wr.eps>
+
+LaTeX Warning: Float too large for page by 27.72046pt on input line 3523.
+
+[72] [73] [74] [75] [76] [77] [78] [79] [80]
+Chapter 8.
+[81
+
+]
+
+LaTeX Warning: Citation `Moss2006186' on page 82 undefined on input line 3555.
+
+
+LaTeX Warning: Citation `volos2009nepaltm' on page 82 undefined on input line 3
+555.
+
+
+Overfull \hbox (25.66861pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 Mohammed El-Shambakey  Chapter [][][]8[][][][]. Conclusions an
+d Proposed Post Preliminary Exam Work   \OT1/cmr/m/n/12 82
+ []
+
+[82]
+Overfull \hbox (25.66861pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 Mohammed El-Shambakey  Chapter [][][]8[][][][]. Conclusions an
+d Proposed Post Preliminary Exam Work   \OT1/cmr/m/n/12 83
+ []
+
+[83]
+Overfull \hbox (25.66861pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 Mohammed El-Shambakey  Chapter [][][]8[][][][]. Conclusions an
+d Proposed Post Preliminary Exam Work   \OT1/cmr/m/n/12 84
+ []
+
+[84]
+Overfull \hbox (1.07608pt too wide) in paragraph at lines 3593--3593
+[]\OT1/cmr/bx/n/14.4 Formal and Ex-per-i-men-tal Com-par-i-son with Real-Time L
+ock-
+ []
+
+
+LaTeX Warning: Citation `chen1990dynamic' on page 85 undefined on input line 35
+95.
+
+
+LaTeX Warning: Citation `6031129' on page 85 undefined on input line 3595.
+
+
+LaTeX Warning: Citation `Rajkumar:1991:SRS:532621' on page 85 undefined on inpu
+t line 3595.
+
+
+LaTeX Warning: Citation `sha1990priority' on page 85 undefined on input line 35
+95.
+
+
+LaTeX Warning: Citation `lakshmanan2009coordinated' on page 85 undefined on inp
+ut line 3595.
+
+
+LaTeX Warning: Citation `rajkumar2002real' on page 85 undefined on input line 3
+595.
+
+
+LaTeX Warning: Citation `Buttazzo:2004:HRC:1027504' on page 85 undefined on inp
+ut line 3595.
+
+
+LaTeX Warning: Citation `baker1991stack' on page 85 undefined on input line 359
+5.
+
+
+LaTeX Warning: Citation `gai2003comparison' on page 85 undefined on input line 
+3595.
+
+
+LaTeX Warning: Citation `easwaran2009resource' on page 85 undefined on input li
+ne 3595.
+
+
+LaTeX Warning: Citation `key-4' on page 85 undefined on input line 3595.
+
+
+LaTeX Warning: Citation `brandenburg2008implementation' on page 85 undefined on
+ input line 3595.
+
+
+LaTeX Warning: Citation `holman2006locking' on page 85 undefined on input line 
+3595.
+
+
+LaTeX Warning: Citation `Baruah:2007:TMG:1338441.1338647' on page 85 undefined 
+on input line 3595.
+
+
+LaTeX Warning: Citation `brandenburg2008comparison' on page 85 undefined on inp
+ut line 3595.
+
+
+LaTeX Warning: Citation `key-3' on page 85 undefined on input line 3597.
+
+
+Overfull \hbox (25.66861pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 Mohammed El-Shambakey  Chapter [][][]8[][][][]. Conclusions an
+d Proposed Post Preliminary Exam Work   \OT1/cmr/m/n/12 85
+ []
+
+[85]
+\openout2 = `FBLT.aux'.
+
+ (./FBLT.tex
+Chapter 9.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[86
+
+
+])
+! Argument of \Hy@setref@link has an extra }.
+<inserted text> 
+                \par 
+l.3601 \include{FBLT}
+                     
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+{\@firstoffive }\fi .FBLT\hfill \csname noextrasenglish\endcsname \endgroup \ET
+C.
+! Paragraph ended before \Hy@setref@link was complete.
+<to be read again> 
+                   \par 
+l.3601 \include{FBLT}
+                     
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+! Extra }, or forgotten \endgroup.
+<recently read> }
+                 
+l.3601 \include{FBLT}
+                     
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten \endgroup.
+\@outputpage ...or \hb@xt@ \textwidth {\@thehead }
+                                                  \color@endbox }\dp \@tempb...
+l.3601 \include{FBLT}
+                     
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.3601 \include{FBLT}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.3601 \include{FBLT}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \vbox (669.62831pt too high) has occurred while \output is active []
+
+
+[88] (./shambake_prelim.bbl
+Missing character: There is no Â in font cmr12!
+Missing character: There is no   in font cmr12!
+Missing character: There is no Â in font cmr12!
+Missing character: There is no   in font cmr12!
+Missing character: There is no Ã in font cmr12!
+Missing character: There is no ¶ in font cmr12!
+Missing character: There is no Ã in font cmr12!
+Missing character: There is no © in font cmr12!
+Missing character: There is no Ã in font cmr12!
+Missing character: There is no   in font cmr12!
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]\OT1/cmr/m/n/12 Intel Cor-po-ra-tion.  In-tel 64 and IA-32 Ar-chi-tec-tures S
+oft-ware De-
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+\OT1/cmr/m/n/12 vel-oper's Man-ual Vol-ume 2A: In-struc-tion Set Ref-er-ence, A
+-M.
+ []
+
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]\OT1/cmr/m/n/12 Intel Cor-po-ra-tion.  In-tel Ita-nium Ar-chi-tec-ture Soft-w
+are De-
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+\OT1/cmr/m/n/12 vel-op-ers Man-ual Vol-ume 3: In-struc-tion Set Ref-er-ence.
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]\OT1/cmr/m/n/12 University of Rochester.  Rochester Soft-ware Trans-ac-tional
+ Mem-ory.
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][][]$\OT1/cmtt/m/n/12 http : / / www . cs . rochester . edu / research / sync
+hronization / rstm / index . shtml$[][][][]\OT1/cmr/m/n/12 ,
+ []
+
+
+Underfull \hbox (badness 6204) has occurred while \output is active
+[]\OT1/cmr/m/n/12 H. Vo-los, A. Welc, A.R. Adl-Tabatabai, T. Sh-peis-man, X. Ti
+an, and
+ []
+
+) (./shambake_prelim.aux (./FBLT.aux))
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+! You can't use `\end' in internal vertical mode.
+\enddocument ... \endgroup \deadcycles \z@ \@@end 
+                                                  
+l.3625 \end{document}
+                     
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.3625 \end{document}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Unbalanced output routine.
+<inserted text> }
+                 
+l.3625 \end{document}
+                     
+Your sneaky output routine has problematic {'s and/or }'s.
+I can't handle that very well; good luck.
+
+\HyPL@Entry{97<</S/D /St 88>>}
+[88
+
+
+\@writefile{loa}{\addvspace {10\p@ }}
+
+] [89] [90] [91] [92] [93] [94] [95] [96] [97] [98])
+! Emergency stop.
+<*> shambake_prelim.tex
+                       
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 8751 strings out of 495062
+ 124604 string characters out of 1182644
+ 290291 words of memory out of 3000000
+ 11721 multiletter control sequences out of 15000+50000
+ 14301 words of font info for 54 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 38i,21n,58p,1430b,1233s stack positions out of 5000i,500n,10000p,200000b,50000s
+Output written on shambake_prelim.dvi (108 pages, 644824 bytes).

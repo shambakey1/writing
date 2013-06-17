@@ -1,0 +1,151 @@
+#ds-js-all {
+	width: 253px;
+}
+
+#ds-top {
+	height: 12px;
+}
+
+#ds-top-left {
+	float: left;
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_tl.png');
+	_background-image: none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_tl.png', sizingMethod='scale');		
+	width: 12px;
+	font-size: 1px;
+	line-height: 12px;	
+}
+
+#ds-top-center {
+	float: left;
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_tc.png');
+	width: 229px;
+	line-height: 12px;
+}	
+
+#ds-top-right {
+	float: right;
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_tr.png');
+	_background-image: none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_tr.png', sizingMethod='scale');	
+	width: 12px;
+	font-size: 1px;	
+	line-height: 12px;		
+}
+
+#ds-bottom-left {
+	float: left;
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_bl.png');
+	_background-image: none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_bl.png', sizingMethod='scale');	
+	width: 12px;
+	font-size: 1px;
+	line-height: 12px;	
+}
+
+#ds-bottom-center {
+	float: left;
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_b.png');
+	width: 229px;
+	line-height: 12px;
+}	
+
+#ds-bottom-right {
+	float: right;
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_br.png');
+	_background-image: none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_br.png', sizingMethod='scale');	
+	width: 12px;
+	font-size: 1px;	
+	line-height: 12px;		
+}
+
+#ds-body-wrapper {
+	height: 136px;
+	background: #f8ffd6;	
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+     #ds-body-wrapper { height: 148px; }
+}
+
+#ds-body-left {
+	float: left;
+	width: 12px;
+	height: 100%;	
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_l.png');
+	background-repeat: repeat-y;
+}
+
+#ds-body-content {
+	float: left;
+	width: 227px;
+	margin: 1px 1px 0 1px;
+}
+
+#ds-body-right {
+	float: right;
+	width: 12px;
+	height: 100%;	
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_r.png');
+	background-repeat: repeat-y;
+}
+
+#ds-body-close {
+	height: 12px;
+	line-height: 12px;	
+}
+
+#ds-close-button {
+	float: right;
+	width: 12px;
+	height: 12px;
+	line-height: 12px;
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/corners/displayedsavings_close.png');
+	cursor: pointer;
+}
+
+#ds-body-copy {
+	margin-top: 6px;
+}
+
+#ds-body-link {
+	float: right;
+	display: none;
+}
+
+#ds-body-link a {
+	background:transparent url(http://media.expedia.com/media/content/expus/graphics/icons/box-arrow-blue13x13.gif) no-repeat scroll right top;
+	color:#4985C7;
+	font: 12px Arial;
+	line-height: 12px;
+	padding-right:17px;
+}
+
+#ds-arw {
+	width: 8px;
+	height: 25px;
+}
+
+.ds-arwL {
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/arrows/displayedsavings_arrow_l.png');
+	_background-image: none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://media.expedia.com/media/content/expus/graphics/common/arrows/displayedsavings_arrow_l.png', sizingMethod='scale');
+}
+
+.ds-arwR {
+	background: transparent url('http://media.expedia.com/media/content/expus/graphics/common/arrows/displayedsavings_arrow_r.png');
+	_background-image: none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://media.expedia.com/media/content/expus/graphics/common/arrows/displayedsavings_arrow_r.png', sizingMethod='scale');	
+}
+
+.ds-title {
+	font: bold 14px Arial;
+	color: #25527e;
+	margin-bottom: 3px;
+}
+
+.ds-copy {
+	font: 12px Arial;
+	color: #336699;
+}

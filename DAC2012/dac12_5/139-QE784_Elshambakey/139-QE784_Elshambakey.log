@@ -1,0 +1,528 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.1.24)  12 APR 2012 20:41
+entering extended mode
+ %&-line parsing enabled.
+**139-QE784_Elshambakey.tex
+(./139-QE784_Elshambakey.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(./sig-alternate.cls (/usr/share/texmf-texlive/tex/latex/graphics/epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen102
+\Gin@req@width=\dimen103
+)
+\epsfxsize=\dimen104
+\epsfysize=\dimen105
+)
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2009/06/22 v3.00
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\@emptytoks=\toks15
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip41
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks16
+\ex@=\dimen106
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen107
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count79
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count80
+\leftroot@=\count81
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count82
+\DOTSCASE@=\count83
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen108
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count84
+\c@MaxMatrixCols=\count85
+\dotsspace@=\muskip10
+\c@parentequation=\count86
+\dspbrk@lvl=\count87
+\tag@help=\toks17
+\row@=\count88
+\column@=\count89
+\maxfields@=\count90
+\andhelp@=\toks18
+\eqnshift@=\dimen109
+\alignsep@=\dimen110
+\tagshift@=\dimen111
+\tagwidth@=\dimen112
+\totwidth@=\dimen113
+\lineht@=\dimen114
+\@envbody=\toks19
+\multlinegap=\skip42
+\multlinetaggap=\skip43
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+Document Class 'sig-alternate' <22nd. April '09>. Modified by G.K.M. Tobin/Gerr
+y Murray
+Based in part upon document Style `acmconf' <22 May 89>. Hacked 4/91 by
+shivers@cs.cmu.edu, 4/93 by theobald@cs.mcgill.ca
+Excerpts were taken from (Journal Style) 'esub2acm.cls'.
+****** Bugs/comments/suggestions/technicalities to Gerry Murray -- murray@hq.ac
+m.org ******
+Questions on the style, SIGS policies, etc. to Adrienne Griscti griscti@acm.org
+
+\footheight=\dimen115
+\@maxsep=\dimen116
+\@dblmaxsep=\dimen117
+\aucount=\count91
+\originalaucount=\count92
+\auwidth=\dimen118
+\auskip=\dimen119
+\auskipcount=\count93
+\auskip=\dimen120
+\allauboxes=\dimen121
+\addauthors=\toks21
+\addauflag=\count94
+\subtitletext=\toks22
+\savesection=\count95
+\sectioncntr=\count96
+\c@figure=\count97
+\c@table=\count98
+\titleboxnotes=\toks23
+\titleboxnoteflag=\count99
+Document Class: sig-alternate 2009/04/22 - V2.4 - based on acmproc.cls V1.3 <No
+v. 30 '99>
+(/usr/share/texmf-texlive/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+)
+\@acmtitlebox=\box28
+\titlenotecount=\count100
+\tntoks=\toks24
+\tntokstwo=\toks25
+\tntoksthree=\toks26
+\tntoksfour=\toks27
+\tntoksfive=\toks28
+\catcount=\count101
+\copyrightnotice=\toks29
+\conf=\toks30
+\confinfo=\toks31
+\c@part=\count102
+\c@section=\count103
+\c@subsection=\count104
+\c@subsubsection=\count105
+\c@paragraph=\count106
+
+Using 'Abbrev' bibliography style
+LaTeX Info: Redefining \cite on input line 1211.
+\bibindent=\dimen122
+\colcntr=\count107
+\saveb@x=\box29
+\copyrtyr=\toks32
+\acmcopyr=\toks33
+\boilerplate=\toks34
+\copyrightetc=\toks35
+(/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+(/usr/share/texmf-texlive/tex/latex/base/t1enc.def
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+)
+LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
+
+(/usr/share/texmf-texlive/tex/latex/ae/t1aer.fd
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+)))
+(/usr/share/texmf-texlive/tex/latex/paralist/paralist.sty
+Package: paralist 2002/03/18 v2.3b Extended list environments (BS)
+\pltopsep=\skip44
+\plpartopsep=\skip45
+\plitemsep=\skip46
+\plparsep=\skip47
+\pl@lab=\toks36
+)
+(/usr/share/texmf-texlive/tex/latex/comment/comment.sty
+\CommentStream=\write3
+
+Excluding comment 'comment') (/usr/share/texmf-texlive/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 285.
+LaTeX Info: Redefining \nocite on input line 356.
+Package: cite 2009/08/29  v 5.2
+) (/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip48
+\subfigcapskip=\skip49
+\subfigcaptopadj=\dimen123
+\subfigbottomskip=\skip50
+\subfigcapmargin=\dimen124
+\subfiglabelskip=\skip51
+\c@subfigure=\count108
+\c@lofdepth=\count109
+\c@subtable=\count110
+\c@lotdepth=\count111
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip52
+\subfig@bottom=\skip53
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip11
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+) (./algorithm2e.sty
+Package: algorithm2e 2008/00/00 v3.10 algorithms environments
+\c@AlgoLine=\count112
+
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf-texlive/tex/latex/tools/xspace.sty
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/relsize.sty
+Package: relsize 2003/07/04 ver 3.1
+
+
+Package relsize Warning: Failed to get list of font sizes.
+(relsize)                Falling back to old definition. on input line 81.
+
+)
+********************************************************
+Package `algorithm2e' Release 4.01 -- december 14 2009 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip54
+\skiplinenumber=\skip55
+\skiprule=\skip56
+\skiphlne=\skip57
+\skiptext=\skip58
+\skiplength=\skip59
+\algomargin=\skip60
+\skipalgocfslide=\skip61
+\algowidth=\dimen125
+\inoutsize=\dimen126
+\inoutline=\dimen127
+\interspacetitleruled=\dimen128
+\interspacealgoruled=\dimen129
+\interspacetitleboxruled=\dimen130
+\algocf@inoutbox=\box30
+\algocf@inputbox=\box31
+\AlCapSkip=\skip62
+\AlCapHSkip=\skip63
+\algocf@nlbox=\box32
+\algocf@hangingbox=\box33
+\algocf@capbox=\box34
+\algoheightruledefault=\skip64
+\algoheightrule=\skip65
+\algotitleheightruledefault=\skip66
+\algotitleheightrule=\skip67
+\c@algocfline=\count113
+\c@algocfproc=\count114
+\c@algocf=\count115
+\algocf@algoframe=\box35
+\algocf@algobox=\box36
+)
+\c@clm=\count116
+ (/usr/share/texmf-texlive/tex/latex/pslatex/pslatex.sty
+Package: pslatex 1996/07/24 v1.2 pslatex emulation (DPC)
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+\symbold=\mathgroup7
+\symitalic=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 75.
+)
+
+LaTeX Warning: Unused global option(s):
+    [letter].
+
+(./139-QE784_Elshambakey.aux)
+\openout1 = `139-QE784_Elshambakey.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 33.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 33
+.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omspzccm.fd
+File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
+)
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 72
+.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1ptmcm.fd
+File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 72
+.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omlptmcm.fd
+File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+psycm on input line 72
+.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omxpsycm.fd
+File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 72.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 72.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for U+lasy on input line 72.
+
+(/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 72.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 72.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 72.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 79.
+
+Overfull \hbox (3.30292pt too wide) in paragraph at lines 79--79
+\T1/ptm/m/n/9 C.3 [\T1/ptm/b/n/9 Special-Purpose and Application-based Sys-tems
+\T1/ptm/m/n/9 ]: Real-time
+ []
+
+
+Overfull \hbox (4.3566pt too wide) in paragraph at lines 110--112
+\T1/ptm/m/n/9 niza-tion tech-niques only un-der some ranges for the max-i-mum a
+tomic
+ []
+
+[1
+
+
+]
+Overfull \hbox (1.0172pt too wide) in paragraph at lines 152--161
+[]\T1/ptm/m/it/9 Shared ob-jects. \T1/ptm/m/n/9 A task may need to read/write s
+hared, in-memory
+ []
+
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 183.
+[2]
+File: figures/figure16.eps Graphic file (type eps)
+ <figures/figure16.eps>
+File: figures/figure18.eps Graphic file (type eps)
+ <figures/figure18.eps>
+Overfull \hbox (5.91339pt too wide) in paragraph at lines 295--298
+[]\T1/ptm/m/n/9 We now com-pare the schedu-la-bil-ity of G-EDF/LCM with ECM [7]
+
+ []
+
+[3]
+Overfull \hbox (2.72743pt too wide) in paragraph at lines 301--303
+\T1/ptm/m/n/9 Thus, schedu-la-bil-ity is com-pared by sub-sti-tut-ing the retry
+ cost added
+ []
+
+
+Overfull \hbox (5.13962pt too wide) in paragraph at lines 316--317
+\T1/ptm/m/it/9 achieves higher schedu-la-bil-ity than the retry-loop lock-free 
+ap-proach
+ []
+
+
+Overfull \hbox (4.75229pt too wide) in paragraph at lines 356--358
+\T1/ptm/m/n/9 ECM, RCM, G-EDF/LCM, and G-RMA/LCM con-tention man-agers,
+ []
+
+[4]
+File: figures/Abr_dur_5t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+ <figures/Abr_dur_5t_nl_g_30_0.5_0.5_0.5_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.5_0.5_0.5_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.5_0.5_0.5_1.eps>
+File: figures/Res_Time_5t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Res_Time_5t_nl_g_30_0.5_0.5_0.5_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.5_0.5_0.5_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.5_0.5_0.5_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.5_0.5_0.5_1.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 492--501
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 492--501
+[]
+ []
+
+[5] (./139-QE784_Elshambakey.bbl
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 37.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 37.
+) [6] [7]
+Overfull \hbox (12.36087pt too wide) in paragraph at lines 696--699
+[]\T1/ptm/m/n/9 Summarizing from the pre-vi-ous cases, the up-per bound on $\OM
+L/ptmcm/m/it/9 s[]=r[]$
+ []
+
+File: figures/Abr_dur_5t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.5_0.2_0.2_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.5_0.2_0.2_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.5_0.2_0.2_1.eps>
+File: figures/Res_Time_5t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_5t_nl_g_30_0.5_0.2_0.2_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.5_0.2_0.2_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.5_0.2_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.5_0.2_0.2_1.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 755--764
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--764
+[]
+ []
+
+File: figures/Abr_dur_5t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+<figures/Abr_dur_5t_nl_g_30_0.8_0.5_0.2_1.eps>
+File: figures/Abr_dur_10t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_10t_nl_g_30_0.8_0.5_0.2_1.eps>
+File: figures/Abr_dur_12t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Abr_dur_12t_nl_g_30_0.8_0.5_0.2_1.eps>
+File: figures/Res_Time_5t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_5t_nl_g_30_0.8_0.5_0.2_1.eps>
+File: figures/Res_Time_10t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_10t_nl_g_30_0.8_0.5_0.2_1.eps>
+File: figures/Res_Time_12t_nl_g_30_0.8_0.5_0.2_1.eps Graphic file (type eps)
+
+<figures/Res_Time_12t_nl_g_30_0.8_0.5_0.2_1.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 791--800
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 791--800
+[]
+ []
+
+[8] [9] [10] (./139-QE784_Elshambakey.aux) ) 
+Here is how much of TeX's memory you used:
+ 3877 strings out of 495062
+ 49191 string characters out of 1182644
+ 128828 words of memory out of 3000000
+ 6974 multiletter control sequences out of 15000+50000
+ 58281 words of font info for 82 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 39i,14n,27p,799b,453s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on 139-QE784_Elshambakey.dvi (10 pages, 74396 bytes).

@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: shambake_prelim.aux
+The style file: plain.bst
+Database file #1: global_bibliography.bib
+I was expecting a `,' or a `}'---line 481 of file global_bibliography.bib
+ :   
+ :   year={2006}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 1311 of file global_bibliography.bib
+ : @inproceedings{Dolev:2008:CSC:1400751.1400769
+ :                                              ,
+I'm skipping whatever remains of this entry
+You've used 63 entries,
+            2118 wiz_defined-function locations,
+            884 strings with 17363 characters,
+and the built_in function-call counts, 28563 in all, are:
+= -- 2943
+> -- 1156
+< -- 50
++ -- 462
+- -- 389
+* -- 1858
+:= -- 4216
+add.period$ -- 211
+call.type$ -- 63
+change.case$ -- 377
+chr.to.int$ -- 0
+cite$ -- 63
+duplicate$ -- 1281
+empty$ -- 2295
+format.name$ -- 389
+if$ -- 6474
+int.to.chr$ -- 0
+int.to.str$ -- 63
+missing$ -- 65
+newline$ -- 318
+num.names$ -- 128
+pop$ -- 443
+preamble$ -- 1
+purify$ -- 317
+quote$ -- 0
+skip$ -- 1075
+stack$ -- 0
+substring$ -- 1997
+swap$ -- 532
+text.length$ -- 50
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 246
+warning$ -- 0
+while$ -- 272
+width$ -- 65
+write$ -- 764
+(There were 2 error messages)

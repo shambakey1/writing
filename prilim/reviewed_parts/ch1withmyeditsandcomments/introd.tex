@@ -1,0 +1,240 @@
+%
+% PROJECT: <ETD> Electronic Thesis and Dissertation Initiative
+%   TITLE: LaTeX report template for ETDs in LaTeX
+%  AUTHOR: Neill Kipp, nkipp@vt.edu
+%     URL: http://etd.vt.edu/latex/
+% SAVE AS: etd.tex
+% REVISED: September 6, 1997 [GMc 8/30/10]
+% 
+
+% Instructions: Remove the data from this document and replace it with your own,
+% keeping the style and formatting information intact.  More instructions
+% appear on the Web site listed above.
+
+\documentclass[12pt,english]{report}
+
+\makeatletter
+\newif\if@restonecol
+
+\let\algorithm\relax
+\let\endalgorithm\relax
+%\usepackage[tight,footnotesize]{subfigure}
+\usepackage{subfigure}
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[ruled]{algorithm2e}
+\usepackage{babel}
+\usepackage{listings}
+\makeatother
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+
+
+\newtheorem{clm}{Claim}
+\newtheorem{proof}{Proof}
+\newtheorem{mydef}{Definition}
+
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\pdfpageheight\paperheight
+\pdfpagewidth\paperwidth
+
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+
+
+\makeatother
+
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+\setlength{\evensidemargin}{0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\topmargin}{0in}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1in}
+
+% Uncomment for double-spaced document.
+% \renewcommand{\baselinestretch}{2}
+
+% \usepackage{epsf}
+
+\begin{document}
+
+\thispagestyle{empty}
+\pagenumbering{roman}
+%\begin{center}
+
+
+
+\pagenumbering{arabic}
+\pagestyle{myheadings}
+
+\chapter{Introduction}
+\markright{Mohammed Elshambakey \hfill Chapter 1. Introduction \hfill}
+
+Embedded systems sense physical processes and control their behavior, typically through feedback loops. Since physical processes are concurrent, computations that control them must also be concurrent, enabling them to process multiple streams of sensor input and control multiple actuators, all concurrently. Often, such computations need to concurrently read/write shared data objects. Typically, they must also process sensor input and react, satisfying application-level time constraints. 
+
+The de facto standard for programming concurrency is the threads abstraction, and the de facto synchronization abstraction is locks. Lock-based concurrency control has significant programmability, scalability, and composability challenges~\cite{Herlihy:2006:AMP:1146381.1146382}. Coarse-grained locking (e.g., a single lock guarding a critical section) is simple to use, but permits no concurrency: the single lock forces concurrent threads to execute the critical section sequentially, in a one-at-a-time order. This is a significant limitation, especially with the emergence of multicore architectures, on which improved software performance must be achieved by exposing greater concurrency.  
+
+With fine-grained locking, a single critical section is broken down into several critical sections -- e.g., each bucket of a hash table is guarded by a unique lock. Thus, threads that need to access different buckets can do so concurrently, permitting greater parallelism. However, this approach has low programmability: programmers must acquire only necessary and sufficient locks to obtain maximum concurrency without compromising safety, and must avoid deadlocks when acquiring multiple locks. Moreover, locks can lead to livelocks, lock-convoying, and priority inversion. 
+
+Perhaps, the most significant limitation of lock-based code is its non-composability. For example, atomically moving an element from one hash table to another using those tables' (lock-based) atomic methods is not possible in a straightforward manner: if the methods internally use locks, a thread cannot simultaneously acquire and hold the locks of the methods (of the two tables); if the methods were to export their locks, that will compromise safety. 
+
+Lock-free synchronization~\cite{herlihy2008art}, 
+which uses atomic hardware synchronization primitives (e.g., Compare And Swap~\cite{CAS64IA32, CASitanium}, Load-Linked/Store-Conditional~\cite{LL:CS:Sites:1993:AAA:151220.151226}),
+also permits greater concurrency, but has even lower programmability: lock-free algorithms must be custom-designed for each situation (e.g., a data structure~\cite{lockfreeLLmichael2002high,lockfreeSL,lockfreeBSTfraser2004practical,HopscotchHashing,KarySearchTreesbrown2011non}). Additionally, it is not clear how to program nested critical sections using lock-free synchronization. Most importantly, reasoning about the correctness of lock-free algorithms is significantly difficult~\cite{herlihy2008art}. 
+
+\section{Transactional Memory}
+
+Transactional memory (TM) is an alternative synchronization model for shared memory data objects that promises to alleviate these difficulties.  With TM, programmers write concurrent code using threads, but organize code that read/write shared memory objects as \emph{memory transactions}, which speculatively execute, while logging changes made to objects--e.g., using an undo-log or a write-buffer. Objects read and written by transactions are also monitored, in read sets and write sets, respectively. Two transactions conflict if they access the same object and one access is a write. (Conflicts are usually detected by detecting non-empty read and write set intersections.) When that happens, a contention manager (CM) resolves the conflict by aborting one and committing the other, yielding (the illusion of) atomicity. Aborted transactions are re-started, after rolling-back the changes--e.g., undoing object changes using the undo-log (eager), or discarding the write buffers (lazy). 
+
+In addition to a simple programming model (locks are excluded from the programming interface), TM provides performance comparable to lock-based synchronization~\cite{Saha:2006:MHP:1122971.1123001}, especially for high contention and read-dominated workloads, and is composable. TM's first implementation was proposed in hardware, called hardware transactional memory (or HTM)~\cite{Herlihy:1993:TMA:165123.165164}. HTM has the lowest overhead, but HTM transactions are usually limited in space and time. Examples of HTMs include TCC~\cite{ham04},
+UTM~\cite{UTM1385954}, Oklahoma~\cite{Oklahoma260295}, ASF~\cite{AMDprocHTMchristie2010evaluation}, and Bulk~\cite{BulkCeze:2006:BDS:1135775.1136506}. TM implementation in software, called software transactional memory (or STM) was proposed later~\cite{sha95}. STM transactions do not need any special hardware, are not
+limited in size or time, and are more flexible. However, STM has a higher overhead, and thus lower performance, than HTM. Examples of STMs include
+RSTM~\cite{RSTM}, TinySTM~\cite{TinySTM}, Deuce~\cite{Deucekorland2010noninvasive},
+and AtomJava~\cite{AtomJavahindman2006atomicity}.
+
+\lstset{language=C++}
+\begin{lstlisting}[caption={STM example},label=rstm_example]
+BEGIN_TRANSACTION;
+	stm::wr_ptr<Counter> wr(m_counter);
+	wr->set_value(wr->get_value(wr) + 1, wr);
+END_TRANSACTION;
+\end{lstlisting}
+
+Listing~\ref{rstm_example} shows an example STM code written by  RSTM~\cite{Shriraman:2007:IHA:1250662.1250676}'s interface. RSTM's \texttt{BEGIN\_TRANSACTION} and \texttt{END\_TRANSACTION} keywords are used to enclose a critical section, which creates a transaction for the enclosed code block and guarantees its atomic execution. First line inside the transaction makes a write pointer to a variable ``\lstinline!m_counter!" of type ``\lstinline!Counter!". The second line reads the current value of the counter variable through "\lstinline!wr->get_value!". The counter value is incremented through ``\lstinline!wr->set_value!" operation.
+
+Hybrid TM (or HyTM) was subsequently proposed in~\cite{FirstHyTMlie2004hardware}, 
+which combines HTM with STM, and avoids their limitations. Examples of HyTMs include SpHT~\cite{SpHTLev:2008:SHT:1345206.1345236}, VTM~\cite{VTM1431581}, HyTM~\cite{dam06},
+LogTM~\cite{logTM1598134}, and LogTM-SE~\cite{logTMSE4147667}.
+
+
+
+\section{STM for Real-Time Software}
+
+Given the hardware-independence of STM, which is a significant advantage, we focus on STM. STM's programmability, scalability, and composability advantages are also compelling for concurrency control in multicore embedded real-time software. However, this will require bounding transactional  retries, as real-time threads, which subsume transactions, must satisfy application-level time constraints.  Transactional retry bounds in STM are dependent on the CM policy at hand (analogous to the way thread response time bounds are OS scheduler-dependent). 
+
+Despite the large body of work on STM contention managers, relatively few results are known on real-time contention management. STM concurrency control for real-time systems has been previously studied, but in a limited way. For example, \cite{manson2006preemptible} proposes a restricted version of STM for uniprocessors. Uniprocessors do not need contention management. \cite{fahmy2009bounding} bounds response times in distributed multicore systems with STM synchronization. They consider Pfair scheduling~\cite{holman-thesis04}, which is largely only of theoretical interest\footnote{This is due to Pfair class of algorithm's time quantum-driven nature of scheduling and consequent high run-time overheads.}, limit to small atomic regions with fixed size, and limit transaction execution to span at most two quanta. \cite{sarni2009real} presents real-time scheduling of transactions and serializes transactions based on transactional deadlines. However, the work does not bound transactional retries and response times. 
+
+\cite{schoeberl2010rttm} proposes real-time HTM, which of course, requires hardware with TM support. The retry bound developed in~\cite{schoeberl2010rttm} assumes that the worst case conflict between atomic sections of different tasks occurs when the sections are released at the same time. We show that, this assumption does not cover the worst case scenario (see Chapter~\ref{ecm-rcm}). \cite{6045438} presents a contention manager that resolves conflicts using task deadlines. The work also establishes upper bounds on transactional retries and task response times. However, similar to \cite{schoeberl2010rttm}, \cite{6045438} also assumes that the worst case conflict between atomic sections occurs when the sections are released simultaneously. Besides, \cite{6045438} assumes that all transactions have equal lengths. The ideas in \cite{6045438} are extended in \cite{barrosmanaging}, which presents three real-time CM designs. But no retry bounds or schedulability analysis techniques are presented for those CMs.
+
+Thus, past efforts on real-time STM are limited, and do not answer important fundamental questions:
+\begin{enumerate}[(1)]
+\item How to design ``general purpose" real-time STM contention managers for multicore architectures? By general purpose, we mean those that do not impose any restrictions on transactional properties (e.g., transaction lengths, number of transactional objects, levels of transactional nestings), which are key limitations of past work. 
+\item What tight upper bounds exist for transactional retries and task response times under such real-time CMs?
+\item How does the schedulability of real-time CMs compare with that of lock-free synchronization? i.e., are there upper bounds or lower bounds for transaction lengths below or above which is STM superior to lock-free synchronization?
+\item How does transactional retry costs and task response times of real-time CMs compare with that of lock-free synchronization in practice (i.e., on average)?
+\end{enumerate}
+
+\section{Research Contributions}
+
+In this dissertation proposal, we answer these questions. We present a suite of real-time STM contention managers, called RCM, ECM, LCM, and PNF. The contention managers progressively improve transactional retry and task response time upper  bounds (and consequently improve STM's schedulability advantages) and also relax the underlying task models. RCM and ECM resolve conflicts using fixed and dynamic priorities of real-time tasks, respectively, and are naturally intended to be used with the fixed priority (e.g., G-RMA~\cite{buttazzo2005hard}) and dynamic priority (e.g., G-EDF~\cite{buttazzo2005hard}) multicore real-time schedulers, respectively. LCM resolves conflicts based on task priorities as well as atomic section lengths, and can be used with G-EDF or G-RMA. Transactions under ECM, RCM and LCM can restart because of other transactions that share no objects with them. This is called transitive retry. PNF solves this problem. PNF also optimizes processor usage through reducing priority of aborted transactions. So, other tasks can proceed.
+
+We establish upper bounds on transactional retry costs and task response times under all the contention managers through schedulability analysis.   Since ECM and RCM conserve the semantics of the underlying real-time scheduler, their maximum transactional retry cost is double the maximum atomic section length. This is improved in the design of LCM, which achieves  shorter retry costs.  However, ECM, RCM, and LCM are affected by transitive retries when transactions access multiple objects. 
+Transitive retry causes a transaction to abort and retry due to another non-conflicting transaction. PNG avoids transitive retry, and also optimizes processor usage by lowering the priority of retrying transactions, enabling other non-conflicting transactions to proceed. 
+
+We formally compare the schedulability of the proposed contention managers with lock-free synchronization. 
+Our comparison reveals that, for most cases, ECM and RCM achieve higher schedulability than lock-free synchronization only when the atomic section length does not exceed half of lock-free synchronization's retry loop length. However, in some cases, the atomic section length can reach the lock-free retry loop length for ECM and it can even be larger than the lock-free retry loop-length for RCM, and yet higher schedulability can be achieved with STM. This means that, STM is more advantageous with G-RMA than with G-EDF. 
+
+LCM achieves shorter retry costs and response times than ECM and RCM. Importantly, the atomic section length range for which STM's schedulability advantage holds is significantly expanded with LCM (over that under ECM and RCM): Under ECM, RCM and LCM, transactional length should not exceed half of lock-free retry loop length to achieve better schedulability. However, with low contention, transactional length can increase to retry loop length under ECM. Under RCM, transactional length can be of many orders of magnitude of retry loop length with low contention. With suitable LCM parameters, transactional length under G-EDF/LCM can be twice as retry loop length. While in G-RMA/LCM, transactional length can be of many orders of magnitude as retry loop length. PNF achieves better schedulability than lock-free as long as transactional length does not exceed length of retry loop.
+
+Why are we concerned about expanding STM's schedulability advantage? When STM's schedulability advantage holds, programmers can reap STM's significant programmability and composability benefits in multicore real-time software. Thus, by expanding STM's schedulability advantage, we increase the range of real-time software for which those benefits can be tapped. Our results, for the first time, thus provides a fundamental understanding of when to use, and not use, STM concurrency control in multicore real-time software.
+
+We also implement the contention managers in the RSTM framework~\cite{Shriraman:2007:IHA:1250662.1250676} and conduct experimental studies using the ChronOS multicore real-time Linux kernel~\cite{dellinger2011chronos}. Our studies confirm that, the contention managers achieve shorter retry costs than lock-free synchronization by as much as 95\% improvement (on average). Among the contention managers, PNF performs the best in case of high transitive retry. PNF achieves shorter retry costs than ECM, RCM and LCM by as much as 53\% improvement (on average).
+
+\section{\label{sec:postprelim work} Summary of Proposed Post Preliminary Research}
+
+Based on our current research results, we propose the following work:
+
+\textit{Supporting nested transactions.} Transactions can be nested \textit{linearly}, where each transaction has at most one pending transaction~\cite{Moss2006186}. Nesting can also be done in \textit{parallel} where transactions execute concurrently within the same parent~\cite{volos2009nepaltm}. Linear nesting can be \textit{1) flat:} If a child transaction aborts, then the parent transaction also aborts. If a child commits, no effect is taken until the parent commits. Modifications made by the child transaction are only visible to the parent until the parent commits, after which they are externally visible. 
+%
+\textit{2) Closed:} Similar to \textit{flat nesting}, except that if a child transaction conflicts, it is aborted and retried, without aborting the parent, potentially improving concurrency over flat nesting. 
+%
+\textit{3) Open:} If a child transaction commits, its modifications are immediately externally visible, releasing memory isolation  of objects used by the child, thereby potentially improving concurrency over closed nesting. However, if the parent conflicts after the child commits, then compensating actions are executed to undo the actions of the child, before retrying the parent and the child. 
+We propose to develop real-time contention managers that allow these different nesting models and establish their retry and response time upper bounds. Additionally, we propose to formally compare their schedulability with nested critical sections under lock-based synchronization. Note that, nesting is not viable under lock-free synchronization. 
+
+
+\textit{Combinations and optimizations of LCM and PNF contention managers.} LCM is designed to reduce the retry cost of a transaction when it is interfered close to the end of its execution. In contrast, PNF is designed to avoid transitive retry when transactions access multiple objects. An interesting direction is to combine the two contention managers to obtain the benefits of both algorithms. Further design optimizations may also be possible to reduce retry costs and response times, by considering additional criteria for resolving transactional conflicts. Importantly, we must also understand what are the schedulability advantages of such a combined/optimized CM over that of LCM and PNF, and how such a combined/optimized CM behaves in practice. This will be our second research direction. 
+
+\textit{Formal and experimental comparison with real-time locking protocols.} Lock-free synchronization offers numerous advantages over locking protocols, but (coarse-grain) locking protocols have had significant traction in real-time systems due to their good programmability (even though their concurrency is low).  Example such real-time locking protocols include PCP and its variants~\cite{chen1990dynamic,6031129,Rajkumar:1991:SRS:532621,sha1990priority}, multicore PCP (MPCP)~\cite{lakshmanan2009coordinated,rajkumar2002real}, SRP~\cite{Buttazzo:2004:HRC:1027504, baker1991stack}, multicore SRP (MSRP)~\cite{gai2003comparison}, PIP~\cite{easwaran2009resource}, FMLP~\cite{key-4,brandenburg2008implementation,holman2006locking}, and OMLP~\cite{Baruah:2007:TMG:1338441.1338647}. OMLP and FMLP are similar, and FMLP has been established to be superior to other protocols~\cite{brandenburg2008comparison}. How does their schedulability compare with that of the proposed contention managers? How do they compare in practice? These questions constitute our third research direction. 
+
+
+\section{\label{sec:proposal outline} Proposal Organization}
+
+The rest of this dissertation proposal is organized as follows. Chapter~\ref{related_work} overviews past and related work on  real-time concurrency control. Chapter~\ref{models_assmuptions} describes our task/system model and assumptions.   Chapter~\ref{ecm-rcm} describes the ECM and RCM contention managers, derives upper bounds for their retry costs and response times, and compares their schedulability between themselves and with lock-free synchronization. Chapters~\ref{ch_lcm} and~\ref{ch_pnf} similarly describe the LCM and PNF contention managers, respectively. Chapter~\ref{ch_exp} describes our implementation and reports our experimental studies. We conclude in Chapter~\ref{conclusions}.
+
+%%BR: I have revised the following chapter titles and also propose chapter organization. 
+\chapter{\label{related_work}Past and Related Work}
+
+\section{Real-Time Locking Protocols}
+
+\section{Real-Time Lock-Free Synchronization}
+
+\section{Real-Time TM Concurrency Control}
+
+
+\chapter{\label{models_assmuptions}Models and Assumptions}
+
+
+\chapter{\label{ecm-rcm} The ECM and RCM Contention Managers}
+%%BR: straight from your SAC paper and TR
+
+\section{Algorithm Description}
+
+\section{Illustrative Example}
+
+\section{Properties}
+%%BR: i.e., retry and response time bound derivations
+
+\section{Schedulability Comparisons}
+
+\chapter{\label{ch_lcm} The LCM Contention Manager}
+%BR: similarly organize 
+
+%%BR: straight from your DAC paper and TR
+
+
+\chapter{\label{ch_pnf} The PNF Contention Manager}
+%BR: similarly organize 
+
+%%BR: straight from your Emsoft paper and TR
+
+
+\chapter{\label{ch_exp} Implementation and Experimental Evaluations}
+%%BR: straight from your papers
+
+\section{Implementation}
+\section{Experimental Settings}
+\section{Retry Cost Measurements}
+\section{Response Time Measurements}
+
+\chapter{\label{conclusions} Conclusions and Proposed Post Preliminary Research}
+
+\section{Conclusions}
+
+\section{Proposed Post Preliminary Research}
+
+\bibliographystyle{plain}
+\bibliography{global_bibliography}
+
+
+
+
+\end{document}

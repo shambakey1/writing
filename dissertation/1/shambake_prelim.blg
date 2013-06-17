@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: shambake_prelim.aux
+The style file: plain.bst
+Database file #1: /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib
+I was expecting a `,' or a `}'---line 481 of file /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib
+ :   
+ :   year={2006}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 1311 of file /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib
+ : @inproceedings{Dolev:2008:CSC:1400751.1400769
+ :                                              ,
+I'm skipping whatever remains of this entry
+Warning--empty journal in pnf_emsoft12
+Warning--empty year in pnf_emsoft12
+Warning--empty publisher in springerlink:10.1007_11561927_23
+Warning--empty year in marathe2006lowering
+You've used 116 entries,
+            2118 wiz_defined-function locations,
+            1164 strings with 26694 characters,
+and the built_in function-call counts, 49787 in all, are:
+= -- 4991
+> -- 2008
+< -- 84
++ -- 799
+- -- 668
+* -- 3156
+:= -- 7356
+add.period$ -- 374
+call.type$ -- 116
+change.case$ -- 668
+chr.to.int$ -- 0
+cite$ -- 120
+duplicate$ -- 2266
+empty$ -- 4120
+format.name$ -- 668
+if$ -- 11297
+int.to.chr$ -- 0
+int.to.str$ -- 116
+missing$ -- 112
+newline$ -- 584
+num.names$ -- 240
+pop$ -- 873
+preamble$ -- 1
+purify$ -- 559
+quote$ -- 0
+skip$ -- 1896
+stack$ -- 0
+substring$ -- 3338
+swap$ -- 934
+text.length$ -- 84
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 456
+warning$ -- 4
+while$ -- 448
+width$ -- 119
+write$ -- 1332
+(There were 2 error messages)

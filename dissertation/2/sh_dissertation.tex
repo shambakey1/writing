@@ -1,0 +1,171 @@
+\documentclass[12pt,english]{report}
+
+\makeatletter
+\newif\if@restonecol
+
+\let\algorithm\relax
+\let\endalgorithm\relax
+%\usepackage[tight,footnotesize]{subfigure}
+\usepackage{subfigure}
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[ruled]{algorithm2e}
+\usepackage{babel}
+\usepackage{listings}
+\usepackage{ifpdf}
+\usepackage[pdftex, breaklinks,colorlinks=false,pdfborder={0 0 0}]{hyperref}
+\usepackage[all]{hypcap}
+\makeatother
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+
+
+\newtheorem{clm}{Claim}
+%\newtheorem{proof}{Proof}
+\newtheorem{mydef}{Definition}
+
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\pdfpageheight\paperheight
+\pdfpagewidth\paperwidth
+
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+
+
+\makeatother
+
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+\setlength{\evensidemargin}{0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1in}
+
+% Uncomment for double-spaced document.
+% \renewcommand{\baselinestretch}{2}
+
+% \usepackage{epsf}
+
+\begin{document}
+
+\thispagestyle{empty}
+\pagenumbering{roman}
+\begin{center}
+
+% TITLE
+{\Large 
+Real-Time Software Transactional Memory: Contention Managers, Time Bounds, and Implementations
+}
+
+\vfill
+
+Mohammed El-Shambakey
+
+\vfill
+
+Dissertation Submitted to the Faculty of the\\
+Virginia Polytechnic Institute and State University\\
+in partial fulfillment of the requirements for the degree of
+
+\vfill
+
+Doctor of Philosophy \\
+in \\
+Computer Engineering
+
+\vfill
+
+Binoy Ravindran, Chair \\
+Robert P. Broadwater \\
+Cameron D. Patterson \\
+Mohamed Rizk Mohamed. Rizk\\
+Anil Kumar S. Vullikanti
+
+\vfill
+\textbf{? ?, ?}\\
+Blacksburg, Virginia
+
+\vfill
+
+Keywords: Software Transactional Memory, Embedded Systems, Contention Managers
+\\
+Copyright \textbf{?}, Mohammed El-Shambakey
+
+\end{center}
+
+\pagebreak
+
+\thispagestyle{empty}
+\begin{center}
+
+{\large Real-Time Software Transactional Memory: Contention Managers, Time Bounds, and Implementations}
+
+\vfill
+
+Mohammed El-Shambakey
+
+\vfill
+
+(ABSTRACT)
+
+\vfill
+
+\end{center}
+
+\include{diss_parts/sh_abstract}
+
+%\vfill
+
+
+%\pagebreak
+
+\include{diss_parts/sh_dedication}
+\include{diss_parts/sh_achnowledgments}
+
+\tableofcontents
+\pagebreak
+
+\listoffigures
+\pagebreak
+
+\listoftables
+\pagebreak
+
+\listofalgorithms
+\pagebreak
+
+\pagenumbering{arabic}
+\pagestyle{myheadings}
+
+\include{diss_parts/sh_introduction}
+\include{diss_parts/sh_related_work}
+\include{diss_parts/sh_preliminaries}
+\include{diss_parts/sh_ecm_rcm}
+\include{diss_parts/sh_lcm}
+\include{diss_parts/sh_pnf}
+\include{diss_parts/sh_fblt}
+\include{diss_parts/sh_exp}
+\include{diss_parts/sh_conclusion}
+\addcontentsline{toc}{chapter}{Bibliography}
+\include{diss_parts/sh_bib}
+
+\end{document}

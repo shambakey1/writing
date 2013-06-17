@@ -1,0 +1,727 @@
+\chapter{\label{related_work}Past and Related Work}
+\markright{Mohammed El-Shambakey \hfill Chapter~\ref{related_work}. Past and Related Work \hfill}
+
+Many mechanisms appeared for concurrency control for real-time systems.
+These methods include locking \cite{Levine:2012:PIF:2148436.2148438,Buttazzo:2004:HRC:1027504},
+lock-free \cite{anderson96framework,563704,anderson1997lock,holman2006supporting,Lai:2009:SSR:1529282.1529660,1656921,726426,4297311,5669659,key-5}
+and wait-free \cite{726426,1508449,Cho:2006:UAP:1141277.1141490,4297311,1003807,hohmuth2001pragmatic,1613351,811240,896371,896423,1203552,5953690}.
+In general, real-time locking protocols have disadvantages like: 1) serialized access to shared object, resulting in reduced concurrency and reduced utilization. 2) increased overhead due to context switches. 3) possibility of deadlock when lock holder crashes.  3) some protocols requires apriori knowledge of ceiling priorities of locks. This is not always available. 4) Operating system data structures must be updates with this knowledge which reduces flexibility. For real-time lock-free, the most important problem is to bound number of failed retries and reduce cost of a single loop. The general technique to access lock-free objects is {}``retry-loop''. Retry-loop uses atomic primitives (e.g., CAS) which is repeated until success. To access a specific data structure efficiently, lock-free technique is customized to that data structure. This increases difficulty of response time analysis. Primitive operations do not access multiple objects concurrently. Although some attempts made to enable multi-word CAS \cite{563704}, but it is not available in commodity hardware \cite{Meawad:2011:RWQ:2043910.2043912}. For real-time wait-free protocols. It has a space problem due to use of multiple buffers. This is inefficient in some applications like small-memory real-time embedded systems. Wait-free has the same problem of lock-free in handling multiple objects.
+
+The rest of this Chapter is organized as follows, Section~\ref{sec:locking protocols} summarizes previous work on real-time locking protocols. In Section~\ref{sec:lock-free and wait-free}, we preview related work on lock-free and wait-free methods for real-time systems. Section~\ref{sec:db concurrency control} provides concurrency control under real-time database systems as a predecessor and inspiration for real-time STM. Section~\ref{sec:contention manager} previews related work on contention management. Contention management policy affects response time analysis of real-time STM.
+
+\section{\label{sec:locking protocols}Real-Time Locking Protocols}
+A lot of work has been done on real-time locking protocols. Locks
+in real-time systems can lead to priority inversion \cite{Levine:2012:PIF:2148436.2148438,Buttazzo:2004:HRC:1027504}.
+Under priority inversion, a higher priority job is not allowed to
+run because it needs a resource locked by a lower priority job. Meanwhile,
+an intermediate priority job preempts the lower priority one and runs.
+Thus, the higher priority job is blocked because of a lower priority
+one. Different locking protocols appeared to solve this problem, but
+exposing other problems. Most of real-time blocking protocols are
+based on \textit{Priority Inheritance Protocol (PIP)} \cite{sha1990priority,easwaran2009resource,Buttazzo:2004:HRC:1027504},
+\textit{Priority Ceiling Protocol (PCP)} \cite{sha1990priority,easwaran2009resource,Buttazzo:2004:HRC:1027504,chen1990dynamic,6031129,Rajkumar:1991:SRS:532621,lakshmanan2009coordinated,rajkumar2002real}
+and \textit{Stack Resource Protocol (SRP)} \cite{baker1991stack,Buttazzo:2004:HRC:1027504,990598}.
+
+In PIP \cite{sha1990priority,Buttazzo:2004:HRC:1027504}, resource
+access is done in FIFO order. A resource holder inherits highest priority
+of jobs blocked on that resource. When resource holder releases the
+resource and it holds no other resources, its priority is returned
+to its normal priority. If it holds other resources, its priority
+is returned to highest priority job blocked on other resources. Under
+PIP, a high priority job can be blocked by lower priority jobs for
+at most the minimum of number of lower priority jobs and number of
+shared resources. PIP suffers from chained blocking, in which a higher
+priority task is blocked for each accessed resource. Besides, PIP
+suffers from deadlock where each of two jobs needs resources held by
+the other. So, each job is blocked because of the other. \cite{easwaran2009resource}
+provides response time analysis for PIP when used with fixed-priority
+preemptive scheduling on multiprocessor system.
+
+PCP \cite{sha1990priority,Buttazzo:2004:HRC:1027504,Rajkumar:1991:SRS:532621}
+provides concept of priority ceiling. Priority ceiling of a resource
+is the highest priority of any job that can access that resource.
+For any job to enter a critical section, its priority should be higher
+the priority ceiling of any currently accessed resource. Otherwise,
+the resource holder inherits the highest priority of any blocked job.
+Under PCP, a job can be blocked for at most one critical section.
+PCP prevents deadlocks. \cite{chen1990dynamic} extends PCP to dynamically
+scheduled systems.
+
+Two protocols extend PCP to multiprocessor systems: 1) \textit{Multiprcoessor
+PCP (M-PCP)} \cite{Rajkumar:1991:SRS:532621,lakshmanan2009coordinated,rajkumar2002real}
+discriminates between global resources and local resources. Local
+resources are accessed by PCP. A global resource has a base priority
+greater than any task normal priority. Priority ceiling of a global
+resource equals sum of its base priority and highest priority of any
+job that can access it. A job uses a global resource at the priority
+ceiling of that resource. Requests for global resources are enqueued
+in a priority queue according to normal priority of requesting job.
+2) \textit{Parallel-PCP (P-PCP)} \cite{easwaran2009resource} extends
+PCP to deal with fixed priority preemptive multiprocessor scheduling.
+P-PCP, in contrast to PCP, allows lower priority jobs to allocate
+resources when higher priority jobs already access resources. Thus,
+increasing parallelism. Under P-PCP, a higher priority job can be
+blocked multiple times by a lower priority job. With reasonable priority
+assignment, blocking time by lower priority jobs is small. P-PCP uses
+$\alpha_{i}$ parameter to specify permitted number of jobs with basic
+priority lower than $i$ and effective priority higher than $i$.
+When $\alpha_{i}$ is small, parallelism is reduced, so as well blocking
+from lower priority tasks. Reverse is true. \cite{easwaran2009resource}
+provides response time analysis for P-PCP.
+
+\cite{6001645} extends P-PCP to provide \textit{Limited-Blocking
+PCP (LB-PCP)}. LB-PCP provides more control on indirect blocking from
+lower priority tasks. LB-PCP specify additional counters that control
+number of times higher priority jobs can be indirectly blocked without
+the need of reasonable priority assignment as in P-PCP. \cite{6001645}
+analyzes response time of LB-PCP and experimentally compares it to
+P-PCP. Results show that LB-PCP is appropriate for task sets with
+medium utilization.
+
+PCP can be unfair from blocking point of view. PCP can cause unnecessary
+and long blocking for tasks that do not need any resources. Thus,
+\cite{6031129} provides Intelligent PCP (IPCP) to increase fairness
+and to work in dynamically configured system (i.e., no a priori information
+about number of tasks, priorities and accessed resources). IPCP initially
+optimizes priorities of tasks and resources through learning. Then,
+IPCP tunes priorities according to system wide parameters to achieve
+fairness. During the tuning phase, penalties are assigned to tasks
+according to number of higher priority tasks that can be blocked.
+
+SRP \cite{Buttazzo:2004:HRC:1027504,baker1991stack,990598} extends
+PCP to allow multiunit resources and dynamic priority scheduling and
+sharing runtime stack-based resources. SRP uses \textit{preemption
+level} as a static parameter assigned to each task despite its dynamic
+priority. Resource ceiling is modified to include number of available
+resources and preemption levels. System ceiling is the highest resource
+ceiling. A task is not allowed to preempt unless it is the highest
+priority ready one, and its preemption level is higher than the system
+ceiling. Under SRP, a job can be blocked at most for one critical
+section. SRP prevents deadlocks. \textit{Multiprocessor SRT (M-SRP)}
+\cite{gai2003comparison} extends SRP to multiprocessor systems. M-SRP,
+as M-PCP, discriminates between local and global resources. Local
+resources are accessed by SRP. Request for global resource are enqueued
+in a FIFO queue for that resource. Tasks with pending requests busy-wait
+until their requests are granted.
+
+Another set of protocols appeared for PFair scheduling \cite{key-4}.
+\cite{1181570} provide initial attempts to synchronize tasks with
+short and long resources under PFair. In Pfair scheduling, each task
+receives a weight that corresponds to its share in system resources.
+Tasks are scheduled in quanta, where each quantum has a specific job
+on a specific processor. Each lock has a FIFO queue. Requesting tasks
+are ordered in this FIFO queue. If a task is preempted during critical
+section, then other tasks can be blocked for additional time known
+as \textit{frozen time}. Critical sections requesting short resources
+execute at most in two quanta. By early lock-request, critical section
+can finish in one quanta, avoiding the additional blocking time. \cite{1181570}
+proposes two protocols to deal with short resources: 1)\textit{ Skip
+Protocol (SP) }leaves any lock request in the FIFO queue during frozen
+interval until requesting task is scheduled again. 2) \textit{Rollback
+Protocol (RP)} discards any request in the FIFO queue for the lock
+during frozen time. For long resources, \cite{1181570} uses \textit{Static
+Weight Server Protocol (SWSP)} where requests for each resource $l$
+is issued to a corresponding server $S$. $S$ orders requests in
+a FIFO queue and has a static specific weight.
+
+Flexible Multiprocessor Locking Protocol (FMLP) \cite{key-4} is the
+most famous synchronization protocol for PFair scheduling. The FMLP
+allows non-nested and nested resources access without constraints.
+FMLP is used under global and partitioned deadline scheduling. Short
+or long resource is user defined. Resources can be grouped if they
+are nested by some task and have the same type. Request to a specific
+resource is issued to its containing group. Short groups are protected
+by non-preemptive FIFO queue locks, while long groups are protected
+by FIFO semaphore queues. Tasks busy-wait for short resources and
+suspend on long resources. Short request execute non-preemptively.
+Requests for long resources cannot be contained within requests for
+short resources. A job executing a long request inherits highest priority
+of blocked jobs on that resource's group. FMLP is deadlock free.
+
+\cite{key-3} is concerned with suspension protocols. Schedulability
+analysis for suspension protocols can be suspension-oblivious or suspension-aware.
+In suspension-oblivious, suspension time is added to task execution.
+While in suspension-aware, it is not. \cite{key-3} provides \textit{Optimal
+Multiprocessor Locking Protocol (OMLP)}. Under OMLP, each resource
+has a FIFO queue of length at most $m$, and a priority queue. Requests
+for each resource are enqueued in the corresponding FIFO queue. If
+FIFO queue is full, requests are added to the priority queue according
+to the requesting job's priority. The head of the FIFO queue is the
+resource holding task. Other queued requests are suspended until their
+turn come. OMLP achieves $O(m)$ priority inversion (\textit{pi})
+blocking per job under suspension oblivious analysis. This is why
+OMLP is asymptotically optimal under suspension oblivious analysis.
+Under suspension aware analysis, FMLP is asymptotically optimal. \cite{6064513}
+extends work in \cite{key-3} to clustered-based scheduled multiprocessor
+system. \cite{6064513} provides concept of \textit{priority donation}
+to ensure that each job is preempted at most once. In priority donation,
+a resource holder priority can be unconditionally increased. Thus,
+a resource holder can preempt another task. The preempted task is
+predetermined such that each job is preempted at most once. OMLP with
+priority donation can be integrated with k-exclusion locks (K-OMLP).
+Under K-exclusion locks, there are k instances of the same resource
+than can be allocated concurrently. K-OMLP has the same structure
+of OMLP except that there are K FIFO queues for each resource. Each
+FIFO queue corresponds to one of the k instances. K-OMLP has $O(m/k)$
+bound for pi-blocking under s-oblivious analysis. \cite{elliott2011optimal}
+extends the K-OMLP in~\cite{6064513} to global
+scheduled multiprocessor systems. The new protocol is \textit{Optimal
+K-Exclusion Global Locking Protocol (O-KGLP)}. Despite global scheduling
+is a special case of clustering, K-OMLP provides additional cost
+to tasks requesting no resources if K-OMLP is used with global scheduling.
+O-KGLP avoids this problem.
+
+\section{\label{sec:lock-free and wait-free}Real-Time Lock-Free and Wait-Free Synchronization}
+
+Due to locking problems (e,g,. priority inversion, high overhead and
+deadlock), research has been done on non-blocking synchronization
+using lock-free \cite{anderson96framework,563704,anderson1997lock,holman2006supporting,Lai:2009:SSR:1529282.1529660,1656921,726426,4297311,5669659}
+and wait-free algorithms \cite{726426,1508449,Cho:2006:UAP:1141277.1141490,4297311,1003807,hohmuth2001pragmatic,1613351,811240,896371,896423,1203552,5953690}.
+Lock-free iterates an atomic primitive (e.g., CAS) inside a retry
+loop until successfully accessing object. When used with real-time
+systems, number of failed retries must be bounded \cite{anderson96framework,563704}.
+Otherwise, tasks are highly likely to miss their deadlines. Wait-free
+algorithms, on the other hand, bound number of object access by any
+operation due to use of sized buffers. Synchronization under wait-free
+is concerned with: 1) single-writer/multi-readers where a number of
+reading operations may conflict with one writer. 2) multi-writer/multi-reader
+where a number of reading operations may conflict with number of writers.
+The problem with wait-free algorithms is its space cost. As embedded
+real-time systems are concerned with both time and space complexity,
+some work appeared trying to combine benefits of locking and wait-free.
+
+\cite{anderson96framework} considers lock-free synchronization for
+hard-real time, periodic, uniprocessor systems. \cite{anderson96framework}
+upper bounds retry loop failures and derives schedulability conditions
+with Rate Monotonic (RM), and Earliest Deadline First (EDF). \cite{anderson96framework}
+compares, formally and experimentally, lock-free objects against locking
+protocols. \cite{anderson96framework} concludes that lock-free objects
+often require less overhead than locking-protocols. They require no
+information about tasks and allow addition of new tasks simply. Besides,
+lock-free object do not induce excessive context switches nor priority
+inversion. On the other hand, locking protocols allow nesting. Besides,
+performance of lock-free depends on the cost of {}``retry-loops''.
+\cite{563704} extends \cite{anderson96framework} to generate a general
+framework for implementing lock-free objects in uniprcocessr real-time
+systems. The framework tackles the problem of multi-objects lock-free
+operations and transactions through multi-word compare and swap (MWCAS)
+implementation. \cite{563704} provides a general approach to calculate
+cost of operation interference based on linear programming. \cite{563704}
+compares the proposed framework with real-time locking protocols.
+Lock-free objects are prefered if cost of retry-loop is less than
+cost of lock-access-unlock sequence. \cite{anderson1997lock} extends
+\cite{anderson96framework,563704} to use lock-free objects in building
+memory-resident transactions for uniprocessor real-time systems. Lock-free
+transactions, in contrast to lock-based transactions, do not suffer
+from priority inversion, deadlocks, complicated data-logging and rolling
+back. Lock-free transaction do not require kernel support.
+
+\cite{key-5} presents two synchronization methods under G-EDF scheduled
+real-time multiprocessor systems for simple objects. The first synchronization
+technique uses queue-based spin locks, while the other uses lock-free.
+The queue lock is FIFO ordered. Each task appends an entry at the
+end of the queue, and spins on it. While the task is spinning, it
+is non-preemptive. The queue could have been priority-based but this
+complicates design and does not enhance worst case response time analysis.
+Spinning is suitable for short critical sections. Disabling preemption
+requires kernel support. So, second synchronization method uses lock-free
+objects. \cite{key-5} bounds number of retries. \cite{key-5} , analytically
+and experimentally, evaluates both synchronization techniques for
+soft and hard real-time analysis. \cite{key-5} concludes that queue
+locks have a little overhead. They are suitable for small number of
+shared object operations per task. Queue locks are not generally suitable
+for nesting. Lock-free have high overhead compared with queue locks.
+Lock-free is suitable for small number of processors and object calls
+in the absence of kernel support.
+
+\cite{holman2006supporting} uses lock-free objects under PFair scheduling
+for multiprocessor system. \cite{holman2006supporting} provides concept
+of \textit{supertasking} to reduce contention and number of failed
+retries. This is done by collecting jobs that need a common resource
+into the same supertask. Members of the same supertask run on the
+same processor. Thus, they cannot content together. \cite{holman2006supporting}
+upper bounds worst case duration for lock-free object access with
+and without supertasking. \cite{holman2006supporting} optimizes,
+not replaces, locks by lock-free objects. Locks are still used in
+situations like sharing external devices and accessing complex objects.
+
+Lock-free objects are used with time utility models where importance
+and criticality of tasks are separated \cite{Lai:2009:SSR:1529282.1529660,1656921}.
+\cite{Lai:2009:SSR:1529282.1529660} presents \textit{MK-Lock-Free
+Utility Accrual (MK-LFUA)} algorithm that minimizes system level energy
+consumption with lock-free synchronization. \cite{1656921} uses lock-free
+synchronization for dynamic embedded real-time systems with resource
+overloads and arbitrary activity arrivals. Arbitrary activity arrivals
+are modelled with Universal Arrival Model (UAM). Lock-free retries
+are upper bounded. \cite{1656921} identifies the conditions under
+which lock-free is better than lock-based sharing. \cite{5669659}
+builds a lock-free linked-list queue on a multi-core ARM processor. 
+
+Wait-free protocols use multiple buffers for readers and writers.
+For single-writer/multiple-readers, each object has a number of buffers
+proportional to maximum number of reader's preemptions by the writer.
+This bounds number of reader's preemptions. Readers and writers can
+use different buffers without interfering each other.
+
+\cite{1508449} presents wait-free protocol for single-writer/multiple-readers
+in small memory embedded real-time systems. \cite{1508449} proves
+space optimality of the proposed protocol, as it required the minimum
+number of buffers. The protocol is safe and orderly. \cite{1508449}
+also proves, analytically and experimentally, that the protocol requires
+less space than other wait-free protocols. \cite{Cho:2006:UAP:1141277.1141490}
+extends \cite{1508449} to present wait-free utility accrual real-time
+scheduling algorithms (RUA and DASA) for real-time embedded systems.
+\cite{Cho:2006:UAP:1141277.1141490} derives lower bounds on accrued
+utility compared with lock-based counterparts while minimizing additional
+space cost. Wait-free algorithms experimentally exhibit optimal utility
+for step time utility functions during underload, and higher utility
+than locks for non-step utility functions. \cite{1003807} uses wait-free
+to build three types of concurrent objects for real-time systems.
+Built objects has persistent states even if they crash. \cite{1613351}
+provides wait-free queue implementation for real-time Java specifications.
+
+A number of wait-free protocols were developed to solve multi-writer/multi-reader
+problem in real-time systems. \cite{811240} provides $m$-writer/$n$-reader
+non-blocking synchronization protocol for real-time multiprocessor
+system. The protocol needs $n+m+1$ slots. \cite{811240} provides
+schedulability analysis of the protocol. \cite{896371} presents wait-free
+methods for multi-writer/multi-reader in real-time multiprocessor
+system. The proposed algorithms are used for both priority and quantum
+based scheduling. For a $B$ word buffer, the proposed algorithms
+exhibit $O(B)$ time complexity for reading and writing, and $\Theta(B)$
+space complexity. \cite{896423} provides a space-efficient wait-free
+implementation for $n$-writer/$n$-reader synchronization in real-time
+multiprocessor system. The proposed algorithm uses timestamps to implement
+the shared buffer. \cite{896423} uses real-time properties to bound
+timestamps. \cite{1203552} presents wait-free implementation of the
+multi-writer/multi-reader problem for real-time multiprocessor synchronization.
+The proposed mechanism replicates single-writer/multi-reader to solve
+the multi-writer/multi-reader problem. \cite{1203552}, as \cite{896423},
+uses real-time properties to ensure data coherence through timestamps.
+
+Each synchronization technique has its benefits. So, a lot of work
+compares between locking, lock-free and wait-free algorithms. \cite{726426}
+compares building snapshot tool for real-time system using locking,
+lock-free and wait-free. \cite{726426} analytically and experimentally
+compares the three methods. \cite{726426} concludes that wait-free
+is better than its competitors. \cite{4297311} presents synchronization
+techniques under LNREF \cite{4032340} (an optimal real-time multiprocessor
+scheduler) for simple data structures. Synchronization mechanisms include
+lock-based, lock-free and wait-free. \cite{4297311} derives minimum
+space cost for wait-free synchronization. \cite{4297311} compares,
+analytically and experimentally, between lock-free and lock-based
+synchronization under LNREF.
+
+Some work tried to combine different synchronization techniques to
+combine their benefits. \cite{hohmuth2001pragmatic} uses combination
+of lock-free and wait-free to build real-time systems. Lock-free is
+used only when CAS suffices. The proposed design aims at allowing
+good real-time properties of the system, thus better schedulability.
+The design also aims at reducing synchronization overhead on uni and
+multiprocessor systems. The proposed mechanism is used to implement
+a micro-kernel interface for a uni-processor system. \cite{5953690}
+combines locking and wait-free for real-time multiprocessor synchronization.
+This combination aims to reduce required space cost compared to pure
+wait-free algorithms, and blocking time compared to pure locking algorithms.
+The proposed scheme is jsut an idea. No formal analysis nor implementation
+is provided.
+
+\section{\label{sec:db concurrency control}Real-Time Database Concurrency Control}
+
+Real-time database systems (RTDBS) is not a synchronization technique.
+It is a predecessor and inspiration for real-time transactional memory.
+RTDBS itself uses synchronization techniques when transactions conflict
+together. RTDBS is concerned not only with logical data consistency,
+but also with temporal time constraints imposed on transactions. Temporal
+time constraints require transactions finish before their deadlines.
+External constraints require updating temporal data periodically to
+keep freshness of database. RTDBS allow mixed types of transactions.
+But a whole transaction is of one type. In real-time TM, a single
+task may contain atomic and non-atomic sections.
+
+\textit{High-Priority two Phase Locking (HP-2PL)} protocol \cite{lam1997concurrency,259432,5532682,1541104}
+and \textit{Real-Time Optimistic Concurrency (RT-OCC)} protocol \cite{lam1997concurrency,1401009,859541,259432,1541104,495222}
+are the most two common protocols for RTDBS concurrency . HP-2PL works
+like 2PL except that when a higher priority transaction request a
+lock held by a lower priority transaction, lower priority transaction
+releases the lock in favor of the higher priority one. Then, lower
+priority transaction restarts. RT-OCC delays conflict resolution till
+transaction validation. If validating transaction cannot be serialized
+with conflicting transactions, a priority scheme is used to determine
+which transaction to restart. In \textit{Optimistic Concurrency Control
+with Broadcast Commit (OCC-BC)}, all conflicting transactions with
+the validating one are restarted. HP-2PL may encounter deadlock and
+long blocking times, while transactions under RT-OCC suffer from restart
+time at validation point.
+
+Other protocols were developed based on HP-2PL \cite{lam1997concurrency,5532682,1541104}
+and RT-OCC \cite{lam1997concurrency,1401009,4680843,495222}. HP-2PL,
+and its derivatives, are similar to locking protocols in real-time
+systems. They have the same problems in real-time locking protocols
+like priority inversion. So, the same solutions exist for the RTDBS
+locking protocols. Despite RT-OCC, and its derivatives, use locks
+in their implementation, their behaviour is closer to abort and retry
+semantics in TM. Some work integrates different protocols to handle
+different situations \cite{853991,5532682}.
+
+\cite{lam1997concurrency} presents \textit{Reduced Ceiling Protocol
+(RCP)} which is a combination of \textit{Priority Ceiling Protocol
+(PCP)} and \textit{Optimistic Concurrency Protocol (OCC)}. RCP targets
+database systems with mixed hard and soft real-time transactions (RTDBS).
+RCP aims at guarantee of schedulabiltiy of hard real-time transactions,
+and minimizing deadline miss of soft real-time transactions. Soft
+real-time transactions are blocked in favor of conflicting hard real-time
+transactions. While hard real-time transactions use PCP to synchrnonize
+among themselves, soft real-time transactions use OCC. Hard real-time
+transactions access locks in a \textit{tow phase locking (2PL)} fashion.
+Seized locks are released as soon as hard real-time transaction no
+longer need them. This reduces blocking time of soft real-time transactions.
+\cite{lam1997concurrency} derives analytical and experimental evaluation
+of RCP against other synchronization protocols.
+
+\cite{853991}, like \cite{lam1997concurrency}, deals with mixed
+transaction. \cite{853991} classifies mixed transactions into hard
+(HRT), soft (SRT) and non (NRT) real-time transactions. HRT has higher
+priority than SRT. SRT has higher priority than NRT. \cite{853991}
+aims at guranting deadlines of HRTs, minimizing miss rate of SRTs
+and reducing response time of NRTs. So, \cite{853991} deals with
+inter and intra-transaction concurrency. HRTs use PCP for concurrency
+control among themselves. SRTs use WAIT-50, and NRTs use 2PL. SRT
+and NRT are blocked or aborted in favor of HRT. If NRT requests a
+lock held by SRT, then NRT is blocked. If SRT requests a lock held
+by NRT, WAIT-50 is applied. Experimental evaluation showed effective
+improvement in overall system performance. Performance objectives
+of each transaction type was met.
+
+\cite{1401009} is concerned with semantic lock concurrency control.
+The semantic lock technique allows negotiation between logical and
+temporal constraints of data and transactions. It also controls imprecision
+resulting from negotiation. Thus, the semantic lock considers scheduling
+and concurrency of transactions. Semantic lock uses a compatibility
+function to determine if the release transaction is allowed to proceed
+or not.
+
+Time Interval OCC protocols try to reduce number of transaction restarts
+by dynamic adjustment of serialization timestamps. Time interval OCC
+may encounter unnecessary restarts. \cite{4680843} presents Timestamp
+Vector based OCC to resolve these unnecessary restarts. Timestamp
+Vector base OCC uses a timestamp vector instead of a single timestamp
+as in Time Interval OCC protocols. Experimental comparison between
+Timestamp Vector OCC and previous Time Interval OCC shows higher performance
+of Timestamp Vector OCC.
+
+\cite{859541} aims to investigate performance improvement of priority
+congnizant OCC over incognizant counterparts. In OCC-BC, all conflicting
+transactions with the validating transaction are restarted. \cite{859541}
+wonders if it is really worthy to sacrifice all other transactions
+in favor of one transaction. \cite{859541} proposes \textit{Optimistic
+Concurrency Control- Adaptive PRiority (OCC-APR)} to answer this question.
+A validating transaction is restarted if it has sufficient time to
+its deadline if restarted, and higher priority transactions cannot
+be serialized with the conflicting transaction. Sufficient time estimate
+is adapted according to system feedback. System feedback is affected
+by contention level. \cite{859541} experimentally concludes that
+integrating priority into concurrency control management is not very
+useful. Time Interval OCC showed better performance.
+
+WAIT-X \cite{495222,859541} is one of the optimistic concurrency
+control (OCC) protocols. WAIT-X is a prospective (forward validation)
+OCC. Prospective means it detects conflicts between a validating transaction
+and conflicting transaction that may commit in the future. In retrospective
+(backward validation) protocols, conflicts are detected between a
+validating transaction and already committed transactions. Retrospective
+validation aborts validating transaction if it cannot be serialized
+with already committed conflicting transactions. When WAIT-X detects
+a conflict, it can either abort validating transaction, or commit
+validating transaction and abort other conflicting transactions, or
+it can dealy validating a transction slightly hoping that conflicts
+resolve themsleves someway. Which action to take is a function of
+priorities of vlaidating and conflicting transactions. WAIT-X can
+delay validating transaction until percetage of higher priority transactions
+in the conflict set is lower than X\%. WAIT-50 is a common implementation
+of WAIT-X.
+
+\cite{853992} is concerned with concurrency control for multiprocessor
+RTDBS. \cite{853992} uses priority cap to modify \textit{Reader/Write
+Prirority Ceiling Protocol (RWPCP)} \cite{83617} to work on multiprocessor
+systems. The proposed protocol, named \textit{One Priority Inversion
+RWPCP (1PI-RWPCP)}, is deadlock-free and bounds number of priority
+inversions for any transaction to one. \cite{853992} derives feasiblity
+condition for any transaction under 1PI-RWPCP. \cite{853992} experimentally
+compares performance of 1PI-RWPCP against RWPCP.
+
+\cite{5532682} combines locking, multi-version and valid confirmation
+concurrency control mechanisms. The proposed method adopts different
+concurrency control mechanism according to idiographic situation.
+Experiments show lower rate of transactional restart of the proposed
+mechanis compared to 2PL-HP.
+
+\cite{1541104} is concerned with RTDBS containing periodically updated
+data and one time transactactions. \cite{1541104} provides two new
+concurrency control protocols to balance freshness of data and transaction
+performance. \cite{1541104} proposes \textit{HP-2PL with Delayed
+Restart (HP-2PL-DR)} and \textit{HP-2PL with Delayed Restart and Pre-declaration
+(HP-2PL-DRP)} based on HP-2PL. Before a transaction $T$ restarts
+in HP-2PL-DR, next update time of each temporal data accessed by $T$
+is checked. If next update time starts before currently re-executing
+$T$, then $T$'s restart time is delayed until the next udpate. Otherwise,
+$T$ is restarted immediately. If $T_{r}$ and $T_{n}$ are two transactions
+under HP-2PL-DRT. $T_{r}$ is requesting a lock held by $T_{n}$.
+If priority of $T_{r}$ is greater than priority of $T_{n}$, then
+$T_{n}$ releases the lock in favor of $T_{r}$. Othewise, $T_{r}$
+fails. If $T_{n}$ releases the lock and $T_{n}$ is a one time transaction,
+then $T_{n}$ restarts immediately. Otherwise, $T_{n}$ lock waiting
+time is updated. Experiments show improved performance of HP-2PL-DR
+and HP-2PL-DRP over HP-2PL.
+
+\section{\label{sec:contention manager}Real-Time TM Concurrency Control}
+Concurrency control in TM is done through contention managers. Contention managers are used to ensure progress of transactions. If one or more transactions conflict on an object, contention manager
+decides which transaction to commit. Other transactions abort or wait.
+Mostly, contention managers are \textit{distributed} or \textit{decentralized}
+\cite{Scherer:2005:ACM:1073814.1073861,scherer2004contention,Guerraoui:2005:TTT:1073814.1073863,Guerraoui:2006:TTT:1146381.1146429},
+in the sense that each transaction maintains its own contention manager.
+Contention managers may not know which objects will be needed by transactions
+and their duration. Past work on contention managers can be classified
+into two classes: 1) Contention management policy that decides which
+transaction commits and which do other actions \cite{Guerraoui:2005:TTT:1073814.1073863,Guerraoui:2006:TTT:1146381.1146429,Scherer:2005:ACM:1073814.1073861,scherer2004contention,Spear:2009:CSC:1504176.1504199,springerlink:10.1007_11561927_23}.
+2) Implementation of contention management policy in practice \cite{Spear:2009:CSC:1504176.1504199,Maldonado:2010:SST:1693453.1693465,Blake:2009:PTS:1669112.1669133,gottschlich2008extending,Scherer:2005:ACM:1073814.1073861,Dolev:2008:CSC:1400751.1400769}.
+The two classes are orthogonal. The second class tries to increase
+the benefit of the the contention management policy in reality by
+considering different aspects in TM design (e.g., lazy versus eager,
+visible versus invisible readers). Second class suggests contention
+managers should be proactive instead of reactive. This can prevent
+conflicts before they happen. Contention managers can be supported
+a lot if they are integrated into system schedulers. This provides
+a global view of the system (due to applications feedback) and reduces
+overhead of the implementation of contention manager.
+
+Contention management policy ranges from never aborting enemies to
+always aborting them \cite{Scherer:2005:ACM:1073814.1073861,scherer2004contention}.
+These two extremes can lead to deadlock, starvation, livelock and
+major loss of performance. Contention manager policy lies in between.
+Depending on heuristics, contention manager balances between decisions
+complexity against quality and overhead.
+
+Different types of contention management policies can be found in
+\cite{Scherer:2005:ACM:1073814.1073861,scherer2004contention,Spear:2009:CSC:1504176.1504199,springerlink:10.1007_11561927_23,Guerraoui:2005:TTT:1073814.1073863,Guerraoui:2006:TTT:1146381.1146429}
+like:
+\begin{enumerate}
+\item Passive and Aggressive: Passive contention manager aborts current transaction,
+while aggressive aborts enemy.
+\item Polite: When conflicting on an object, a transaction spins exponensially
+for average of $2^{(n+k)}\, ns$, where $n$ is number of times to
+access the object, and $k$ is a tuning parameter. Spinning times
+is bounded by $m$. Afterwards, any enemy is aborted.
+\item Karma: It assigns priorities to transaction based on the amount of
+work done so far. Amount of work is measured by number of opened objects
+by current transaction. Higher priority transaction aborts lower priority
+one. If lower priority transaction tries to access an object for a
+number of times greater than priority difference between itself and
+higher priority transaction, enemy is aborted.
+\item Eruption: It works like Karma except it adds priority of blocked transaction
+to the transaction blocking it. This way, enemy is sped-up, allowing
+blocked transactions to complete faster.
+\item Kindergarten: A transaction maintains a hit list (initially empty)
+of enemies who previously caused current thread to abort. When a new
+enemy is encountered, current transaction backs off for a limited
+amount of time. The new enemy is recorded in the hit list. If the
+enemy is already in the hit list, it is aborted. If current transaction
+is still blocked afterwards, then it is aborted.
+\item Timestamp: It is a fair contention manager. Each transaction gets
+a timestamp when it begins. Transaction with newer timestamp is aborted
+in favour of the older. Otherwise, transaction waits for a fixed intervals,
+marking the enemy flag as defunct. If the enemy is not done afterwards,
+it is killed. Active transaction clear their flag when they notice
+it is set.
+\item Greedy: Each transaction is given a timestamp when it starts. The
+earlier the timestamp of a transaction, the higher its priority. If
+transaction A conflicts with transaction B, and B is of lower priority
+or is waiting for another transaction, then A aborts B. Otherwise,
+A waits for B to commit, abort or starts waiting.
+\item Randomized: It aborts current transaction with some probability $p$,
+and waits with probability $1-p$.
+\item PublishedTimestamp: It works like Timestamp contention manager except
+it has a new definition for an {}``inactive'' transaction. Each
+transaction maintains a {}``recency'' flag. Recency flag is updated
+every time the transaction makes a request. Each transaction maintains
+its own {}``inactivity'' threshold parameter that is doubled every
+time it is aborted up to a specific limit. If the enemy {}``recency''
+flag is behind the system global time by amount exceeding its {}``inactivity''
+threshold, then enemy is aborted.
+\item Polka: It is a combination of Polite and Karma contention managers.
+Like Karma, it assigns priorities based on amount of job done so far.
+A transaction backs off for a number of intervals equals difference
+in priority between itself and its enemy. Unlike Karma, back-off length
+increases exponentially.
+\item Prioritized version of some of the previous contention managers appeared.
+Prioritized contention managers include base priority of the thread
+holding the transaction into contention manager policy. This way,
+higher priority threads are more favoured.
+\end{enumerate}
+\cite{springerlink:10.1007/s00453-008-9195-x} compares performance
+of different contention managers against an optimal, clairvoyant contention
+manager. The optimal contention manager knows all resources needed
+by each transaction, as well as its release time and duration. Comparison
+is based on the {}``makespan'' concept which is amount of time needed
+to finish a specific set of transactions. The ratio between makespan
+of analyzed contention manager and the makespan of the optimal contention
+manager is known as competitive ratio. \cite{springerlink:10.1007/s00453-008-9195-x}
+proves that any contention manager can be of $O(s)$ competitive ratio
+if the contention manager is work conserving (i.e., always lets the
+maximal set of non-conflicting transactions run), and satisfies pending
+property \cite{Guerraoui:2005:TTT:1073814.1073863}. The paper proves
+that this result is asymptotically tight as no on-line work conserving
+contention manager can achieve better result. \cite{springerlink:10.1007/s00453-008-9195-x}
+also proves that the makespan of greedy contention manager is $O(s)$
+instead of $O(s^{2})$ \cite{Guerraoui:2005:TTT:1073814.1073863}.
+This allows transactions of arbitrary release time and durations in
+contrast to what is assumed in \cite{Guerraoui:2005:TTT:1073814.1073863}.
+For randomized contention managers, a lower bound of $\Omega(s)$
+if transaction can modify their resource needs when they are reinvoked.
+
+\cite{springerlink:10.1007_11561927_23} analyzes different contention
+managers under different situations. \cite{springerlink:10.1007_11561927_23}
+concludes that no single contention manager is suitable for all cases.
+Thus, \cite{springerlink:10.1007_11561927_23} proposes a polymorphic
+contention manager that changes contention managers on the fly throughout
+different loads, concurrent threads of single load and even different
+phases of a single thread. To implement polymorphic contention manager,
+it is important to resolve conflicts resulting from different contention
+managers in the same application by different methods. The easiest
+way is to abort the enemy contention manager if it is of different
+type. \cite{springerlink:10.1007_11561927_23} uses generic priorities
+for each transaction regardless of the transaction's contention manager.
+Upon conflict between different classes of contention manager, highest
+priority transaction is committed.
+
+\cite{Spear:2009:CSC:1504176.1504199} provides a comprehensive contention
+manager attempting to achieve low overhead for low contention, and
+good throughput and fairness in case of high contention. The main
+components of comprehensive contention manager are lazy acquisition,
+extendable timestamp-based conflict detection, and efficient method
+for capturing conflicts and priorities. 
+
+\cite{Maldonado:2010:SST:1693453.1693465} is concerned with implementation
+issues. \cite{Maldonado:2010:SST:1693453.1693465} considers problems
+resulting from previous contention management policies like backing
+off and waiting for time intervals. These strategies make transactions
+suffer from many aborts that may lead to livelocks, and increased
+vulnerability to abort because of transactional preemption due to
+higher priority tasks. Imprecise information and unpredictable benefits
+resulting from handling long transactions make it difficult to make
+correct conflict resolution decisions. \cite{Maldonado:2010:SST:1693453.1693465}
+discriminates between decisions for long and short transactions, as
+well as, number of threads larger or lower than number of cores. \cite{Maldonado:2010:SST:1693453.1693465}
+suggests a number of user and kernel level support mechanisms for
+contention managers, attempting to reduce overhead in current contention
+managers' implementations. Instead of spin-locks and system calls,
+the paper uses shared memory segments for communication between kernel
+and STM library. It also proposes reducing priority of loser threads
+instead of aborting them. \cite{Maldonado:2010:SST:1693453.1693465}
+increases time slices for transactions before they are preempted by
+higher priority threads. This way, long transactions can commit quickly
+before they are suspended, reducing abort numbers.
+
+For high number of cores, back-off strategies perform poorly. This
+is due to hot spots created by small set of conflicts. These hotspots
+repeat in predictable manner. \cite{Blake:2009:PTS:1669112.1669133}
+introduces proactive contention manger that uses history to predict
+these hotspots and scheduler transactions around them without programmer's
+input. Proactive contention manager is useful in high contention,
+but has high cost for low contention. So, \cite{Blake:2009:PTS:1669112.1669133}
+uses a hybrid contention managers that begins with back-off strategy
+for low contention. After a specific threshold for contention level,
+hybrid contention manager switches to proactive manager.
+
+Contention managers concentrate on preventing starvation through fair
+policies. They are not suitable for specific systems like real-time
+systems where stronger behavioural guarantees are required. \cite{gottschlich2008extending}
+proposes user-defined priority transactions to make contention management
+suitable for these specific systems. It investigates the correlation
+between consistency checking (i.e., finding memory conflicts) and
+user-defined priority transactions. Transaction priority can be static
+or dynamic. Dynamic priority increases as abort numbers of transaction
+increases.
+
+Contention managers are limited in: 1) they are reactive, and suitable
+only for imminent conflicts. They do not specify when aborted transaction
+should restart, making them conflict again easily. 2) Contention managers
+are decentralized because they consume a large part of traffic during
+high contention. Decentralization prevents global view of the system
+and limit contention management policy to heuristics. 3) As contention
+managers are user-level modules, it is difficult to integrate them
+in HTM. \cite{Scherer:2005:ACM:1073814.1073861} tackles the previous
+problems by \textit{adaptive transaction scheduling} (ATS). ATS uses
+contention intensity feedback from the application to adaptively decide
+number of concurrent transactions running within critical sections.
+ATS is called only when transaction starts in high contention. Thus,
+resulting traffic is low and scheduler can be centralized. ATS is
+integrated into HTM and STM.
+
+\cite{Dolev:2008:CSC:1400751.1400769} presents CAR-STM, a scheduling-based
+mechanism for STM collision avoidance and resolution. CAR-STM maintains
+a transaction queue per each core. Each transaction is assigned to
+a queue by a dispatcher. At the beginning of the transaction, dispatcher
+uses a conflict probability method to determine the suitable queue
+for the transaction. The queue with high contention for the current
+transaction is the most suitable one. All transactions in the same
+queue are executed by the same thread, thus they are serialized and
+cannot collide together. CAR-STM uses a serializing contention manager.
+If one transaction conflicts with another transaction, the former
+transaction is moved to the queue of the latter. This prevents further
+collision between them unless the second transaction is moved to a
+third queue. Thus, CAR-STM uses another serialization strategy in
+which the two transactions are moved to the third queue. This guarantees
+conflict between transactions for at most once.
+
+\cite{Meawad:2011:RWQ:2043910.2043912} uses HTM to build single and
+double linked queue, and limited capacity queue. HTM is used as an
+alternative synchronization operation to CAS and locks. \cite{Meawad:2011:RWQ:2043910.2043912}
+provides worst case time analysis for the implemented data structures.
+It experimentally compares the implemented data structures with CAS
+and lock. \cite{Meawad:2011:RWQ:2043910.2043912} reverses the role
+of TM. Transactions are used to build the data structure, instead of
+accessing data structures inside transactions. \cite{5694263} presents
+an implementation for HTM in a Java chip multiprocessor system (CMP).
+The used processor is JOP, where worst case execution time analysis
+is supported.
+
+\cite{6068352} presents two steps to minimize and limit number of
+transactional aborts in real-time multiprocessor embedded systems.
+\cite{6068352} assumes tasks are scheduled under partitioned EDF.
+Each task contains at most one transaction. \cite{6068352} uses multi-versioned
+STM. In this method, read-only transactions use recent and consistent
+snapshot of their read sets. Thus, they do not conflict with other
+transactions and commit on first try. This reduction in abort number
+comes at the cost of increased memory storage for different versions.
+\cite{6068352} uses real-time characteristics to bound maximum number
+of required versions for each object. Thus, required space is bounded.
+\cite{6068352} serializes conflicting transaction in a chronological
+order. Ties are broken using least laxity and processor identification.
+\cite{6068352} does not provide experimental evaluation of its work. 
+
+\cite{5665752} studies the effect of eager versus lazy conflict detection
+on real-time schedulability. In eager validation, conflicts are detected
+as soon as they occur. One of the conflicting transactions should
+be aborted immediately. In lazy validation, conflict detection is
+delayed to commit time. \cite{5665752} assumes each task is a complete
+transaction. \cite{5665752} proves that synchronous release of tasks
+does not necessarily lead to worst case response time of tasks. \cite{5665752}
+also proves that lazy validation will always result in a longer or
+equal response time than eager validation. Experiments show that this
+gap is quite high if higher priority tasks interfere with lower priority
+ones.
+
+\cite{5958224}proposes an adaptive scheme to meet deadlines of transactions.
+This adaptive scheme collects statistical information about execution
+length of transactions. A transaction can execute in any of three
+modes depending on its closeness to deadline. These modes are optimistic,
+visible read and irrevocable. The optimistic mode defers conflict
+detection to commit time. In visible read, other transactions are
+informed that a particular location has been read and subject to conflict.
+Irrevocable mode prevents transaction from aborting. As a transaction
+gets closer to its deadline, it moves from optimistic to visible read
+to irrevocable mode. Deadline transactions are supported by the underlying
+scheduler by disabling preemption for them. Experimental evaluation
+shows improvement in number of committed transactions without noticeable
+degradation in transactional throughput.

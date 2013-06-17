@@ -1,0 +1,75 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: HiPeac_sh.aux
+The style file: acmsmall.bst
+Database file #1: global_bibliography.bib
+I was expecting a `,' or a `}'---line 492 of file global_bibliography.bib
+ :   
+ :   year={2006}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 2069 of file global_bibliography.bib
+ :     
+ :     %address  = "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Warning--empty publisher in key-5
+Warning--empty address in key-5
+ptr=2, stack=
+'155
+Real-time software transactional memory: Contention managers, time bounds, and implementations
+---the literal stack isn't empty for entry shambake_phd_proposal
+while executing---line 3687 of file acmsmall.bst
+Warning--empty publisher in 6045438
+Warning--empty address in 6045438
+Warning--empty publisher in Guerraoui:2005:TTT:1073814.1073863
+Warning--empty address in Guerraoui:2005:TTT:1073814.1073863
+Warning--empty publisher in Herlihy:2006:AMP:1146381.1146382
+Warning--empty address in Herlihy:2006:AMP:1146381.1146382
+Warning--empty year in marathe2006lowering
+Warning--empty publisher in marathe2006lowering
+Warning--empty address in marathe2006lowering
+Warning--empty publisher in Saha:2006:MHP:1122971.1123001
+Warning--empty address in Saha:2006:MHP:1122971.1123001
+You've used 12 entries,
+            3177 wiz_defined-function locations,
+            801 strings with 8051 characters,
+and the built_in function-call counts, 9264 in all, are:
+= -- 910
+> -- 452
+< -- 0
++ -- 133
+- -- 168
+* -- 800
+:= -- 1434
+add.period$ -- 61
+call.type$ -- 12
+change.case$ -- 94
+chr.to.int$ -- 11
+cite$ -- 25
+duplicate$ -- 340
+empty$ -- 674
+format.name$ -- 236
+if$ -- 1928
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 20
+newline$ -- 63
+num.names$ -- 118
+pop$ -- 114
+preamble$ -- 1
+purify$ -- 163
+quote$ -- 0
+skip$ -- 314
+stack$ -- 0
+substring$ -- 538
+swap$ -- 125
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 236
+warning$ -- 13
+while$ -- 102
+width$ -- 0
+write$ -- 177
+(There were 3 error messages)

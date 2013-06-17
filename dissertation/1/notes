@@ -1,0 +1,85 @@
+- The abstract is too long. It must be condensed into a page or so and must focus on:
+a) the thesis problem space in 1 paragraph
+b) the current contributions in 2 (maybe 3, but not recommended) paragraphs
+c) proposed post-exam work in 1 paragraph
+
+- The Intro is very immature and too condensed. Preliminaries and models must NOT be in the Intro, but must be in a separate chapter. Infact, I suggest that you use Section 1 of your SAC and DATE papers as the material for the Intro, but significantly expanded, especially explaining TM (see Mohamedin's section 1.1).
+
+- Related work chapter is too condensed. You classify works (and discuss them) in the following categories:
+a) locking protocols
+b) lock-free
+c) database
+d) TM
+
+- TM overview should not be in the Related work chapter!
+
+- Chapter 3 should be models/assumptions
+
+Editorial-type comments:
+- It is awkward to format proofs in italics
+- How come you have sections 1.0.1 in Ch 1? Ch 1 sections should be 1.1, 1.2, etc. Looks like wrong usage of latex section command.
+
+- Advisor proof-editing. Usually, students give the exam document to the advisor for editing and correcting 1-week before the deadline for giving to the draft committee, which is 1-week before the exam. You have blown that deadline, so I am not sure whether I can edit and correct your work with sufficient lead time for you to correct, etc., and then forward to the committee.
+
+I don't think you are ready for the exam, and suggest that you postpone the exam. You can alert the GS, and I can e-mail the committee. Thanks. 
+****************************************************************************************************************************************
+Mohammed,
+
+Go ahead and start on this asap, and thoroughly address all my comments that I had sent you previously. (FYI, I include an outline below. This is the same as what I had discussed before.)
+
+The key is to get your Abstract, Intro, and Concl chapters right. I suggest that you send me each of these three, in a piecemeal fashion -- that way, I can respond fast. (The rest of the chapters must follow the outline that I had suggested. I have reviewed them anyway, as part of your papers.)
+
+Be sure to incorporate Emsoft results. 
+
+I am very busy this week, with many other submissions. Plan to send me stuff starting Mon/Tues or so. 
+
+BR
+------------
+
+Abs
+(essentially should be a sum of all your paper abstracts.)
+
+Intro
+(essentially should be a sum of all your paper Intros, but expanded.)
+- Motivate STM by explaining the difficult of locks, etc., exactly like we do in the papers
+- Summary of contributions
+- Summary of post-prelim work
+
+Related work
+- Lock-based
+- Lock-free
+- Databases
+- STM
+
+ Models and Preliminaries
+(essentially should be a sum of all your paper Models, but expanded.)
+
+RCM
+- Informal algm overview
+- Algm description
+- Properties (i.e., retry/response time bounds)
+
+ECM
+(repeat)
+
+LCM
+
+PNF
+
+Schedulability Comparison
+- Comparison with locking protocols
+(i.e., each CM versus FMLP, OMLP)
+- Comparison with lock-free
+(i.e., each CM versus lock-free)
+- Comparison between contention managers
+(RCM vs. ECM vs. LCM vs. PNF)
+
+
+Experimental Evaluation
+ - Implementation
+- Experimental settings
+- Results
+
+Conclusions
+ - Summary of contributions
+- Detailed description of post-prelim work

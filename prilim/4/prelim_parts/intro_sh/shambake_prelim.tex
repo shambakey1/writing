@@ -1,0 +1,257 @@
+%
+% PROJECT: <ETD> Electronic Thesis and Dissertation Initiative
+%   TITLE: LaTeX report template for ETDs in LaTeX
+%  AUTHOR: Neill Kipp, nkipp@vt.edu
+%     URL: http://etd.vt.edu/latex/
+% SAVE AS: etd.tex
+% REVISED: September 6, 1997 [GMc 8/30/10]
+% 
+
+% Instructions: Remove the data from this document and replace it with your own,
+% keeping the style and formatting information intact.  More instructions
+% appear on the Web site listed above.
+
+\documentclass[12pt,english]{report}
+
+\makeatletter
+\newif\if@restonecol
+
+\let\algorithm\relax
+\let\endalgorithm\relax
+%\usepackage[tight,footnotesize]{subfigure}
+\usepackage{subfigure}
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[ruled]{algorithm2e}
+\usepackage{babel}
+\makeatother
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+
+
+\newtheorem{clm}{Claim}
+\newtheorem{proof}{Proof}
+\newtheorem{mydef}{Definition}
+
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\pdfpageheight\paperheight
+\pdfpagewidth\paperwidth
+
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+
+
+\makeatother
+
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+\setlength{\evensidemargin}{0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\topmargin}{0in}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1in}
+
+% Uncomment for double-spaced document.
+% \renewcommand{\baselinestretch}{2}
+
+% \usepackage{epsf}
+
+\begin{document}
+
+\thispagestyle{empty}
+\pagenumbering{roman}
+%\begin{center}
+
+
+
+\pagenumbering{arabic}
+\pagestyle{myheadings}
+
+\chapter{Introduction}
+\markright{Mohammed Elshambakey \hfill Chapter 1. Introduction \hfill}
+
+Embedded systems sense physical processes and control their behavior, typically through feedback loops. Since physical processes are concurrent, computations that control them must also be concurrent, enabling them to process multiple streams of sensor input and control multiple actuators, all concurrently. Often, such computations need to concurrently read/write shared data objects. Typically, they must also process sensor input and react in a timely manner. 
+
+The de facto standard for programming concurrency is the threads abstraction, and the de facto synchronization abstraction is locks. 
+Lock-based concurrency control has significant programmability, scalability, and compositionality challenges~\cite{Herlihy:2006:AMP:1146381.1146382}. Transactional memory (TM) is an alternative synchronization model for shared in-memory data objects that promises to alleviate these difficulties.  With TM, programmers write concurrent code using threads, but organize code that read/write shared objects as transactions, which appear to execute atomically. Two transactions conflict if they access the same object and one access is a write. When that happens, a contention manager (or CM)~\cite{Guerraoui:2005:TTT:1073814.1073863} resolves the conflict by aborting one and allowing the other to proceed to commit, yielding (the illusion of) atomicity. Aborted transactions are re-started, often immediately.  In addition to a simple programming model, TM provides performance comparable or superior to highly concurrent fine-grained locking and lock-free approaches~\cite{Saha:2006:MHP:1122971.1123001}, and is composable~\cite{Harris:2005:CMT:1065944.1065952}. Multiprocessor TM has been proposed in hardware, called HTM (e.g.,~\cite{austenmc:tcc:dissertation:2009}), and in software, called STM (e.g.,~\cite{sha95}), with the usual tradeoffs: HTM provides strong atomicity~\cite{austenmc:tcc:dissertation:2009}, has lesser overhead, but needs transactional support in hardware; STM is available on any hardware.
+
+Given STM's programmability, scalability, and compositionality advantages, we consider it for concurrency control in multicore embedded real-time software. Doing so will require bounding transactional  retries, as real-time threads, which subsume transactions, must satisfy time constraints.  Retry bounds in STM are dependent on the CM policy at hand (analogous to the way thread response time bounds are scheduler-dependent). Thus, real-time CM is logical. Despite the large body of work on contention managers, few results are known for them on real-time systems. In this proposal, we consider the design of real-time contention managers for real-time multicore systems.
+
+The rest of this Chapter is organized as follows, in Section~\ref{sec:transactional memory}, we introduce transactional memory. In Section~\ref{sec:real-time stm}, we summarize work on integrating software transactional memory into real-time systems. In Section~\ref{sec:summary of current research}, we describe our current research contribution. In Section~\ref{sec:postprelim work}, we present an overview of the work we plan to conduct after the preliminary exam in order to achieve the goals of this dissertation and Section~\ref{sec:proposal outline} provides a road map for the rest of the proposal.
+
+\section{\label{sec:transactional memory}Transactional Memory}
+
+Transactional memory (TM) is motivated by Database transactions~\cite{Gray:1981:TCV:1286831.1286846}.
+In TM, each thread executes a set of transactions when accessing shared memory. A TM transaction consists of a sequence
+of steps (i.e., reads and/or writes) executed atomically by a thread \cite{tm-book10}. Atomicity
+means that the sequence of steps logically occur at a single instant in time; intermediate states are
+invisible to other transactions. The difficulty of locks' maintenance and development are the driving motivation for seeking alternate concurrency control methods.
+Lock-free and wait-free are two alternatives. Lock-free and wait-free have high performance, but significantly
+complex to write and reason about, and therefore, have largely been
+limited to a simple data structures - e.g., linked lists,
+queues, stacks \cite{1508449,4079519,1656921,Cho:2006:UAP:1141277.1141490}.
+
+The term \textquotedblleft{}transactional memory\textquotedblright{}
+was proposed by Herlihy and Moss~\cite{Herlihy:1993:TMA:165123.165164}, where they presented hardware
+support for lock-free data structures. TM has been provided in hardware
+(HTM) \cite{Herlihy:1993:TMA:165123.165164,Martinez:2002:SSA:605397.605400,Oplinger:2002:ESR:605397.605417,Rajwar:2002:TLE:605397.605399,ham04},
+software (STM) \cite{4145102,Dolev:2008:CSC:1400751.1400769,Harris:2003:LSL:949305.949340,Harris:2005:CMT:1065944.1065952,Cho:2006:UAP:1141277.1141490,Marathe:2004:DTM:1066650.1066660,Yoo:2008:ATS:1378533.1378564,Saha:2006:ASS:1194816.1194838,Shpeisman:2007:EIO:1250734.1250744}
+and hybrid TM \cite{dam06,Kumar:2006:HTM:1122971.1123003,Minh:2007:EHT:1250662.1250673,Shriraman:2007:IHA:1250662.1250676}.
+Hybrid TM allows STM to improve performance using HTM support. Conflicts between TM threads arise when multiple threads try to access the same object simultaneously, and at least one access is a \textit{write} operation. TM uses \textit{Contention Managers} (CM) to resolve these conflicts. CM decides which transaction to abort and when to
+restart the aborted transaction in case of conflicts \cite{Spear:2009:CSC:1504176.1504199,Scherer:2005:ACM:1073814.1073861,Blake:2009:PTS:1669112.1669133,Maldonado:2010:SST:1693453.1693465}.
+
+\section{\label{sec:real-time stm}Real-Time STM}
+
+STM concurrency control for real-time systems has been
+previously studied in~\cite{manson2006preemptible,fahmy2009bounding,sarni2009real,schoeberl2010rttm,barrosmanaging,6045438,fahmy2009response}.
+\cite{manson2006preemptible} proposes a restricted version of STM
+for uniprocessors. \cite{fahmy2009response} considers STM for distributed
+uni-processor systems. A higher priority task causes only one retry
+in a lower priority tasks due to the uniprocessor. \cite{fahmy2009bounding}
+bounds response times in distributed multicore systems with STM
+synchronization. They consider Pfair scheduling, limit to small atomic
+regions with fixed size, and limit transaction execution to span at
+most two quanta. \cite{sarni2009real} presents real-time scheduling
+of transactions and serializes transactions based on transactions'
+- not jobs'- deadlines. However, the work does not bound retries and
+response times, nor establishes tradeoffs against lock-free synchronization.
+\cite{schoeberl2010rttm} proposes real-time HTM. The retry bound
+developed in~\cite{schoeberl2010rttm} assumes that the worst case
+conflict between atomic sections of different tasks occurs when the
+sections are released at the same time. This assumption does not cover
+the worst case scenario for transactions' interference. \cite{6045438}
+presents earliest-deadline CM or ECM. ECM resolves conflicts by aborting
+the transaction with longer absoluted deadline. \cite{6045438} derives
+a number of properties for ECM, upper bounds transactional retry,
+and compares schedulability of ECM to retry-loop lock-free synchronization
+\cite{key-5}. \cite{6045438}, like \cite{schoeberl2010rttm}, assumes
+that the worst case conflict between atomic sections occurs when the
+sections are released simultaneously. Besides, \cite{6045438} assumes
+all transactions have equal lengths. \cite{barrosmanaging} presents
+extend idea in \cite{6045438} to bound number of retries and prevent
+starvation. \cite{barrosmanaging} presents three ideas for CMs. However,
+work in \cite{barrosmanaging} is still in progress. Provided algorithms
+might not give the planned results because they are not analyzed.~\cite{6120942} uses timed automate for schedulability analysis of STM.
+
+\cite{Meawad:2011:RWQ:2043910.2043912} uses HTM to build single and
+double linked queue, and limited capacity queue. HTM is used as an
+alternative synchronization operation to CAS and locks. \cite{Meawad:2011:RWQ:2043910.2043912}
+provides worst case time analysis for the implemented data structures.
+It experimentally compares the implemented data structures with CAS
+and lock. \cite{Meawad:2011:RWQ:2043910.2043912} reverses the role
+of TM. Transactions are used to build the data structure, instead of
+accessing data structures inside transactions. \cite{5694263} presents
+an implementation for HTM in a Java chip multiprocessor system (CMP).
+The used processor is JOP, where worst case execution time analysis
+is supported.
+
+\cite{6068352} presents two steps to minimize and limit number of
+transactional aborts in real-time multiprocessor embedded systems.
+\cite{6068352} assumes tasks are scheduled under partitioned EDF.
+Each task contains at most one transaction. \cite{6068352} uses multi-versioned
+STM. In this method, read-only transactions use recent and consistent
+snapshot of their read sets. Thus, they do not conflict with other
+transactions and commit on first try. This reduction in abort number
+comes at the cost of increased memory storage for different versions.
+\cite{6068352} uses real-time characteristics to bound maximum number
+of required versions for each object. Thus, required space is bounded.
+\cite{6068352} serializes conflicting transaction in a chronological
+order. Ties are broken using least laxity and processor identification.
+\cite{6068352} does not provide experimental evaluation of its work. 
+
+\cite{5665752} studies the effect of eager versus lazy conflict detection
+on real-time schedulability. In eager validation, conflicts are detected
+as soon as they occur. One of the conflicting transactions should
+be aborted immediately. In lazy validation, conflict detection is
+delayed to commit time. \cite{5665752} assumes each task is a complete
+transaction. \cite{5665752} proves that synchronous release of tasks
+does not necessarily lead to worst case response time of tasks. \cite{5665752}
+also proves that lazy validation will always result in a longer or
+equal response time than eager validation. Experiments show that this
+gap is quite high if higher priority tasks interfere with lower priority
+ones.
+
+\cite{5958224}proposes an adaptive scheme to meet deadlines of transactions.
+This adaptive scheme collects statistical information about execution
+length of transactions. A transaction can execute in any of three
+modes depending on its closeness to deadline. These modes are optimistic,
+visible read and irrevocable. The optimistic mode defers conflict
+detection to commit time. In visible read, other transactions are
+informed that a particular location has been read and subject to conflict.
+Irrevocable mode prevents transaction from aborting. As a transaction
+gets closer to its deadline, it moves from optimistic to visible read
+to irrevocable mode. Deadline transactions are supported by the underlying
+scheduler by disabling preemption for them. Experimental evaluation
+shows improvement in number of committed transactions without noticeable
+degradation in transactional throughput.
+
+
+\section{\label{sec:summary of current research}Summary of Current Research and Contributions}
+Contribution of the proposal can be summarized as follows:-
+\begin{itemize}
+\item We investigate and design priority-based contention managers for real-time systems. These contention managers try to preserve time constraints in addition to data accuracy. For this goal, we investigate Earliest Deadline First contention manager (ECM) and present Rate Monotonic Assignment contention manager (RCM). ECM and RCM keeps the logic of the underlying real-time scheduler (i.e., transaction belonging to higher priority job is allowed to commit first).
+\item We present Length-based contention manager (LCM) which can be used with both G-EDF and G-RMA. LCM is not only concerned with priority of the transactions, but also with the length of the interfering transaction relative to the length of the interfered transaction. LCM achieves better retry cost and response time than ECM and RCM.
+\item Priority-based with Negative value and First access (PNF) contention manager is introduced. PNF avoids transitive retry effect suffered by ECM, RCM and LCM in case of multiple objects per transaction. PNF tries to optimize processor usage by lower priority of aborted transaction. This way, other tasks can proceed if they do no conflict with others.
+\item For previous contention managers, we upper bounded their retry cost and response times. We compared their schedulability to identify the conditions to prefer one of the them over the others. We also compared their schedulability against schedulability of lock-free method. We also compared retry cost of previous synchronization techniques.
+\end{itemize}
+
+\section{\label{sec:postprelim work}Summary of Proposed Post Preliminary-Exam Work}
+
+Based on our current research results, we proposed the following work:
+\begin{itemize}
+
+\item \textbf{Analytical and experimental comparison between developed CMs and real-time locking protocols}
+Lock-free offer numerous advantages over locking protocols, but locking protocols are still of wide use in real-time systems due to simpler programming and analysis than lock-free. Thus, it is desired to compares different CMs against real-time locking protocols. Examples of real-time locking protocols include PCP and its variants~\cite{chen1990dynamic,6031129,Rajkumar:1991:SRS:532621,sha1990priority}, multicore PCP (MPCP)~\cite{lakshmanan2009coordinated,rajkumar2002real}, SRP~\cite{Buttazzo:2004:HRC:1027504, baker1991stack}, multicore SRP (MSRP)~\cite{gai2003comparison}, PIP~\cite{easwaran2009resource}, FMLP~\cite{key-4,brandenburg2008implementation,holman2006locking} and OMLP~\cite{Baruah:2007:TMG:1338441.1338647}. OMLP and FMLP are similar, and FMLP was found to be superior to other protocols~\cite{brandenburg2008comparison}.
+
+\item \textbf{Contention manager development for nested transactions}
+Transactions can be nested \textit{linearly}, where each transaction has at most one pending transaction~\cite{Moss2006186}. Nesting can also be done in \textit{parallel} where transactions execute concurrently within the same parent~\cite{volos2009nepaltm}. Linear nesting can be \textit{1) flat:} If a child transaction aborts, then parent also aborts. If a child commits, no effect is taken until the parent commits. Modifications made by child transaction is seen only be the parent . \textit{2) Closed:} Similar to \textit{flat nesting} except that if a child transaction aborts, parent does not have to abort. \textit{3) Open:} If a child transaction commits, its modifications is seen not only by the parent, but also by other non-surrounding transactions. If parent aborts after child commits, child modifications are still valid. It is required to extend the proposed real-time CMs (or develop new ones) to handle some or all types of transaction nesting.
+
+\item \textbf{Combine both LCM and PNF} LCM is designed to reduce the retry cost of one transaction when it is interfered close to its end of execution. PNF is designed to avoid transitive retry in case of multiple objects per transactions. One goal is to combine benefits of both algorithms.
+
+\item \textbf{Investigate other criterion for contention managers to further reduced retry cost} Criterion other than or combined with priority, transaction length and first access may be used to produce better contention managers.
+
+\end{itemize}
+
+\section{\label{sec:proposal outline}Proposal outline}
+The rest of this dissertation proposal is organized as follows. Chapter~\ref{related_work} overviews past and related work for real-time concurrency control. Chapter~\ref{models_assmuptions} provides our computational model and assumptions. Chapter~\ref{ecm-rcm} investigates Earliest Deadline First CM (ECN) and proposes Rate-Monotnic Assignment CM (RCM). We derive upper bounds for retry cost and response time under ECM and RCM. Finally, schedulability is compared between ECM, RCM and lock-free method. Chapter~\ref{ch_lcm} shows how to reduce retry cost of transactions under ECM and RCM using a length-based CM (LCM). Chapter~\ref{ch_pnf} tries to solve transitive retry of transaction under ECM, RCM and LCM in case of multiobjects per transaction. Chapter~\ref{ch_exp} compares measured retry cost and response time for sets of tasks under previous CMs, as well as, lock-free algorithm. We conclude in Chapter~\ref{conclusions}.
+
+\chapter{\label{related_work}Past and Related Work}
+
+\chapter{\label{models_assmuptions}Model/Assumptions}
+
+\chapter{\label{ecm-rcm}ECM and RCM}
+
+\chapter{\label{ch_lcm}LCM}
+
+\chapter{\label{ch_pnf}PNF}
+
+\chapter{\label{ch_exp}Experiments}
+
+\chapter{\label{conclusions}Conclusions, Contributions, and Proposed Post Preliminary-Exam Work}
+
+
+\bibliographystyle{plain}
+\bibliography{global_bibliography}
+
+
+
+
+\end{document}

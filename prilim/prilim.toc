@@ -1,0 +1,27 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {chapter}{\numberline {2}ECM and RCM}{2}
+\contentsline {section}{\numberline {2.1}G-EDF/EDF CM Response Time}{2}
+\contentsline {subsection}{\numberline {2.1.1}Retry Cost of Atomic Sections}{3}
+\contentsline {subsection}{\numberline {2.1.2}Upper Bound on Response Time}{7}
+\contentsline {subsubsection}{\numberline {2.1.2.1}Tighter Upper Bound}{8}
+\contentsline {section}{\numberline {2.2}G-RMA/RMA CM Response Time}{10}
+\contentsline {subsection}{\numberline {2.2.1}Maximum Task Interference}{10}
+\contentsline {subsection}{\numberline {2.2.2}Retry Cost of Atomic Sections}{10}
+\contentsline {subsection}{\numberline {2.2.3}Upper Bound on Response Time}{11}
+\contentsline {section}{\numberline {2.3}STM versus Lock-Free}{11}
+\contentsline {subsection}{\numberline {2.3.1} ECM versus Lock-Free}{11}
+\contentsline {subsection}{\numberline {2.3.2}RCM versus Lock-Free}{13}
+\contentsline {section}{\numberline {2.4}Conclusions}{16}
+\contentsline {chapter}{\numberline {3}LCM}{17}
+\contentsline {section}{\numberline {3.1}Length-based CM}{17}
+\contentsline {subsection}{\numberline {3.1.1} Design and Rationale}{17}
+\contentsline {subsection}{\numberline {3.1.2} Response Time of G-EDF/LCM}{21}
+\contentsline {subsection}{\numberline {3.1.3}Schedulability of G-EDF/LCM and ECM}{22}
+\contentsline {subsection}{\numberline {3.1.4}G-EDF/LCM versus Lock-free}{24}
+\contentsline {subsection}{\numberline {3.1.5}Response Time of G-RMA/LCM}{25}
+\contentsline {subsection}{\numberline {3.1.6}Schedulability of G-RMA/LCM and RCM}{26}
+\contentsline {subsection}{\numberline {3.1.7}G-RMA/LCM versus Lock-free}{27}
+\contentsline {subsection}{\numberline {3.1.8}Experimental Setup}{29}
+\contentsline {subsection}{\numberline {3.1.9}Results}{30}
+\contentsline {section}{\numberline {3.2}Conclusions}{30}

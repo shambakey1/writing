@@ -1,0 +1,453 @@
+% acmsmall-sample.tex, dated 24th May 2012
+% This is a sample file for ACM small trim journals
+%
+% Compilation using 'acmsmall.cls' - version 1.3, Aptara Inc.
+% (c) 2010 Association for Computing Machinery (ACM)
+%
+% Questions/Suggestions/Feedback should be addressed to => "acmtexsupport@aptaracorp.com".
+% Users can also go through the FAQs available on the journal's submission webpage.
+%
+% Steps to compile: latex, bibtex, latex latex
+%
+% For tracking purposes => this is v1.3 - May 2012
+
+\documentclass[prodmode,acmtecs]{acmsmall}
+
+% Package to generate and customize Algorithm as per ACM style
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{cite}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[ruled]{algorithm2e}
+\renewcommand{\algorithmcfname}{ALGORITHM}
+\newtheorem{clm}{Claim}
+\newtheorem{mydef}{Definition}
+\SetAlFnt{\small}
+\SetAlCapFnt{\small}
+\SetAlCapNameFnt{\small}
+\SetAlCapHSkip{0pt}
+\IncMargin{-\parindent}
+
+% Metadata Information
+\acmVolume{}
+\acmNumber{}
+\acmArticle{}
+\acmYear{}
+\acmMonth{}
+
+% Document starts
+\begin{document}
+
+% Page heads
+\markboth{M. Elshambakey et al.}{FBLT}
+
+% Title portion
+\title{FBLT}
+\author{Mohammed Elshambakey
+\affil{Virginia Tech University}
+Binoy Ravindran
+\affil{Virginia Tech University}}
+
+\begin{abstract}
+\bf{NEEDS TO BE WRITTEN}
+\end{abstract}
+
+\category{C.3}{Special-Purpose and Application-based Systems}{Real-time and embedded systems}
+
+\terms{Design, Experimentation, Measurement}
+
+\keywords{Software transactional memory (STM), real-time contention manager}
+
+\acmformat{Elshambakey, M., Binoy, R. 2012. FBLT.}
+
+\begin{bottomstuff}
+New Paper, Not an Extension of a Conference Paper.\\
+Author's addresses: M. Elshambakey {and} B. Ravindran, ECE Department,
+Virginia Tech University, Blacksburg, VA 24060, USA.
+\end{bottomstuff}
+
+\maketitle
+
+
+
+\section{Preliminaries}
+\label{sec:model}
+
+We consider a multiprocessor system with $m$ identical processors and $n$ sporadic tasks $\tau_1, \tau_2,\ldots, \tau_n$. The $k^{th}$ instance (or job) of a task $\tau_i$ is denoted $\tau_i^k$. Each task $\tau_i$ is specified by its worst case execution time (WCET) $c_i$, its minimum period $T_i$ between any two consecutive instances, and its relative deadline $D_i$, where $D_i=T_i$. Job $\tau_i^j$ is released at time $r_i^j$ and must finish no later than its absolute deadline $d_i^j=r_i^j+D_i$. Under a fixed priority scheduler such as G-RMA, $p_i$ determines $\tau_i$'s (fixed) priority and it is constant for all instances of $\tau_i$. Under a dynamic priority scheduler such as G-EDF, a job $\tau_i^j$'s priority, $p_i^j$, differs from one instance to another. 
+A task $\tau_j$ may interfere with task $\tau_i$ for a number of times during an interval $L$, and this number is denoted as $G_{ij}(L)$. 
+
+
+\textit{Shared objects.}
+ A task may need to read/write shared, in-memory data objects while it is executing any of its atomic sections (transactions), which are synchronized using STM. 
+The set of atomic sections of task $\tau_i$ is denoted $s_i$. $s_i^k$ is the $k^{th}$ atomic section of $\tau_i$. 
+Each object, $\theta$, can be accessed by multiple tasks. The set of distinct objects accessed by $\tau_i$ is $\theta_i$ without repeating objects.
+The set of atomic sections used by $\tau_i$ to access $\theta$ is $s_i(\theta)$, and the sum of the lengths of those atomic sections is $len(s_i(\theta))$. $s_i^k(\theta)$ is the $k^{th}$ atomic section of $\tau_i$ that accesses $\theta$.
+%
+ $s_i^k$ can access one or more objects in $\theta_i$. So, $s_i^k$ refers to the transaction itself, regardless of the objects accessed by the transaction. We denote the set of all accessed objects by $s_i^k$ as $\Theta_i^k$. While $s_i^k(\theta)$ implies that $s_i^k$ accesses an object $\theta \in \Theta_i^k$, $s_i^k(\Theta)$ implies that $s_i^k$ accesses a set of objects $\Theta=\{\theta \in \Theta_i^k$ \}. $\bar{s_i^k}=\bar{s_i^k}(\Theta)$ refers only once to $s_i^k$, regardless of the number of objects in $\Theta$. So, $|\bar{s_i^k}(\Theta)|_{\forall \theta \in \Theta}=1$.
+%
+ $s_i^k(\theta)$  executes for a duration $len(s_i^k(\theta))$. $len(s_i^k)=len(s_i^k(\theta))=len(s_i^k(\Theta))=len(s_i^k(\Theta_i^k))$ The set of tasks sharing $\theta$ with $\tau_i$ is denoted $\gamma_i(\theta)$. 
+
+Atomic sections are non-nested (supporting nested STM is future work). The maximum-length atomic section in $\tau_i$ that accesses $\theta$ is denoted $s_{i_{max}} (\theta)$, while the maximum one among all tasks is $s_{max} (\theta)$, and the maximum one among tasks with priorities lower than that of $\tau_i$ is $s_{max}^i (\theta)$.
+
+\textit{STM retry cost.} If two or more atomic sections conflict, the CM will commit one section and abort and retry the others, increasing the time to execute the aborted sections. The increased time that an atomic section $s_i^p (\theta)$ will take to execute due to a conflict with another section $s_j^k (\theta)$, is denoted $W_{i}^{p}(s_{j}^{k}(\theta))$. If an atomic section, $s_i^p$, is already executing, and another atomic section $s_j^k$ tries to access a shared object with $s_i^p$, then $s_j^k$ is said to ``interfere" or ``conflict" with $s_i^p$. The job $s_j^k$ is the ``interfering job", and the job $s_i^p$ is the ``interfered job".
+
+Due to \textit{transitive retry} (introduced in Section~\ref{pnf overview}), an atomic section $s_i^k(\Theta_i^k)$ may retry due to another atomic section $s_j^l(\Theta_j^l)$, where $\Theta_i^k \cap \Theta_j^l = \emptyset$. $\theta_i^*$ denotes the set of objects not accessed directly by atomic sections in $\tau_i$, but can cause transactions in $\tau_i$ to retry due to transitive retry. $\theta_i^{ex}(=\theta_i + \theta_i^*)$ is the set of all objects that can cause transactions in $\tau_i$ to retry directly or through transitive retry. $\gamma_i^*$ is the set of tasks that accesses  objects in $\theta_i^*$. $\gamma_i^{ex}(=\gamma_i + \gamma_i^*)$ is the set of all tasks that can directly or indirectly (through transitive retry) cause transactions in $\tau_i$ to abort and retry.
+
+The total time that a task $\tau_i$'s atomic sections have to retry over $T_i$ is denoted $RC(T_i)$. The additional amount of time by which all interfering jobs of $\tau_j$ increases the response time of any job of $\tau_i$ during $L$, without considering retries due to atomic sections, is denoted $W_{ij}(L)$.
+
+
+\section{Motivation}
+
+To understand the need for \textit{First Bounded, Last Timestamp (FBLT)} contention manager}, we first give a brief introduction of previous real-time CMs, ECM, RCM, LCM, and PNF. 
+%%BR: Cite each. 
+
+\subsection{ECM and RCM}
+
+The \textit{Earliest Deadline Contention Manager} (ECM) \cite{stmconcurrencycontrol:emsoft11} is used with the G-EDF multicore real-time scheduler. ECM allows the transaction with the shortest absolute deadline to commit first. The other transactions retry and abort. 
+
+The \textit{Rate Monotonic Contention Manager} (RCM) \cite{stmconcurrencycontrol:emsoft11} 
+is used with the G-RMA scheduler. RCM allows the transaction with the shortest period to commit first. ECM and RCM maintain semantic consistency with the underlying scheduler.
+
+\subsection{LCM}
+
+For both ECM and RCM, $s_{i}^{k}(\theta)$ can be totally repeated if $s_{j}^{l}(\theta)$ --- which belongs to a higher priority job $\tau_{j}^b$ than $\tau_{i}^a$ --- conflicts with $s_{i}^{k}(\theta)$
+at the end of its execution, while $s_{i}^{k}(\theta)$ is just about
+to commit. The, \textit{Length-based Contention Manager} (LCM)~\cite{lcmdac2012}, shown in Algorithm~\ref{alg_lcm}, uses the remaining length of $s_{i}^{k}(\theta)$ when it is interfered,
+as well as $len(s_{j}^{l}(\theta))$, to decide which transaction must be aborted. If $p_i^k$ is greater than $p_j^l$, then $s_i^k(\theta)$ is committed, because it belongs to a higher priority job, and it started before $s_j^l(\theta)$ (step~\ref{step_sicommits}). Otherwise, $c_{ij}^{kl}$ is calculated (step~\ref{step_cijkl}) to determine whether it is worth aborting $s_i^k(\theta)$ in favor of $s_j^l(\theta)$, because $len(s_j^l(\theta))$ is relatively small compared to the remaining execution length of $s_i^k(\theta)$.~\cite{lcmdac2012} assumes that:
+\begin{equation}
+c_{ij}^{kl}=len(s_{j}^{l}(\theta))/len(s_{i}^{k}(\theta))
+\label{cm_eq}\end{equation}
+where $c_{ij}^{kl}\in]0,\infty[$, to cover all possible lengths of $s_{j}^{l}(\theta)$.
+
+
+Thus, LCM's key idea is to reduce the opportunity for the abort of $s_{i}^{k}(\theta)$ if it is close to committing when interfered and $len(s_{j}^{l}(\theta))$ is large. This abort opportunity is increasingly reduced as $s_{i}^{k}(\theta)$ gets closer to the end of its execution, or $len(s_{j}^{l}(\theta))$ gets larger. On the other hand, as $s_{i}^{k}(\theta)$ is interfered early, or $len(s_{j}^{l}(\theta))$ is small compared to $s_{i}^{k}(\theta)$'s remaining length, the abort opportunity is increased even if $s_i^k (\theta)$ is close to the end of its execution. To decide whether $s_{i}^{k}(\theta)$ must be aborted or not, a threshold value $\psi\in[0,1]$ that determines $\alpha_{ij}^{kl}$ (step~\ref{step_alphaijkl}) is used, where $\alpha_{ij}^{kl}$ is the maximum percentage of $len(s_i^k(\theta))$ below which $s_j^l(\theta)$ is allowed to abort $s_i^k(\theta)$. Thus, if the already executed part of $s_i^k(\theta)$ --- when $s_j^l(\theta)$ interferes with $s_i^k(\theta)$ --- does not exceed $\alpha_{ij}^{kl}len(s_i^k(\theta))$, then $s_i^k(\theta)$ is aborted (step~\ref{step_siaborts}). Otherwise, $s_j^l(\theta)$ is aborted (step~\ref{step_sjaborts}).
+
+\begin{algorithm}
+\footnotesize{
+\LinesNumbered
+\KwData{$s_i^k(\theta)\rightarrow$ interfered atomic section.\\$s_j^l(\theta)\rightarrow$ interfering atomic section.\\$\psi\rightarrow$ predefined threshold $\in [0,1]$.\\$\delta_i^k(\theta)\rightarrow$ remaining execution length of $s_i^k(\theta)$}
+\KwResult{which atomic section of $s_i^k(\theta)$ or $s_j^l(\theta)$ aborts}
+\eIf{$p_i^k > p_j^l$}
+	{$s_j^l(\theta)$ aborts\label{step_sicommits}\;}
+	{$c_{ij}^{kl}=len(s_j^l(\theta))/len(s_i^k(\theta))$\label{step_cijkl}\;
+	$\alpha_{ij}^{kl}=ln(\psi)/(ln(\psi)-c_{ij}^{kl})$\label{step_alphaijkl}\;
+	$\alpha=\left(len(s_i^k(\theta))-\delta_i^k(\theta)\right)/len(s_i^k(\theta))$\;
+	\eIf{$\alpha \le \alpha_{ij}^{kl}$}
+	{$s_i^k(\theta)$ aborts\label{step_siaborts}\;}
+	{$s_j^l(\theta)$ aborts\label{step_sjaborts}\;}
+	}
+	}
+\caption{The LCM Algorithm}
+\label{alg_lcm}
+\end{algorithm}
+
+LCM reduces the retry cost of a single transaction $s_i^k(\theta)$ due to another transaction $s_j^l(\theta)$ from $2.s_{max}$ (in case of ECM and RCM) to $(1+\alpha_{max}).s_{max}$, where $s_{max}$ is the maximum length transaction among all tasks, and $\alpha_{max}$ is the maximum $alpha$ for any transaction. On the other side, 
+%BR: In situations like these, say "On the other hand,.." (and not "..the other side")
+LCM suffers from bounded priority inversion because a higher priority transaction can be blocked by a lower priority one. Additionally, LCM is not a centralized CM, which means that, upon a conflict, each transaction must decide whether it must commit or abort. 
+
+
+\subsection{PNF}
+\label{pnf overview}
+
+ECM, RCM, and LCM suffer from \textit{transitive retry}. Transitive retry is illustrated by the following example:
+
+\textbf{Example 1.} 
+%%BR: You only have 1 example. So delete "\textbf{Example 1.}" and just go with your following paragraph:
+Consider three atomic sections $s_{1}^{x}$, $s_{2}^{y}$, 
+and $s_{3}^{z}$ belonging to jobs $\tau_{1}^{x}$, $\tau_{2}^{y}$, 
+and $\tau_{3}^{z}$, with priorities $p_{3}^{z}>p_{2}^{y}>p_{1}^{x}$, respectively. 
+Assume that $s_{1}^{x}$ and $s_{2}^{y}$ share objects, and $s_{2}^{y}$ and $s_{3}^{z}$ share objects. $s_{1}^{x}$ and $s_{3}^{z}$ do not share objects.
+Now, $s_{3}^{z}$ can cause $s_{2}^{y}$ to retry, which in turn will cause $s_{1}^{x}$ to retry. This means that $s_{1}^{x}$ will retry transitively
+because of $s_{3}^{z}$, which will increase the retry cost of $s_{1}^{x}$.
+
+Now, consider another atomic section $s_4^f$ with a priority higher than that of $s_3^z$. Suppose $s_4^f$ shares objects only with $s_3^z$. Thus, $s_4^f$ can cause $s_3^z$ to retry, which in turn will cause $s_2^y$ to retry, and finally, $s_1^x$ to retry. Thus, transitive retry will move from $s_{4}^{f}$ to $s_{1}^{x}$, increasing the retry cost of $s_{1}^{x}$. The situation gets worse as more higher priority tasks are added, where each task shares objects with its immediate lower priority task. $\tau_{3}^{z}$ may have atomic sections that share objects with $\tau_{1}^{x}$,
+but this will not prevent the effect of transitive retry due to $s_{1}^{x}$.
+
+
+
+Therefore, the analysis in~\cite{stmconcurrencycontrol:emsoft11} and~\cite{lcmdac2012} extend the set of objects that can cause an atomic section of a lower priority job to retry.  This is done by initializing the set of conflicting objects, $\gamma_i$, to all objects accessed by all transactions of $\tau_i$. We then cycle through all transactions belonging to all other higher priority tasks. Each transaction $s_j^l$ that accesses at least one of the objects in $\gamma_i$ adds all other objects accessed by $s_j^l$ to $\gamma_i$. The loop over all higher priority tasks is repeated, each time with the new $\gamma_i$, until there are no more transactions accessing any object in $\gamma_i$. The final set of objects (tasks) that can cause transactions in $\tau_i$ to retry is $\theta_i^{ex}(\gamma_i^{ex})$, respectively\footnote{However, note that, this solution may over-extend the set of conflicting objects, and may even contain all objects accessed by all tasks.}. 
+
+The \textit{Priority contention manager with Negative value and First access} (PNF)~\cite{shambake_phd_proposal} 
+%%BR: In the bibliography for this citation, be sure to include the URL using the "Note" command: http://www.real-time.ece.vt.edu/shambakey_prelim.pdf (so that reviewers can look it up). 
+%
+is designed to avoid transitive retry. ECM, RCM, and LCM suffer from transitive retry. PNF avoids transitive retry by concurrently executing at most $m$ non-conflicting transactions together. These executing transactions are non-preemptive. Thus, executing transactions cannot be aborted due to direct or indirect conflict with other transactions.
+
+However, with PNF, all objects accessed by each transaction must be known a-priori. Therefore, this is not suitable with dynamic STM implementations~\cite{Herlihy:2003:STM:872035.872048}. Additionally, PNF is implemented in~\cite{shambake_phd_proposal} as a centralized CM that uses locks. This increases overhead and wastes reduction in retry cost. 
+%%BR: I don't know what you mean when you say "This increases overhead and wastes reduction in retry cost." Do you mean "This increases overhead and retry cost."?
+
+%PNF is most appropriate when there is heavy transitive retry among transactions. LCM is preferred in other cases.
+%%BR: Doesn't add much. So I suggest to skip it. 
+
+\subsection{Case for FBLT}
+
+Thus, it is desirable to have a CM with the following goals:
+\begin{enumerate}
+%%BR: Use the compactenum package
+\item \label{goal 1} reduce the retry cost of each transaction $s_i^k$ due to another transaction $s_j^l$, just as LCM does compared to ECM and RCM.
+\item \label{goal 2} avoid or bound the effect of transitive retry, similar to PNF, without prior knowledge of accessed objects by each transaction, enabling dynamic STM.
+\item \label{goal 3} decentralized design and avoid the use of locks, thereby reducing  overhead.
+\end{enumerate}
+
+We propose the \textit{First Bounded, Last Timestamp contention manager} (or (FBLT). FBLT achieves these goals by bounding the number of times each transaction $s_i^k$ is aborted due to other transactions to at most $\delta_i^k$. $\dela_i^k$ includes the number of aborts due to direct conflict with other transactions, as well as transitive retry (goal~\ref{goal 2}). If a transaction $s_i^k$ reaches its $\delta_i^k$, it is added to an $m\_$set in FIFO order. In the $m\_$set, $s_i^k$ executes non-preemptively. If transactions in the $m\_$set conflict together, they use their FIFO order in the $m\_$set to resolve the conflict. $s_i^k$ can still abort after it becomes a non-preemptive transaction due to other non-preemptive transactions. The number of abort times 
+%%BR: Say "The number of aborts.." 
+for any non-preemptive transaction is bounded by $m-1$ , where $m$ is the number of processors, as will be shown in Section~\ref{fblt rc}. 
+
+Thus, the key idea behind FBLT is to use a suitable $\delta_i^k$ for each $s_i^k$ before it becomes a non-preemptive transaction. The choice of $\delta_i^k$ should make the total retry cost (and thus, the schedulability) of any job $\tau_i^x$ under FBLT comparable to the retry cost under ECM, RCM, LCM, and PNF. (In Section~\ref{schedulabiltiy comparison}, we show the suitable $\delta_i^k$ for each $s_i^k$ to have equal or better schedulability than other CMs.) Preemptive transactions resolve their conflicts using LCM.  Thus, FBLT defaults to LCM if abort bounds have not been violated (goal~\ref{goal 1}). Each non-preemptive transaction $s_i^k$  uses the time it joined the $m\_$set to resolve conflicts with other non-preemptive transactions. Therefore, FBLT does not have to use locks and is decentralized (goal~\ref{goal 3}).
+
+
+\section{The FBLT Contention Manager}
+
+\begin{algorithm}[h]
+\footnotesize{
+\LinesNumbered
+\KwData{
+$s_i^k$: interfered transaction\;
+$s_j^l$: interfering transactions\;
+$\delta_i^k$: the maximum number of times $s_i^k$ can be aborted during $T_i$\;
+$\eta_i^k$: number of times $s_i^k$ has already been aborted up to now\;
+$m\_$set: contains at most m 
+%%BR: Always, italicize "m". 
+non-preemptive transactions. $m$ is number of processors\;
+$m\_prio$: priority of any transaction in $m\_$set. $m\_prio$ is higher than any priority of any real-time task\;
+$r(s_i^k)$: time point at which $s_i^k$ joined $m\_$set\;
+}
+\KwResult{atomic sections that will abort}
+\uIf{\label{both preemptive}$s_i^k,\,s_j^l \not\in m\_set$}
+{
+Apply Algorithm~\ref{alg_lcm} (default to LCM)\label{apply lcm}\;
+\eIf{\label{preemptive s_i^k aborted}$s_i^k$ is aborted}
+{
+\eIf{$\eta_i^k<\delta_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{increment eta 1}\;
+}
+{
+Add $s_i^k$ to $m\_$set\label{add to m_set 1}\;
+Record $r(s_i^k)$\label{record 1}\;
+Increase priority of $s_i^k$ to $m\_prio$\label{increase priority 1}\;
+}
+}
+{
+Swap $s_i^k$ and $s_j^l$\;
+Go to Step~\ref{preemptive s_i^k aborted}\;
+}
+}
+\uElseIf{\label{s_j^l is non preemptive}$s_j^l \in m\_set,s_i^k \not\in m\_set$}
+{
+Abort $s_i^k$\;
+\eIf{$\eta_i^k < \delta_i^k$}
+{
+Increment $\eta_i^k$ by 1\label{increment eta 2}\;
+}
+{
+Add $s_i^k$ to $m\_$set\label{add to m_set 2}\;
+Record $r(s_i^k)$\label{record 2}\;
+Increase priority of $s_i^k$ to $m\_prio$\label{increase priority 2}\;
+}
+}
+\uElseIf{\label{s_i^k is non-preemptive}$s_i^k \in m\_set,s_j^l \not\in m\_set$}
+{
+Swap $s_i^k$ and $s_j^l$\;
+Go to Step~\ref{s_j^l is non preemptive}\label{end preemptive and non preemptive}\;
+}
+\Else
+{
+\label{both non preemptive}
+\eIf{$r(s_i^k)<r(s_j^l)$}
+{	
+Abort $s_j^l$\label{s_i^k first in m_set}\;
+}
+{
+Abort $s_i^k$\label{s_j^l first in m_set}\;
+}
+}
+}
+\caption{The FBLT Algorithm}\label{fblt-algorithm}
+\end{algorithm}
+
+Algorithm~\ref{fblt-algorithm} illustrates FBLT. Each transaction $s_{i}^{k}$ can be aborted during $T_i$ for at most $\delta_{i}^{k}$ times. $\eta_{i}^{k}$ records  the number of times $s_{i}^{k}$ has already been aborted up to now. If $s_i^k$ and $s_j^l$ have not joined the $m\_$set yet, then they are preemptive transactions. Preemptive transactions resolve conflicts using Algorithm~\ref{alg_lcm} (step~\ref{apply lcm}). Thus, FBLT defaults to LCM when no transaction reaches its $\delta$. If only one of the transactions is in the $m\_$set, then the non-preemptive transaction (the one in $m\_$set) aborts the other one (steps~\ref{s_j^l is non preemptive} to~\ref{end preemptive and non preemptive}). $\eta_i^k$ is incremented each time $s_i^k$ is aborted as long as $\eta_i^k < \delta_i^k$ (steps~\ref{increment eta 1} and~\ref{increment eta 2}). Otherwise, $s_i^k$ is added to the $m\_$ set and its priority is increased to $m\_prio$ (steps~\ref{add to m_set 1} to~\ref{increase priority 1} and~\ref{add to m_set 2} to~\ref{increase priority 2}). When the priority of $s_i^k$ is increased to $m\_prio$, $s_i^k$ becomes a non-preemptive transaction. Non-preemptive transactions cannot be aborted by other preemptive transactions, nor by any other real-time job. The $m\_$set can hold at most $m$ concurrent transactions because there are $m$ processors in the system. $r(s_i^k)$ records the time $s_i^k$ joined the $m\_$set (steps~\ref{record 1} and~\ref{record 2}). When non-preemptive transactions conflict together (step~\ref{both non preemptive}), the transaction with the smaller $r()$ commits first (steps~\ref{s_i^k first in m_set} and~\ref{s_j^l first in m_set}). Thus, non-preemptive transactions are executed in FIFO order of the $m\_$set.
+
+\subsection{Illustrative Example}
+
+We now illustrate FBLT's behavior with the following example:
+\begin{enumerate}
+%%BR: Use compactenum package (throughout)
+\item Transaction $s_{i}^{k}(\theta_{1},\theta_{2})$ is released while
+$m\_set=\emptyset$. $\eta_{i}^{k}=0$ and $\delta_{i}^{k}=3$.
+\item \label{fblt_ex_step 2} Transaction $s_{a}^{b}(\theta_{2})$ is released
+while $s_{i}^{k}(\theta_{1},\theta_{2})$ is running. $p_{a}^{b}>p_{i}^{k}$
+and $\eta_{i}^{k}<\delta_{i}^{k}$. Applying LCM, $s_{i}^{k}(\theta_{1},\theta_{2})$
+is aborted in favor of $s_{a}^{b}$ and $\eta_{i}^{k}$ is incremented
+to 1.
+\item $s_{a}^{b}(\theta_{2})$ commits. $s_{i}^{k}(\theta_{1},\theta_{2})$
+runs again. Transaction $s_{c}^{d}(\theta_{2})$ is released while
+$s_{i}^{k}(\theta_{1},\theta_{2})$ is running. $p_{c}^{d}>p_{i}^{k}$. Applying LCM, $s_{i}^{k}(\theta_{1},\theta_{2})$ is aborted again in favor of $s_{c}^{d}(\theta_{2})$.
+$\eta_{i}^{k}$ is incremented to 2.
+\item $s_{c}^{d}(\theta_{2})$ commits. $s_{e}^{f}(\theta_{2},\theta_{3})$
+is released. $p_{e}^{f}>p_{i}^{k}$ and $\eta_{e}^{f}=2$. $s_{i}^{k}(\theta_{1},\theta_{2})$
+is aborted in favor of $s_{e}^{f}(\theta_{2},\theta_{3})$ and $\eta_{i}^{k}$
+is incremented to 3.
+\item $s_{j}^{l}(\theta_{3})$ is released. $p_{j}^{l}>p_{e}^{f}$. $s_{e}^{f}(\theta_{2},\theta_{3})$ is aborted in favor of $s_{j}^{l}(\theta_{3})$
+and $\eta_{e}^{f}$ is incremented to 1.
+\item \label{fblt_ex_step 6} $s_{i}^{k}(\theta_{1},\theta_{2})$ and $s_{e}^{f}(\theta_{2},\theta_{3})$
+are compared again. $\because\,\eta_{i}^{k}=\delta_{i}^{k}$, $\therefore\, s_{i}^{k}(\theta_{1},\theta_{2})$
+is added to $m\_$set. $m\_set=\left\{ s_{i}^{k}(\theta_{1},\theta_{2})\right\} $.
+$s_{i}^{k}(\theta_{1},\theta_{2})$ becomes a non-preemptive transaction.
+As $s_{e}^{f}(\theta_{2},\theta_{3})$ is a preemptive transaction, $\therefore\, s_{e}^{f}(\theta_{2},\theta_{3})$ is aborted in
+favor of $s_{i}^{k}(\theta_{1},\theta_{2})$, despite $p_{e}^{f}$ being greater than the original priority of $s_i^k(\theta_1,\theta_2)$. $\eta_{e}^{f}$ is incremented to 2.
+%
+\item \label{fblt_ex_step 7} $s_{j}^{l}(\theta_{3})$ commits but $s_{g}^{h}(\theta_{3})$
+is released. $p_{g}^{h}>p_{e}^{f}$ but $\eta_{e}^{f}=\delta_{e}^{f}$.
+So, $s_{e}^{f}(\theta_{2},\theta_{3})$ becomes a non-preemptive transaction.
+$m\_set=\left\{ s_{i}^{k}(\theta_{1},\theta_{2}),s_{g}^{h}(\theta_{2},\theta_{3})\right\} $.
+%
+\item $s_{i}^{k}(\theta_{1},\theta_{2})$ and $s_{g}^{h}(\theta_{2},\theta_{3})$
+are now non-preemptive transactions. $s_{i}^{k}(\theta_{1},\theta_{2})$
+and $s_{g}^{h}(\theta_{2},\theta_{3})$ still conflict together. So,
+they are executed according to their addition order to the $m\_$set.
+So, $s_{i}^{k}(\theta_{1},\theta_{2})$ commits first, then $s_{g}^{h}(\theta_{2},\theta_{3})$.
+%%BR: "So, $s_{i}^{k}(\theta_{1},\theta_{2})$ commits first, followed by $s_{g}^{h}(\theta_{2},\theta_{3})$."
+\item $s_{g}^{h}(\theta_{3})$ will continue to abort and retry in favor
+of $s_{e}^{f}(\theta_{2},\theta_{3})$ until $s_{e}^{f}(\theta_{2},\theta_{3})$
+commits or $\eta_{g}^{h}=\delta_{g}^{h}$. Even if $s_{g}^{h}(\theta_{3})$
+joined the $m\_$set, $s_{g}^{h}(\theta_{3})$ will still abort and retry
+in favor of $s_{e}^{f}(\theta_{2},\theta_{3})$, because $s_{e}^{f}(\theta_{2},\theta_{3})$ joined the $m\_$set earlier than $s_{g}^{h}(\theta_{3})$.
+\end{enumerate}
+
+It is seen from steps \ref{fblt_ex_step 2} to \ref{fblt_ex_step 6}
+that $s_{i}^{k}(\theta_{1},\theta_{2})$ can be aborted due to direct
+conflict with other transactions, or due to transitive retry. Irrespective of 
+the reason for the conflict, once a transaction has reached its maximum
+allowed $\delta$, the transaction becomes a non-preemptive one
+(steps \ref{fblt_ex_step 6} and \ref{fblt_ex_step 7}). Non-preemptive
+transactions have higher priority than other preemptive transactions
+(steps \ref{fblt_ex_step 6} and \ref{fblt_ex_step 7}). Non-preemptive
+transactions execute in their arrival order to the $m\_$set.
+
+
+\section{Retry Cost and Response Time Bounds}\label{fblt rc}
+%%BR: No need to say "under FBLT" in the section titles, as it is implied.
+
+We now derive an upper bound on the retry cost of any job $\tau_{i}^{x}$
+under FBLT during an interval $L\le T_{i}$. Since all tasks are sporadic
+(i.e., each task $\tau_{i}$ has a minimum period $T_{i}$), $T_{i}$
+is the maximum study interval for each task $\tau_{i}$.
+
+\begin{clm}
+The total retry cost for any job $\tau_{i}^{x}$ under FBLT due to 1) conflicts
+between its transactions and transactions of other jobs during an interval $L\le T_{i}$ and 2) release of higher priority jobs is upper bounded by:
+%
+\begin{equation}
+RC_{to}(L)\le\sum_{\forall s_{i}^{k}\in s_{i}}\left(\delta_{i}^{k}len(s_{i}^{k})+\sum_{\forall s_{iz}^k\in \chi_i^k} len(s_{iz}^{k})\right)+RC_{re}(L)\label{eq:fblt_rc}
+\end{equation} 
+where $\chi_i^k$ is the set of at most $m-1$ maximum length transactions conflicting directly or indirectly (through transitive retry) with $s_i^k$. Each transaction $s_{iz}^k \in \chi_i^k$ belongs to a distinct task $\tau_j$. $RC_{re}(L)$ is the retry cost resulting
+from the release of higher priority jobs which preempt $\tau_{i}^{x}$.
+$RC_{re}(L)$ is calculated by (6.8) in \cite{shambake_phd_proposal}
+for G-EDF, and (6.10) in \cite{shambake_phd_proposal} for G-RMA schedulers.
+%
+\end{clm}
+
+
+\begin{proof}
+By the definition of FBLT, $s_{i}^{k}\in\tau_{i}^{x}$ can be aborted
+a maximum of $\delta_{i}^{k}$ times before $s_{i}^{k}$ joins the $m\_$set. 
+%%BR: I reworded. Check for accuracy. 
+Before joining the $m\_$set, $s_{i}^{k}$ can be aborted due to higher priority transactions, or transactions
+in the $m\_$set. The original priority of transactions in the $m\_$set can be higher or lower than
+$p_{i}^{x}$. Thus, the maximum time $s_{i}^{k}$ is aborted before
+joining the $m\_$set occurs if $s_{i}^{k}$ is aborted for $\delta_{i}^{k}$ times. 
+
+
+Transactions preceding  $s_i^k$ in the $m\_$set can conflict directly with $s_i^k$, or indirectly through transitive retry. The worst case scenario for $s_{i}^{k}$ after joining the $m\_$set occurs if $s_{i}^{k}$ is preceded by $m-1$ maximum length conflicting transactions. Hence, in the worst case, $s_{i}^{k}$ has to wait for the previous $m-1$ transactions to commit first. The priority of $s_{i}^{k}$ after joining the $m\_$set is higher than any real-time job. Therefore, $s_{i}^{k}$ is not aborted
+by any job. If $s_{i}^{k}$ has not joined the $m\_$ set yet, and a higher
+priority job $\tau_{j}^{y}$ is released while $s_{i}^{k}$ is running,
+then $s_{i}^{k}$ may be aborted if $\tau_{j}^{y}$ has conflicting
+transactions with $s_{i}^{k}$. $\tau_{j}^{y}$ causes only one abort
+in $\tau_{i}^{x}$ because $\tau_{j}^{y}$ preempts $\tau_{i}^{x}$
+only once. If $s_{i}^{k}$ has already joined the $m\_$set, then $s_{i}^{k}$
+cannot be aborted by the release of higher priority jobs. Thus, the maximum
+number of times transactions in $\tau_{i}^{x}$ can be aborted due to the release
+of higher priority jobs is less than or equal to the number of interfering
+higher priority jobs to $\tau_{i}^{x}$. Claim follows.
+\end{proof}
+
+\begin{clm}
+Under FBLT, the blocking time of a job $\tau_{i}^{x}$ due to lower priority
+jobs is upper bounded by: 
+\begin{equation}
+D(\tau_{i}^{x})=min\left(max_{1}^{m}(s_{j_{max},\forall\tau_{j}^{l},\, p_{j}^{l}<p_{i}^{x}})\right)\label{eq:fblt_delay}
+\end{equation}
+where $s_{j_{max}}$ is the maximum length transaction in any job
+$\tau_{j}^{l}$ with original priority lower than $p_{i}^{x}$. The
+right hand side of (\ref{eq:fblt_delay}) is the minimum of the $m$
+maximum transactional lengths in all jobs with lower priority than
+$\tau_{i}^{x}$.
+\end{clm}
+
+
+\begin{proof}
+$\tau_{i}^{x}$ is blocked when it is initially released and all processors
+are busy with lower priority jobs with non-preemptive transactions.
+Although $\tau_{i}^{x}$ can be preempted by higher priority jobs,
+$\tau_{i}^{x}$ cannot be blocked after it is released. If $\tau_{i}^{x}$
+is preempted by a higher priority job $\tau_{j}^{y}$, then, when $\tau_{j}^{y}$
+finishes execution, the underlying scheduler will not choose a lower
+priority job than $\tau_{i}^{x}$ before $\tau_{i}^{x}$. So, after
+$\tau_{i}^{x}$ is released, there is no chance for any transaction
+$s_{u}^{v}$ belonging to a lower priority job than $\tau_{i}^{x}$
+to run before $\tau_{i}^{x}$. Thus, $s_{u}^{v}$ cannot join the $m\_$set
+before $\tau_{i}^{x}$ finishes. Consequently, the worst case blocking
+time for $\tau_{i}^{x}$ occurs when the maximum length $m$ transactions
+in lower priority jobs than $\tau_{i}^{x}$ are executing non-preemptively.
+After the minimum length transaction in the $m\_$set finishes, the
+underlying scheduler will choose $\tau_{i}^{x}$ or a higher priority
+job to run. Claim follows.
+\end{proof}
+
+\begin{clm}
+The response time of any job $\tau_{i}^{x}$ during an interval $L\le T_{i}$
+under FBLT is upper bounded by:
+\begin{equation}
+R_{i}^{up}=c_{i}+RC_{to}(L)+D(\tau_{i}^{x})+\left\lfloor \frac{1}{m}\sum_{\forall j\ne i}W_{ij}(R_{i}^{up})\right\rfloor \label{eq:fblt_res_time}
+\end{equation}
+where $RC_{to}(L)$ is calculated by (\ref{eq:fblt_rc}), $D(\tau_{i}^{x})$
+is calculated by (\ref{eq:fblt_delay}), and $W_{ij}(R_{i}^{up})$
+is calculated by (11) in \cite{stmconcurrencycontrol:emsoft11} for
+G-EDF, and (17) in \cite{stmconcurrencycontrol:emsoft11} for G-RMA schedulers.
+(11) and (17) in \cite{stmconcurrencycontrol:emsoft11} inflates $c_{j}$
+of any job $\tau_{j}^y\ne\tau_{i}^x,\, p_{j}^y>p_{i}^x$ by the retry cost
+of transactions in $\tau_{j}^y$.
+\end{clm}
+
+
+\begin{proof}
+The response time of any job $\tau_i^x$ is calculated directly from FBLT's behavior. 
+%%BR: You are not using the notation "$\tau_i^x$" elsewhere in this sentence, so there is no need to use it. Reword as "The response time of a job is calculated directly from FBLT's behavior."
+The response time of any job $\tau_{i}^{x}$ is the sum of its
+worst case execution time $c_{i}$, plus the retry cost of transactions
+in $\tau_{i}^{x}$ ($RC_{to}(L)$), plus the blocking time of $\tau_{i}^{x}$
+($D(\tau_{i}^{x})$), and the workload interference of higher priority
+jobs. The workload interference of higher priority jobs scheduled by
+G-EDF is calculated by (11) in \cite{stmconcurrencycontrol:emsoft11},
+and by (17) in \cite{stmconcurrencycontrol:emsoft11} for G-RMA. Claim follows.
+\end{proof}
+
+%%BR: DONE. 5:38PM, 6/14/2012.
+
+% Bibliography
+\bibliographystyle{acmsmall}
+\bibliography{global_bibliography}
+
+% History dates
+\received{}{}{}
+
+% Electronic Appendix
+%\elecappendix
+
+\medskip
+
+
+\end{document}
+

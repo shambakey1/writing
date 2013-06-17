@@ -1,0 +1,89 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: HiPeac_sh.aux
+The style file: acmsmall.bst
+Database file #1: /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib
+You're missing a field name---line 820 of file /e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib
+ :  
+ :  %url = {http://doi.acm.org/10.1145/1378704.1378725},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Warning--empty publisher in anderson95realtime
+Warning--empty address in anderson95realtime
+Warning--empty publisher in barrosmanaging
+Warning--empty address in barrosmanaging
+Warning--empty publisher in bc+08
+Warning--empty address in bc+08
+Warning--empty address in dellinger2011chronos
+Warning--empty publisher in key-5
+Warning--empty address in key-5
+ptr=2, stack=
+'155
+Real-time software transactional memory: Contention managers, time bounds, and implementations
+---the literal stack isn't empty for entry shambake_phd_proposal
+while executing---line 3687 of file acmsmall.bst
+Warning--empty address in lcmdac2012
+Warning--empty address in stmconcurrencycontrol:emsoft11
+Warning--no number and no volume in pnf_dac_asp
+Warning--page numbers missing in pnf_dac_asp
+Warning--empty publisher in 6045438
+Warning--empty address in 6045438
+Warning--empty publisher in fahmy2009bounding
+Warning--empty address in fahmy2009bounding
+Warning--empty publisher in Guerraoui:2005:TTT:1073814.1073863
+Warning--empty address in Guerraoui:2005:TTT:1073814.1073863
+Warning--empty publisher in Herlihy:2006:AMP:1146381.1146382
+Warning--empty address in Herlihy:2006:AMP:1146381.1146382
+Warning--empty address in Herlihy:2003:STM:872035.872048
+Warning--empty publisher in manson2006preemptible
+Warning--empty address in manson2006preemptible
+Warning--empty publisher in marathe2006lowering
+Warning--empty address in marathe2006lowering
+Warning--empty publisher in Saha:2006:MHP:1122971.1123001
+Warning--empty address in Saha:2006:MHP:1122971.1123001
+Warning--empty publisher in sarni2009real
+Warning--empty address in sarni2009real
+Warning--empty publisher in schoeberl2010rttm
+Warning--empty address in schoeberl2010rttm
+You've used 23 entries,
+            3177 wiz_defined-function locations,
+            852 strings with 9619 characters,
+and the built_in function-call counts, 17193 in all, are:
+= -- 1685
+> -- 821
+< -- 0
++ -- 237
+- -- 314
+* -- 1449
+:= -- 2664
+add.period$ -- 110
+call.type$ -- 23
+change.case$ -- 170
+chr.to.int$ -- 22
+cite$ -- 55
+duplicate$ -- 644
+empty$ -- 1266
+format.name$ -- 438
+if$ -- 3566
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 37
+newline$ -- 121
+num.names$ -- 228
+pop$ -- 217
+preamble$ -- 1
+purify$ -- 304
+quote$ -- 0
+skip$ -- 606
+stack$ -- 0
+substring$ -- 967
+swap$ -- 232
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 456
+warning$ -- 32
+while$ -- 197
+width$ -- 0
+write$ -- 329
+(There were 2 error messages)

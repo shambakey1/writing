@@ -1,0 +1,341 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{clm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:pnf_lcm_rma_comp"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Schedulability performance of PNF/RMA tends to be better or equal to schedulabil
+ity performance of LCM/RMA if conflict effect of higher priority tasks to
+ lower priority tasks increases.
+ Increasing lengths of atomic sections as priority increases, as well as,
+ increasing 
+\begin_inset Formula $\alpha$
+\end_inset
+
+s, enhances schedulability of PNF/RMA compared with LCM/RMA schedulabiltiy.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{clm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By substituting 
+\begin_inset Formula $RC_{A}(T_{i})$
+\end_inset
+
+ in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+) with (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rc-pcm-n-f"
+
+\end_inset
+
+) and 
+\begin_inset Formula $RC_{B}(T_{i})$
+\end_inset
+
+ with 
+\begin_inset Formula 
+\[
+\sum_{\forall\tau_{j}^{*}\in\gamma_{i}^{ex}}\sum_{\forall\theta\in\theta_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}+\alpha_{max}^{jl}s_{max}^{j}(\theta)\right)+\sum_{\forall s_{i}^{y}}\left(1-\alpha_{max}^{iy}\right)len(s_{max}^{i})+\sum_{\forall\tau_{j}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil s_{i_{max}}\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\tau_{j}^{*}=\left\{ \tau_{j}:\left(\tau_{j}\ne\tau_{i}\right)\wedge\left(p_{j}>p_{i}\right)\right\} $
+\end_inset
+
+, then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "utilization comparison"
+
+\end_inset
+
+) becomes 
+\begin_inset Formula 
+\begin{eqnarray}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)}{T_{i}}\label{pnf_lcm_rma_comp_1}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}^{*}\in\gamma_{i}^{ex}}\sum_{\forall\theta\in\theta_{i}^{ex}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}+\alpha_{max}^{jl}s_{max}^{j}(\theta)\right)+\sum_{\forall s_{i}^{y}}\left(1-\alpha_{max}^{iy}\right)len(s_{max}^{i})+\sum_{\forall\tau_{j}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil s_{i_{max}}\right)}{T_{i}}\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+As assumed in the proof of Claim 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "pcm-n-f ecf comaprison clm"
+
+\end_inset
+
+, 
+\begin_inset Formula $\theta_{i}^{ex}=\theta_{i}+\theta_{i}^{*}$
+\end_inset
+
+, 
+\begin_inset Formula $\gamma_{i}^{ex}=\gamma_{i}+\gamma_{i}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\[
+g(\tau_{i})=\frac{\sum_{\forall\tau_{j}^{*}\in\gamma_{i}^{*}}\sum_{\forall\theta\in\theta_{i}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}+s_{max}^{j}(\theta)\right)+\sum_{\forall\tau_{j}^{*}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil s_{i_{max}}\right)}{T_{i}}
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $\gamma_{i}=\tau_{j}^{*}\cup\bar{\tau_{j}}$
+\end_inset
+
+ where 
+\begin_inset Formula $\bar{\tau_{j}}=\left\{ \tau_{j}:\left(\tau_{j}\ne\tau_{i}\right)\wedge\left(p_{j}<p_{i}\right)\right\} $
+\end_inset
+
+, thus 
+\begin_inset Formula $\tau_{j}^{*}\cap\bar{\tau_{j}}=\phi$
+\end_inset
+
+.
+ By substitution of the previous assumptions in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "pnf_lcm_rma_comp_1"
+
+\end_inset
+
+), we get 
+\begin_inset Formula 
+\begin{eqnarray*}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}^{*}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)}{T_{i}}\\
++ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\bar{\tau_{j}}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)}{T_{i}}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}^{*}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}+\alpha_{max}^{jl}s_{max}^{j}(\theta)\right)+\sum_{\forall s_{i}^{y}}\left(1-\alpha_{max}^{iy}\right)len(s_{max}^{i})}{T_{i}}+g(\tau_{i})
+\end{eqnarray*}
+
+\end_inset
+
+For each 
+\begin_inset Formula $\tau_{j}\in\bar{\tau_{j}}$
+\end_inset
+
+, 
+\begin_inset Formula $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil =1$
+\end_inset
+
+ because under G-RMA system for implicit deadline tasks, 
+\begin_inset Formula $T_{j}>T_{i}$
+\end_inset
+
+ when 
+\begin_inset Formula $p_{j}>p_{i}$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula 
+\begin{eqnarray*}
+ & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}^{*}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)}{T_{i}}\\
++ & 2\sum_{\forall\tau_{i}}\frac{\sum_{\forall\bar{\tau_{j}}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)}{T_{i}}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}^{*}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}+\alpha_{max}^{jl}s_{max}^{j}(\theta)\right)+\sum_{\forall s_{i}^{y}}\left(1-\alpha_{max}^{iy}\right)len(s_{max}^{i})}{T_{i}}+g(\tau_{i})
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Formula $\therefore$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray}
+ & 2\sum_{\forall\tau_{i}}\frac{\sum_{\forall\bar{\tau_{j}}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\sum_{\bar{\forall s_{j}^{k}(\theta)}}len\left(\bar{s_{j}^{k}(\theta)}\right)\right)}{T_{i}}\label{eq:pnf_lcm_rma_comp_2}\\
+\le & \sum_{\forall\tau_{i}}\frac{\sum_{\forall\tau_{j}^{*}\in\gamma_{i}}\sum_{\forall\theta\in\theta_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall\bar{s_{j}^{k}(\theta)}}len\left(\alpha_{max}^{jl}s_{max}^{j}(\theta)\right)+\sum_{\forall s_{i}^{y}}\left(1-\alpha_{max}^{iy}\right)len(s_{max}^{i})}{T_{i}}+g(\tau_{i})\nonumber 
+\end{eqnarray}
+
+\end_inset
+
+Assuming negligible effect of transitive retry and retry cost due to release
+ of higher priority jobs (
+\begin_inset Formula $g(\tau_{i})\rightarrow0$
+\end_inset
+
+).
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_lcm_rma_comp_2"
+
+\end_inset
+
+) tends to hold if: 1) contention from higher priority jobs to lower priority
+ jobs increases because of the 
+\begin_inset Formula $\left\lceil\frac{T_{i}}{T_{j}}\right\rceil+1$
+\end_inset
+
+ term in the right hand side of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_lcm_rma_comp_2"
+
+\end_inset
+
+).
+ 2) 
+\begin_inset Formula $\alpha$
+\end_inset
+
+s approaches 1.
+ 3) Lengths of atomic sections increase as priority increases.
+ This makes 
+\begin_inset Formula $len(s_{max}^{j}(\theta))$
+\end_inset
+
+ in the right hand side of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pnf_lcm_rma_comp_2"
+
+\end_inset
+
+) greater than 
+\begin_inset Formula $len(\bar{s_{j}^{k}(\theta)})$
+\end_inset
+
+.
+ Claim follows.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

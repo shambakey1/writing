@@ -1,0 +1,176 @@
+\begin{thebibliography}{10}
+
+\bibitem{anderson95realtime}
+J.~Anderson, S.~Ramamurthy, and K.~Jeffay.
+\newblock Real-time computing with lock-free shared objects.
+\newblock In {\em RTSS}, pages 28--37, 1995.
+
+\bibitem{barrosmanaging}
+A.~Barros and L.~Pinho.
+\newblock Managing contention of software transactional memory in real-time
+  systems.
+\newblock In {\em IEEE RTSS, Work-In-Progress}, 2011.
+
+\bibitem{bc+08}
+B.~Brandenburg, J.~Calandrino, A.~Block, H.~Leontyev, and J.~Anderson.
+\newblock Real-time synchronization on multiprocessors: To block or not to
+  block, to suspend or spin?
+\newblock In {\em Real-Time and Embedded Technology and Applications Symposium,
+  2008. RTAS '08. IEEE}, pages 342 --353, april 2008.
+
+\bibitem{Davis:2011:SHR:1978802.1978814}
+R.~I. Davis and A.~Burns.
+\newblock A survey of hard real-time scheduling for multiprocessor systems.
+\newblock {\em ACM Comput. Surv.}, 43(4):35:1--35:44, Oct. 2011.
+
+\bibitem{shambake_phd_proposal}
+M.~El-Shambakey.
+\newblock {\em Real-Time Software Transactional Memory: Contention Managers,
+  Time Bounds, and Implementations}.
+\newblock Phd proposal, Virginia Tech, 2012.
+\newblock Available as
+  \url{http://www.real-time.ece.vt.edu/shambakey_prelim.pdf}.
+
+\bibitem{lcmdac2012}
+M.~El-Shambakey and B.~Ravindran.
+\newblock {STM} concurrency control for embedded real-time software with
+  tighter time bounds.
+\newblock In {\em Proceedings of the 49th DAC}, pages 437--446. ACM, 2012.
+
+\bibitem{stmconcurrencycontrol:emsoft11}
+M.~El-Shambakey and B.~Ravindran.
+\newblock {STM} concurrency control for multicore embedded real-time software:
+  time bounds and tradeoffs.
+\newblock In {\em Proceedings of the 27th SAC}, pages 1602--1609. ACM, 2012.
+
+\bibitem{fblt}
+M.~Elshambakey and B.~Ravindran.
+\newblock {FBLT}: A real-time contention manager with improved schedulability.
+\newblock {\em DATE'13}, 2013.
+\newblock (to appear).
+
+\bibitem{pnf_dac_asp}
+M.~Elshambakey and B.~Ravindran.
+\newblock On real-time {STM} concurrency control for embedded software with
+  improved schedulability.
+\newblock {\em 18th ASP-DAC}, 2013.
+\newblock (to appear).
+
+\bibitem{6045438}
+S.~Fahmy and B.~Ravindran.
+\newblock On {STM} concurrency control for multicore embedded real-time
+  software.
+\newblock In {\em International Conference on Embedded Computer Systems}, pages
+  1 --8, July 2011.
+
+\bibitem{fahmy2009bounding}
+S.~Fahmy, B.~Ravindran, and E.~D. Jensen.
+\newblock On bounding response times under software transactional memory in
+  distributed multiprocessor real-time systems.
+\newblock In {\em DATE}, pages 688--693, 2009.
+
+\bibitem{key-1}
+S.~F. Fahmy.
+\newblock {\em Collaborative Scheduling and Synchronization of Distributable
+  Real-Time Threads}.
+\newblock PhD thesis, Virginia Tech, 2010.
+
+\bibitem{Guerraoui:2005:TTT:1073814.1073863}
+R.~Guerraoui, M.~Herlihy, and B.~Pochon.
+\newblock Toward a theory of transactional contention managers.
+\newblock In {\em PODC}, pages 258--264, 2005.
+
+\bibitem{Harris:2005:CMT:1065944.1065952}
+T.~Harris, S.~Marlow, S.~P. Jones, and M.~Herlihy.
+\newblock Composable memory transactions.
+\newblock {\em Commun. ACM}, 51:91--100, Aug 2008.
+
+\bibitem{Herlihy:2006:AMP:1146381.1146382}
+M.~Herlihy.
+\newblock The art of multiprocessor programming.
+\newblock In {\em PODC}, pages 1--2, 2006.
+
+\bibitem{Herlihy:2003:STM:872035.872048}
+M.~Herlihy et~al.
+\newblock Software transactional memory for dynamic-sized data structures.
+\newblock In {\em Proceedings of the 22nd PODC}, pages 92--101. ACM, 2003.
+
+\bibitem{Herlihy:2008:TBM:1345206.1345237}
+M.~Herlihy and E.~Koskinen.
+\newblock Transactional boosting: a methodology for highly-concurrent
+  transactional objects.
+\newblock In {\em Proceedings of the 13th ACM SIGPLAN Symposium on Principles
+  and practice of parallel programming}, PPoPP '08, pages 207--216, New York,
+  NY, USA, 2008. ACM.
+
+\bibitem{6267834}
+J.~Kim and B.~Ravindran.
+\newblock Scheduling closed-nested transactions in distributed transactional
+  memory.
+\newblock In {\em IEEE 26th International Parallel Distributed Processing
+  Symposium (IPDPS)}, pages 179 --188, may 2012.
+
+\bibitem{Koskinen:2008:CCI:1378533.1378563}
+E.~Koskinen and M.~Herlihy.
+\newblock Checkpoints and continuations instead of nested transactions.
+\newblock In {\em Proceedings of the twentieth annual symposium on Parallelism
+  in algorithms and architectures}, SPAA '08, pages 160--168, New York, NY,
+  USA, 2008. ACM.
+
+\bibitem{manson2006preemptible}
+J.~Manson, J.~Baker, et~al.
+\newblock Preemptible atomic regions for real-time {Java}.
+\newblock In {\em RTSS}, pages 10--71, 2006.
+
+\bibitem{marathe2006lowering}
+Marathe et~al.
+\newblock Lowering the overhead of nonblocking software transactional memory.
+\newblock In {\em Workshop on Languages, Compilers, and Hardware Support for
+  Transactional Computing}, 2006.
+
+\bibitem{Peri:2011:CCE:1946143.1946152}
+S.~Peri and K.~Vidyasankar.
+\newblock Correctness of concurrent executions of closed nested transactions in
+  transactional memory systems.
+\newblock In {\em Proceedings of the 12th international conference on
+  Distributed computing and networking}, pages 95--106. Springer-Verlag, 2011.
+
+\bibitem{Saad:2011:HHP:1996130.1996167}
+M.~M. Saad and B.~Ravindran.
+\newblock Hyflow: a high performance distributed software transactional memory
+  framework.
+\newblock In {\em Proceedings of the 20th international symposium on High
+  performance distributed computing}, HPDC '11, pages 265--266, New York, NY,
+  USA, 2011. ACM.
+
+\bibitem{Saha:2006:MHP:1122971.1123001}
+B.~Saha, A.-R. Adl-Tabatabai, et~al.
+\newblock {McRT-STM}: a high performance software transactional memory system
+  for a multi-core runtime.
+\newblock In {\em PPoPP}, pages 187--197, 2006.
+
+\bibitem{sarni2009real}
+T.~Sarni, A.~Queudet, and P.~Valduriez.
+\newblock Real-time support for software transactional memory.
+\newblock In {\em RTCSA}, pages 477--485, 2009.
+
+\bibitem{schoeberl2010rttm}
+M.~Schoeberl, F.~Brandner, and J.~Vitek.
+\newblock {RTTM}: Real-time transactional memory.
+\newblock In {\em ACM SAC}, pages 326--333, 2010.
+
+\bibitem{turcu_phd_proposal}
+A.~Turcu.
+\newblock {\em On Improving Distributed Transactional Memory Through Nesting
+  and Data Partitioning}.
+\newblock Phd proposal, Virginia Tech, 2012.
+\newblock Available as
+  \url{http://www.ssrg.ece.vt.edu/theses/PhdProposal_Turcu.pdf}.
+
+\bibitem{turcu2012closed}
+A.~Turcu, B.~Ravindran, and M.~Saad.
+\newblock On closed nesting in distributed transactional memory.
+\newblock In {\em Seventh ACM SIGPLAN workshop on Transactional Computing},
+  2012.
+
+\end{thebibliography}

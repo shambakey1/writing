@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: shambake_prelim.aux
+The style file: plain.bst
+Database file #1: global_bibliography.bib
+I was expecting a `,' or a `}'---line 88 of file global_bibliography.bib
+ :   
+ :   pages={47--56},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 462 of file global_bibliography.bib
+ :   
+ :   year={2006}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 1056 of file global_bibliography.bib
+ : @inproceedings{chen2002efficient
+ :                                 ,
+I'm skipping whatever remains of this entry
+Warning--empty year in key-4
+Warning--empty year in marathe2006lowering
+You've used 80 entries,
+            2118 wiz_defined-function locations,
+            973 strings with 20250 characters,
+and the built_in function-call counts, 34979 in all, are:
+= -- 3625
+> -- 1402
+< -- 63
++ -- 564
+- -- 467
+* -- 2220
+:= -- 5198
+add.period$ -- 273
+call.type$ -- 80
+change.case$ -- 466
+chr.to.int$ -- 0
+cite$ -- 82
+duplicate$ -- 1581
+empty$ -- 2840
+format.name$ -- 467
+if$ -- 7910
+int.to.chr$ -- 0
+int.to.str$ -- 80
+missing$ -- 79
+newline$ -- 404
+num.names$ -- 163
+pop$ -- 562
+preamble$ -- 1
+purify$ -- 388
+quote$ -- 0
+skip$ -- 1288
+stack$ -- 0
+substring$ -- 2369
+swap$ -- 634
+text.length$ -- 63
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 314
+warning$ -- 2
+while$ -- 347
+width$ -- 82
+write$ -- 965
+(There were 3 error messages)

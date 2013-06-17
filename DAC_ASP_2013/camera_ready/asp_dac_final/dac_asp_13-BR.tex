@@ -1,0 +1,628 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% 	Template for Producing ASP-DAC 2013 Proceedings
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% History
+% ??/??/?? Designed by Hiroaki Kunieda (ASP-DAC '97 Publication Chair)
+% 09/22/97 Modified and small bug fixed by Masaharu Imai 
+% 	   (ASP-DAC '98 Publication Chair)
+% 11/02/98 Modified by Tsuyoshi Isshiki
+% 	   (ASP-DAC 2000 TPS Secretary)
+% 7/24/00 Modified by Kiyoharu Hamaguchi
+% 	   (ASP-DAC 2001 Publication chair)
+% 6/18/02 Modified by Kazutoshi Kobayashi
+% 	   (ASP-DAC 2003 Publication Co-Chair)
+% 5/27/03 Modified by Kiyoharu Hamaguchi
+% 	   (ASP-DAC 2004 TPC secretary)
+% 6/10/03 Modified by Kazutoshi Kobayashi for Latex2e
+% 	   (ASP-DAC 2004 Publication Co-Chair)
+% 6/01/05 Modified by Nozomu Togawa
+% 	   (ASP-DAC 2006 Publication Chair)
+% 6/01/06 Modified by Hiroyuki Ochi
+% 	   (ASP-DAC 2007 Publication Chair)
+% 5/30/08 Modified by Nozomu Togawa
+% 	   (ASP-DAC 2009 Publication Co-Chair)
+% 4/30/10 Modified by Masashi Imai
+% 	   (ASP-DAC 2011 Publication Chair)
+% 3/20/12 Modified by Masashi Imai
+% 	   (ASP-DAC 2013 Publication Chair)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% If you have any problem, please contact ASP-DAC 2013 Publication
+% Co-Chairs by E-mail at ``aspdac13publication@hal.eit.hirosaki-u.ac.jp.''
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\documentclass[twocolumn]{article}
+%% If you use dvips and ps2pdf, please use Postscript font 
+%% and uncomment the line below.
+%%\usepackage{times}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newif\if@restonecol
+
+\let\algorithm\relax
+\let\endalgorithm\relax
+\usepackage[tight,footnotesize]{subfigure}
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage[ruled]{algorithm2e}
+\usepackage{times}
+\usepackage[letter]{aspdac2e}
+\makeatother
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+\newtheorem{clm}{Claim}
+\newtheorem{mydef}{Definition}
+\newtheorem{proof}{Proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+%date not printed
+\date{}
+
+%make title
+\title{\Large\textbf{On Real-Time STM Concurrency Control for Embedded Software with Improved Schedulability}}	% Modified by K. Kobayashi 18/06/02
+
+
+\author{\normalsize
+ \begin{tabular}[t]{c@{\extracolsep{8em}}c}
+  \large Mohammed Elshambakey& \large Binoy Ravindran \\
+%  \\
+   ECE Dept. & ECE Dept. \\
+%   Author Institute  & Coauthor Institute \\
+   Blacksburg, VA 24060, USA & Blacksburg, VA 24060, USA\\
+   shambake@vt.edu & binoy@vt.edu\\
+\end{tabular}}
+
+\maketitle
+\thispagestyle{empty}
+
+{\small\textbf{Abstract---
+We consider software transactional memory (STM) concurrency control for embedded multicore real-time software, and present a novel contention manager for resolving transactional conflicts, called PNF. We upper bound transactional retries and task response times.
+%, and show when PNF has better schedulability than previous contention managers and lock-free synchronization.
+ Our implementation in RSTM/real-time Linux reveals that PNF yields shorter or comparable retry costs than competitors.}}
+
+\section{Introduction}
+
+Concurrency is intrinsic to embedded software, as they control concurrent physical processes. Often, such concurrent computations need to read/write shared data objects. They must also satisfy time constraints.
+
+Lock-based concurrency control has significant programmability, scalability, and composability challenges~\cite{Herlihy:2006:AMP:1146381.1146382}. Software transactional memory (STM) is an alternative synchronization model for shared memory objects that promises to alleviate these difficulties. With STM, code that read/write shared objects is organized as transactions, which execute speculatively, while logging changes made to objects. Two transactions conflict if they access the same object and one access is a write. When that happens, a contention manager (CM)~\cite{Guerraoui:2005:TTT:1073814.1073863} resolves the conflict by aborting one and committing the other, yielding (the illusion of) atomicity. Aborted transactions are re-started, after rolling back the changes. Besides a simple programming model, STM provides performance comparable to lock-free synchronization, especially for read-dominated workloads, and is composable~\cite{Harris:2005:CMT:1065944.1065952}.  
+
+Given STM's programmability, scalability, and composability advantages, it is a compelling concurrency control technique also for multicore embedded real-time software. However, this requires  bounding transactional  retries, as real-time threads, which subsume transactions, must satisfy time constraints.  STM retry bounds are dependent on the CM policy.
+
+Past real-time CM research has proposed resolving transactional contention using dynamic and fixed priorities of parent threads, resulting in Earliest Deadline First CM (ECM) and Rate Monotonic CM (RCM), respectively~\cite{6045438,stmconcurrencycontrol:emsoft11,lcmdac2012}.
+In particular,~\cite{stmconcurrencycontrol:emsoft11} shows that ECM and RCM achieve higher schedulability -- i.e., greater number of task sets meeting their time constraints -- than lock-free synchronization only under some ranges for the maximum atomic section length. That range is significantly expanded with the Length-based CM (LCM) in~\cite{lcmdac2012}, increasing the coverage of STM's timeliness superiority. However, these works restrict to \textit{one} object access per transaction, which is a major limitation (Section~\ref{probelm description}). To allow multiple objects per transaction, we design a novel contention manager called PNF  (Section~\ref{PNF}), which can be used with global EDF (G-EDF) and global RMA (G-RMA) multicore real-time schedulers. 
+We upper bound transactional retry costs and task response times under PNF (Section~\ref{rc pnf sec}).
+%, and formally compare PNF's schedulability with ECM, RCM, LCM, and lock-free synchronization (Section~\ref{sec:pnf-sched-comparison}). We show that PNF achieves better schedulability than lock-free synchronization for larger atomic section length range than ECM and RCM.
+ Our implementation reveals that PNF yields shorter or comparable retry costs than competitors (Section~\ref{exp_eval}).
+
+PNF's superior timeliness properties thus allow embedded real-time programmers to reap STM's significant programmability and composability advantages for a broader range of multicore embedded real-time software than what was previously possible -- paper's contribution. 
+
+\section{Preliminaries}
+\label{sec:model}
+
+We consider a multiprocessor system with $m$ identical processors and $n$ sporadic tasks $\tau_1, \tau_2,\ldots, \tau_n$. The $k^{th}$ instance (or job) of a task $\tau_i$ is denoted $\tau_i^k$. Each task $\tau_i$ is specified by its worst case execution time (WCET) $c_i$, its minimum period $T_i$ between any two consecutive instances, and its relative deadline $D_i$, where $D_i=T_i$. Job $\tau_i^j$ is released at time $r_i^j$ and must finish no later than its absolute deadline $d_i^j=r_i^j+D_i$. Under a fixed priority scheduler such as G-RMA, $p_i$ determines $\tau_i$'s (fixed) priority and it is constant for all instances of $\tau_i$. Under a dynamic priority scheduler such as G-EDF, a job $\tau_i^j$'s priority, $p_i^j$, differs from one instance to another. 
+A task $\tau_j$ may interfere with task $\tau_i$ for a number of times during an interval $L$, and this number is denoted as $G_{ij}(L)$. 
+
+
+\textit{Shared objects.}
+ A task may need to read/write shared, in-memory data objects while it is executing any of its atomic sections (transactions), which are synchronized using STM. 
+The set of atomic sections of task $\tau_i$ is denoted $s_i$. $s_i^k$ is the $k^{th}$ atomic section of $\tau_i$. $p(s_i^k)$ is the priority of transaction $s_i^k$. Each object, $\theta$, can be accessed by multiple tasks. The set of distinct objects accessed by $\tau_i$ is $\theta_i$ without repeating objects.
+The set of atomic sections used by $\tau_i$ to access $\theta$ is $s_i(\theta)$, and the sum of the lengths of those atomic sections is $len(s_i(\theta))$. $s_i^k(\theta)$ is the $k^{th}$ atomic section of $\tau_i$ that accesses $\theta$.
+
+ $s_i^k$ can access one or more objects in $\theta_i$. So, $s_i^k$ refers to the transaction itself, regardless of the objects accessed by the transaction. We denote the set of all accessed objects by $s_i^k$ as $\Theta_i^k$. While $s_i^k(\theta)$ implies that $s_i^k$ accesses an object $\theta \in \Theta_i^k$, $s_i^k(\Theta)$ implies that $s_i^k$ accesses a set of objects $\Theta=\{\theta : \theta \in \Theta_i^k$ \}. $\bar{s_i^k}=\bar{s_i^k}(\Theta)$ refers only once to $s_i^k$, regardless of the number of objects in $\Theta$. So, $|\bar{s_i^k}(\Theta)|_{\forall \theta \in \Theta}=1$.
+
+ $s_i^k(\theta)$  executes for a duration $len(s_i^k(\theta))$. $len(s_i^k)=len(s_i^k(\theta))=len(s_i^k(\Theta))=len(s_i^k(\Theta_i^k))$. The set of tasks sharing $\theta$ with $\tau_i$ is denoted $\gamma_i(\theta)$. Atomic sections are non-nested (supporting nested STM is future work). The maximum-length atomic section in $\tau_i$ that accesses $\theta$ is denoted $s_{i_{max}} (\theta)$, while the maximum one among all tasks is $s_{max} (\theta)$, and the maximum one among tasks with priorities lower than that of $\tau_i$ is $s_{max}^i (\theta)$.
+
+\textit{STM retry cost.} If two or more atomic sections conflict, the CM will commit one section and abort and retry the others, increasing the time to execute the aborted sections. The increased time that an atomic section $s_i^p (\theta)$ will take to execute due to a conflict with another section $s_j^k (\theta)$, is denoted $W_{i}^{p}(s_{j}^{k}(\theta))$. If an atomic section, $s_i^p$, is already executing, and another atomic section $s_j^k$ tries to access a shared object with $s_i^p$, then $s_j^k$ is said to ``interfere" or ``conflict" with $s_i^p$. The transaction $s_j^k$ is the ``interfering" transaction, and the transaction $s_i^p$ is the ``interfered" transaction.
+
+Due to \textit{transitive retry} 
+(Definition~\ref{defn:trans-retry}) 
+%(see Section~\ref{probelm description}), 
+an atomic section $s_i^k(\Theta_i^k)$ may retry due to another atomic section $s_j^l(\Theta_j^l)$, where $\Theta_i^k \cap \Theta_j^l = \emptyset$. $\theta_i^*$ denotes the set of objects not accessed directly by atomic sections in $\tau_i$, but can cause transactions in $\tau_i$ to retry due to transitive retry. $\theta_i^{ex}(=\theta_i + \theta_i^*)$ is the set of all objects that can cause transactions in $\tau_i$ to retry directly or through transitive retry. $\gamma_i^*$ is the set of tasks that accesses  objects in $\theta_i^*$. $\gamma_i^{ex}(=\gamma_i + \gamma_i^*)$ is the set of all tasks that can directly or indirectly (through transitive retry) cause transactions in $\tau_i$ to retry.
+
+The total time that a task $\tau_i$'s atomic sections have to retry over $T_i$ is denoted $RC(T_i)$. The additional amount of time by which all interfering jobs of $\tau_j$ increases the response time of any job of $\tau_i$ during an interval $L$, without considering retries due to atomic sections, is denoted $W_{ij}(L)$.
+
+%%BR: STOPPED. 9:49PM. 10/29/12. 
+
+\section{Limitations of ECM, RCM, and LCM}\label{probelm description}
+
+ECM and RCM~\cite{stmconcurrencycontrol:emsoft11} use dynamic and fixed priorities, respectively, to resolve conflicts. ECM uses G-EDF, and allows the transaction whose job has the earliest absolute deadline to commit first~\cite{6045438}. RCM uses G-RMA, and commits the transaction whose job has the shortest period.
+ To use STM in real-time systems, transactional retry cost must be bounded in order to satisfy time constraints.
+  ECM's retry cost is bounded in~\cite{stmconcurrencycontrol:emsoft11} as follows:
+
+Claim 1 (from~\cite{stmconcurrencycontrol:emsoft11}): Under ECM, a task $\tau_i$'s maximum retry cost during $T_i$ is upper bounded by:
+\begin{eqnarray}
+RC\left(T_{i}\right) & \le & \sum_{\theta\in\theta_{i}}\Bigg(\Big(\sum_{\tau_{j}\in\gamma_i(\theta)}\Big(\left\lceil\frac{T_{i}}{T_{j}}\right\rceil\sum_{\forall s_{j}^{l}(\theta)}len\big(s_{j}^{l}(\theta)\nonumber \\
+ & + & s_{max}(\theta)\big)\Big)\Big)-s_{max}(\theta)+s_{i_{max}}(\theta)\Bigg)\label{eq3}\end{eqnarray}
+
+
+Retry cost under RCM is similar to ECM, except that, only tasks with higher priority than $\tau_i$ can interfere with any job $\tau_i^x$ of $\tau_i$. RCM's retry cost is also bounded in~\cite{stmconcurrencycontrol:emsoft11}. 
+
+G-EDF/LCM~\cite{lcmdac2012} and G-RMA/LCM default to ECM and RCM, respectively, with some difference. Under LCM, a higher priority transaction $s_i^k(\theta)$ cannot abort a lower priority transaction $s_j^l(\theta)$ if $s_j^l(\theta)$ has already executed $\alpha$ percentage of its execution length. G-EDF/LCM's retry cost is bounded in~\cite{lcmdac2012} as follows:
+
+Claim 5 (from~\cite{lcmdac2012}): $RC(T_i)$ for a task $\tau_i$ under G-EDF/LCM is upper bounded by:
+\begin{eqnarray}
+RC(T_i) & = & \Bigg(\sum_{\forall \tau_h \in \gamma_i}\sum_{\forall\theta \in \theta_i \wedge \theta_h}\Bigg(\left\lceil\frac{T_{i}}{T_{h}}\right\rceil\sum_{\forall s_{h}^{l}(\theta)}len\Big(s_{h}^{l}(\theta)\Big)\nonumber\\
+& + & \alpha_{max}^{hl}len\Big(s_{max}^{h}(\theta)\Big)\Bigg)\Bigg)\nonumber\\
+& + & \sum_{\forall s_{i}^{y}(\theta)}\Big(1-\alpha_{max}^{iy}\Big)len\Big(s_{max}^i(\theta)\Big)  
+\label{eq78}\end{eqnarray} 
+$\alpha_{max}^{hl}$ is the $\alpha$ value that corresponds to $\psi$ due to the interference of $s_{max}^h(\theta)$ by $s_h^l(\theta)$. $\alpha_{max}^{iy}$ is the $\alpha$ value that corresponds to $\psi$ due to the interference of $s_{max}^i(\theta)$ by $s_i^y(\theta)$.
+
+G-RMA/LCM's retry cost is similar to G-EDF/LCM's, except that, only tasks with higher priority than $\tau_i$ can interfere with any job $\tau_i^x$ of $\tau_i$. G-RMA/LCM's retry cost is bounded 
+%by Claim 8 
+in~\cite{lcmdac2012}.
+
+%BR: STOPPED. 10:31AM, 10/30/12. 
+
+As mentioned before, \cite{stmconcurrencycontrol:emsoft11,lcmdac2012} assumes that each transaction accesses only one object. This assumption simplifies the retry cost 
+%(Claims 2 and 3 in~\cite{stmconcurrencycontrol:emsoft11}, and Claims 5, 8 in~\cite{lcmdac2012}) 
+and response time analysis 
+%(Sections 4 and 5 in~\cite{stmconcurrencycontrol:emsoft11}, and Sections 4.2, 4.5 in~\cite{lcmdac2012})
+\cite{stmconcurrencycontrol:emsoft11,lcmdac2012}. Besides, it enables comparison with lock-free synchronization~\cite{key-5}. With multiple objects accessed per transaction, ECM, RCM, and LCM will suffer from \emph{transitive   retry}, which we illustrate with an example.
+
+%%BR: STOPPED.
+
+\textbf{Example 1.} Consider three atomic sections $s_{1}^{x}$, $s_{2}^{y}$, 
+and $s_{3}^{z}$ belonging to jobs $\tau_{1}^{x}$, $\tau_{2}^{y}$, 
+and $\tau_{3}^{z}$, with priorities $p_{3}^{z}>p_{2}^{y}>p_{1}^{x}$, respectively. 
+Assume that $s_{1}^{x}$ and $s_{2}^{y}$ share objects; $s_{2}^{y}$ and $s_{3}^{z}$
+share objects; and $s_{1}^{x}$ and $s_{3}^{z}$ do not share objects.
+$s_{3}^{z}$ can cause $s_{2}^{y}$ to retry, which in turn will cause $s_{1}^{x}$ to retry. 
+This means that, $s_{1}^{x}$ may retry transitively
+because of $s_{3}^{z}$, which will increase the retry cost of $s_{1}^{x}$.
+
+Now. consider another atomic section $s_4^f$ with a priority higher than the priority of $s_3^z$. Let $s_4^f$ share  objects only with $s_3^z$. Thus, $s_4^f$ can cause $s_3^z$ to retry, which in turn will cause $s_2^y$ to retry, and finally, $s_1^x$ to retry. Thus, transitive retry will move from $s_{4}^{f}$ to $s_{1}^{x}$, increasing the retry cost of $s_{1}^{x}$. 
+The situation gets worse as more tasks of higher priorities are added, where each task
+shares objects with its immediate lower priority task. $\tau_{3}^{z}$
+may have atomic sections that share objects with $\tau_{1}^{x}$,
+but this will not prevent the effect of transitive retry due to $s_{1}^{x}$.
+
+\begin{mydef}
+\label{defn:trans-retry}
+\textbf{Transitive retry.} A transaction $s_{i}^{k}$ suffers from
+transitive retry when $s_i^k$ retries due to a higher priority transaction $s_z^h$, and $\Theta_z^h \cap \Theta_i^k=\emptyset$.
+\end{mydef}
+%
+\begin{clm}\label{ecm-rcm-transitive-retry}
+ECM, RCM, and LCM suffer from transitive retry for multi-object transactions.
+\end{clm}
+\begin{proof}\normalfont
+Example 1 applies for any transaction under ECM, RCM, and LCM. Claim follows.
+\end{proof}
+
+Hence, the analysis in~\cite{stmconcurrencycontrol:emsoft11,lcmdac2012} must extend the set of objects that can cause an atomic section of a lower priority job to retry.  This can be done by initializing the set of conflicting objects, $\gamma_i$, to all objects accessed by all transactions of $\tau_i$. We can then cycle through all transactions belonging to all other higher priority tasks. Each transaction $s_j^l$ that accesses at least one of the objects in $\gamma_i$ adds all other objects accessed by $s_j^l$ to $\gamma_i$. The loop over all higher priority tasks is repeated, each time with the new $\gamma_i$, until there are no more transactions accessing any object in $\gamma_i$.\footnote{However, this solution may over-extend the set of conflicting objects, and may even contain all objects accessed by all tasks.}
+
+In addition to the transitive retry problem, retrying higher priority transactions can prevent lower priority tasks from running. This happens when all processors are busy with higher priority jobs. When a transaction retries, the processor time is wasted. Thus, it would be better to give the processor to some other task.
+
+Essentially, what we present is a new contention manager that avoids the effect of transitive retry. We call it, \textit{Priority contention manager with Negative values and First access} (or PNF). PNF also attempts to enhance processor utilization. This is done by allocating processors to jobs with non-retrying transactions if any exist. 
+%PNF is described in Section \ref{PNF}.
+
+%%BR: STOPPED. 10/30/12. 5:56PM. 
+
+\section{The PNF Contention Manager\label{PNF}}
+
+Algorithm \ref{PNF-algorithm} describes PNF. It
+manages two sets. The first is the $m$-set, which contains at most $m$ non-conflicting
+transactions, where $m$ is the number of processors, as
+there cannot be more than $m$ executing transactions (or generally,
+$m$ executing jobs) at the same time. When a transaction is entered
+in the $m$-set, it executes non-preemptively and no other transaction
+can abort it. A transaction in the $m$-set is called an \emph{executing
+transaction}. 
+This means that, when a transaction is executing before
+the arrival of higher priority conflicting transactions, then the
+one that started executing first will be committed (Step~\ref{s_i^k commit}) (hence the term ``First access'' in PNF).
+
+\begin{algorithm}[h]
+\footnotesize{
+\LinesNumbered
+\KwData{
+\textit{Executing Transaction:} is one that cannot be aborted by any other transaction, nor preempted by a higher priority task\;
+\textit{$m$-set:} $m$-length set that contains only non-conflicting executing transactions\;
+\textit{$n$-set:} $n$-length set that contains retrying transactions for $n$ tasks in non-increasing order of priority\;
+\textit{n(z):} transaction at index $z$ of the $n$-set\;
+$s_i^k$: a newly released transaction\;
+$s_j^l$: one of the executing transactions\;
+}
+\KwResult{atomic sections that will commit}
+\eIf{$s_i^k$ does not conflict with any executing transaction\label{s_i^k true}}
+{
+Assign $s_i^k$ as an executing transaction\;
+Add $s_i^k$ to the $m$-set\;
+Select $s_i^k$ to commit
+}
+{
+Add $s_i^k$ to the $n$-set according to its priority\label{move to n}\;
+Assign temporary priority -1 to the job that owns $s_i^k$ \label{priority to -1}\;
+Select transaction(s) conflicting with $s_i^k$ for commit\label{s_i^k commit}\;
+}
+\If{$s_j^l$ commits\label{s_j^l commits}}
+{
+	\For{z=1 to size of n-set\label{traverse n-set}}
+	{
+		\If{n(z) does not conflict with any executing transaction\label{n(z) no conflict}}
+		{
+			\eIf{processor available\footnotemark \label{processor available}}
+			{
+				Restore priority of task owning n(z)\;
+				Assign n(z) as executing transaction\;
+				Add n(z) to m-set and remove it from n-set\;
+				Select n(z) for commit\;
+			}
+			{
+				Wait until processor available
+			}
+		}
+%		move to the next n(z)\;
+	}
+}
+}
+\caption{PNF Algorithm} \label{PNF-algorithm}
+\end{algorithm}
+\footnotetext{An idle processor or at least one that runs a non-atomic section task with priority lower than the task holding $n(z)$.}
+
+
+The second set is the $n$-set, which holds the transactions
+that are retrying because of a conflict with one or more of the executing
+transactions (Step~\ref{move to n}), where $n$ stands for
+the number of tasks in the system. Transactions in the $n$-set are known as \emph{retrying transactions}. It also holds transactions that
+cannot currently execute, because processors are busy, either due to processing executing transactions
+and/or higher priority jobs. Any transaction in the $n$-set is assigned a temporal
+priority of -1 (Step~\ref{priority to -1}) (hence the word 
+``Negative'' in PNF). A negative priority
+is considered smaller than any normal priority, and a transaction
+continues to hold this negative priority until it is moved to the $m$-set, where it is restored its normal priority.
+
+
+A job holding a transaction in the $n$-set can be preempted by any other job with normal priority, even if that job does not have transactions conflicting with the preempted job. Hence, this set is of length $n$, as there can be at most $n$ jobs. 
+%at the same time. 
+Transactions in the $n$-set whose jobs have been preempted are called \textit{preempted transactions}. The $n$-set list keeps track of preempted transactions, because
+as it will be shown, all preempted and non-preempted transactions in the $n$-set are examined when any of the
+executing transaction commits. Then, one or more transactions are selected from the $n$-set to be executing transactions. If a retrying transaction is selected as an executing transaction, the task that owns the retrying transaction regains its priority.
+
+When a new transaction is released, and if it does not conflict with
+any of the executing transactions (Step~\ref{s_i^k true}), then
+it will allocate a slot in the $m$-set and becomes an
+executing transaction. When this transaction is released (i.e., its containing task is already allocated to a processor), it will be able to access a processor immediately. 
+This transaction may have a conflict with any of the transactions in the $n$-set. However, since transactions in the $n$-set have priorities of -1, they cannot prevent this new transaction from executing if it does not conflict with any of the executing transactions.
+
+When one of the executing transactions commits (Step~\ref{s_j^l commits}), it is time to select one of the $n$-set transactions to commit. The $n$-set is traversed from the highest priority
+to the lowest priority (priority here refers to the
+original priority of the transactions, and not -1) (Step~\ref{traverse n-set}).
+%
+If an examined transaction in the $n$-set, $s_{h}^{b}$,
+does not conflict with any executing transaction (Step~\ref{n(z) no conflict}),
+and there is an available processor for it (Step~\ref{processor available})
+(``available'' means either an idle processor, or one that
+is executing a job of lower priority than $s_{h}^{b}$),
+then $s_{h}^{b}$ is moved from the $n$-set to the
+$m$-set as an executing transaction and its original priority is restored. 
+%
+If $s_{h}^{b}$ is added to the $m$-set, the new $m$-set is compared with other transactions in the $n$-set with lower priority than $s_{h}^{b}$. 
+Hence, if one of the transactions in the $n$-set, $s_{d}^{g}$, is of
+lower priority than $s_{h}^{b}$ and conflicts with $s_{h}^{b}$,  
+it will remain in the $n$-set. 
+
+The choice of the new transaction
+from the $n$-set depends on the original priority of transactions (hence the term  ``Priority'' in the algorithm name). The algorithm
+avoids interrupting an already executing transaction to reduce its
+retry cost. In the meanwhile, it tries to avoid delaying the highest priority
+transaction in the $n$-set when it is time to select a new
+one to commit, even if the highest priority transaction arrives after
+other lower priority transactions in the $n$-set.
+
+\begin{comment}
+\subsection{Illustrative Example}
+We illustrate PNF with an example. We use the following notions: $s_{a}^{b}\in\tau_{a}^{k}$ is transaction $s_{a}^{b}$ in job $\tau_{a}^{k}$. $s_{a}^{b}(\theta_{1},\theta_{2},\theta_{3})$
+means that $s_{a}^{b}$ accesses objects $\theta_{1},\theta_{2},\theta_{3}$.
+$p(s_{a}^{b})$ is the priority of transaction $s_{a}^{b}$. $p_{i}^{j}$
+is the priority of job $\tau_{i}^{j}$. If $s_{a}^{b}\in\tau_{a}^{j},\,\therefore p_{o}(s_{a}^{b})=p_{a}^{j}$,
+where $p_{o}(s_{a}^{b})$ is the original priority of $s_{a}^{b}$.
+$p(s_{a}^{b})=-1$, if $s_{a}^{b}$ is a retrying transaction; $p(s_{a}^{b})=p_{o}(s_{a}^{b})$ otherwise. $m$-set$=\{s_{a}^{b},s_{i}^{k}\}$ means that the $m$-set contains
+transactions $s_{a}^{b}$ and $s_{i}^{k}$ regardless of their order.
+$n$-set$=\{s_{a}^{b},s_{i}^{k}\}$ means that the $n$-set contains transactions
+$s_{a}^{b}$ and $s_{i}^{k}$ in that order, where $p_{o}(s_{a}^{b})>p_{o}(s_{i}^{k})$.
+$m$-set$\,(n$-set$)=\{\emptyset\}$ means that $m$-set$\,(n$-set$)$ is empty.
+%
+Assume there are five processors.
+\begin{compactenum}
+\item Initially, $m$-set$=n$-set$=\{\emptyset\}$. $s_{a}^{b}(\theta_{1},\theta_{2})\in\tau_{a}^{b}$
+is released and checks $m$-set for conflicting transactions. As
+$m$-set is empty, $s_{a}^{b}$ finds no conflict and becomes an
+executing transaction. $s_{a}^{b}$ is added to $m$-set. $m$-set$=\{s_{a}^{b}\}$
+and $n$-set$=\{\emptyset\}$. $s_{a}^{b}$ is executing on processor 1.
+%
+\item $s_{c}^{d}(\theta_{3},\theta_{4})\in\tau_{c}^{d}$ is released and
+checks $m$-set for conflicting transactions. $s_{c}^{d}$ does not
+conflict with $s_{a}^{b}$ as they access different objects. $s_{c}^{d}$
+becomes an executing transaction and is added to $m$-set. $m$-set$=\{s_{a}^{b},s_{c}^{d}\}$
+and $n$-set$=\{\emptyset\}$. $s_{c}^{d}$ is executing on processor 2.
+%
+\item $s_{e}^{f}(\theta_{1},\theta_{5})\in\tau_{e}^{f}$ is released and
+$p_{o}(s_{e}^{f})<p_{o}(s_{a}^{b})$. $s_{e}^{f}$ conflicts with
+$s_{a}^{b}$ when it checks $m$-set. $s_{e}^{f}$ is added to $n$-set
+and becomes a retrying transaction. $p(s_{e}^{f})$ becomes $-1$.
+$m$-set$=\{s_{a}^{b},s_{c}^{d}\}$ and $n$-set$=\{s_{e}^{f}\}$. $s_{e}^{f}$
+is retrying on processor 3.
+%
+\item $s_{g}^{h}(\theta_{1},\theta_{6})\in\tau_{g}^{h}$ is released and
+$p_{o}(s_{g}^{h})>p_{o}(s_{a}^{b})$. $s_{g}^{h}$ conflicts with
+$s_{a}^{b}$. Though $s_{g}^{h}$ is of higher priority than $s_{a}^{b}$, $s_{a}^{b}$ is an executing transaction. So $s_{a}^{b}$ runs non-preemptively. 
+$s_{g}^{h}$ is added to $n$-set before $s_{e}^{f}$, 
+because $p_{o}(s_{g}^{h})>p_{o}(s_{e}^{f})$. $p(s_{g}^{h})$ becomes
+$-1$. $m$-set$=\{s_{a}^{b},s_{c}^{d}\}$ and $n$-set$=\{s_{g}^{h},s_{e}^{f}\}$.
+$s_{g}^{h}$ is retrying on processor 4.
+%%
+\item \label{pnf_example_step_3} $s_{i}^{j}(\theta_{5},\theta_{7})\in\tau_{i}^{j}$
+is released. $p_{o}(s_{i}^{j})<p_{o}(s_{e}^{f})$. $s_{i}^{j}$ does
+not conflict with any transaction in $m$-set. Though $s_{i}^{j}$
+conflicts with $s_{e}^{f}$ and $p_{o}(s_{i}^{j})<p_{o}(s_{e}^{f})<p_{o}(s_{g}^{h})$,
+$s_{e}^{f}$ and $s_{g}^{h}$ are retrying transactions. $s_{i}^{j}$
+becomes an executing transaction and is added to $m$-set. $m$-set$=\{s_{a}^{b},s_{c}^{d},s_{i}^{j}\}$
+and $n$-set$=\{s_{g}^{h},s_{e}^{f}\}$. $s_{i}^{j}$ is executing on
+processor 5.
+%%
+\item \label{pnf_example_step 1} $\tau_{k}^{l}$ is released. $\tau_{k}^{l}$
+does not access any object. $p_{k}^{l}<p_{o}(s_{e}^{f})<p_{o}(s_{g}^{h})$,
+but $p(s_{e}^{f})=p(s_{g}^{h})=-1$. Since there are no more processors,
+$\tau_{k}^{l}$ preempts $\tau_{e}^{f}$, because the currently assigned
+priority to $\tau_{e}^{f}=p(s_{e}^{f})=-1$ and $p_{o}(s_{g}^{h})>p_{o}(s_{e}^{f})$.
+$\tau_{k}^{l}$ is running on processor 3. This way, PNF optimizes
+processor usage. The $m$-set and $n$-set are not changed. Although
+$s_{e}^{f}$ is preempted, $n$-set still records it, as $s_{e}^{f}$
+might be needed (as will be shown in the following steps).
+\item \label{pnf_example_step_2} $s_{i}^{j}$ commits. $s_{i}^{j}$ is removed
+from $m$-set. Transactions in $n$-set are checked from the first
+(highest $p_{o}$) to the last (lowest $p_{o}$) for conflicts against
+any executing transaction. $s_{g}^{h}$ is checked first because $p_{o}(s_{g}^{h})>p_{o}(s_{e}^{f})$.
+$s_{g}^{h}$ conflicts with $s_{a}^{b}$, so $s_{g}^{h}$ cannot be
+an executing transaction. Now it is time to check $s_{e}^{f}$, even though  
+$s_{e}^{f}$ is preempted in step \ref{pnf_example_step 1}. $s_{e}^{f}$
+also conflicts with $s_{a}^{b}$, so $s_{e}^{f}$ cannot be an executing
+transaction. $m$-set$=\{s_{a}^{b},s_{c}^{d}\}$ and $n$-set$=\{s_{g}^{h},s_{e}^{f}\}$.
+Now, $s_{e}^{f}$ can be retrying on processor 5 if $\tau_{i}^{j}$
+has finished execution. Otherwise, $\tau_{i}^{j}$ continues running
+on processor 5 and $s_{e}^{f}$ is still preempted. This is because, 
+$p(s_{e}^{f})=-1$ and $p_{i}^{j}>p(s_{e}^{f})$. Let us assume that 
+$\tau_{i}^{j}$ is still running on processor 5.
+%
+\item \label{pnf_example_step_4} $s_{a}^{b}$ commits. $s_{a}^{b}$ is removed
+from $m$-set. Transactions in $n$-set are checked as done in step
+\ref{pnf_example_step_2}. $s_{g}^{h}$ does not conflict with any
+executing transaction any more. $s_{g}^{h}$ becomes an executing
+transaction. $s_{g}^{h}$ is removed from $n$-set and added to $m$-set,
+so $m$-set$=\{s_{c}^{d},s_{g}^{h}\}$. Now, $s_{e}^{f}$ is checked against
+the new $m$-set. $s_{e}^{f}$ conflicts with $s_{g}^{h}$, so $s_{e}^{f}$
+cannot be an executing transaction. $s_{e}^{f}$ can be retrying on
+processor 1 if $\tau_{a}^{b}$ has finished execution. Otherwise,
+$s_{e}^{f}$ remains preempted, because $p(s_{e}^{f})=-1$ and $p_{a}^{b}>p(s_{e}^{f})$. $n$-set$=\{s_{e}^{f}\}$. Let us assume that $\tau_{a}^{b}$ is still
+running on processor 1.
+%
+\item \label{pnf_example_step_5} $s_{g}^{h}$ commits. $s_{g}^{h}$ is removed
+from $m$-set. $\tau_{g}^{h}$ continues execution on processor 4.
+Transactions in $n$-set are checked again. $s_{e}^{f}$ is the only
+retrying transaction in the $n$-set, and it does not conflict with
+any executing transactions. Now, the system has $\tau_{a}^{b}$ running
+on processor 1, $s_{c}^{d}$ executing on processor 2, $\tau_{k}^{l}$
+running on processor 3, $\tau_{g}^{h}$ running on processor 4, and
+$\tau_{i}^{j}$ running on processor 5. $s_{e}^{f}$ can become an
+executing transaction if it can find a processor. 
+%
+Since $p_{i}^{j},\, p_{k}^{l}<p_{o}(s_{e}^{f})$,
+$s_{e}^{f}$ can preempt the lowest in priority between $\tau_{i}^{j}$
+and $\tau_{k}^{l}$. $s_{e}^{f}$ now becomes an executing transaction.
+$s_{e}^{f}$ is removed from the $n$-set and added to the $m$-set.
+So, $m$-set$=\{s_{c}^{d},s_{e}^{f}\}$ and $n$-set$=\{\emptyset\}$. If $p_{i}^{j},\, p_{k}^{l}$
+were of higher priority than $p_{o}(s_{e}^{f})$, then $s_{e}^{f}$
+would have remained in $n$-set until a processor becomes available.
+%
+\end{compactenum}
+The  example shows that PNF avoids transitive retry. This is illustrated in step \ref{pnf_example_step_3}, where $s_{i}^{j}(\theta_{5},\theta_{7})$ is not affected by the  retry of $s_{e}^{f}(\theta_{1},\theta_{5})$. The example also explains how
+PNF optimizes processor usage. This is illustrated in step \ref{pnf_example_step 1}, 
+where the retrying transaction $s_{e}^{f}$ is preempted in favor of $\tau_{k}^{l}$.
+\end{comment}
+
+%%BR: STOPPED. 9:48PM. 11/1/2012. 
+
+\subsection{Properties\label{pnf properties sec}}
+
+\begin{clm}\label{PNF-transitive-retry}
+Transactions scheduled under PNF do not suffer from transitive
+retry.
+\end{clm}
+\begin{proof}\normalfont
+The proof is by contradiction. Assume three transactions $s_i^k$, $s_j^l$, and $s_z^h$, with $p(s_z^h)>p(s_j^l)>p(s_i^k)$. $\Theta_i^k \cap \Theta_j^l \neq \emptyset$, $\Theta_j^l \cap \Theta_z^h \neq \emptyset$, and $\Theta_i^k \cap \Theta_z^h = \emptyset$. Assume that $s_i^k$ is transitively retrying because of $s_z^h$. This means that, $s_i^k$, $s_j^l$, and $s_z^h$ are executing concurrently. $\Theta_i^k \cap \Theta_j^l \neq \emptyset$, so $s_i^k$ and $s_j^l$ cannot be executing transactions at the same time, by the definition of PNF. $\Theta_j^l \cap \Theta_z^h \neq \emptyset$, so $s_j^l$ and $s_z^h$ cannot be executing transactions at the same time, by the definition of PNF. Only $s_i^k$ and $s_z^h$ can be executing transactions at the same time,  because $\Theta_i^k \cap \Theta_z^h = \emptyset$. Hence, the three transactions cannot be running concurrently. So, $s_i^k$ cannot be transitively retrying because of $s_z^h$, which yields a contradiction. Claim follows.
+\end{proof}
+
+From Claim~ \ref{PNF-transitive-retry},
+%From Claims \ref{PNF-transitive-retry} and \ref{first-access},
+ PNF does not increase the retry cost of multi-object transactions. However, this is not the case for ECM and RCM as shown by Claim~\ref{ecm-rcm-transitive-retry}. 
+
+\begin{clm}\label{higher retry does not affect response}
+Under PNF, any job $\tau_{i}^{x}$ is not affected by the retry cost in any other
+job $\tau_{j}^{l}$.
+\end{clm}
+\begin{proof}\normalfont
+As explained in Section~\ref{PNF-algorithm}, PNF assigns a temporary priority of -1 to any job that includes a retrying transaction. So, retrying transactions have lower priority than any other normal priority.
+When $\tau_{i}^{x}$ is released and $\tau_j^l$ has a retrying transaction, $\tau_i^x$ will have a higher priority
+than $\tau_j^l$. Thus, $\tau_i^x$ can run on any available processor while $\tau_j^l$ is retrying one of its transactions. Claim follows.
+\end{proof}
+
+
+\section{Retry Cost under PNF}\label{rc pnf sec}
+
+We now derive an upper bound on the retry cost of any job $\tau_i^x$ under PNF during an interval $L\le T_i$. Since all tasks are sporadic (i.e., each task $\tau_i$ has a minimum period $T_i$), $T_i$ is the maximum study interval for each task $\tau_i$.
+
+\begin{clm}\label{two transactions retry cost PNF}
+%Assume two conflicting transactions $s_{i}^{k}$ and $s_{j}^{l}$.
+Under PNF, the maximum retry cost suffered by a transaction $s_{i}^{k}$ due 
+to a transaction $s_{j}^{l}$ is $len(s_{j}^{l})$.
+\end{clm}
+\begin{proof}\normalfont
+By PNF's definition, $s_{i}^{k}$ cannot have started before
+$s_{j}^{l}$. Otherwise, $s_i^k$ would have been an executing transaction and $s_{j}^{l}$ cannot abort it. So, the earliest release time for $s_{i}^{k}$ would have been just after $s_{j}^{l}$ starts execution. Then, $s_i^k$ would have to wait until $s_{j}^{l}$
+commits. Claim follows.
+\end{proof}
+
+\begin{clm}
+The retry cost of any job $\tau_{i}^{x}$ due to conflicts between its transactions and transactions of other jobs under PNF during an interval $L\le T_{i}$ is upper bounded by:
+\begin{equation}
+RC(L)\le\sum_{\tau_{j}\in\gamma_{i}}\left(\sum_{\theta\in\theta_{i}}\left(\left(\left\lceil \frac{L}{T_{j}}\right\rceil +1\right)\sum_{\bar{\forall s_{j}^{l}(\theta)}}len\left(\bar{s_{j}^{l}(\theta)}\right)\right)\right)\label{rc-PNF}
+\end{equation}
+\end{clm}
+
+\begin{proof}\normalfont
+Consider a transaction $s_{i}^{k}$ belonging to job $\tau_{i}^{x}$. By the definition of PNF, higher and lower priority transactions than $s_i^k$ can become executing transactions before $s_i^k$. 
+ The worst case scenario for $s_{i}^{k}$ occurs when $s_i^k$ has to wait in the $n$-set, while all other conflicting transactions with $s_i^k$ are chosen to be executing transactions. Executing transactions are not aborted. This is why $\bar{s_j^l}$ is included only once in~(\ref{rc-PNF}) for all shared objects with $s_i^k$.
+
+The maximum number of jobs of any task $\tau_{j}$ that can interfere with $\tau_{i}^{x}$ during interval $L$ is $\left\lceil \frac{L}{T_{j}}\right\rceil +1$. From  the previous observations and Claim~\ref{two transactions retry cost PNF}, the claim follows.
+\end{proof}
+
+%%
+\begin{clm}\label{delay}
+The blocking time for a job $\tau_{i}^{x}$ due to lower priority jobs 
+during an interval $L\le T_{i}$ is upper bounded by:
+\begin{equation}
+D(\tau_{i}^{x})\le\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\left(\left(\left\lceil \frac{L}{T_{j}}\right\rceil +1\right)\sum_{\forall\ddot{s_{j}^{h}}}len\left(\ddot{s_{j}^{h}}\right)\right)\right\rfloor \label{PNF-delay}
+\end{equation}
+where $D(\tau_{i}^{x})$ is the blocking time 
+suffered by $\tau_{i}^{x}$
+due to lower priority jobs. $\bar{\tau_{j}^{l}}=\{\tau_{j}^{l}:p_{j}^{l}<p_{i}^{x}\}$
+and $\ddot{s_{j}^{h}}=\{s_{j}^{h}:\left(\Theta_{j}^{h} \cap \Theta_i^k = \emptyset \right) \wedge \left(\forall \Theta_i^k \in \theta_i \right)\}$. During this blocking time, all processors are unavailable for $\tau_{i}^{x}$.
+\end{clm}
+\begin{proof}\normalfont
+Under PNF, executing transactions are non-preemptive. So, a lower priority executing transaction can delay a higher priority job $\tau_i^x$ if no other processors are available. Lower priority executing transactions can be conflicting or non-conflicting with any transaction in $\tau_{i}^{x}$. If lower priority transactions are conflicting with any transaction in $\tau_i^x$, then (\ref{rc-PNF}) already covers the increase in retry cost of transactions in $\tau_i^x$ due to lower priority transactions. Otherwise, lower priority non-conflicting transactions can be executing transactions that block $\tau_i^x$.
+
+Lower priority non-conflicting transactions can block $\tau_i^x$ when $\tau_i^x$ is newly released, or after that -- i.e., that we have two cases:
+
+\emph{Lower priority non-conflicting transactions when $\tau_i^x$ is newly released.} $\tau_i^x$ is delayed if no processor is available. Otherwise, $\tau_i^x$ can run in parallel with these non-conflicting lower priority transactions. Each lower priority non-conflicting transaction $\ddot{s_j^h}$ will delay $\tau_i^x$ for $len(\ddot{s_j^h})$.
+
+\emph{Lower priority non-conflicting transactions after $\tau_i^x$ is released.} This situation can happen if $\tau_i^x$ is retrying one of its transactions $s_i^k$. So, $\tau_i^x$ is assigned a priority of -1. $\tau_i^x$ can be preempted by any other job. When $s_i^k$ is checked again to be an executing transaction, all processors may be busy with lower priority non-conflicting transactions and/or higher priority jobs. Otherwise, $\tau_i^x$ can run in parallel with  lower priority non-conflicting transactions.
+% The effect of higher priority jobs is included by Claims~\ref{response time ecm PNF},~\ref{response rcm PNF}.
+
+Each lower priority non-conflicting transaction $\ddot{s_j^h}$ will delay $\tau_i^x$ for $len(\ddot{s_j^h})$. From the previous cases, lower priority non-conflicting transactions act as if they were higher priority jobs interfering with $\tau_{i}^{x}$. So, the blocking time can be calculated by the interference workload given by Theorem 7 in \cite{key-2}. 
+%Claim follows.
+\end{proof}
+
+
+\begin{clm}\label{response time ecm PNF}
+%Assume that PNF is used with the G-EDF scheduler. 
+A job $\tau_{i}^{x}$'s response time, during an interval $R_i^{up}\le T_{i}$, under PNF/G-EDF is upper bounded by:
+\begin{equation}
+R_{i}^{up}=c_{i}+RC(R_i^{up})+D_{edf}(\tau_{i}^{x})+\left\lfloor \frac{1}{m}\sum_{\forall j\ne i}W_{ij}(R_{i}^{up})\right\rfloor 
+\end{equation}
+where $RC(R_i^{up})$ is calculated by (\ref{rc-PNF}). $D_{edf}(\tau_{i}^{x})$
+is the same as $D(\tau_{i}^{x})$ defined in~(\ref{PNF-delay}). However, for G-EDF, $D_{edf}(\tau_i^x)$ is calculated as:
+\begin{equation}
+D_{edf}(\tau_{i}^{x})\le\left\lfloor \frac{1}{m}\sum_{\forall\bar{\tau_{j}^{l}}}\begin{cases}
+0 & ,R_i^{up}\le T_{i}-T_{j}\\
+\sum_{\forall\ddot{s_{j}^{h}}}len\left(\ddot{s_{j}^{h}}\right) & ,R_i^{up}>T_{i}-T_{j}
+\end{cases}\right\rfloor \label{d-edf}
+\end{equation}
+$W_{ij}(R_{i}^{up})$ is calculated by (3) in~\cite{stmconcurrencycontrol:emsoft11}.
+\end{clm}
+%%%%
+%%%%%%%%%%
+%%%%%%%%%%%
+\begin{proof}\normalfont
+$\tau_{i}^{x}$'s response time is calculated by (3) in~\cite{stmconcurrencycontrol:emsoft11} with the addition of blocking time defined by Claim \ref{delay}. G-EDF uses absolute deadlines for scheduling. This defines which jobs of the same task can be of lower priority than $\tau_{i}^{x}$, and which will not. Any instance $\tau_j^h$, released between $r_i^x - T_j$ and $d_i^x - T_j$, will be of higher priority than $\tau_i^x$. Before $r_i^x-T_j$, $\tau_j^h$ would have finished before $\tau_i^x$ is released. After $d_i^x-T_j$, $d_j^h$ would be greater than $d_i^x$. Thus, $\tau_j^h$ will be of lower priority than $\tau_i^x$. So, during $T_i$, there can be only one instance $\tau_j^h$ of $\tau_j$ with lower priority than $\tau_i^x$. $\tau_j^h$ is released between $d_i^x-T_j$ and $d_i^x$. Consequently, during $R_i^{up}<T_i-T_j$, no existing instance of $\tau_j$ is of lower  priority than $\tau_i^x$. Hence, 0 is used in the first case of~(\ref{d-edf}). But if $R_i^{up}>T_i-T_j$, there can be only one instance $\tau_j^h$ of $\tau_j$ with lower priority than $\tau_i^x$. Hence, $\left\lceil\frac{R_i^{up}}{T_i}\right\rceil+1$ in~(\ref{PNF-delay}) is replaced with 1 in the second case in~(\ref{d-edf}). Claim follows.
+\end{proof}
+
+
+\begin{clm}\label{response rcm PNF}
+%Assume that PNF is used with the G-RMA scheduler. 
+A job $\tau_{i}^{x}$'s response time, during an interval $R_i^{up}\le T_{i}$, under PNF/G-RMA is upper bounded by: 
+\begin{equation}
+R_{i}^{up}=c_{i}+RC(R_i^{up})+D(\tau_{i}^{x})+\left\lfloor \frac{1}{m}\sum_{\forall j\ne i,p_j>p_i}W_{ij}(R_{i}^{up})\right\rfloor 
+\end{equation}
+where $RC(L)$ is calculated by (\ref{rc-PNF}), $D(\tau_{i}^{x})$
+is calculated by (\ref{PNF-delay}), and $W_{ij}(R_{i}^{up})$
+is calculated by (2) in~\cite{stmconcurrencycontrol:emsoft11}.
+\end{clm}
+\begin{proof}\normalfont
+The proof is the same as that of Claim \ref{response time ecm PNF}, 
+except that G-RMA assigns fixed priorities. Hence, (\ref{PNF-delay}) can be used directly for calculating $D(\tau_{i}^{x})$ without modifications. Claim follows.
+\end{proof}
+
+
+%%%
+\section{Experimental Evaluation}\label{exp_eval}
+
+
+%Having established PNF's retry and response time bounds, and the conditions under which it outperforms ECM, RCM, LCM, and lock-free synchronization, 
+To understand how PNF's retry cost compares with competitors in practice (i.e., on average), we implement PNF and the competitors and conduct experimental studies.
+
+%\subsection{Experimental Setup}
+
+We used the ChronOS real-time Linux kernel~\cite{dellinger2011chronos}
+and the RSTM library~\cite{marathe2006lowering} in our implementation. We implemented G-EDF and G-RMA schedulers in ChronOS, and modified RSTM to include implementations of ECM, RCM, LCM, and PNF. For the retry-loop lock-free synchronization, we used a loop that reads an object and attempts to write to it  using a CAS  instruction. The task retries until the CAS succeeds. We used an 8 core, 2GHz AMD Opteron platform. The average time taken for one write operation by RSTM on any core is 0.0129653375$\mu s$, and the average time taken by one CAS-loop operation on any core is 0.0292546250 $\mu s$.
+
+We used four task sets consisting of 4, 5, 8, and 20 periodic tasks. Each task runs in its own thread and has a set of atomic sections. Atomic section properties are probabilistically controlled using: 1) the maximum and 2) minimum lengths of any atomic section within a task, and 3) the total length of atomic sections within any task. Since lock-free synchronization cannot handle more than one object per atomic section, we first compare PNF's retry cost with that of lock-free (and other contention managers) for one object per transaction. We then compare PNF's retry cost with that of other contention managers for multiple objects per transaction.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{figures/Abr_dur_5t_1obj_1wr}
+\caption{Avg. retry cost (1 shared object, 5 tasks).}
+\label{fig:pnf_results_uniobject}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{figures/Abr_dur_4t_5obj_1wr}
+\caption{Avg. retry cost (5 shared objects, 4 tasks).}
+\label{fig-RC-pnf-4t}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{figures/Abr_dur_8t_90obj_100wr}
+\caption{Avg. retry cost (20 shared objects, 8 tasks).}
+\label{fig-RC-pnf-8t}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{figures/Abr_dur_20t_210obj_100wr}
+\caption{Avg. retry cost (20 shared objects, 20 tasks).}
+\label{fig-RC-pnf-20t-20obj}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{figures/Abr_dur_20t_420obj_100wr}
+\caption{Avg. retry cost (40 shared objects, 20 tasks).}
+\label{fig-RC-pnf-20t-40obj}
+\end{figure}
+
+Figures~\ref{fig:pnf_results_uniobject},~\ref{fig-RC-pnf-4t},~\ref{fig-RC-pnf-8t},~\ref{fig-RC-pnf-20t-20obj}, and~\ref{fig-RC-pnf-20t-40obj} show the average retry cost for the 5, 4, 8, and 20 tasks, under 1, 5, 20, and 40 shared objects, respectively. On the x-axis of the figures, we record 3 parameters $x$, $y$, and $z$. $x$ is the ratio of the total length of all atomic sections of a task to the task WCET. $y$ is the ratio of the maximum length of any atomic section of a task to the task WCET. $z$ is the ratio of the minimum length of any atomic section of a task to the task WCET. Confidence level of all data points is 0.95. 
+
+Figure~\ref{fig:pnf_results_uniobject} compares ECM, RCM, LCM, PNF, and lock-free with one shared object per transaction. Lock-free has the largest retry cost, as it provides no conflict resolution. PNF's retry cost closely approximates ECM's and RCM's, as there is no transitive retry because there is only one shared object. 
+
+Figures~\ref{fig-RC-pnf-4t},~\ref{fig-RC-pnf-8t},~\ref{fig-RC-pnf-20t-20obj}, and~\ref{fig-RC-pnf-20t-20obj} compare the contention managers under multiple shared objects per transaction. We observe that PNF has shorter or comparable retry cost than ECM, RCM, and LCM. Similar trends were observed for the other task sets; those are omitted here for brevity and due to space limitations.
+
+\begin{comment}
+In Figure~\ref{fig-RC-pnf-20t}, retry costs are close. This happens because each task's execution time is small relative to the task's period. Consequently, atomic sections have small length and are highly unlikely to be triggered at the same time. Thus, contention, as well as, retry costs are low.
+\end{comment}
+
+\section{Conclusions}\label{conclusion}
+
+Transitive retry increases transactional retry cost under ECM, RCM, and LCM. PNF avoids transitive retry by avoiding   transactional preemptions, and reduces aborted transactions' priority to enable other tasks to execute, increasing processor usage. Executing transactions are not preempted due to the release of higher priority jobs. On PNF's negative side, higher priority jobs can be blocked by executing transactions of lower priority jobs. 
+
+%%BR: DONE. 6:10PM, 11/2/2012. 
+
+\bibliographystyle{abbrv}
+%\small{\bibliography{global_bibliography}}
+\footnotesize{\bibliography{global_bibliography}}
+
+
+
+\end{document}

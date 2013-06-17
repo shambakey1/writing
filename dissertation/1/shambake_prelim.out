@@ -1,0 +1,65 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}
+\BOOKMARK [1][-]{section.1.1}{Transactional Memory}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{STM for Real-Time Software}{chapter.1}
+\BOOKMARK [1][-]{section.1.3}{Research Contributions}{chapter.1}
+\BOOKMARK [1][-]{section.1.4}{Summary of Proposed Post Preliminary Research}{chapter.1}
+\BOOKMARK [1][-]{section.1.5}{Proposal Organization}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{Past and Related Work}{}
+\BOOKMARK [1][-]{section.2.1}{Real-Time Locking Protocols}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Real-Time Lock-Free and Wait-Free Synchronization}{chapter.2}
+\BOOKMARK [1][-]{section.2.3}{Real-Time Database Concurrency Control}{chapter.2}
+\BOOKMARK [1][-]{section.2.4}{Real-Time TM Concurrency Control}{chapter.2}
+\BOOKMARK [0][-]{chapter.3}{Models and Assumptions}{}
+\BOOKMARK [0][-]{chapter.4}{The ECM and RCM Contention Managers}{}
+\BOOKMARK [1][-]{section.4.1}{ECM}{chapter.4}
+\BOOKMARK [2][-]{subsection.4.1.1}{Illustrative Example}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.2}{G-EDF Interference and workload}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.3}{Retry Cost of Atomic Sections}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.4}{Upper Bound on Response Time}{section.4.1}
+\BOOKMARK [1][-]{section.4.2}{RCM}{chapter.4}
+\BOOKMARK [2][-]{subsection.4.2.1}{Maximum Task Interference}{section.4.2}
+\BOOKMARK [2][-]{subsection.4.2.2}{Retry Cost of Atomic Sections}{section.4.2}
+\BOOKMARK [2][-]{subsection.4.2.3}{Upper Bound on Response Time}{section.4.2}
+\BOOKMARK [1][-]{section.4.3}{STM versus Lock-Free}{chapter.4}
+\BOOKMARK [2][-]{subsection.4.3.1}{ECM versus Lock-Free}{section.4.3}
+\BOOKMARK [2][-]{subsection.4.3.2}{RCM versus Lock-Free}{section.4.3}
+\BOOKMARK [1][-]{section.4.4}{Conclusions}{chapter.4}
+\BOOKMARK [0][-]{chapter.5}{The LCM Contention Manager}{}
+\BOOKMARK [1][-]{section.5.1}{Length-based CM}{chapter.5}
+\BOOKMARK [2][-]{subsection.5.1.1}{Design and Rationale}{section.5.1}
+\BOOKMARK [2][-]{subsection.5.1.2}{LCM Illustrative Example}{section.5.1}
+\BOOKMARK [1][-]{section.5.2}{Properties}{chapter.5}
+\BOOKMARK [1][-]{section.5.3}{Response Time of G-EDF/LCM}{chapter.5}
+\BOOKMARK [1][-]{section.5.4}{Schedulability of G-EDF/LCM}{chapter.5}
+\BOOKMARK [2][-]{subsection.5.4.1}{Schedulability of G-EDF/LCM and ECM}{section.5.4}
+\BOOKMARK [2][-]{subsection.5.4.2}{G-EDF/LCM versus Lock-free}{section.5.4}
+\BOOKMARK [1][-]{section.5.5}{Response Time of G-RMA/LCM}{chapter.5}
+\BOOKMARK [1][-]{section.5.6}{Schedulability of G-RMA/LCM}{chapter.5}
+\BOOKMARK [2][-]{subsection.5.6.1}{Schedulability of G-RMA/LCM and RCM}{section.5.6}
+\BOOKMARK [2][-]{subsection.5.6.2}{G-RMA/LCM versus Lock-free}{section.5.6}
+\BOOKMARK [1][-]{section.5.7}{Conclusions}{chapter.5}
+\BOOKMARK [0][-]{chapter.6}{The PNF Contention Manager}{}
+\BOOKMARK [1][-]{section.6.1}{Limitations of ECM, RCM, and LCM}{chapter.6}
+\BOOKMARK [1][-]{section.6.2}{The PNF Contention Manager}{chapter.6}
+\BOOKMARK [2][-]{subsection.6.2.1}{Illustrative Example}{section.6.2}
+\BOOKMARK [1][-]{section.6.3}{Properties}{chapter.6}
+\BOOKMARK [1][-]{section.6.4}{Retry Cost under PNF}{chapter.6}
+\BOOKMARK [1][-]{section.6.5}{PNF vs. Competitors}{chapter.6}
+\BOOKMARK [2][-]{subsection.6.5.1}{PNF versus ECM}{section.6.5}
+\BOOKMARK [2][-]{subsection.6.5.2}{PNF versus RCM}{section.6.5}
+\BOOKMARK [2][-]{subsection.6.5.3}{PNF versus G-EDF/LCM}{section.6.5}
+\BOOKMARK [2][-]{subsection.6.5.4}{PNF versus G-RMA/LCM}{section.6.5}
+\BOOKMARK [2][-]{subsection.6.5.5}{PNF versus Lock-free Synchronization}{section.6.5}
+\BOOKMARK [1][-]{section.6.6}{Conclusion}{chapter.6}
+\BOOKMARK [0][-]{chapter.7}{Implementation and Experimental Evaluations}{}
+\BOOKMARK [1][-]{section.7.1}{Experimental Setup}{chapter.7}
+\BOOKMARK [1][-]{section.7.2}{Results}{chapter.7}
+\BOOKMARK [0][-]{chapter.8}{Conclusions and Proposed Post Preliminary Exam Work}{}
+\BOOKMARK [1][-]{section.8.1}{Conclusions}{chapter.8}
+\BOOKMARK [1][-]{section.8.2}{Proposed Post Preliminary Exam Research}{chapter.8}
+\BOOKMARK [2][-]{subsection.8.2.1}{Supporting Nested Transactions}{section.8.2}
+\BOOKMARK [2][-]{subsection.8.2.2}{Combining and Optimizing LCM and PNF}{section.8.2}
+\BOOKMARK [2][-]{subsection.8.2.3}{Formal and Experimental Comparison with Real-Time Locking}{section.8.2}
+\BOOKMARK [0][-]{chapter.9}{FBLT Contenition Manager}{}
+\BOOKMARK [1][-]{section.9.1}{Motivation}{chapter.9}
+\BOOKMARK [1][-]{section.9.2}{FBLT Contention Manager}{chapter.9}

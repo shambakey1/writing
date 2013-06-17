@@ -1,0 +1,93 @@
+\documentclass[conference]{IEEEtran}
+%\documentclass{acm_proc_article-sp}
+
+\makeatletter
+\newif\if@restonecol
+
+\let\algorithm\relax
+\let\endalgorithm\relax
+\usepackage[tight,footnotesize]{subfigure}
+\usepackage {paralist}
+\usepackage{comment}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{url}
+\makeatother
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+
+
+\newtheorem{clm}{Claim}
+\begin{document}
+
+\title{Real-Time Length-based Contention Management for STM}
+
+
+%\author{Mohammed Elshambakey
+%\affil{ECE Dept., Virginia Tech, Blacksburg, VA 24060, USA}
+%Binoy Ravindran
+%\affil{ECE Dept., Virginia Tech, Blacksburg, VA 24060, USA}
+%}
+
+\begin{comment}
+\author{\IEEEauthorblockN{Mohammed Elshambakey}
+\IEEEauthorblockA{ECE Dept, Virginia Tech\\
+Blacksburg, VA 24061, USA\\
+Email: shambake@vt.edu}
+\and
+\IEEEauthorblockN{Binoy Ravindran}
+\IEEEauthorblockA{ECE Dept, Virginia Tech\\
+Blacksburg, VA 24061, USA\\
+Email: binoy@vt.edu}
+}
+\end{comment}
+
+
+\maketitle
+
+
+\begin{clm}
+\label{priority_inversion}
+A higher priority job, $\tau_i^z$, suffers from priority inversion for at most number of atomic sections in $\tau_i^z$.
+\end{clm}
+\begin{proof}
+Assuming three atomic sections, $s_i^k(\theta)$, $s_j^l(\theta)$ and $s_a^b(\theta)$, where $p_j > p_i$ and $s_j^l(\theta)$ interferes with $s_i^k(\theta)$ after $\alpha_{ij}^{kl}$. Then $s_j^l(\theta)$ will have to abort and retry. At this time, if $s_a^b(\theta)$ interferes with the other two atomic sections, and the LCM decides which transaction to commit based on comparison between each two transactions. So, we have the following cases:-
+\begin{itemize}
+\item $p_a < p_i < p_j$, then $s_a^b(\theta)$ will not abort any one because it is still in its beginning and it is of the lowest priority. So. $\tau_j$ is not indirectly blocked by $\tau_a$.
+\item $p_i<p_a<p_j$ and even if $s_a^b(\theta)$ interferes with $s_i^k(\theta)$ before $\alpha_{ia}^{kb}$, so, $s_a^b(\theta)$ is allowed abort $s_i^k(\theta)$. Comparison between $s_j^l(\theta)$ and $s_a^b(\theta)$ will result in LCM choosing $s_j^l(\theta)$ to commit and abort $s_a^b(\theta)$ because the latter is still beginning, and $\tau_j$ is of higher priority. If $s_a^b(\theta)$ is not allowed to abort $s_i^k(\theta)$, the situation is still the same, because $s_j^l(\theta)$ was already retrying until $s_i^k(\theta)$ finishes.
+\item $p_a>p_j>p_i$, then if $s_a^b(\theta)$ is chosen to commit, this is not priority inversion for $\tau_j$ because $\tau_a$ is of higher priority.
+\item if $\tau_a$ preempts $\tau_i$ ($\tau_i$ is the job of lowest priority, so it is the one to be preempted), then LCM will compare only between $s_j^l(\theta)$ and $s_a^b(\theta)$. If $p_a<p_j$, then $s_j^l(\theta)$ will commit because of its task's higher priority and $s_a^b(\theta)$ is still at its beginning, otherwise, $s_j^l(\theta)$ will retry, but this will not be priority inversion because $\tau_a$ is already of higher priority than $\tau_j$.
+\end{itemize}
+So, by generalizing these cases to any number of conflicting jobs, it is seen that when an atomic section, $s_j^l(\theta)$, of a higher priority job is in conflict with a number of atomic sections belonging to lower priority jobs, $s_j^l(\theta)$ can suffer from priority inversion by only one of them. So, if each atomic section belonging to the higher priority job suffers from priority inversion, then Claim follows.
+\end{proof}
+
+\begin{clm}
+\label{max_pri_inv}
+The minimum length atomic section sharing object $\theta$ with $s_j^l(\theta)$ and belonging to a lower priority job than $\tau_j^b$, is the one causing maximum delay to $s_j^l(\theta)$ due to priority inversion.
+\end{clm}
+
+\begin{proof}
+For three atomic sections, $s_i^k(\theta)$, $s_j^l(\theta)$ and $s_h^z(\theta)$, where $p_j>p_i$, $p_j>p_h$ and $len(s_i^k(\theta))>len(s_h^z(\theta))$, then $\alpha_{ij}^{kl}>\alpha_{hj}^{zl}$ and $c_{ij}^{kl}<c_{hj}^{zl}$. By applying~(\ref{eq48}) to get the contribution of $s_i^k(\theta)$ and $s_h^z(\theta)$ to the priority inversion of $s_j^l(\theta)$ and dividing them, we get
+\begin{eqnarray*}
+\frac{W_{j}^{l}(s_{i}^{k}(\theta))}{W_{j}^{l}(s_{h}^{z}(\theta))} & = & \frac{\left(1-\alpha_{ij}^{kl}\right)len(s_{i}^{k}(\theta))}{\left(1-\alpha_{hj}^{zl}\right)len(s_{h}^{z}(\theta))}
+\end{eqnarray*}
+By substitution for $\alpha$s from~(\ref{eq49})
+\begin{eqnarray*}
+ & = & \frac{(1-\frac{ln\psi}{ln\psi-c_{ij}^{kl}})len(s_{i}^{k}(\theta))}{(1-\frac{ln\psi}{ln\psi-c_{hj}^{zl}})len(s_{h}^{z}(\theta))}
+  =  \frac{(\frac{-c_{ij}^{kl}}{ln\psi-c_{ij}^{kl}})len(s_{i}^{k}(\theta))}{(\frac{-c_{hj}^{zl}}{ln\psi-c_{hj}^{zl}})len(s_{h}^{z}(\theta))}\end{eqnarray*}
+By substitution from~(\ref{cm_eq})
+\begin{eqnarray*}
+ & = & \frac{len(s_{j}^{l}(\theta))/(ln\psi-c_{ij}^{kl})}{len(s_{j}^{l}(\theta))/(ln\psi-c_{hj}^{zl})}
+  =  \frac{ln\psi-c_{hj}^{zl}}{ln\psi-c_{ij}^{kl}}<1\end{eqnarray*}
+So, as the length of the interfered atomic section decreases, the greater the effect of priority inversion on the interfering atomic section. Claim follows.
+
+\end{proof}
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,global_bibliography}
+
+\end{document}

@@ -1,0 +1,779 @@
+\chapter{\label{ch_pnf}The PNF Contention Manager}
+\markright{Mohammed El-Shambakey \hfill Chapter~\ref{ch_pnf}. PNF \hfill}
+%
+In this chapter, we present a novel contention manager for resolving transactional conflicts, called PNF~\cite{6509557}. We upper bound transactional retries and task response times under PNF, when used with the G-EDF and  G-RMA schedulers. We formally identify the conditions under which PNF outperforms previous real-time STM contention managers, lock-free and locking protocols.
+
+The rest of this Chapter is organized as follows: Section~\ref{probelm description} discusses limitations of previous contention managers and the motivation to PNF. Section~\ref{PNF} give a formal description of PNF. Section~\ref{pnf properties sec} derives PNF's properties. We upper bound retry cost and response time under PNF in Section~\ref{rc pnf sec}. Schedulability comparison between PNF and other synchronization techniques is given in Section~\ref{sec:pnf-sched-comparison}. We conclude Chapter in Section~\ref{pnf_conclusion}.
+
+\section{Limitations of ECM, RCM, and LCM}\label{probelm description}
+%
+With multiple objects per transaction, ECM, RCM (Chapter~\ref{ecm-rcm}) and LCM (Chapter~\ref{ch_lcm}) face transitive retry as shown by Claims~\ref{ecm-rcm-transitive-retry},~\ref{clm:rcm-transitive-retry} and~\ref{clm:lcm-transitive-retry}. Thus, a transaction $s_i^k$ can abort and retry due to another transaction $s_j^l$ where $\Theta_i^k \cap \Theta_j^l = \emptyset$. Retry cost and response time analysis- presented in Chapters~\ref{ecm-rcm} and~\ref{ch_lcm}- extend the set of objects accessed by any task $\tau_i$ to include any object that can cause direct or indirect(transitive) retry to any transaction in $\tau_i$. However, this solution may over-extend the set of conflicting objects, and may even contain all objects accessed by all tasks.
+
+In addition to the \emph{transitive retry} problem, retrying higher priority transactions can prevent lower priority tasks from running. This happens when all processors are busy with higher priority jobs. When a transaction retries, the processor time is wasted. Thus, it would be better to give the processor to some other task.
+
+Essentially, what we present is a new contention manager that avoids the effect of transitive retry. We call it, Priority contention manager with Negative values and First access (or PNF). PNF also tries to enhance processor utilization. This is done by allocating processors to jobs with non-retrying transactions. PNF is described in Section \ref{PNF}.
+%
+\section{The PNF Contention Manager\label{PNF}}
+%
+Algorithm \ref{PNF-algorithm} describes PNF. It
+manages two sets. The first is the $m$-set, which contains at most $m$ non-conflicting
+transactions, where $m$ is the number of processors, as
+there cannot be more than $m$ executing transactions (or generally,
+$m$ executing jobs) at the same time. When a transaction is entered
+in the $m$-set, it executes non-preemptively and no other transaction
+can abort it. A transaction in the $m$-set is called an \emph{executing
+transaction}. 
+This means that, when a transaction is executing before
+the arrival of higher priority conflicting transactions, then the
+one that started executing first will be committed (Step~\ref{s_i^k commit}) (hence the term ``First access'' in the algorithm's name). 
+%
+\begin{algorithm}[h]
+\footnotesize{
+\LinesNumbered
+\KwData{
+\textit{Executing Transaction:} is one that cannot be aborted by any other transaction, nor preempted by a higher priority task\;
+\textit{$m$-set:} $m$-length set that contains only non-conflicting executing transactions\;
+\textit{$n$-set:} $n$-length set that contains retrying transactions for $n$ tasks in non-increasing order of priority\;
+\textit{n(z):} transaction at index $z$ of the $n$-set\;
+$s_i^k$: a newly released transaction\;
+$s_j^l$: one of the executing transactions\;
+}
+\KwResult{atomic sections that will commit}
+\eIf{$s_i^k$ does not conflict with any executing transaction\label{s_i^k true}}
+{
+Assign $s_i^k$ as an executing transaction\;
+Add $s_i^k$ to the $m$-set\;
+Select $s_i^k$ to commit
+}
+{
+Add $s_i^k$ to the $n$-set according to its priority\label{move to n}\;
+Assign temporary priority -1 to the job that owns $s_i^k$ \label{priority to -1}\;
+Select transaction(s) conflicting with $s_i^k$ for commit\label{s_i^k commit}\;
+}
+\If{$s_j^l$ commits\label{s_j^l commits}}
+{
+	\For{z=1 to size of n-set\label{traverse n-set}}
+	{
+		\If{n(z) does not conflict with any executing transaction\label{n(z) no conflict}}
+		{
+			\eIf{processor available\footnotemark \label{processor available}}
+			{
+				Restore priority of task owning n(z)\;
+				Assign n(z) as executing transaction\;
+				Add n(z) to m-set and remove it from n-set\;
+				Select n(z) for commit\;
+			}
+			{
+				Wait until processor available
+			}
+		}
+		move to the next n(z)\;
+	}
+}
+}
+\caption{PNF} \label{PNF-algorithm}
+\end{algorithm}
+\footnotetext{An idle processor or at least one that runs a non-atomic section task with priority lower than the task holding $n(z)$.}
+%
+The second set is the $n$-set, which holds the transactions
+that are retrying because of a conflict with one or more of the executing
+transactions (Step~\ref{move to n}), where $n$ stands for
+the number of tasks in the system. Transactions in the $n$-set are known as \emph{retrying transaction}. $n$-set also holds transactions that
+cannot currently execute, because processors are busy, either due to processing executing transactions and/or higher priority jobs. Any transaction in the $n$-set is assigned a temporal
+priority of -1 (Step~\ref{priority to -1}) (hence the word 
+``Negative'' in the algorithm's name). A negative priority
+is considered smaller than any normal priority, and a transaction
+continues to hold this negative priority until it is moved to the $m$-set, where it restores its normal priority.
+
+A job $\tau_x^y$ holding a transaction in the $n$-set can be preempted by any other job $\tau_z^l$ with normal priority, even if $\tau_z^l$ does not have transactions conflicting with $\tau_x^y$. Hence, the $n$-set is of length $n$, as there can be at most $n$ jobs. Transactions in the $n$-set whose jobs have been preempted are called \textit{preempted transactions}. The $n$-set list keeps track of preempted transactions, because
+as it will be shown, all preempted and non-preempted transactions in the $n$-set are examined when any executing transaction commits. Then, one or more transactions are selected from the $n$-set to be executing transactions. If a retrying transaction is selected as an executing transaction, the task that owns the retrying transaction regains its priority.
+
+When a new transaction is released, and if it does not conflict with
+any of the executing transactions (Step~\ref{s_i^k true}), then
+it will allocate a slot in the $m$-set and becomes an
+executing transaction. When this transaction is released (i.e., its containing task is already allocated to a processor), it will be able to access a processor immediately. 
+This transaction may have a conflict with any of the transactions in the $n$-set. However, since transactions in the $n$-set have priorities of -1, they cannot prevent this new transaction from executing if it does not conflict with any of the executing transactions.
+
+When one of the executing transactions commits (Step~\ref{s_j^l commits}), it is time to select one of the $n$-set transactions to commit. The $n$-set is traversed from the highest priority
+to the lowest priority (priority here refers to the
+original priority of the transactions, and not -1) (Step~\ref{traverse n-set}).
+%
+If an examined transaction in the $n$-set, $s_{h}^{b}$,
+does not conflict with any executing transaction (Step~\ref{n(z) no conflict}),
+and there is an available processor for it (Step~\ref{processor available})
+(``available'' means either an idle processor, or one that
+is executing a job of lower priority than $s_{h}^{b}$),
+then $s_{h}^{b}$ is moved from the $n$-set to the
+$m$-set as an executing transaction and its original priority is restored. 
+%
+If $s_{h}^{b}$ is added to the $m$-set, the new $m$-set is compared with other transactions in the $n$-set with lower priority than $s_{h}^{b}$. 
+Hence, if one of the transactions in the $n$-set, $s_{d}^{g}$, is of
+lower priority than $s_{h}^{b}$ and conflicts with $s_{h}^{b}$,  
+it will remain in the $n$-set. 
+
+The choice of the new transaction
+from the $n$-set depends on the original priority of transactions (hence the term  ``P'' in the algorithm name). The algorithm
+avoids interrupting an already executing transaction to reduce its
+retry cost. In the meanwhile, it tries to avoid delaying the highest priority
+transaction in the $n$-set when it is time to select a new
+one to commit, even if the highest priority transaction arrives after
+other lower priority transactions in the $n$-set.
+%
+\subsection{Illustrative Example}
+We illustrate PNF with an example. We use the following notions: $s_{a}^{b}(\theta_{1},\theta_{2},\theta_{3})$ means that $s_{a}^{b}$ accesses objects $\theta_{1},\theta_{2},\theta_{3}$. If $s_{a}^{b}\in\tau_{a}^{j},\,\therefore p_{o}(s_{a}^{b})=p_{a}^{j}$,
+where $p_{o}(s_{a}^{b})$ is the original priority of $s_{a}^{b}$.
+$p(s_{a}^{b})=-1$, if $s_{a}^{b}$ is a retrying transaction; $p(s_{a}^{b})=p_{o}(s_{a}^{b})$ otherwise. $m$-set$=\{s_{a}^{b},s_{i}^{k}\}$ means that the $m$-set contains
+transactions $s_{a}^{b}$ and $s_{i}^{k}$ regardless of their order.
+$n$-set$=\{s_{a}^{b},s_{i}^{k}\}$ means that the $n$-set contains transactions
+$s_{a}^{b}$ and $s_{i}^{k}$ in that order, where $p_{o}(s_{a}^{b})>p_{o}(s_{i}^{k})$.
+$m$-set$\,(n$-set$)=\{\phi\}$ means that $m$-set$\,(n$-set$)$ is empty.
+%
+Assume there are five processors.
+\begin{compactenum}
+\item Initially, $m$-set$=n$-set$=\{\phi\}$. $s_{a}^{b}(\theta_{1},\theta_{2})\in\tau_{a}^{b}$
+is released and checks $m$-set for conflicting transactions. As
+$m$-set is empty, $s_{a}^{b}$ finds no conflict and becomes an
+executing transaction. $s_{a}^{b}$ is added to $m$-set. $m$-set$=\{s_{a}^{b}\}$
+and $n$-set$=\{\phi\}$. $s_{a}^{b}$ is executing on processor 1.
+%
+\item $s_{c}^{d}(\theta_{3},\theta_{4})\in\tau_{c}^{d}$ is released and
+checks $m$-set for conflicting transactions. $s_{c}^{d}$ does not
+conflict with $s_{a}^{b}$ as they access different objects. $s_{c}^{d}$
+becomes an executing transaction and is added to $m$-set. $m$-set$=\{s_{a}^{b},s_{c}^{d}\}$
+and $n$-set$=\{\phi\}$. $s_{c}^{d}$ is executing on processor 2.
+%
+\item $s_{e}^{f}(\theta_{1},\theta_{5})\in\tau_{e}^{f}$ is released and
+$p_{o}(s_{e}^{f})<p_{o}(s_{a}^{b})$. $s_{e}^{f}$ conflicts with
+$s_{a}^{b}$ when it checks $m$-set. $s_{e}^{f}$ is added to $n$-set
+and becomes a retrying transaction. $p(s_{e}^{f})$ becomes $-1$.
+$m$-set$=\{s_{a}^{b},s_{c}^{d}\}$ and $n$-set$=\{s_{e}^{f}\}$. $s_{e}^{f}$
+is retrying on processor 3.
+%
+\item $s_{g}^{h}(\theta_{1},\theta_{6})\in\tau_{g}^{h}$ is released and
+$p_{o}(s_{g}^{h})>p_{o}(s_{a}^{b})$. $s_{g}^{h}$ conflicts with
+$s_{a}^{b}$. Though $s_{g}^{h}$ is of higher priority than $s_{a}^{b}$, $s_{a}^{b}$ is an executing transaction. So $s_{a}^{b}$ runs non-preemptively. 
+$s_{g}^{h}$ is added to $n$-set before $s_{e}^{f}$, 
+because $p_{o}(s_{g}^{h})>p_{o}(s_{e}^{f})$. $p(s_{g}^{h})$ becomes
+$-1$. $m$-set$=\{s_{a}^{b},s_{c}^{d}\}$ and $n$-set$=\{s_{g}^{h},s_{e}^{f}\}$.
+$s_{g}^{h}$ is retrying on processor 4.
+%%
+\item \label{pnf_example_step_3} $s_{i}^{j}(\theta_{5},\theta_{7})\in\tau_{i}^{j}$
+is released. $p_{o}(s_{i}^{j})<p_{o}(s_{e}^{f})$. $s_{i}^{j}$ does
+not conflict with any transaction in $m$-set. Though $s_{i}^{j}$
+conflicts with $s_{e}^{f}$ and $p_{o}(s_{i}^{j})<p_{o}(s_{e}^{f})<p_{o}(s_{g}^{h})$,
+$s_{e}^{f}$ and $s_{g}^{h}$ are retrying transactions. $s_{i}^{j}$
+becomes an executing transaction and is added to $m$-set. $m$-set$=\{s_{a}^{b},s_{c}^{d},s_{i}^{j}\}$
+and $n$-set$=\{s_{g}^{h},s_{e}^{f}\}$. $s_{i}^{j}$ is executing on
+processor 5.
+%%
+\item \label{pnf_example_step 1} $\tau_{k}^{l}$ is released. $\tau_{k}^{l}$
+does not access any object. $p_{k}^{l}<p_{o}(s_{e}^{f})<p_{o}(s_{g}^{h})$,
+but $p(s_{e}^{f})=p(s_{g}^{h})=-1$. Since there are no more processors,
+$\tau_{k}^{l}$ preempts $\tau_{e}^{f}$, because the currently assigned
+priority to $\tau_{e}^{f}=p(s_{e}^{f})=-1$ and $p_{o}(s_{g}^{h})>p_{o}(s_{e}^{f})$.
+$\tau_{k}^{l}$ is running on processor 3. This way, PNF optimizes
+processor usage. The $m$-set and $n$-set are not changed. Although
+$s_{e}^{f}$ is preempted, $n$-set still records it, as $s_{e}^{f}$
+might be needed (as will be shown in the following steps).
+\item \label{pnf_example_step_2} $s_{i}^{j}$ commits. $s_{i}^{j}$ is removed
+from $m$-set. Transactions in $n$-set are checked from the first
+(highest $p_{o}$) to the last (lowest $p_{o}$) for conflicts against
+any executing transaction. $s_{g}^{h}$ is checked first because $p_{o}(s_{g}^{h})>p_{o}(s_{e}^{f})$.
+$s_{g}^{h}$ conflicts with $s_{a}^{b}$, so $s_{g}^{h}$ cannot be
+an executing transaction. Now it is time to check $s_{e}^{f}$, even though  
+$s_{e}^{f}$ is preempted in step \ref{pnf_example_step 1}. $s_{e}^{f}$
+also conflicts with $s_{a}^{b}$, so $s_{e}^{f}$ cannot be an executing
+transaction. $m$-set$=\{s_{a}^{b},s_{c}^{d}\}$ and $n$-set$=\{s_{g}^{h},s_{e}^{f}\}$.
+Now, $s_{e}^{f}$ can be retrying on processor 5 if $\tau_{i}^{j}$
+has finished execution. Otherwise, $\tau_{i}^{j}$ continues running
+on processor 5 and $s_{e}^{f}$ is still preempted. This is because, 
+$p(s_{e}^{f})=-1$ and $p_{i}^{j}>p(s_{e}^{f})$. Let us assume that 
+$\tau_{i}^{j}$ is still running on processor 5.
+%
+\item \label{pnf_example_step_4} $s_{a}^{b}$ commits. $s_{a}^{b}$ is removed
+from $m$-set. Transactions in $n$-set are checked as done in step
+\ref{pnf_example_step_2}. $s_{g}^{h}$ does not conflict with any
+executing transaction any more. $s_{g}^{h}$ becomes an executing
+transaction. $s_{g}^{h}$ is removed from $n$-set and added to $m$-set,
+so $m$-set$=\{s_{c}^{d},s_{g}^{h}\}$. Now, $s_{e}^{f}$ is checked against
+the new $m$-set. $s_{e}^{f}$ conflicts with $s_{g}^{h}$, so $s_{e}^{f}$
+cannot be an executing transaction. $s_{e}^{f}$ can be retrying on
+processor 1 if $\tau_{a}^{b}$ has finished execution. Otherwise,
+$s_{e}^{f}$ remains preempted, because $p(s_{e}^{f})=-1$ and $p_{a}^{b}>p(s_{e}^{f})$. $n$-set$=\{s_{e}^{f}\}$. Let us assume that $\tau_{a}^{b}$ is still
+running on processor 1.
+%
+\item \label{pnf_example_step_5} $s_{g}^{h}$ commits. $s_{g}^{h}$ is removed
+from $m$-set. $\tau_{g}^{h}$ continues execution on processor 4.
+Transactions in $n$-set are checked again. $s_{e}^{f}$ is the only
+retrying transaction in the $n$-set, and it does not conflict with
+any executing transactions. Now, the system has $\tau_{a}^{b}$ running
+on processor 1, $s_{c}^{d}$ executing on processor 2, $\tau_{k}^{l}$
+running on processor 3, $\tau_{g}^{h}$ running on processor 4, and
+$\tau_{i}^{j}$ running on processor 5. $s_{e}^{f}$ can become an
+executing transaction if it can find a processor. 
+%
+Since $p_{i}^{j},\, p_{k}^{l}<p_{o}(s_{e}^{f})$,
+$s_{e}^{f}$ can preempt the lowest in priority between $\tau_{i}^{j}$
+and $\tau_{k}^{l}$. $s_{e}^{f}$ now becomes an executing transaction.
+$s_{e}^{f}$ is removed from the $n$-set and added to the $m$-set.
+So, $m$-set$=\{s_{c}^{d},s_{e}^{f}\}$ and $n$-set$=\{\phi\}$. If $p_{i}^{j},\, p_{k}^{l}$
+were of higher priority than $p_{o}(s_{e}^{f})$, then $s_{e}^{f}$
+would have remained in $n$-set until a processor becomes available.
+%
+\end{compactenum}
+The  example shows that PNF avoids transitive retry. This is illustrated in step \ref{pnf_example_step_3}, where $s_{i}^{j}(\theta_{5},\theta_{7})$ is not affected by the  retry of $s_{e}^{f}(\theta_{1},\theta_{5})$. The example also explains how
+PNF optimizes processor usage. This is illustrated in step \ref{pnf_example_step 1}, 
+where the retrying transaction $s_{e}^{f}$ is preempted in favor of $\tau_{k}^{l}$.
+%
+\section{Properties\label{pnf properties sec}}
+%
+\begin{clm}\label{PNF-transitive-retry}
+Transactions scheduled under PNF do not suffer from transitive
+retry.
+\end{clm}
+\begin{proof}\normalfont
+Proof is by contradiction. Assume that a transaction $s_{i}^{k}$
+is retrying because of a higher priority transaction $s_{j}^{l}$, which
+in turn is retrying because of another higher priority transaction
+$s_{z}^{h}$. Assume that $s_{i}^{k}$ and $s_{z}^{h}$ do not conflict, yet,
+$s_{i}^{k}$ is transitively retrying due to $s_{z}^{h}$. 
+Note that $s_{z}^{h}$ and $s_{j}^{l}$ cannot exit together in
+the $m$-set as they have shared objects. But they both can
+be in the $n$-set, as they can conflict with other \emph{executing
+transactions}. We have three cases:
+
+\textit{Case 1:} Assume that $s_{z}^{h}$ is an executing transaction. This means that $s_{j}^{l}$ is in the $n$-set. When $s_{i}^{k}$ arrives, by the definition of PNF, it will be compared with the $m$-set, which contains $s_{z}^{h}$. Now, it will be found that $s_{i}^{k}$ does not conflict with $s_{z}^{h}$. Also, by the definition of PNF, $s_{i}^{k}$ is not compared with transactions in the $n$-set. When $s_i^k$ newly arrives, priorities of $n$-set transactions are lower than any normal priority. Therefore, as $s_{i}^{k}$ does not conflict with any other executing
+transaction, it joins the $m$-set and becomes an \emph{executing
+transaction}. This contradicts the assumption that $s_{i}^{k}$
+is transitively retrying because of $s_{z}^{h}$.
+
+\textit{Case 2:} Assume that $s_{z}^{h}$ is in the $n$-set, while $s_{j}^{l}$
+is an executing transaction. When $s_{i}^{k}$ arrives, it will conflict
+with $s_{j}^{l}$ and joins the $n$-set. Now, $s_{i}^{k}$
+retries due to $s_{j}^{l}$, and not $s_{z}^{h}$. When $s_{j}^{l}$ commits,
+the $n$-set is traversed from the highest priority transaction
+to the lowest one: if $s_{z}^{h}$ does not conflict with any other
+executing transaction and there are available processors, $s_{z}^{h}$
+becomes an executing transaction. When $s_{i}^{k}$ is compared with 
+the $m$-set, it is found that it does not conflict with $s_{z}^{h}$. Additionally, if it also does not conflict with any other executing transaction and there are available processors, then $s_{i}^{k}$ becomes an executing
+transaction. This means that $s_{i}^{k}$ and $s_{z}^{h}$ are executing
+concurrently, which violates the assumption of transitive retry.
+
+\textit{Case 3:} Assume that $s_{z}^{h}$ and $s_{j}^{l}$ both exist in the $n$-set.
+When $s_{i}^{k}$ arrives, it is compared with the $m$-set. If $s_{i}^{k}$ does not conflict with any executing transactions and there are available processors, then $s_{i}^{k}$ becomes an executing transaction. 
+Even though $s_{i}^{k}$ has common objects with $s_{j}^{l}$, $s_{i}^{k}$ is not compared with $s_{j}^{l}$, which is in the $n$-set. If $s_{i}^{k}$ joins the $n$-set, it is because, it conflicts with one or more executing transactions, not because of $s_{z}^{h}$, which violates the transitive retry assumption.
+If the three transactions $s_i^k$, $s_j^l$ and $s_z^h$ exist in the $n$-set, and  $s_{z}^{h}$ is chosen as a new executing transaction, then $s_{j}^{l}$ remains in the $n$-set. This leads to
+Case 1. If $s_{j}^{l}$ is chosen, because $s_{z}^{h}$ conflicts
+with another executing transaction and $s_{j}^{l}$ does not, then
+this leads to Case 2.
+%
+\end{proof}
+%
+\begin{clm}\label{first-access}
+The first access property of PNF prevents transitive retry.
+\end{clm}
+%
+\begin{proof}\normalfont
+The proof is by contradiction. Assume that the retry cost of transactions
+in the absence of the first access property is the same as when first access  exists. Now, assume that PNF is devoid of the first access property.  This means that executing transactions can be aborted. 
+
+Assume three transactions $s_{i}^{k}$, $s_{j}^{l}$, and $s_{z}^{h}$, where $s_{z}^{h}$'s priority is higher than $s_{j}^{l}$'s priority, and $s_j^l$'s priority is higher than $s_{i}^{k}$'s priority. Assume that $s_{j}^{l}$ conflicts with both $s_{i}^{k}$ and $s_{z}^{h}$. 
+$s_{i}^{k}$ and $s_{z}^{h}$ do not conflict together. If $s_{i}^{k}$
+arrives while $s_{z}^{h}$ is an executing transaction and $s_{j}^{l}$
+exists in the $n$-set, then $s_{i}^{k}$ becomes an executing transaction itself while $s_{j}^{l}$ is retrying. If $s_{i}^{k}$ did not commit at least when $s_{z}^{h}$ commits, then $s_{j}^{l}$ becomes an executing transaction. 
+Due to the lack of the first access property, $s_{j}^{l}$ will cause $s_{i}^{k}$ to retry. So, the retry cost for $s_{i}^{k}$ will be $len(s_{z}^{h}+s_{j}^{l})$. This
+retry cost for $s_{i}^{k}$ is the same if it had been transitively
+retrying because of $s_{z}^{h}$. 
+This contradicts the first
+assumption. Claim follows.
+\end{proof}
+%
+From Claims \ref{PNF-transitive-retry} and \ref{first-access}, PNF does not increase the retry cost of multi-object transactions. However, this is not the case for ECM, RCM and LCM as shown by Claims~\ref{ecm-rcm-transitive-retry},~\ref{clm:rcm-transitive-retry} and~\ref{clm:lcm-transitive-retry}.
+%
+\begin{clm}\label{higher retry does not affect response}
+Under PNF, any job $\tau_{i}^{x}$ is not affected by the retry cost in any other
+job $\tau_{j}^{l}$.
+\end{clm}
+%
+\begin{proof}\normalfont
+As explained in Section~\ref{PNF-algorithm}, PNF assigns a temporary priority of -1 to any job that includes a retrying transaction. So, retrying transactions have lower priority than any other normal priority for any real-time task.
+When $\tau_{i}^{x}$ is released and $\tau_j^l$ has a retrying transaction, $\tau_i^x$ will have a higher priority
+than $\tau_j^l$. Thus, $\tau_i^x$ can run on any available processor while $\tau_j^l$ is retrying one of its transactions. Claim follows.
+\end{proof}
+%
+\section{Retry Cost and Response Time Under PNF}\label{rc pnf sec}
+%
+We now derive an upper bound on the retry cost of any job $\tau_i^x$ under PNF during an interval $L\le T_i$. Since all tasks are sporadic (i.e., each task $\tau_i$ has a minimum period $T_i$), $T_i$ is the maximum study interval for each task $\tau_i$.
+%
+\begin{clm}\label{two transactions retry cost PNF}
+%
+Under PNF, the maximum retry cost suffered by a transaction $s_{i}^{k}$ due 
+to a transaction $s_{j}^{l}$ is $len(s_{j}^{l})$.
+\end{clm}
+%
+\begin{proof}\normalfont
+By PNF's definition, $s_{i}^{k}$ cannot have started before
+$s_{j}^{l}$. Otherwise, $s_i^k$ would have been an executing transaction and $s_{j}^{l}$ cannot abort it. So, the earliest release time for $s_{i}^{k}$ would have been just after $s_{j}^{l}$ starts execution. Then, $s_i^k$ would have to wait until $s_{j}^{l}$
+commits. Claim follows.
+\end{proof}
+%
+\begin{clm}
+The retry cost for any job $\tau_{i}^{x}$ due to conflicts between its transactions and transactions of other jobs under PNF during an interval $L\le T_{i}$ is upper bounded by:
+%
+\begin{equation}
+RC_i(L)\le\sum_{\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_j^l,\left(\Theta=\Theta_j^l \cap \Theta_i\right)\neq \emptyset}\left(\left(\left\lceil \frac{L}{T_{j}}\right\rceil +1\right)len\left(s_{j}^{l}\right)\right)\right)
+\label{rc-PNF}
+\end{equation}
+%
+\end{clm}
+%
+\begin{proof}\normalfont
+%
+Consider a transaction $s_{i}^{k}$ belonging to job $\tau_{i}^{x}$. Under PNF, higher priority transactions than $s_i^k$ can become executing transaction before $s_i^k$. A lower priority transaction $s_v^f$ can also become an executing transaction before $s_i^k$. This happens when $s_i^k$ conflicts with any executing transaction while $s_v^f$ does not. The worst case scenario for $s_{i}^{k}$ occurs when $s_i^k$ has to wait in the $n$-set, while all other conflicting transactions with $s_i^k$ are chosen to be executing transactions. The maximum number of jobs of any task $\tau_{j}$ that can interfere with $\tau_{i}^{x}$ during interval $L$ is $\left\lceil \frac{L}{T_{j}}\right\rceil +1$. From  the previous observations and Claim~\ref{two transactions retry cost PNF}, Claim follows.
+\end{proof}
+%
+\begin{clm}\label{clm:no_release_rc_under_pnf}
+%
+In contrast to ECM, RCM and LCM, release of any higher priority job $\tau_j^l$ during execution of a lower priority transaction $s_i^k$ does not increase retry cost of $s_i^k$. Thus, $RC_{i_{re}}(L)=0$ and $RC_{i_{to}}(L)=RC_i(L)$, where $L \le T_i$ and $RC_i(L)$ is given by (\ref{rc-PNF}).
+%
+\end{clm}
+%
+\begin{proof}
+%
+Under PNF, executing transactions have higher priority than any other real-time task. Thus, release of a higher priority task $\tau_j^l$ will not preempt any executing transaction $s_i^k$. Retrying transactions are already retrying when higher priority tasks are released. When a retrying transaction $s_i^k$ is chosen to be an executing transaction, and all processors are busy with executing transactions except the processor running $\tau_j^l$, then $\tau_j^l$ is preempted in favour of the executing transaction $s_i^k$ by definition of PNF. Thus, $\tau_j^l$ does not increase retry cost of $s_i^k$. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{delay}
+The maximum blocking time for any job in $\tau_{i}$ due to lower priority jobs 
+during an interval $L\le T_{i}$ is upper bounded by:
+%
+\begin{equation}
+D_i(L)\le max_{\forall \tau_i^x \in \tau_i}\left(\left\lfloor \frac{1}{m}\sum_{\forall\tau_{j}^{l},p_j^l<p_i^x}\left(\left(\left\lceil \frac{L}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{h}, \Theta_j^h \cap \Theta_i = \emptyset }len\left(s_{j}^{h}\right)\right)\right\rfloor\right)
+\label{PNF-delay}
+\end{equation}
+%
+During $D_i(L)$, all processors are unavailable for $\tau_{i}^{x}$.
+%
+\end{clm}
+%
+\begin{proof}\normalfont
+%
+Under PNF, executing transactions are non preemptive. So, an executing transaction $s_i^k$ can delay a higher priority job $\tau_i^x$, where $p_o\left(s_i^k\right)<p_i^x$, if no other processors are available. Through this proof, we call an $s_i^k$ with $p_o\left(s_i^k\right)<p_i^x$ an original lower priority transaction compared to priority of $\tau_i^x$. An original lower priority executing transactions can be conflicting or non-conflicting with any transaction in $\tau_{i}^{x}$. They also can exist when $\tau_i^x$ is newly released, or after that. So, we have the following cases:
+
+\emph{Original lower priority conflicting transactions after $\tau_i^x$ is released:} This case is already covered by the retry cost in~(\ref{rc-PNF}).
+
+\emph{Original lower priority conflicting transactions when $\tau_i^x$ is newly released:} Each original lower priority conflicting transaction $s_j^h$ will delay $\tau_i^x$ for $len(s_j^h)$. The effect of $s_j^h$ is already covered by~(\ref{rc-PNF}). Besides,~(\ref{rc-PNF}) does not divide the retry cost by $m$ as done in~(\ref{PNF-delay}). Thus, the worst case scenario requires inclusion of $s_j^h$ in~(\ref{rc-PNF}), and not in~(\ref{PNF-delay}).
+
+\emph{Original lower priority non-conflicting transactions when $\tau_i^x$ is newly released:} $\tau_i^x$ is delayed if there are no available processors for it. Otherwise, $\tau_i^x$ can run in parallel with these non-conflicting original lower priority transactions. Each original lower priority non-conflicting transaction $s_j^h$ will delay $\tau_i^x$ for $len(s_j^h)$.
+
+\emph{Original lower priority non-conflicting transactions after $\tau_i^x$ is released:} This situation can happen if $\tau_i^x$ is not currently running any executing transaction. A retrying transaction $s_i^k$ is chosen to be an executing transaction. All processors are busy with executing transactions except the processor running $\tau_i^x$. Thus, $\tau_i^x$ is preempted in favour of executing transaction $s_i^k$. Otherwise, $\tau_i^x$ can run in parallel with these original lower priority non-conflicting transactions.
+
+Each original lower priority non-conflicting transaction $s_j^h$ will delay $\tau_i^x$ for $len(s_j^h)$.
+
+From the previous cases, original lower priority non-conflicting transactions act as if they were higher priority jobs interfering with $\tau_{i}^{x}$. So, the blocking time can be calculated by the interference workload given by Theorem 7 in \cite{key-2}. Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{response time ecm PNF}
+%
+The response time $R_i^{up}$ of a job $\tau_{i}^{x}$ under G-EDF/PNF is upper bounded by:
+\begin{equation}
+R_{i}^{up}=c_{i}+RC_{i_{to}}(R_i^{up})+D_i(R_i^{up})+\left\lfloor \frac{1}{m}\sum_{\forall j\ne i}I_{ij}(R_{i}^{up})\right\rfloor 
+\end{equation}
+where $RC_{i_{to}}(R_i^{up})$ is calculated by (\ref{rc-PNF}). $D_i(R_i^{up})$
+is modified from~(\ref{PNF-delay}) to fit G-EDF as follows:
+\begin{equation}
+D_i(R_i^{up})\le \left\lfloor \frac{1}{m}\sum_{\forall \tau_{j}}\begin{cases}
+0 & ,R_i^{up} \le T_{i}-T_{j}\\
+\sum_{\forall s_{j}^{h}, \Theta_j^h \cap \Theta_i = \emptyset}len\left(s_{j}^{h}\right) & ,R_i^{up} >T_{i}-T_{j}
+\end{cases}\right\rfloor
+\label{d-edf}
+\end{equation}
+and $I_{ij}(R_{i}^{up})$ is calculated by (\ref{eq13}).
+\end{clm}
+%
+\begin{proof}\normalfont
+Proof is similar to proof of Claim~\ref{clm:ecm_response_time_upper_bound} except that: 1) Total retry cost given by (\ref{rc-PNF}) (due to Claim~\ref{clm:no_release_rc_under_pnf}) and blocking time given by (\ref{PNF-delay}) are added to each $c_i$. 2) Due to Claim~\ref{higher retry does not affect response}, each $c_j$ is not changed to $c_{ji}$. G-EDF uses absolute deadlines for scheduling. This defines which jobs of the same task can be of lower priority than $\tau_{i}^{x}$, and which will not. Any instance $\tau_j^h$, released between $r_i^x - T_j$ and $d_i^x - T_j$, will be of higher priority than $\tau_i^x$. Before $r_i^x-T_j$, $\tau_j^h$ would have finished before $\tau_i^x$ is released. After $d_i^x-T_j$, $d_j^h$ would be greater than $d_i^x$. Thus, $\tau_j^h$ will be of lower priority than $\tau_i^x$. So, during $T_i$, there can be only one instance $\tau_j^h$ of $\tau_j$ with lower priority than $\tau_i^x$. $\tau_j^h$ is released between $d_i^x-T_j$ and $d_i^x$. Consequently, during $R_i^{up}<T_i-T_j$, no existing instance of $\tau_j$ is of lower  priority than $\tau_i^x$. Hence, 0 is used in the first case of~(\ref{d-edf}). But if $R_i^{up}>T_i-T_j$, there can be only one instance $\tau_j^h$ of $\tau_j$ with lower priority than $\tau_i^x$. Hence, $\left\lceil\frac{R_i^{up}}{T_i}\right\rceil+1$ in~(\ref{PNF-delay}) is replaced with 1 in the second case in~(\ref{d-edf}). Claim follows.
+\end{proof}
+%
+\begin{clm}\label{response rcm PNF}
+%
+The response time $R_i^{up}$ of a job $\tau_{i}^{x}$ under G-RMA/PNF is upper bounded by:
+% 
+\begin{equation}
+R_{i}^{up}=c_{i}+RC_i(R_i^{up})+D_i(R_i^{up})+\left\lfloor \frac{1}{m}\sum_{\forall j\ne i,p_j>p_i}I_{ij}(R_{i}^{up})\right\rfloor 
+\end{equation}
+%
+where $RC(R_i^{up})$ is calculated by (\ref{rc-PNF}), $D_i(R_i^{up})$
+is calculated by (\ref{PNF-delay}), and $I_{ij}(R_{i}^{up})$
+is calculated by (\ref{eq12}).
+\end{clm}
+%
+\begin{proof}\normalfont
+Proof is same as of Claim \ref{response time ecm PNF}, 
+except that G-RMA assigns fixed priorities. Hence, (\ref{PNF-delay}) can be used directly for calculating $D_i(R_i^{up})$ without modifications. Claim follows.
+\end{proof}
+%
+\section{PNF versus Competitors}
+\label{sec:pnf-sched-comparison}
+%
+We now (formally) compare the schedulability of G-EDF (G-RMA) with PNF against ECM (Chapter~\ref{ecm-rcm}), RCM (Chapter~\ref{ecm-rcm}), LCM (Chapter~\ref{ch_lcm}), retry-loop lock-free~\cite{key-5} and locking protocols((i.e., OMLP\cite{springerlink:10.1007/s10617-012-9090-1,key-3} and RNLP\cite{6257574}). Such a comparison will reveal when PNF outperforms others. Toward this, we compare the total utilization under G-EDF (G-RMA)/PNF, with that under the other synchronization methods. Total utilization comparison between PNF and other synchronization techniques is done as in Sections~\ref{performance g-edf-lcm} and~\ref{rma eval} with the addition of $D_i(T_i)$ - given by (\ref{d-edf}) under G-EDF and (\ref{PNF-delay}) under G-RMA - to the inflated execution time of any job of $\tau_i$ under PNF.
+%
+\subsection{PNF versus ECM\label{pnf vs ecm sec}}
+%
+\begin{clm}\label{PNF ecf comaprison clm}
+%
+Schedulability of G-EDF/PNF is equal or better than ECM's if for each task $\tau_i$ total number of transactions in any task $\tau_{j}\neq\tau_{i}$ - that has no direct conflict with any transaction in $\tau_{i}$ - divided by number of processors is not greater than maximum number of jobs- with higher priority than current job of $\tau_{i}$ - that can be released during $T_{i}$.
+%
+\end{clm}
+%
+\begin{proof}\normalfont
+%
+Proof follows from proof of Claim~\ref{lcm versus ecm} with the following modification: Under PNF, $c_i$ is inflated with $RC_{G-EDF/PNF}^{to}(T_i)$ given by (\ref{rc-PNF}) and $D_i(T_i)$ given by (\ref{d-edf}). Thus, schedulability of G-EDF/PNF is equal or better than ECM's if for each $\tau_i$:
+%
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \nonumber \\
+\le & \left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\label{eq:pnf_vs_ecm_2}
+\end{eqnarray}
+%
+$\because\,\gamma_{i}\subseteq\gamma_{i}^{ex}$, $\Theta_{i}\subseteq\Theta_{i}^{ex}$
+and $2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \ge\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1$,
+$\therefore\,\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\le\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(2\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)$.
+So, (\ref{eq:pnf_vs_ecm_2}) holds if $\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \le\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $.
+
+$\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}$
+is the total number of transactions in any task $\tau_{j}\neq\tau_{i}$
+that has no direct conflict with any transaction in $\tau_{i}$. $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $
+is the maximum number of jobs- with higher priority than current job of $\tau_{i}$ - that can be released during $T_{i}$. Thus, Claim follows.
+%
+\end{proof}
+%
+\subsection{PNF versus RCM}\label{pnf vs rcm sec}
+%
+\begin{clm}\label{clm_pnf_rcm_comp}
+%
+Schedulability of G-RMA/PNF is equal or better than RCM's if for each task $\tau_i$ total number of transactions in tasks with lower priority than $p_i$ does not exceed one half of maximum number of jobs with higher priority than $p_{i}$ that can be released during $T_{i}$.
+%
+\end{clm}
+%
+\begin{proof}\normalfont
+%
+Proof follows from proof of Claim~\ref{rma_eval_clm} with the following modification: Under PNF, $c_i$ is inflated with $RC_{G-RMA/PNF}^{to}(T_i)$ given by (\ref{rc-PNF}) and $D_i(T_i)$ given by (\ref{PNF-delay}). Thus, schedulability of G-RMA/PNF is equal or better than RCM's if for each $\tau_i$:
+%
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \nonumber \\
+\le & \left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_rcm_2}
+\end{eqnarray}
+%
+\begin{eqnarray}
+\therefore & \left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(2\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right) \nonumber\\
++ & \left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \nonumber \\
+\le & \left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_rcm_3}
+\end{eqnarray}
+%
+Eq(\ref{eq:pnf_vs_rcm_3}) holds if 
+%
+\begin{eqnarray}
+\therefore & \left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right) \nonumber\\
++ & \left(2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)\right)\nonumber \\
+\le & \left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_rcm_4}
+\end{eqnarray}
+%
+\begin{eqnarray}
+\therefore & \left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l}}\right)\right)\nonumber \\
+\le & \left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_rcm_5}
+\end{eqnarray}
+%
+$\because\,\gamma_{i}\subseteq\gamma_{i}^{ex}$ and $\Theta_{i}\subseteq\Theta_{i}^{ex}$,
+$\therefore\,\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)$ is always less than $2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)$.
+Thus, (\ref{eq:pnf_vs_rcm_5}) holds if $\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l}}\right)$ does not exceed one half of $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $. $\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l}}\right)$
+is total number of transactions in tasks with lower priority than
+$\tau_{i}$. $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+is maximum number of jobs with higher priority than $p_{i}$ that can be released during $T_{i}$. Claim follows.
+%
+\end{proof}
+%
+\subsection{PNF versus G-EDF/LCM}
+%
+\begin{clm}\label{sub:pnf_lcm_edf_comp}
+G-EDF/PNF's schedulability is equal or better than G-EDF/LCM's if for each task $\tau_i$:
+%
+\begin{compactitem}
+\item Maximum number of jobs of $\tau_{j}\in \gamma_i$ - with higher priority than
+current job of $\tau_{i}$ - that can exist during $T_{i}$ is not less than $1/\alpha_{max}$.
+%
+\item Total number of transactions in any task $\tau_{j}\neq\tau_{i}$ - that has no direct conflict with any transaction in $\tau_{i}$ - divided by number of processors is not greater than maximum number of jobs- with higher priority than current job of $\tau_{i}$ - that can be released during $T_{i}$.
+%
+\end{compactitem}
+%
+\end{clm}
+%
+\begin{proof}\normalfont
+%
+Proof follows from proof of Claim~\ref{PNF ecf comaprison clm} where $RC_{G-EDF/LCM}^{to}(T_i)$ is upper bounded by (\ref{eq:gedf_lcm_vs_ecm_1}). Schedulability of G-EDF/PNF is equal or better than schedulability of G-EDF/LCM if for each $\tau_i$ 
+%
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \nonumber \\
+\le & \left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}^{ex}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\label{eq:pnf_vs_gedf_lcm_2}
+\end{eqnarray}
+%
+$\because\,\gamma_{i}\subseteq\gamma_{i}^{ex}$ and $\Theta_{i}\subseteq\Theta_{i}^{ex}$.
+$\therefore$ (\ref{eq:pnf_vs_gedf_lcm_2}) holds if 
+%
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \nonumber \\
+\le & \left(\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\label{eq:pnf_vs_gedf_lcm_3}
+\end{eqnarray}
+%
+Eq(\ref{eq:pnf_vs_gedf_lcm_3}) holds if:
+\begin{enumerate}
+%
+\item For each $\tau_{i}$ and $\tau_{j}\in\gamma_{i}$ 
+\[
+\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\le\left(1+\alpha_{max}\right)\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)
+\]
+\[
+\therefore\,\forall\tau_{j}\in\gamma_{i},\,\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\le\left(1+\alpha_{max}\right)\left\lceil \frac{T_{i}}{T_{j}}\right\rceil 
+\]
+\[
+\therefore\,\forall\tau_{j}\in\gamma_{i},\,\frac{1}{\alpha_{max}}\le\left\lceil \frac{T_{i}}{T_{j}}\right\rceil 
+\]
+By (\ref{eq:gedf_max_job_no_interfer_j_i}), $\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+is maximum number of jobs of $\tau_{j}$ - with higher priority than
+current job of $\tau_{i}$ - that can exist during $T_{i}$.
+%
+\item $\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \le\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $.
+$\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}$
+is total number of transactions in any task $\tau_{j}\neq\tau_{i}$
+that has no direct conflict with any transaction in $\tau_{i}$. $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $
+is the maximum number of jobs- with higher priority than current job
+of $\tau_{i}$ - that can be released during $T_{i}$.
+\end{enumerate}
+%
+From the previous observations, Claim follows.
+%
+\end{proof}
+%
+\subsection{PNF versus G-RMA/LCM}\label{subsec:pnf_vs_grma_lcm}
+%
+\begin{clm}\label{sub:pnf_lcm_rma_comp}
+%
+Schedulability of G-RMA/PNF is equal or better than G-RMA/LCM's if:
+\begin{compactitem}
+\item $\alpha_{min}$ is small (i.e., $\alpha_{min \rightarrow 0}$).
+%
+\item For each task $\tau_i$, total number of transactions in tasks with lower priority than $p_{i}$ and have no direct conflict with any transaction in $\tau_i$ divided by number of processors does not exceed one half of maximum number of jobs with higher priority than $p_{i}$ that can be released during $T_{i}$.
+%
+\end{compactitem}
+%
+\end{clm}
+%
+\begin{proof}\normalfont
+%
+Proof follows from proof of Claim~\ref{clm_pnf_rcm_comp} where $RC_{G-RMA/LCM}^{to}(T_i)$ is upper bounded by (\ref{eq:grma_lcm_vs_rcm_1}). Schedulability of G-RMA/PNF is equal or better than schedulability of G-RMA/LCM if for each $\tau_i$:
+%
+\begin{eqnarray}
+ & \left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \nonumber \\
+\le & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)\nonumber \\
++ & \left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)\nonumber \\
++ & \left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)
+\label{eq:pnf_vs_grma_lcm_1}
+\end{eqnarray}
+%
+\begin{eqnarray}
+\therefore & \left(\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)+\left(2\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right)\nonumber \\
++ & \left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \nonumber \\
+\le & \left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)\nonumber \\
++ & \left(1-\alpha_{min}\right)\left(2\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)\nonumber \\
++ & \left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\label{eq:pnf_vs_grma_lcm_2}
+\end{eqnarray}
+%
+$\because\,\gamma_{i}\subseteq\gamma_{i}^{ex}$, $\Theta_{i}\subseteq\Theta_{i}^{ex}$
+and $\alpha_{max}\ge0$, then $\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)$
+is never bigger than $\left(1+\alpha_{max}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}>p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\right)\right)$.
+Thus, (\ref{eq:pnf_vs_grma_lcm_2}) holds if:
+%
+\begin{enumerate}
+\item For each $\tau_{i}$ 
+\begin{equation}
+\sum_{\forall\tau_{j}\in\gamma_{i},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\le\left(1-\alpha_{min}\right)\left(\sum_{\forall\tau_{j}\in\gamma_{i}^{ex},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}^{ex}\neq\emptyset}\right)\right)\label{eq:pnf_vs_grma_lcm_3}
+\end{equation}
+%
+Eq(\ref{eq:pnf_vs_grma_lcm_3}) holds if $\alpha_{min}\rightarrow0$.
+%
+\item For each $\tau_{i}$ 
+\begin{equation}
+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \le\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \label{eq:pnf_vs_grma_lcm_4}
+\end{equation}
+Eq(\ref{eq:pnf_vs_grma_lcm_3}) holds if 
+\[
+\frac{\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\le\frac{\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil }{2}
+\]
+$\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)$
+is total number of transactions in tasks with lower priority than
+$p_{i}$ that do not have direct conflict with any transaction in $\tau_i$. $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+is maximum number of jobs with higher priority than $p_{i}$ that can
+be released during $T_{i}$.
+\end{enumerate}
+%
+From previous observations, Claim follows.
+%
+\end{proof}
+%
+\subsection{PNF versus Lock-free Synchronization\label{pnf vs lock free sec}}
+%
+As mentioned in Section~\ref{sec:comparison}, the retry-loop lock-free approach in~\cite{key-5} is the most relevant to our work. As lock-free instructions access only one object, then $\Theta_i^k$ for any $s_i^k$ will be restricted to one object only (i.e., $\Theta_i^k=\theta_i^k$). Thus, transitive retry cannot happen, $\Theta_i^{ex}=\Theta_i$ and $\gamma_i^{ex}=\gamma_i$.
+%
+\begin{clm}\label{PNF lock-free comparison}
+%
+If, for each task $\tau_i$, maximum number of jobs- with higher priority than current job of
+$\tau_{i}$ - that can be released during $T_{i}$ is not less than total number of transactions in any task $\tau_{j}\neq\tau_{i}$ that has no direct conflict with any transaction in $\tau_{i}$, then schedulability of PNF under G-EDF is equal or better than schedulability of retry-loop lock-free~\cite{key-5} with $s_{max}/r_{max} \ge 1$. $s_{max}$ is the length of longest transaction among all tasks. $r_{max}$ is the maximum execution cost of a single iteration of any lock-free retry loop of any task.
+%
+\end{clm}
+%
+\begin{proof}\normalfont
+%
+Following the same steps of proof Claim~\ref{gedf-lcm-lock-free_clm}, schedulability of PNF is equal or better than schedulability of retry-loop lock-free under G-EDF if for each task $\tau_i$
+%
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)r_{max}\label{eq:pnf_vs_gedf_lf_1}
+\end{eqnarray}
+%
+Let $\beta_{ij}^{*}=\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}$.
+Thus, (\ref{eq:pnf_vs_gedf_lf_1}) becomes 
+%
+\begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \right)\right)}{\left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}^{*}\right)\right)+\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor \right)}\label{eq:pnf_vs_gedf_lf_2}
+\end{equation}
+%
+$\because\,\beta_{ij}\ge\beta_{ij}^{*}$, then (\ref{eq:pnf_vs_gedf_lf_2})
+holds if $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \ge\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor $.
+$\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor $
+is maximum number of jobs- with higher priority than current job of
+$\tau_{i}$ - that can be released during $T_{i}$. $\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}$
+is total number of transactions in any task $\tau_{j}\neq\tau_{i}$
+that has no direct conflict with any transaction in $\tau_{i}$. $\sum_{\forall\tau_{j}\in\zeta_{i}}\left\lfloor \frac{T_{i}}{T_{j}}\right\rfloor \ge\left\lfloor \frac{\sum_{\forall\tau_{j}}\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}}{m}\right\rfloor $
+allows $s_{max}/r_{max}\ge1$ with equal or better schedulability for PNF than retry-loop lock-free with G-EDF.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:pnf_grma_lf_comp}
+%
+If, for each task $\tau_i$, maximum number of jobs with higher priority than $p_{i}$ that
+can be released during $T_{i}$ is not less than double of total number of transactions in tasks with lower priority than $p_{i}$ that have no direct conflict with any transaction in $\tau_{i}$ divided by number of processors, then schedulability of PNF is equal or better than schedulability of retry-loop lock-free~\cite{key-5} under G-RMA with $s_{max}/r_{max} \ge 1$. $s_{max}$ is the length of longest transaction among all tasks. $r_{max}$ is the maximum execution cost of a single iteration of any lock-free retry loop of any task.
+%
+\end{clm}
+%
+\begin{proof}\normalfont
+%
+Following the same steps of proof Claim~\ref{lcm rma lock-free comparison clm}, schedulability of PNF is equal or better than schedulability of retry-loop lock-free under G-RMA if for each task $\tau_i$
+%
+\begin{eqnarray}
+ & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor \right)s_{max}\nonumber \\
+\le & \left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)r_{max}\label{eq:pnf_vs_grma_lf_1}
+\end{eqnarray}
+%
+Let $\beta_{ij}^{*}=\sum_{\forall s_{j}^{l},\Theta_{j}^{l}\cap\Theta_{i}\neq\emptyset}$,
+then (\ref{eq:pnf_vs_grma_lf_1}) becomes 
+%
+\begin{equation}
+\frac{s_{max}}{r_{max}}\le\frac{\left(\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}\right)+\left(\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \right)\right)}{\left(\sum_{\forall\tau_{j}\in\gamma_{i}}\left(\left(\left\lceil \frac{T_{i}}{T_{j}}\right\rceil +1\right)\beta_{ij}^{*}\right)\right)+\left\lfloor \frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}\right\rfloor }\label{eq:pnf_vs_grma_lf_2}
+\end{equation}
+%
+$\because\,\beta_{ij}\ge\beta_{ij}^{*}$, then (\ref{eq:pnf_vs_grma_lf_2})
+holds if $\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil \ge\frac{2\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)}{m}$.
+$\sum_{\forall\tau_{j},p_{j}>p_{i}}\left\lceil \frac{T_{i}}{T_{j}}\right\rceil $
+is maximum number of jobs with higher priority than $p_{i}$ that
+can be released during $T_{i}$. $\sum_{\forall\tau_{j},p_{j}<p_{i}}\left(\sum_{\forall s_{j}^{h},\Theta_{j}^{h}\cap\Theta_{i}=\emptyset}\right)$
+is total number of transactions in tasks with lower priority than
+$p_{i}$ that have no direct conflict with any transaction in $\tau_{i}$.
+%
+\end{proof}
+%
+\subsection{PNF versus Locking Protocols}\label{subsec:pnf_vs_locking_comp}
+%
+\begin{clm}\label{clm:gedf_pnf_vs_omlp}
+%
+Following the same notations in Section~\ref{subsec:pi_omlp}, schedulability of PNF is equal or better than schedulability of Global OMLP under G-EDF if 
+%
+\begin{eqnarray}
+%
+\frac{s_{max}}{L_{max}} \le \frac{N_{min}\left(2m-1\right)}{\left(n-1\right)N_{max}\left(\Phi_{max}+1+\frac{1}{m}\right)}
+\label{eq:gedf_pnf_omlp_cmp_final}
+%
+\end{eqnarray}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Use (\ref{rc-PNF}) for $RC_{i_{to}}(T_i)$ and (\ref{d-edf}) for $D_i(T_i)$ under G-EDF/PNF. Following the same steps of proof of Claim~\ref{clm:ecm_vs_omlp}, Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:grma_pnf_vs_omlp}
+%
+Following the same notations in Section~\ref{subsec:pi_omlp}, schedulability of PNF is equal or better than schedulability of Global OMLP under G-RMA if 
+%
+\begin{equation}
+\frac{s_{max}}{L_{max}}\le\frac{N_{min}\left(2m-1\right)}{\left(n-1\right)N_{max}\left(\Phi_{max}+1+\frac{2}{m}\right)}
+\label{eq:grma_pnf_omlp_cmp_final}
+\end{equation}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Use (\ref{rc-PNF}) for $RC_{i_{to}}(T_i)$ and (\ref{PNF-delay}) for $D_i(T_i)$ under G-RMA/PNF. Following the same steps of proof of Claim~\ref{clm:ecm_vs_omlp}, Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:gedf_pnf_vs_rnlp}
+%
+Following the same notations in Section~\ref{subsec:pi_rnlp}, schedulability of PNF is equal or better than schedulability of RNLP under G-EDF if 
+%
+\begin{eqnarray}
+%
+\frac{s_{max}}{L_{max}} \le \frac{N_{min}\left(2m-1\right)}{\left(n-1\right)N_{max}\left(\Phi_{max}+1+\frac{1}{m}\right)}
+\label{eq:gedf_pnf_rnlp_cmp_final}
+%
+\end{eqnarray}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Use (\ref{rc-PNF}) for $RC_{i_{to}}(T_i)$ and (\ref{d-edf}) for $D_i(T_i)$ under G-EDF/PNF. Following the same steps of proof of Claim~\ref{clm:ecm_vs_rnlp}, Claim follows.
+%
+\end{proof}
+%
+\begin{clm}\label{clm:grma_pnf_vs_rnlp}
+%
+Following the same notations in Section~\ref{subsec:pi_rnlp}, schedulability of PNF is equal or better than schedulability of Global RNLP under G-RMA if 
+%
+\begin{equation}
+\frac{s_{max}}{L_{max}}\le\frac{N_{min}\left(2m-1\right)}{\left(n-1\right)N_{max}\left(\Phi_{max}+1+\frac{2}{m}\right)}
+\label{eq:grma_pnf_rnlp_cmp_final}
+\end{equation}
+%
+\end{clm}
+%
+\begin{proof}
+%
+Use (\ref{rc-PNF}) for $RC_{i_{to}}(T_i)$ and (\ref{PNF-delay}) for $D_i(T_i)$ under G-RMA/PNF. Following the same steps of proof of Claim~\ref{clm:ecm_vs_rnlp}, Claim follows.
+%
+\end{proof}
+%
+\section{Conclusions}\label{pnf_conclusion}
+%
+Transitive retry increases transactional retry cost under ECM, RCM, and LCM. PNF avoids transitive retry by avoiding transactional preemptions. PNF reduces the priority of aborted transactions to enable other tasks to execute, increasing processor usage. Executing transactions are not preempted due to the release of higher priority jobs. On the negative side of PNF, higher priority jobs can be blocked by executing transactions of lower priority jobs. 
+
+G-EDF/PNF's schedulability is equal or better than ECM's if, for each task $\tau_i$, total number of transactions in any task $\tau_{j}\neq\tau_{i}$ - that has no direct conflict with any transaction in $\tau_{i}$ - divided by number of processors is not greater than maximum number of higher priority jobs than current job of $\tau_{i}$ that can be released during $T_{i}$. Similar condition holds for the schedulability comparison between G-EDF/PNF and G-EDF/LCM, in addition to maintain a lower bound of $1/\alpha_{max}$ over maximum number of higher priority jobs of $\tau_j$ that can exist during $T_i$ and have direct conflict with any transaction in $\tau_i$. 
+
+Schedulability of G-RMA/PNF is equal or better than RCM's if, for each task $\tau_i$, total number of transactions in tasks with lower priority than $p_i$ does not exceed one half of maximum number of jobs with higher priority than $p_{i}$ that can be released during $T_{i}$. Schedulability of G-RMA/PNF is equal or better than G-RMA/LCM's if $\alpha_{min}\rightarrow 0$ and, for each task $\tau_i$, total number of transactions in tasks with lower priority than $p_{i}$ and have no direct conflict with any transaction in $\tau_i$ divided by number of processors does not exceed one half of maximum number of jobs with higher priority than $p_{i}$ that can be released during $T_{i}$.
+
+schedulability of PNF under G-EDF and G-RMA is equal or better than schedulability of retry-loop lock-free~\cite{key-5} with $s_{max}/r_{max} \ge 1$ if, for each task $\tau_i$, maximum number of higher priority jobs than current job of $\tau_i$ - that can be released during $T_{i}$ - is not less than maximum number of lower priority transactions in any task $\tau_{j}\neq\tau_{i}$ that has no direct conflict with any transaction in $\tau_{i}$. 
+
+Schedulability of G-EDF/PNF is equal or better than schedulability of Global OMLP and RNLP if $\frac{s_{max}}{L_{max}} \le \frac{N_{min}\left(2m-1\right)}{\left(n-1\right)N_{max}\left(\Phi_{max}+1+\frac{1}{m}\right)}$. Under G-RMA, schedulability of PNF is equal or better than schedulability of Global OMLP and RNLP if $\frac{s_{max}}{L_{max}}\le\frac{N_{min}\left(2m-1\right)}{\left(n-1\right)N_{max}\left(\Phi_{max}+1+\frac{2}{m}\right)}$.

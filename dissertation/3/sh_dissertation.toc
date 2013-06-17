@@ -1,0 +1,99 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Transactional Memory}{2}{section.1.1}
+\contentsline {section}{\numberline {1.2}STM for Real-Time Software}{3}{section.1.2}
+\contentsline {section}{\numberline {1.3}Research Contributions}{4}{section.1.3}
+\contentsline {section}{\numberline {1.4}Summary of Proposed Post Preliminary Research}{5}{section.1.4}
+\contentsline {section}{\numberline {1.5}Proposal Organization}{6}{section.1.5}
+\contentsline {chapter}{\numberline {2}Past and Related Work}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Real-Time Locking Protocols}{8}{section.2.1}
+\contentsline {section}{\numberline {2.2}Real-Time Lock-Free and Wait-Free Synchronization}{10}{section.2.2}
+\contentsline {section}{\numberline {2.3}Real-Time Database Concurrency Control}{13}{section.2.3}
+\contentsline {section}{\numberline {2.4}Real-Time TM Concurrency Control}{16}{section.2.4}
+\contentsline {chapter}{\numberline {3}Models and Assumptions}{21}{chapter.3}
+\contentsline {chapter}{\numberline {4}The ECM and RCM Contention Managers}{23}{chapter.4}
+\contentsline {section}{\numberline {4.1}ECM}{23}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Illustrative Example}{24}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Transitive Retry}{24}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}G-EDF Interference}{25}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Retry Cost of Atomic Sections}{27}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}Upper Bound on Response Time}{31}{subsection.4.1.5}
+\contentsline {section}{\numberline {4.2}RCM}{33}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Maximum Task Interference}{34}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Retry Cost of Atomic Sections}{34}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Upper Bound on Response Time}{35}{subsection.4.2.3}
+\contentsline {section}{\numberline {4.3}STM versus Lock-Free}{36}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}ECM versus Lock-Free}{36}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}RCM versus Lock-Free}{38}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}STM versus Locking protocols}{40}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Priority Inversion under Global OMLP}{41}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}ECM versus Global OMLP}{41}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}RCM versus Global OMLP}{42}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}Priority Inversion under RNLP}{42}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.5}ECM versus RNLP}{43}{subsection.4.4.5}
+\contentsline {subsection}{\numberline {4.4.6}RCM vs. RNLP}{43}{subsection.4.4.6}
+\contentsline {section}{\numberline {4.5}Conclusions}{43}{section.4.5}
+\contentsline {chapter}{\numberline {5}The LCM Contention Manager}{45}{chapter.5}
+\contentsline {section}{\numberline {5.1}Length-based CM}{45}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Design and Rationale}{46}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}LCM Illustrative Example}{48}{subsection.5.1.2}
+\contentsline {section}{\numberline {5.2}Properties}{49}{section.5.2}
+\contentsline {section}{\numberline {5.3}Retry Cost and Response Time of G-EDF/LCM}{51}{section.5.3}
+\contentsline {section}{\numberline {5.4}Schedulability of G-EDF/LCM}{52}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}G-EDF/LCM versus ECM}{52}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}G-EDF/LCM versus Lock-free}{53}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}G-EDF/LCM versus Global OMLP}{54}{subsection.5.4.3}
+\contentsline {subsection}{\numberline {5.4.4}G-EDF/LCM versus RNLP}{54}{subsection.5.4.4}
+\contentsline {section}{\numberline {5.5}Retry Cost and Response Time of G-RMA/LCM}{54}{section.5.5}
+\contentsline {section}{\numberline {5.6}Schedulability of G-RMA/LCM}{55}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}G-RMA/LCM versus RCM}{55}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}G-RMA/LCM versus Lock-free}{56}{subsection.5.6.2}
+\contentsline {subsection}{\numberline {5.6.3}G-RMA/LCM versus Global OMLP}{59}{subsection.5.6.3}
+\contentsline {subsection}{\numberline {5.6.4}G-RMA/LCM versus RNLP}{59}{subsection.5.6.4}
+\contentsline {section}{\numberline {5.7}Conclusions}{60}{section.5.7}
+\contentsline {chapter}{\numberline {6}The PNF Contention Manager}{61}{chapter.6}
+\contentsline {section}{\numberline {6.1}Limitations of ECM, RCM, and LCM}{61}{section.6.1}
+\contentsline {section}{\numberline {6.2}The PNF Contention Manager}{62}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Illustrative Example}{64}{subsection.6.2.1}
+\contentsline {section}{\numberline {6.3}Properties}{65}{section.6.3}
+\contentsline {section}{\numberline {6.4}Retry Cost and Response Time Under PNF}{67}{section.6.4}
+\contentsline {section}{\numberline {6.5}PNF versus Competitors}{70}{section.6.5}
+\contentsline {subsection}{\numberline {6.5.1}PNF versus ECM}{70}{subsection.6.5.1}
+\contentsline {subsection}{\numberline {6.5.2}PNF versus RCM}{70}{subsection.6.5.2}
+\contentsline {subsection}{\numberline {6.5.3}PNF versus G-EDF/LCM}{71}{subsection.6.5.3}
+\contentsline {subsection}{\numberline {6.5.4}PNF versus G-RMA/LCM}{73}{subsection.6.5.4}
+\contentsline {subsection}{\numberline {6.5.5}PNF versus Lock-free Synchronization}{74}{subsection.6.5.5}
+\contentsline {subsection}{\numberline {6.5.6}PNF versus Locking Protocols}{76}{subsection.6.5.6}
+\contentsline {section}{\numberline {6.6}Conclusions}{76}{section.6.6}
+\contentsline {chapter}{\numberline {7}The FBLT Contention Manager}{78}{chapter.7}
+\contentsline {section}{\numberline {7.1}Motivation}{78}{section.7.1}
+\contentsline {section}{\numberline {7.2}The FBLT Contention Manager}{79}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}Illustrative Example}{79}{subsection.7.2.1}
+\contentsline {section}{\numberline {7.3}Retry Cost and Response Time Bounds}{81}{section.7.3}
+\contentsline {section}{\numberline {7.4}Schedulability Comparison}{82}{section.7.4}
+\contentsline {subsection}{\numberline {7.4.1}FBLT versus ECM}{83}{subsection.7.4.1}
+\contentsline {subsection}{\numberline {7.4.2}FBLT versus RCM}{84}{subsection.7.4.2}
+\contentsline {subsection}{\numberline {7.4.3}FBLT versus G-EDF/LCM}{84}{subsection.7.4.3}
+\contentsline {subsection}{\numberline {7.4.4}FBLT versus G-RMA/LCM}{84}{subsection.7.4.4}
+\contentsline {subsection}{\numberline {7.4.5}FBLT versus G-EDF/PNF}{85}{subsection.7.4.5}
+\contentsline {subsection}{\numberline {7.4.6}FBLT versus G-RMA/PNF}{85}{subsection.7.4.6}
+\contentsline {subsection}{\numberline {7.4.7}FBLT versus Lock-free}{86}{subsection.7.4.7}
+\contentsline {subsection}{\numberline {7.4.8}FBLT versus Locking Protocols}{87}{subsection.7.4.8}
+\contentsline {section}{\numberline {7.5}Conclusions}{88}{section.7.5}
+\contentsline {chapter}{\numberline {8}FBLT Contention Manager with Checkpointing}{89}{chapter.8}
+\contentsline {section}{\numberline {8.1}Motivation}{89}{section.8.1}
+\contentsline {section}{\numberline {8.2}Checkpointing FBLT (CPFBLT)}{90}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}Checkpointing LCM (CPLCM)}{90}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}CPFBLT}{92}{subsection.8.2.2}
+\contentsline {section}{\numberline {8.3}CPFBLT Retry Cost}{92}{section.8.3}
+\contentsline {section}{\numberline {8.4}CPFBLT versus FBLT}{96}{section.8.4}
+\contentsline {section}{\numberline {8.5}Conclusion}{97}{section.8.5}
+\contentsline {chapter}{\numberline {9}Implementation and Experimental Evaluations}{98}{chapter.9}
+\contentsline {section}{\numberline {9.1}Methodology}{98}{section.9.1}
+\contentsline {section}{\numberline {9.2}Tasksets}{99}{section.9.2}
+\contentsline {section}{\numberline {9.3}Performance Measurements}{99}{section.9.3}
+\contentsline {section}{\numberline {9.4}Results}{100}{section.9.4}
+\contentsline {chapter}{\numberline {10}Conclusions and Future Work}{110}{chapter.10}
+\contentsline {section}{\numberline {10.1}Conclusions}{110}{section.10.1}
+\contentsline {section}{\numberline {10.2}Future Work}{110}{section.10.2}
+\contentsline {chapter}{Bibliography}{111}{section.10.2}

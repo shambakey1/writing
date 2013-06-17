@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+
+\bibitem{key-5}
+U.M.C. Devi, H.~Leontyev, and J.H. Anderson.
+\newblock Efficient synchronization under global edf scheduling on
+  multiprocessors.
+\newblock In {\em 18th Euromicro Conference on Real-Time Systems}, pages 10 pp.
+  --84, 0-0 2006.
+
+\bibitem{shambake_phd_proposal}
+Mohammed El-Shambakey.
+\newblock {\em Real-Time Software Transactional Memory: Contention Managers,
+  Time Bounds, and Implementations}.
+\newblock Phd proposal, Virginia Tech, 2012.
+
+\bibitem{stmconcurrencycontrol:emsoft11}
+M.~Elshambakey and B.~Ravindran.
+\newblock Stm concurrency control for multicore embedded real-time software:
+  Time bounds and tradeoffs.
+\newblock In {\em SAC}, 2012.
+
+\end{thebibliography}

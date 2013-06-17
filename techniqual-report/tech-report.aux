@@ -1,0 +1,858 @@
+\relax 
+\citation{Herlihy:2006:AMP:1146381.1146382}
+\citation{Guerraoui:2005:TTT:1073814.1073863}
+\citation{Saha:2006:MHP:1122971.1123001}
+\citation{Harris:2005:CMT:1065944.1065952}
+\citation{austenmc:tcc:dissertation:2009}
+\citation{sha95}
+\citation{austenmc:tcc:dissertation:2009}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
+\newlabel{sec:intro}{{1}{1}}
+\citation{key-4}
+\citation{key-3}
+\citation{marathe2006lowering}
+\citation{Herlihy:2003:STM:872035.872048}
+\citation{marathe2006lowering}
+\citation{anderson95realtime}
+\citation{bc+08}
+\citation{Herlihy:2006:AMP:1146381.1146382}
+\citation{key-1}
+\citation{Saha:2006:MHP:1122971.1123001}
+\citation{manson2006preemptible,fahmy2009bounding,sarni2009real,schoeberl2010rttm,key-1,barrosmanaging}
+\citation{manson2006preemptible}
+\citation{fahmy2009bounding}
+\citation{sarni2009real}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}}
+\newlabel{sec:past}{{2}{3}}
+\citation{schoeberl2010rttm}
+\citation{schoeberl2010rttm}
+\citation{key-1}
+\citation{schoeberl2010rttm}
+\citation{key-1}
+\citation{key-1}
+\citation{barrosmanaging}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Preliminaries}{4}}
+\newlabel{sec:model}{{3}{4}}
+\citation{key-2}
+\@writefile{toc}{\contentsline {section}{\numberline {4}G-EDF/EDF CM Response Time}{5}}
+\newlabel{sec:g-edf-edf-cm}{{4}{5}}
+\newlabel{eq11}{{1}{5}}
+\newlabel{eq12}{{2}{5}}
+\citation{austenmc:tcc:dissertation:2009}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  Maximum interference between two tasks under G-EDF}}{6}}
+\newlabel{fig1}{{1}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Maximum interference during part $L$ of $t(T_{i})$}}{6}}
+\newlabel{fig2}{{2}{6}}
+\newlabel{eq13}{{3}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Retry Cost of Atomic Sections}{6}}
+\newlabel{gedf-edf}{{1}{6}}
+\newlabel{eq3}{{4}{6}}
+\newlabel{fig5-a}{{3(a)}{7}}
+\newlabel{sub@fig5-a}{{(a)}{7}}
+\newlabel{fig5-b}{{3(b)}{7}}
+\newlabel{sub@fig5-b}{{(b)}{7}}
+\newlabel{fig5-c}{{3(c)}{7}}
+\newlabel{sub@fig5-c}{{(c)}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Retry of $s_i^k(\theta )$ due to $s_j^l(\theta )$}}{7}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Early validation}}}{7}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Lazy validation with $s_{i}^{k}(\theta )\le s_{j}^{l}(\theta )$}}}{7}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Lazy validation with $s_{i}^{k}(\theta )>s_{j}^{l}(\theta )$}}}{7}}
+\newlabel{fig5}{{3}{7}}
+\newlabel{eq2}{{5}{7}}
+\newlabel{fig6-a}{{4(a)}{8}}
+\newlabel{sub@fig6-a}{{(a)}{8}}
+\newlabel{fig6-b}{{4(b)}{8}}
+\newlabel{sub@fig6-b}{{(b)}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Retry of $s_i^p(\theta )$ due to other atomic sections}}{8}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Other atomic sections interfere only with $s_i^p(\theta )$}}}{8}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {All atomic sections interfere with each other and $s_i^p(\theta )$}}}{8}}
+\newlabel{fig6}{{4}{8}}
+\newlabel{eq3-1}{{6}{8}}
+\newlabel{eq5}{{7}{8}}
+\newlabel{eq4}{{8}{8}}
+\newlabel{eq4-1}{{9}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Values associated with $s_{max}^{*}(\theta )$}}{9}}
+\newlabel{fig7}{{5}{9}}
+\citation{key-2}
+\citation{key-2}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Upper Bound on Response Time}{10}}
+\newlabel{eq9}{{10}{10}}
+\newlabel{eq10}{{11}{10}}
+\newlabel{eq14}{{12}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces  Atomic sections of job $T_{j}^{1}$ contributing to period $t(T_i)$}}{11}}
+\newlabel{fig10}{{6}{11}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Tighter Upper Bound}{11}}
+\newlabel{eq15}{{13}{11}}
+\newlabel{eq16}{{14}{12}}
+\newlabel{eq17}{{15}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}G-RMA/RMA CM Response Time}{12}}
+\newlabel{sec:g-rma-rma-cm}{{5}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Maximum Task Interference}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Max interference of $T_{j}$ to $T_{i}$ in G-RMA}}{12}}
+\newlabel{fig11}{{7}{12}}
+\citation{key-2}
+\citation{brandenburg2008comparison}
+\citation{key-3}
+\citation{chen1990dynamic}
+\citation{baker1991stack}
+\citation{Rajkumar:1991:SRS:532621}
+\citation{sha1990priority}
+\citation{lakshmanan2009coordinated,rajkumar2002real}
+\citation{rajkumar2002real}
+\citation{chen1998multiprocessor}
+\citation{lopez2004utilization}
+\citation{gai2003comparison}
+\citation{holman2006locking}
+\citation{easwaran2009resource}
+\citation{easwaran2009resource}
+\citation{key-5}
+\citation{key-4,brandenburg2008implementation}
+\citation{key-3}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Retry Cost of Atomic Sections}{13}}
+\newlabel{eq20}{{16}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Upper Bound on Response Time}{13}}
+\newlabel{eq22}{{17}{13}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}FMLP and OMLP Blocking Times}{13}}
+\newlabel{sec:blocking-bound-fmlp-omlp}{{6}{13}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Some synchronization protocols }}{14}}
+\newlabel{table 2}{{1}{14}}
+\newlabel{global-fmlp}{{6.1}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Global FMLP}{14}}
+\citation{Goossens:2003:PSP:876600.876615,srinivasan2002deadline}
+\citation{key-3}
+\citation{key-3}
+\citation{key-3}
+\citation{key-3}
+\citation{key-3}
+\newlabel{eq26}{{18}{15}}
+\newlabel{eq27}{{19}{15}}
+\newlabel{eq28}{{20}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Global OMLP}{15}}
+\citation{key-5}
+\citation{key-5}
+\newlabel{eq29}{{21}{16}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}STM versus Locks and Lock-Free}{16}}
+\newlabel{sec:comparison}{{7}{16}}
+\newlabel{sub:G-EDF-scheduler-with}{{7.1}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1} ECM versus Lock-Free}{16}}
+\newlabel{eq30}{{22}{16}}
+\newlabel{eq31}{{23}{16}}
+\newlabel{eq32}{{24}{16}}
+\citation{key-5}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Effect of $\left \delimiter "4264306 \frac  {t(T_{i})}{t(T_{j})}\right \delimiter "5265307 $ on $\frac  {s_{max}}{r_{max}}$}}{17}}
+\newlabel{fig14}{{8}{17}}
+\newlabel{eq33}{{26}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}RCM versus Lock-Free}{18}}
+\newlabel{eq34}{{27}{18}}
+\newlabel{eq35}{{28}{18}}
+\newlabel{eq36}{{29}{18}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces  Task association for lower priority tasks than $T_i$ and higher priority tasks than $T_k$}}{19}}
+\newlabel{fig:matrix-example}{{9}{19}}
+\newlabel{fig15-a}{{10(a)}{20}}
+\newlabel{sub@fig15-a}{{(a)}{20}}
+\newlabel{fig15-b}{{10(b)}{20}}
+\newlabel{sub@fig15-b}{{(b)}{20}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Change of $s_{max}/r_{max}$: a) $\frac  {s_{max}}{r_{max}}$ versus $\beta _{i,j}$ and b) $\frac  {s_{max}}{r_{max}}$ versus $\beta _{k,l}$}}{20}}
+\newlabel{fig15}{{10}{20}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{20}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{20}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}FMLP \& OMLP versus ECM and RCM }{20}}
+\newlabel{eq38}{{30}{21}}
+\newlabel{eq45}{{31}{21}}
+\newlabel{eq40}{{32}{22}}
+\newlabel{eq41}{{33}{22}}
+\newlabel{eq46}{{34}{22}}
+\newlabel{FIFO}{{8}{22}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Response time of G-EDF and G-RMA system with FIFO CM}{22}}
+\newlabel{fig12-a}{{11(a)}{23}}
+\newlabel{sub@fig12-a}{{(a)}{23}}
+\newlabel{fig12-b}{{11(b)}{23}}
+\newlabel{sub@fig12-b}{{(b)}{23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces (a)Early validation (b)Lazy validation}}{23}}
+\newlabel{fig12}{{11}{23}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{23}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{23}}
+\newlabel{eq23}{{35}{23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Retrial of $s_{i}^{l}$ by multiple atomic sections of $s_{j}^{p}$}}{24}}
+\newlabel{fig13}{{12}{24}}
+\newlabel{eq24}{{36}{24}}
+\newlabel{eq26}{{37}{24}}
+\citation{stmconcurrencycontrol:emsoft11}
+\newlabel{eq25}{{38}{25}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Length-based CM}{25}}
+\newlabel{sec 9.1}{{9.1}{25}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1} Design and Rationale}{25}}
+\newlabel{cm_eq}{{39}{25}}
+\newlabel{step_sicommits}{{2}{26}}
+\newlabel{step_cijkl}{{4}{26}}
+\newlabel{step_alphaijkl}{{5}{26}}
+\newlabel{step_siaborts}{{8}{26}}
+\newlabel{step_sjaborts}{{10}{26}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces LCM}}{26}}
+\newlabel{alg_lcm}{{1}{26}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Interference of $s_{i}^{k}(\theta )$ by various lengths of $s_{j}^{l}(\theta )$}}{26}}
+\newlabel{fig16}{{13}{26}}
+\newlabel{eq49}{{40}{27}}
+\newlabel{LCM_higher_rc}{{7}{27}}
+\newlabel{eq47}{{41}{27}}
+\newlabel{LCM_lower_rc}{{8}{27}}
+\newlabel{eq48}{{42}{27}}
+\newlabel{no priority inversion in lcm}{{9}{27}}
+\newlabel{priority_inversion}{{10}{28}}
+\newlabel{max_pri_inv}{{11}{28}}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\newlabel{response g-edf/lcm}{{9.2}{29}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2} Response Time of G-EDF/LCM}{29}}
+\newlabel{GEDF/LCM response time}{{12}{29}}
+\newlabel{eq78}{{43}{29}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}Schedulability of G-EDF/LCM and ECM}{29}}
+\newlabel{performance g-edf-lcm}{{9.3}{29}}
+\citation{stmconcurrencycontrol:emsoft11}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces $\tau _h^p$ has a higher priority than $\tau _i^x$}}{30}}
+\newlabel{fig17}{{14}{30}}
+\newlabel{eqa}{{44}{30}}
+\newlabel{lcm versus ecm}{{13}{30}}
+\newlabel{edf-lcm-ecm}{{45}{30}}
+\newlabel{eq61}{{46}{30}}
+\newlabel{eq101}{{47}{30}}
+\citation{key-5}
+\citation{key-5}
+\citation{key-5}
+\newlabel{eq63}{{48}{31}}
+\newlabel{eq102}{{49}{31}}
+\newlabel{eqc}{{50}{31}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.4}G-EDF/LCM versus Lock-free}{31}}
+\newlabel{gedf-lcm-lock-free}{{9.4}{31}}
+\newlabel{gedf-lcm-lock-free_clm}{{14}{31}}
+\newlabel{eq32}{{51}{31}}
+\newlabel{u-gedf-lcm-ecm}{{52}{32}}
+\newlabel{s-r-1}{{53}{32}}
+\newlabel{s-r-2}{{54}{32}}
+\newlabel{s-r-4}{{55}{32}}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.5}Response Time of G-RMA/LCM}{33}}
+\newlabel{rma}{{9.5}{33}}
+\newlabel{response g-rma/lcm}{{15}{33}}
+\newlabel{eq60}{{56}{33}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.6}Schedulability of G-RMA/LCM and RCM}{33}}
+\newlabel{rma eval}{{9.6}{33}}
+\newlabel{rma_eval_clm}{{16}{33}}
+\newlabel{eq70}{{57}{33}}
+\newlabel{eq68}{{58}{33}}
+\newlabel{eq69}{{16}{33}}
+\citation{key-5}
+\citation{key-5}
+\citation{key-5}
+\newlabel{grma-lcm-rcm}{{59}{34}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.7}G-RMA/LCM versus Lock-free}{34}}
+\newlabel{g-rma lcm vs lock-free}{{9.7}{34}}
+\newlabel{lcm rma lock-free comparison clm}{{17}{34}}
+\newlabel{eq:lcm rma lock-free comparison 1}{{60}{34}}
+\newlabel{eq:lcm rma lock-free comparison 3}{{61}{34}}
+\citation{stmconcurrencycontrol:emsoft11,lcmdac2012}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{lcmdac2012}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{lcmdac2012}
+\citation{key-5}
+\newlabel{eq:lcm rma lock-free comparison 4}{{62}{35}}
+\newlabel{eq:lcm rma lock-free comparison 5}{{63}{35}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Limitations of ECM, RCM, and LCM}{35}}
+\newlabel{probelm description}{{10}{35}}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{lcmdac2012}
+\newlabel{ecm-rcm-transitive-retry}{{18}{36}}
+\newlabel{PNF}{{11}{37}}
+\@writefile{toc}{\contentsline {section}{\numberline {11}The PNF Contention Manager}{37}}
+\newlabel{s_i^k true}{{1}{37}}
+\newlabel{move to n}{{6}{37}}
+\newlabel{priority to -1}{{7}{37}}
+\newlabel{s_i^k commit}{{8}{37}}
+\newlabel{s_j^l commits}{{10}{37}}
+\newlabel{traverse n-set}{{11}{37}}
+\newlabel{n(z) no conflict}{{12}{37}}
+\newlabel{processor available}{{13}{37}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces PNF Algorithm}}{37}}
+\newlabel{PNF-algorithm}{{2}{37}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1}Illustrative Example}{39}}
+\newlabel{pnf_example_step_3}{{5}{39}}
+\newlabel{pnf_example_step 1}{{6}{39}}
+\newlabel{pnf_example_step_2}{{7}{39}}
+\newlabel{pnf_example_step_4}{{8}{40}}
+\newlabel{pnf_example_step_5}{{9}{40}}
+\newlabel{pnf properties sec}{{11.2}{40}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2}Properties}{40}}
+\newlabel{PNF-transitive-retry}{{19}{40}}
+\newlabel{first-access}{{20}{41}}
+\newlabel{higher retry does not affect response}{{21}{41}}
+\@writefile{toc}{\contentsline {section}{\numberline {12}Retry Cost under PNF}{42}}
+\newlabel{rc pnf sec}{{12}{42}}
+\newlabel{two transactions retry cost PNF}{{22}{42}}
+\newlabel{rc-PNF}{{64}{42}}
+\newlabel{delay}{{24}{42}}
+\newlabel{PNF-delay}{{65}{42}}
+\citation{key-2}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\newlabel{response time ecm PNF}{{25}{43}}
+\newlabel{d-edf}{{67}{43}}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11,lcmdac2012,key-5}
+\newlabel{response rcm PNF}{{26}{44}}
+\@writefile{toc}{\contentsline {section}{\numberline {13}PNF vs. Competitors}{44}}
+\newlabel{sec:pnf-sched-comparison}{{13}{44}}
+\newlabel{utilization comparison}{{69}{44}}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{lcmdac2012}
+\citation{key-2}
+\citation{key-2}
+\newlabel{ecm rlease conflict}{{27}{45}}
+\newlabel{total rc ecm eq}{{70}{45}}
+\newlabel{eq6}{{71}{45}}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{lcmdac2012}
+\newlabel{rcm rlease conflict}{{28}{46}}
+\newlabel{total rc rcm eq}{{72}{46}}
+\newlabel{eq21}{{73}{46}}
+\newlabel{lock free release}{{29}{46}}
+\newlabel{pnf vs ecm sec}{{13.1}{46}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1}PNF versus ECM}{46}}
+\newlabel{PNF ecf comaprison clm}{{30}{46}}
+\newlabel{PNF ecm comparison 2}{{74}{47}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.2}PNF versus RCM}{47}}
+\newlabel{pnf vs rcm sec}{{13.2}{47}}
+\newlabel{clm_pnf_rcm_comp}{{31}{47}}
+\newlabel{PNF rcm comparison 3}{{75}{48}}
+\newlabel{PNF rcm comparison 5}{{76}{48}}
+\newlabel{PNF rcm comparison 4}{{77}{48}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.3}PNF versus G-EDF/LCM}{48}}
+\newlabel{sub:pnf_lcm_edf_comp}{{32}{48}}
+\citation{key-5,stmconcurrencycontrol:emsoft11}
+\newlabel{eq:pnf_lcm_edf_comp}{{78}{49}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.4}PNF versus G-RMA/LCM}{49}}
+\newlabel{sub:pnf_lcm_rma_comp}{{33}{49}}
+\newlabel{pnf-lcm-rma-comp-2}{{79}{49}}
+\citation{key-5}
+\citation{key-5}
+\citation{key-5}
+\citation{Herlihy:2003:STM:872035.872048}
+\citation{shambake_phd_proposal}
+\newlabel{pnf vs lock free sec}{{13.5}{50}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.5}PNF versus Lock-free Synchronization}{50}}
+\newlabel{lock-free rc}{{80}{50}}
+\newlabel{PNF lock-free comparison}{{34}{50}}
+\newlabel{eq:PNF lock-free comparison}{{81}{50}}
+\@writefile{toc}{\contentsline {section}{\numberline {14}First Bounded, Last Timestamp CM (FBLT)}{50}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.1}Case for FBLT}{51}}
+\newlabel{goal 1}{{1}{51}}
+\newlabel{goal 2}{{2}{51}}
+\newlabel{goal 3}{{3}{51}}
+\@writefile{toc}{\contentsline {section}{\numberline {15}The FBLT Contention Manager}{51}}
+\newlabel{sec:fblt design}{{15}{51}}
+\newlabel{both preemptive}{{1}{52}}
+\newlabel{apply lcm}{{2}{52}}
+\newlabel{preemptive s_i^k aborted}{{3}{52}}
+\newlabel{increment eta 1}{{5}{52}}
+\newlabel{add to m_set 1}{{7}{52}}
+\newlabel{record 1}{{8}{52}}
+\newlabel{increase priority 1}{{9}{52}}
+\newlabel{s_j^l is non preemptive}{{15}{52}}
+\newlabel{increment eta 2}{{18}{52}}
+\newlabel{add to m_set 2}{{20}{52}}
+\newlabel{record 2}{{21}{52}}
+\newlabel{increase priority 2}{{22}{52}}
+\newlabel{s_i^k is non-preemptive}{{24}{52}}
+\newlabel{end preemptive and non preemptive}{{26}{52}}
+\newlabel{both non preemptive}{{27}{52}}
+\newlabel{s_i^k first in m_set}{{29}{52}}
+\newlabel{s_j^l first in m_set}{{31}{52}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces The FBLT Algorithm}}{52}}
+\newlabel{fblt-algorithm}{{3}{52}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {15.1}Illustrative Example}{52}}
+\newlabel{fblt_ex_step 2}{{2}{52}}
+\citation{shambake_phd_proposal}
+\citation{shambake_phd_proposal}
+\newlabel{fblt_ex_step 6}{{6}{53}}
+\newlabel{fblt_ex_step 7}{{7}{53}}
+\@writefile{toc}{\contentsline {section}{\numberline {16}Retry Cost and Response Time Bounds}{53}}
+\newlabel{fblt rc}{{16}{53}}
+\newlabel{eq:fblt_rc}{{82}{53}}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\citation{stmconcurrencycontrol:emsoft11}
+\newlabel{eq:fblt_delay}{{83}{54}}
+\newlabel{eq:fblt_res_time}{{84}{54}}
+\citation{stmconcurrencycontrol:emsoft11,lcmdac2012,key-5,shambake_phd_proposal}
+\citation{shambake_phd_proposal}
+\@writefile{toc}{\contentsline {section}{\numberline {17}Schedulability Comparison}{55}}
+\newlabel{schedulabiltiy comparison}{{17}{55}}
+\newlabel{eq:utilization comparison}{{85}{55}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.1}FBLT vs. ECM}{55}}
+\newlabel{clm:fblt_ecm}{{38}{55}}
+\newlabel{eq:fblt_edf_comparison_1}{{86}{55}}
+\newlabel{eq:fblt_edf_comparison_3}{{87}{56}}
+\newlabel{eq:fblt_edf_comparison_4}{{88}{56}}
+\newlabel{eq:fblt_edf_comparison_4_1}{{89}{56}}
+\citation{shambake_phd_proposal}
+\newlabel{eq:fblt_edf_comparison_5}{{90}{57}}
+\newlabel{eq:fblt_edf_comparison_6}{{91}{57}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.2}FBLT vs. RCM}{57}}
+\newlabel{clm:fblt_rcm}{{39}{57}}
+\newlabel{eq:fblt_rcm_comparison_16_clm}{{39}{57}}
+\newlabel{eq:fblt_rcm_comparison_1}{{92}{57}}
+\newlabel{eq:fblt_rcm_comparison_2}{{93}{58}}
+\newlabel{eq:fblt_rcm_comparison_4}{{94}{58}}
+\newlabel{eq:fblt_rcm_comparison_5}{{95}{58}}
+\newlabel{eq:fblt_rcm_comparison_14}{{96}{58}}
+\citation{shambake_phd_proposal}
+\newlabel{eq:fblt_rcm_comparison_15}{{97}{59}}
+\newlabel{eq:fblt_rcm_comparison_16}{{98}{59}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.3}FBLT vs. G-EDF/LCM}{59}}
+\newlabel{clm:fblt_lcm_edf}{{40}{59}}
+\newlabel{eq:fblt_lcm_edf_comparison_1}{{99}{59}}
+\newlabel{eq:fblt_lcm_edf_comparison_2}{{100}{60}}
+\newlabel{eq:fblt_lcm_edf_comparison_4}{{101}{60}}
+\newlabel{eq:fblt_lcm_edf_comparison_4_1}{{102}{60}}
+\citation{shambake_phd_proposal}
+\newlabel{eq:fblt_lcm_edf_comparison_5}{{103}{61}}
+\newlabel{eq:fblt_lcm_edf_comparison_6}{{104}{61}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.4}FBLT vs. G-RMA/LCM}{61}}
+\newlabel{clm:fblt_lcm_rma}{{41}{61}}
+\newlabel{eq:fblt_lcm_rma_comparison_7_mod}{{41}{61}}
+\newlabel{eq:fblt_lcm_rma_comparison_1}{{105}{62}}
+\newlabel{eq:fblt_lcm_rma_comparison_2}{{106}{62}}
+\newlabel{eq:fblt_lcm_rma_comparison_4}{{107}{62}}
+\newlabel{eq:fblt_lcm_rma_comparison_5}{{108}{63}}
+\newlabel{eq:fblt_lcm_rma_comparison_6}{{109}{63}}
+\newlabel{eq:fblt_lcm_rma_comparison_7}{{110}{63}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.5}FBLT vs. PNF}{63}}
+\newlabel{sec:fblt vs pnf}{{17.5}{63}}
+\newlabel{clm:fblt_pnf_edf}{{42}{63}}
+\citation{shambake_phd_proposal}
+\citation{shambake_phd_proposal}
+\citation{shambake_phd_proposal}
+\citation{shambake_phd_proposal}
+\newlabel{eq:fblt_pnf_comparison_1-1-1-1_mod}{{112}{64}}
+\newlabel{eq:fblt_pnf_comparison_1}{{113}{64}}
+\newlabel{eq:fblt_pnf_comparison_1-1}{{114}{64}}
+\newlabel{eq:fblt_pnf_comparison_1-1-1}{{115}{64}}
+\citation{key-5,Herlihy:2006:AMP:1146381.1146382}
+\citation{shambake_phd_proposal}
+\citation{key-5}
+\citation{key-5}
+\citation{shambake_phd_proposal}
+\newlabel{eq:fblt_pnf_comparison_1-1-1-1}{{116}{65}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.6}FBLT vs. Lock-free}{65}}
+\newlabel{sec:fblt vs lock free}{{17.6}{65}}
+\newlabel{clm:fblt_edf_lock-free}{{43}{65}}
+\newlabel{eq:fblt_lf_comparison_1}{{116}{65}}
+\citation{key-5,stmconcurrencycontrol:emsoft11}
+\newlabel{eq:fblt_lf_comparison_8}{{117}{66}}
+\newlabel{eq:fblt_lf_comparison_6}{{118}{66}}
+\newlabel{eq:fblt_lf_comparison_7}{{119}{66}}
+\newlabel{eq:fblt_lf_comparison_9}{{120}{66}}
+\newlabel{eq:fblt_lf_comparison_10}{{121}{66}}
+\newlabel{sec:fblt vs lock free}{{17.6}{66}}
+\citation{shambake_phd_proposal}
+\citation{key-5}
+\citation{key-5}
+\citation{shambake_phd_proposal}
+\newlabel{clm:fblt_edf_lock-free}{{44}{67}}
+\newlabel{eq:fblt_lf_comparison_1}{{122}{67}}
+\newlabel{eq:fblt_lf_comparison_8}{{123}{67}}
+\newlabel{eq:fblt_lf_comparison_6}{{124}{67}}
+\newlabel{eq:fblt_lf_comparison_7}{{125}{67}}
+\newlabel{eq:fblt_lf_comparison_9}{{126}{67}}
+\citation{dellinger2011chronos}
+\citation{marathe2006lowering}
+\newlabel{eq:fblt_lf_comparison_10}{{127}{68}}
+\@writefile{toc}{\contentsline {section}{\numberline {18}Experimental Evaluation}{68}}
+\newlabel{exp_eval}{{18}{68}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {18.1}Experimental Setup}{68}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {18.2}LCM Results}{68}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Task sets a) 4 tasks. b) 5 tasks. c) 8 tasks. d) 10 tasks. e) 12 tasks. c) 20 tasks.}}{69}}
+\newlabel{pnf_task_sets_table}{{2}{69}}
+\newlabel{tab:Task-sets-a)pnf4}{{2}{69}}
+\newlabel{tab:task-sets-c}{{2}{69}}
+\newlabel{tab:Task-sets-a)pnf8}{{2}{69}}
+\newlabel{tab:task set e}{{2}{69}}
+\newlabel{tab:task sets f}{{2}{69}}
+\newlabel{tab:Task-sets-a)pnf20}{{2}{69}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {18.3}PNF Results}{70}}
+\newlabel{pnf experiemtns}{{18.3}{70}}
+\newlabel{fig-RC-set1}{{15(a)}{71}}
+\newlabel{sub@fig-RC-set1}{{(a)}{71}}
+\newlabel{fig-RC-set2}{{15(b)}{71}}
+\newlabel{sub@fig-RC-set2}{{(b)}{71}}
+\newlabel{fig-RC-set3}{{15(c)}{71}}
+\newlabel{sub@fig-RC-set3}{{(c)}{71}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Task retry costs under LCM and competitor synchronization methods}}{71}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{71}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{71}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{71}}
+\newlabel{fig:RC_results}{{15}{71}}
+\newlabel{fig-res-set1-1}{{16(a)}{72}}
+\newlabel{sub@fig-res-set1-1}{{(a)}{72}}
+\newlabel{fig-res-set2-1}{{16(b)}{72}}
+\newlabel{sub@fig-res-set2-1}{{(b)}{72}}
+\newlabel{fig-res-set3-1}{{16(c)}{72}}
+\newlabel{sub@fig-res-set3-1}{{(c)}{72}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Task response times under LCM and competitor synchronization methods}}{72}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{72}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{72}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3 }}}{72}}
+\newlabel{fig:res_results-1}{{16}{72}}
+\bibstyle{plain}
+\bibdata{/e/lectures/real-time/PhD-work/STM/writing/global_bibliography/global_bibliography.bib}
+\bibcite{anderson95realtime}{1}
+\bibcite{baker1991stack}{2}
+\bibcite{barrosmanaging}{3}
+\bibcite{key-2}{4}
+\bibcite{key-4}{5}
+\bibcite{brandenburg2008implementation}{6}
+\bibcite{key-3}{7}
+\bibcite{bc+08}{8}
+\bibcite{brandenburg2008comparison}{9}
+\bibcite{chen1998multiprocessor}{10}
+\bibcite{chen1990dynamic}{11}
+\bibcite{dellinger2011chronos}{12}
+\bibcite{key-5}{13}
+\bibcite{easwaran2009resource}{14}
+\bibcite{shambake_phd_proposal}{15}
+\bibcite{lcmdac2012}{16}
+\bibcite{stmconcurrencycontrol:emsoft11}{17}
+\bibcite{fahmy2009bounding}{18}
+\bibcite{key-1}{19}
+\bibcite{gai2003comparison}{20}
+\bibcite{Goossens:2003:PSP:876600.876615}{21}
+\bibcite{Guerraoui:2005:TTT:1073814.1073863}{22}
+\bibcite{Harris:2005:CMT:1065944.1065952}{23}
+\bibcite{Herlihy:2006:AMP:1146381.1146382}{24}
+\bibcite{Herlihy:2003:STM:872035.872048}{25}
+\bibcite{holman2006locking}{26}
+\bibcite{lakshmanan2009coordinated}{27}
+\bibcite{lopez2004utilization}{28}
+\bibcite{manson2006preemptible}{29}
+\bibcite{marathe2006lowering}{30}
+\bibcite{austenmc:tcc:dissertation:2009}{31}
+\bibcite{rajkumar2002real}{32}
+\bibcite{Rajkumar:1991:SRS:532621}{33}
+\bibcite{Saha:2006:MHP:1122971.1123001}{34}
+\bibcite{sarni2009real}{35}
+\bibcite{schoeberl2010rttm}{36}
+\bibcite{sha1990priority}{37}
+\bibcite{sha95}{38}
+\bibcite{srinivasan2002deadline}{39}
+\@writefile{toc}{\contentsline {subsection}{\numberline {18.4}FBLT Results}{73}}
+\newlabel{fblt experiemnt sec}{{18.4}{73}}
+\@writefile{toc}{\contentsline {section}{\numberline {19}Conclusions}{73}}
+\newlabel{sec:conclusions}{{19}{73}}
+\newlabel{fig:results_1_obj_all_4_tasks}{{17(a)}{74}}
+\newlabel{sub@fig:results_1_obj_all_4_tasks}{{(a)}{74}}
+\newlabel{fig:results_1_obj_all_8_tasks}{{17(b)}{74}}
+\newlabel{sub@fig:results_1_obj_all_8_tasks}{{(b)}{74}}
+\newlabel{fig:results_1_obj_all_20_tasks}{{17(c)}{74}}
+\newlabel{sub@fig:results_1_obj_all_20_tasks}{{(c)}{74}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Average retry cost for 1 object per transaction for different values of total, maximum and minimum atomic section length under all synchronization techniques}}{74}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {4 tasks}}}{74}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {8 tasks}}}{74}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {20 tasks}}}{74}}
+\newlabel{fig:pnf_results_1_obj_all}{{17}{74}}
+\newlabel{fig:pnf_results_1_obj_cm_4t}{{18(a)}{75}}
+\newlabel{sub@fig:pnf_results_1_obj_cm_4t}{{(a)}{75}}
+\newlabel{fig:pnf_results_1_obj_cm_8t}{{18(b)}{75}}
+\newlabel{sub@fig:pnf_results_1_obj_cm_8t}{{(b)}{75}}
+\newlabel{fig:pnf_results_1_obj_cm_20t}{{18(c)}{75}}
+\newlabel{sub@fig:pnf_results_1_obj_cm_20t}{{(c)}{75}}
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Average retry cost for 1 object per transaction for different values of total, maximum and minimum atomic section length under contention managers only}}{75}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {4 tasks}}}{75}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {8 tasks}}}{75}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {20 tasks}}}{75}}
+\newlabel{fig:pnf_results_1_obj_without_lock_free}{{18}{75}}
+\newlabel{fig:4t_ecm_rcm_lcm_pnf_50obj_40wr}{{19(a)}{76}}
+\newlabel{sub@fig:4t_ecm_rcm_lcm_pnf_50obj_40wr}{{(a)}{76}}
+\newlabel{fig:8t_ecm_rcm_lcm_pnf_90obj_40wr}{{19(b)}{76}}
+\newlabel{sub@fig:8t_ecm_rcm_lcm_pnf_90obj_40wr}{{(b)}{76}}
+\newlabel{fig:20t_ecm_rcm_lcm_pnf_210obj_40wr}{{19(c)}{76}}
+\newlabel{sub@fig:20t_ecm_rcm_lcm_pnf_210obj_40wr}{{(c)}{76}}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Average retry cost for 20 objects per transaction, 40\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{76}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {4 tasks}}}{76}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {8 tasks}}}{76}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {20 tasks}}}{76}}
+\newlabel{fig:cm_20obj_per_tx_40wr}{{19}{76}}
+\newlabel{fig:4t_ecm_rcm_lcm_pnf_50obj_80wr}{{20(a)}{77}}
+\newlabel{sub@fig:4t_ecm_rcm_lcm_pnf_50obj_80wr}{{(a)}{77}}
+\newlabel{fig:8t_ecm_rcm_lcm_pnf_90obj_80wr}{{20(b)}{77}}
+\newlabel{sub@fig:8t_ecm_rcm_lcm_pnf_90obj_80wr}{{(b)}{77}}
+\newlabel{fig:20t_ecm_rcm_lcm_pnf_210obj_80wr}{{20(c)}{77}}
+\newlabel{sub@fig:20t_ecm_rcm_lcm_pnf_210obj_80wr}{{(c)}{77}}
+\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Average retry cost for 20 objects per transaction, 80\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{77}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {4 tasks}}}{77}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {8 tasks}}}{77}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {20 tasks}}}{77}}
+\newlabel{fig:cm_20obj_per_tx_80wr}{{20}{77}}
+\newlabel{fig:4t_ecm_rcm_lcm_pnf_50obj_100wr}{{21(a)}{78}}
+\newlabel{sub@fig:4t_ecm_rcm_lcm_pnf_50obj_100wr}{{(a)}{78}}
+\newlabel{fig:8t_ecm_rcm_lcm_pnf_90obj_100wr}{{21(b)}{78}}
+\newlabel{sub@fig:8t_ecm_rcm_lcm_pnf_90obj_100wr}{{(b)}{78}}
+\newlabel{fig:20t_ecm_rcm_lcm_pnf_210obj_100wr}{{21(c)}{78}}
+\newlabel{sub@fig:20t_ecm_rcm_lcm_pnf_210obj_100wr}{{(c)}{78}}
+\@writefile{lof}{\contentsline {figure}{\numberline {21}{\ignorespaces Average retry cost for 20 objects per transaction, 100\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{78}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {4 tasks}}}{78}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {8 tasks}}}{78}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {20 tasks}}}{78}}
+\newlabel{fig:cm_20obj_per_tx_100wr}{{21}{78}}
+\newlabel{fig:4t_ecm_rcm_lcm_pnf_100obj_40wr}{{22(a)}{79}}
+\newlabel{sub@fig:4t_ecm_rcm_lcm_pnf_100obj_40wr}{{(a)}{79}}
+\newlabel{fig:8t_ecm_rcm_lcm_pnf_180obj_40wr}{{22(b)}{79}}
+\newlabel{sub@fig:8t_ecm_rcm_lcm_pnf_180obj_40wr}{{(b)}{79}}
+\newlabel{fig:20t_ecm_rcm_lcm_pnf_420obj_40wr}{{22(c)}{79}}
+\newlabel{sub@fig:20t_ecm_rcm_lcm_pnf_420obj_40wr}{{(c)}{79}}
+\@writefile{lof}{\contentsline {figure}{\numberline {22}{\ignorespaces Average retry cost for 40 objects per transaction, 40\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{79}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {4 tasks}}}{79}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {8 tasks}}}{79}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {20 tasks}}}{79}}
+\newlabel{fig:cm_40obj_per_tx_40wr}{{22}{79}}
+\newlabel{fig:4t_ecm_rcm_lcm_pnf_100obj_80wr}{{23(a)}{80}}
+\newlabel{sub@fig:4t_ecm_rcm_lcm_pnf_100obj_80wr}{{(a)}{80}}
+\newlabel{fig:8t_ecm_rcm_lcm_pnf_180obj_80wr}{{23(b)}{80}}
+\newlabel{sub@fig:8t_ecm_rcm_lcm_pnf_180obj_80wr}{{(b)}{80}}
+\newlabel{fig:20t_ecm_rcm_lcm_pnf_420obj_80wr}{{23(c)}{80}}
+\newlabel{sub@fig:20t_ecm_rcm_lcm_pnf_420obj_80wr}{{(c)}{80}}
+\@writefile{lof}{\contentsline {figure}{\numberline {23}{\ignorespaces Average retry cost for 40 objects per transaction, 80\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{80}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {4 tasks}}}{80}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {8 tasks}}}{80}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {20 tasks}}}{80}}
+\newlabel{fig:cm_40obj_per_tx_80wr}{{23}{80}}
+\newlabel{fig:4t_ecm_rcm_lcm_pnf_100obj_100wr}{{24(a)}{81}}
+\newlabel{sub@fig:4t_ecm_rcm_lcm_pnf_100obj_100wr}{{(a)}{81}}
+\newlabel{fig:8t_ecm_rcm_lcm_pnf_180obj_100wr}{{24(b)}{81}}
+\newlabel{sub@fig:8t_ecm_rcm_lcm_pnf_180obj_100wr}{{(b)}{81}}
+\newlabel{fig:20t_ecm_rcm_lcm_pnf_420obj_100wr}{{24(c)}{81}}
+\newlabel{sub@fig:20t_ecm_rcm_lcm_pnf_420obj_100wr}{{(c)}{81}}
+\@writefile{lof}{\contentsline {figure}{\numberline {24}{\ignorespaces Average retry cost for 40 objects per transaction, 100\% write operations for different values of total, maximum and minimum atomic section length under different CMs}}{81}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {4 tasks}}}{81}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {8 tasks}}}{81}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {20 tasks}}}{81}}
+\newlabel{fig:cm_40obj_per_tx_100wr}{{24}{81}}
+\newlabel{fig:fblt_results_1_obj_all}{{25(a)}{82}}
+\newlabel{sub@fig:fblt_results_1_obj_all}{{(a)}{82}}
+\newlabel{fig:fblt_results_1_obj_without_lock_free}{{25(b)}{82}}
+\newlabel{sub@fig:fblt_results_1_obj_without_lock_free}{{(b)}{82}}
+\@writefile{lof}{\contentsline {figure}{\numberline {25}{\ignorespaces Avgerage retry cost (one object/transaction).}}{82}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {ECM, RCM, LCM, PNF, FBLT, Lock-Free}}}{82}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {ECM, RCM, LCM, PNF, FBLT}}}{82}}
+\newlabel{fig:fblt_results_uniobject}{{25}{82}}
+\newlabel{fig:fblt_results_1_obj_all}{{26(a)}{83}}
+\newlabel{sub@fig:fblt_results_1_obj_all}{{(a)}{83}}
+\newlabel{fig:fblt_results_1_obj_without_lock_free}{{26(b)}{83}}
+\newlabel{sub@fig:fblt_results_1_obj_without_lock_free}{{(b)}{83}}
+\@writefile{lof}{\contentsline {figure}{\numberline {26}{\ignorespaces Avgerage retry cost (one object/transaction).}}{83}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {ECM, RCM, LCM, PNF, FBLT, Lock-Free}}}{83}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {ECM, RCM, LCM, PNF, FBLT}}}{83}}
+\newlabel{fig:fblt_results_uniobject}{{26}{83}}
+\@writefile{lof}{\contentsline {figure}{\numberline {27}{\ignorespaces Avgerage retry cost (20 shared objects, 4 tasks).}}{83}}
+\newlabel{fig-RC-fblt-4t-20obj}{{27}{83}}
+\@writefile{lof}{\contentsline {figure}{\numberline {28}{\ignorespaces Avgerage retry cost (40 shared objects, 4 tasks).}}{84}}
+\newlabel{fig-RC-fblt-4t-40obj}{{28}{84}}
+\@writefile{lof}{\contentsline {figure}{\numberline {29}{\ignorespaces Avgerage retry cost (20 shared objects, 8 tasks).}}{84}}
+\newlabel{fig-RC-fblt-8t-20obj}{{29}{84}}
+\@writefile{lof}{\contentsline {figure}{\numberline {30}{\ignorespaces Avgerage retry cost (40 shared objects, 8 tasks).}}{84}}
+\newlabel{fig-RC-fblt-8t-40obj}{{30}{84}}
+\@writefile{lof}{\contentsline {figure}{\numberline {31}{\ignorespaces Avgerage retry cost (20 shared objects, 20 tasks).}}{85}}
+\newlabel{fig-RC-fblt-20t-20obj}{{31}{85}}
+\@writefile{lof}{\contentsline {figure}{\numberline {32}{\ignorespaces Avgerage retry cost (40 shared objects, 20 tasks).}}{85}}
+\newlabel{fig-RC-fblt-20t-40obj}{{32}{85}}
+\@writefile{lof}{\contentsline {figure}{\numberline {33}{\ignorespaces Avgerage retry cost (20 shared objects, 4 tasks).}}{85}}
+\newlabel{fig-RC-fblt-20t-20obj}{{33}{85}}
+\@writefile{lof}{\contentsline {figure}{\numberline {34}{\ignorespaces Avgerage retry cost (20 shared objects, 8 tasks).}}{86}}
+\newlabel{fig-RC-fblt-8t-20obj}{{34}{86}}
+\newlabel{notations}{{A}{86}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Notations}{86}}
+\newlabel{extended results}{{B}{87}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Extended Results}{87}}
+\@writefile{lof}{\contentsline {figure}{\numberline {35}{\ignorespaces Avgerage retry cost (20 shared objects, 20 tasks).}}{87}}
+\newlabel{fig-RC-fblt-20t-20obj}{{35}{87}}
+\newlabel{Res_Time_5t_nl_g_30_0.5_0.2_0.2_1.eps}{{37(a)}{88}}
+\newlabel{sub@Res_Time_5t_nl_g_30_0.5_0.2_0.2_1.eps}{{(a)}{88}}
+\newlabel{Res_Time_10t_nl_g_30_0.5_0.2_0.2_1.eps}{{37(b)}{88}}
+\newlabel{sub@Res_Time_10t_nl_g_30_0.5_0.2_0.2_1.eps}{{(b)}{88}}
+\newlabel{Res_Time_12t_nl_g_30_0.5_0.2_0.2_1.eps}{{37(c)}{88}}
+\newlabel{sub@Res_Time_12t_nl_g_30_0.5_0.2_0.2_1.eps}{{(c)}{88}}
+\@writefile{lof}{\contentsline {figure}{\numberline {37}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.5,0.2,0.2)}}{88}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{88}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{88}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{88}}
+\newlabel{fig:res_results 0.5 0.2 0.2}{{37}{88}}
+\newlabel{Abr_dur_5t_nl_g_30_0.5_0.5_0.2_1.eps}{{38(a)}{89}}
+\newlabel{sub@Abr_dur_5t_nl_g_30_0.5_0.5_0.2_1.eps}{{(a)}{89}}
+\newlabel{Abr_dur_10t_nl_g_30_0.5_0.5_0.2_1.eps}{{38(b)}{89}}
+\newlabel{sub@Abr_dur_10t_nl_g_30_0.5_0.5_0.2_1.eps}{{(b)}{89}}
+\newlabel{Abr_dur_12t_nl_g_30_0.5_0.5_0.2_1.eps}{{38(c)}{89}}
+\newlabel{sub@Abr_dur_12t_nl_g_30_0.5_0.5_0.2_1.eps}{{(c)}{89}}
+\@writefile{lof}{\contentsline {figure}{\numberline {38}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.5,0.5,0.2)}}{89}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{89}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{89}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{89}}
+\newlabel{fig:RC_results 0.5 0.5 0.2}{{38}{89}}
+\newlabel{Res_Time_5t_nl_g_30_0.5_0.5_0.2_1.eps}{{39(a)}{90}}
+\newlabel{sub@Res_Time_5t_nl_g_30_0.5_0.5_0.2_1.eps}{{(a)}{90}}
+\newlabel{Res_Time_10t_nl_g_30_0.5_0.5_0.2_1.eps}{{39(b)}{90}}
+\newlabel{sub@Res_Time_10t_nl_g_30_0.5_0.5_0.2_1.eps}{{(b)}{90}}
+\newlabel{Res_Time_12t_nl_g_30_0.5_0.5_0.2_1.eps}{{39(c)}{90}}
+\newlabel{sub@Res_Time_12t_nl_g_30_0.5_0.5_0.2_1.eps}{{(c)}{90}}
+\@writefile{lof}{\contentsline {figure}{\numberline {39}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.5,0.5,0.2)}}{90}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{90}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{90}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{90}}
+\newlabel{fig:res_results 0.5 0.5 0.2}{{39}{90}}
+\newlabel{Abr_dur_5t_nl_g_30_0.5_0.5_0.5_1.eps}{{40(a)}{91}}
+\newlabel{sub@Abr_dur_5t_nl_g_30_0.5_0.5_0.5_1.eps}{{(a)}{91}}
+\newlabel{Abr_dur_10t_nl_g_30_0.5_0.5_0.5_1.eps}{{40(b)}{91}}
+\newlabel{sub@Abr_dur_10t_nl_g_30_0.5_0.5_0.5_1.eps}{{(b)}{91}}
+\newlabel{Abr_dur_12t_nl_g_30_0.5_0.5_0.5_1.eps}{{40(c)}{91}}
+\newlabel{sub@Abr_dur_12t_nl_g_30_0.5_0.5_0.5_1.eps}{{(c)}{91}}
+\@writefile{lof}{\contentsline {figure}{\numberline {40}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.5,0.5,0.5)}}{91}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{91}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{91}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{91}}
+\newlabel{fig:RC_results 0.5 0.5 0.5}{{40}{91}}
+\newlabel{Res_Time_5t_nl_g_30_0.5_0.5_0.5_1.eps}{{41(a)}{92}}
+\newlabel{sub@Res_Time_5t_nl_g_30_0.5_0.5_0.5_1.eps}{{(a)}{92}}
+\newlabel{Res_Time_10t_nl_g_30_0.5_0.5_0.5_1.eps}{{41(b)}{92}}
+\newlabel{sub@Res_Time_10t_nl_g_30_0.5_0.5_0.5_1.eps}{{(b)}{92}}
+\newlabel{Res_Time_12t_nl_g_30_0.5_0.5_0.5_1.eps}{{41(c)}{92}}
+\newlabel{sub@Res_Time_12t_nl_g_30_0.5_0.5_0.5_1.eps}{{(c)}{92}}
+\@writefile{lof}{\contentsline {figure}{\numberline {41}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.5,0.5,0.5)}}{92}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{92}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{92}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{92}}
+\newlabel{fig:res_results 0.5 0.5 0.5}{{41}{92}}
+\newlabel{Abr_dur_5t_nl_g_30_0.8_0.2_0.2_1.eps}{{42(a)}{93}}
+\newlabel{sub@Abr_dur_5t_nl_g_30_0.8_0.2_0.2_1.eps}{{(a)}{93}}
+\newlabel{Abr_dur_10t_nl_g_30_0.8_0.2_0.2_1.eps}{{42(b)}{93}}
+\newlabel{sub@Abr_dur_10t_nl_g_30_0.8_0.2_0.2_1.eps}{{(b)}{93}}
+\newlabel{Abr_dur_12t_nl_g_30_0.8_0.2_0.2_1.eps}{{42(c)}{93}}
+\newlabel{sub@Abr_dur_12t_nl_g_30_0.8_0.2_0.2_1.eps}{{(c)}{93}}
+\@writefile{lof}{\contentsline {figure}{\numberline {42}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.8,0.2,0.2)}}{93}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{93}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{93}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{93}}
+\newlabel{fig:RC_results 0.8 0.2 0.2}{{42}{93}}
+\newlabel{Res_Time_5t_nl_g_30_0.8_0.2_0.2_1.eps}{{43(a)}{94}}
+\newlabel{sub@Res_Time_5t_nl_g_30_0.8_0.2_0.2_1.eps}{{(a)}{94}}
+\newlabel{Res_Time_10t_nl_g_30_0.8_0.2_0.2_1.eps}{{43(b)}{94}}
+\newlabel{sub@Res_Time_10t_nl_g_30_0.8_0.2_0.2_1.eps}{{(b)}{94}}
+\newlabel{Res_Time_12t_nl_g_30_0.8_0.2_0.2_1.eps}{{43(c)}{94}}
+\newlabel{sub@Res_Time_12t_nl_g_30_0.8_0.2_0.2_1.eps}{{(c)}{94}}
+\@writefile{lof}{\contentsline {figure}{\numberline {43}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.8,0.2,0.2)}}{94}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{94}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{94}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{94}}
+\newlabel{fig:res_results 0.8 0.2 0.2}{{43}{94}}
+\newlabel{Abr_dur_5t_nl_g_30_0.8_0.5_0.2_1.eps}{{44(a)}{95}}
+\newlabel{sub@Abr_dur_5t_nl_g_30_0.8_0.5_0.2_1.eps}{{(a)}{95}}
+\newlabel{Abr_dur_10t_nl_g_30_0.8_0.5_0.2_1.eps}{{44(b)}{95}}
+\newlabel{sub@Abr_dur_10t_nl_g_30_0.8_0.5_0.2_1.eps}{{(b)}{95}}
+\newlabel{Abr_dur_12t_nl_g_30_0.8_0.5_0.2_1.eps}{{44(c)}{95}}
+\newlabel{sub@Abr_dur_12t_nl_g_30_0.8_0.5_0.2_1.eps}{{(c)}{95}}
+\@writefile{lof}{\contentsline {figure}{\numberline {44}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.8,0.5,0.2)}}{95}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{95}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{95}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{95}}
+\newlabel{fig:RC_results 0.8 0.5 0.2}{{44}{95}}
+\newlabel{Res_Time_5t_nl_g_30_0.8_0.5_0.2_1.eps}{{45(a)}{96}}
+\newlabel{sub@Res_Time_5t_nl_g_30_0.8_0.5_0.2_1.eps}{{(a)}{96}}
+\newlabel{Res_Time_10t_nl_g_30_0.8_0.5_0.2_1.eps}{{45(b)}{96}}
+\newlabel{sub@Res_Time_10t_nl_g_30_0.8_0.5_0.2_1.eps}{{(b)}{96}}
+\newlabel{Res_Time_12t_nl_g_30_0.8_0.5_0.2_1.eps}{{45(c)}{96}}
+\newlabel{sub@Res_Time_12t_nl_g_30_0.8_0.5_0.2_1.eps}{{(c)}{96}}
+\@writefile{lof}{\contentsline {figure}{\numberline {45}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.8,0.5,0.2)}}{96}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{96}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{96}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{96}}
+\newlabel{fig:res_results 0.8 0.5 0.2}{{45}{96}}
+\newlabel{Abr_dur_5t_nl_g_30_0.8_0.5_0.5_1.eps}{{46(a)}{97}}
+\newlabel{sub@Abr_dur_5t_nl_g_30_0.8_0.5_0.5_1.eps}{{(a)}{97}}
+\newlabel{Abr_dur_10t_nl_g_30_0.8_0.5_0.5_1.eps}{{46(b)}{97}}
+\newlabel{sub@Abr_dur_10t_nl_g_30_0.8_0.5_0.5_1.eps}{{(b)}{97}}
+\newlabel{Abr_dur_12t_nl_g_30_0.8_0.5_0.5_1.eps}{{46(c)}{97}}
+\newlabel{sub@Abr_dur_12t_nl_g_30_0.8_0.5_0.5_1.eps}{{(c)}{97}}
+\@writefile{lof}{\contentsline {figure}{\numberline {46}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.8,0.5,0.5)}}{97}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{97}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{97}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{97}}
+\newlabel{fig:RC_results 0.8 0.5 0.5}{{46}{97}}
+\newlabel{Res_Time_5t_nl_g_30_0.8_0.5_0.5_1.eps}{{47(a)}{98}}
+\newlabel{sub@Res_Time_5t_nl_g_30_0.8_0.5_0.5_1.eps}{{(a)}{98}}
+\newlabel{Res_Time_10t_nl_g_30_0.8_0.5_0.5_1.eps}{{47(b)}{98}}
+\newlabel{sub@Res_Time_10t_nl_g_30_0.8_0.5_0.5_1.eps}{{(b)}{98}}
+\newlabel{Res_Time_12t_nl_g_30_0.8_0.5_0.5_1.eps}{{47(c)}{98}}
+\newlabel{sub@Res_Time_12t_nl_g_30_0.8_0.5_0.5_1.eps}{{(c)}{98}}
+\@writefile{lof}{\contentsline {figure}{\numberline {47}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.8,0.5,0.5)}}{98}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{98}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{98}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{98}}
+\newlabel{fig:res_results 0.8 0.5 0.5}{{47}{98}}
+\newlabel{Abr_dur_5t_nl_g_30_0.8_0.8_0.2_1.eps}{{48(a)}{99}}
+\newlabel{sub@Abr_dur_5t_nl_g_30_0.8_0.8_0.2_1.eps}{{(a)}{99}}
+\newlabel{Abr_dur_10t_nl_g_30_0.8_0.8_0.2_1.eps}{{48(b)}{99}}
+\newlabel{sub@Abr_dur_10t_nl_g_30_0.8_0.8_0.2_1.eps}{{(b)}{99}}
+\newlabel{Abr_dur_12t_nl_g_30_0.8_0.8_0.2_1.eps}{{48(c)}{99}}
+\newlabel{sub@Abr_dur_12t_nl_g_30_0.8_0.8_0.2_1.eps}{{(c)}{99}}
+\@writefile{lof}{\contentsline {figure}{\numberline {48}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.8,0.8,0.2)}}{99}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{99}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{99}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{99}}
+\newlabel{fig:RC_results 0.8 0.8 0.2}{{48}{99}}
+\newlabel{Res_Time_5t_nl_g_30_0.8_0.8_0.2_1.eps}{{49(a)}{100}}
+\newlabel{sub@Res_Time_5t_nl_g_30_0.8_0.8_0.2_1.eps}{{(a)}{100}}
+\newlabel{Res_Time_10t_nl_g_30_0.8_0.8_0.2_1.eps}{{49(b)}{100}}
+\newlabel{sub@Res_Time_10t_nl_g_30_0.8_0.8_0.2_1.eps}{{(b)}{100}}
+\newlabel{Res_Time_12t_nl_g_30_0.8_0.8_0.2_1.eps}{{49(c)}{100}}
+\newlabel{sub@Res_Time_12t_nl_g_30_0.8_0.8_0.2_1.eps}{{(c)}{100}}
+\@writefile{lof}{\contentsline {figure}{\numberline {49}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.8,0.8,0.2)}}{100}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{100}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{100}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{100}}
+\newlabel{fig:res_results 0.8 0.8 0.2}{{49}{100}}
+\newlabel{Abr_dur_5t_nl_g_30_0.8_0.8_0.5_1.eps}{{50(a)}{101}}
+\newlabel{sub@Abr_dur_5t_nl_g_30_0.8_0.8_0.5_1.eps}{{(a)}{101}}
+\newlabel{Abr_dur_10t_nl_g_30_0.8_0.8_0.5_1.eps}{{50(b)}{101}}
+\newlabel{sub@Abr_dur_10t_nl_g_30_0.8_0.8_0.5_1.eps}{{(b)}{101}}
+\newlabel{Abr_dur_12t_nl_g_30_0.8_0.8_0.5_1.eps}{{50(c)}{101}}
+\newlabel{sub@Abr_dur_12t_nl_g_30_0.8_0.8_0.5_1.eps}{{(c)}{101}}
+\@writefile{lof}{\contentsline {figure}{\numberline {50}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.8,0.8,0.5)}}{101}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{101}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{101}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{101}}
+\newlabel{fig:RC_results 0.8 0.8 0.5}{{50}{101}}
+\newlabel{Res_Time_5t_nl_g_30_0.8_0.8_0.5_1.eps}{{51(a)}{102}}
+\newlabel{sub@Res_Time_5t_nl_g_30_0.8_0.8_0.5_1.eps}{{(a)}{102}}
+\newlabel{Res_Time_10t_nl_g_30_0.8_0.8_0.5_1.eps}{{51(b)}{102}}
+\newlabel{sub@Res_Time_10t_nl_g_30_0.8_0.8_0.5_1.eps}{{(b)}{102}}
+\newlabel{Res_Time_12t_nl_g_30_0.8_0.8_0.5_1.eps}{{51(c)}{102}}
+\newlabel{sub@Res_Time_12t_nl_g_30_0.8_0.8_0.5_1.eps}{{(c)}{102}}
+\@writefile{lof}{\contentsline {figure}{\numberline {51}{\ignorespaces Task response times under LCM and competitor synchronization methods (0.8,0.8,0.5)}}{102}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{102}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{102}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{102}}
+\newlabel{fig:res_results 0.8 0.8 0.5}{{51}{102}}
+\newlabel{Abr_dur_5t_nl_g_30_0.8_0.8_0.8_1.eps}{{52(a)}{103}}
+\newlabel{sub@Abr_dur_5t_nl_g_30_0.8_0.8_0.8_1.eps}{{(a)}{103}}
+\newlabel{Abr_dur_10t_nl_g_30_0.8_0.8_0.8_1.eps}{{52(b)}{103}}
+\newlabel{sub@Abr_dur_10t_nl_g_30_0.8_0.8_0.8_1.eps}{{(b)}{103}}
+\newlabel{Abr_dur_12t_nl_g_30_0.8_0.8_0.8_1.eps}{{52(c)}{103}}
+\newlabel{sub@Abr_dur_12t_nl_g_30_0.8_0.8_0.8_1.eps}{{(c)}{103}}
+\@writefile{lof}{\contentsline {figure}{\numberline {52}{\ignorespaces Task retry costs under LCM and competitor synchronization methods (0.8,0.8,0.8)}}{103}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Task set 1}}}{103}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Task set 2}}}{103}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Task set 3}}}{103}}
+\newlabel{fig:RC_results 0.8 0.8 0.8}{{52}{103}}
